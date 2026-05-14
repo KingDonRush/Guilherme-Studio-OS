@@ -1,0 +1,35 @@
+# Ignore generated WordPress runtime by default.
+*
+
+# Keep local orchestration tracked.
+!.gitignore
+!.env.example
+!.mcp.example.json
+!docker-compose.yml
+!scripts/
+!scripts/**
+
+# Keep wp-content structure tracked, but ignore generated runtime objects.
+!wp-content/
+wp-content/*
+!wp-content/.gitkeep
+!wp-content/plugins/
+wp-content/plugins/*
+!wp-content/plugins/.gitkeep
+!wp-content/themes/
+wp-content/themes/*
+!wp-content/themes/.gitkeep
+!wp-content/pages/
+wp-content/pages/*
+!wp-content/pages/.gitkeep
+!wp-content/mu-plugins/
+wp-content/mu-plugins/*
+!wp-content/mu-plugins/.gitkeep
+
+# Local secrets and dependencies.
+.env
+node_modules/
+**/node_modules/
+vendor/
+*.log
+.cache/

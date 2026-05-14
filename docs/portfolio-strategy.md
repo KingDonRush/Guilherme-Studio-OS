@@ -1,0 +1,39 @@
+# Portfolio Strategy
+
+## Target
+
+International WordPress roles involving:
+- Elementor implementation;
+- custom plugin work;
+- custom code for business workflows;
+- frontend polish from design;
+- performance and maintainability.
+
+## Positioning Statement
+
+I build maintainable WordPress and Elementor solutions that turn design and
+business requirements into working plugin-backed experiences.
+
+## Project Roles
+
+- `3d-viewer-to-elementor`: advanced technical depth.
+- `simple-budget-plugin`: practical workflow simplification.
+- `Elementor Implementation Toolkit`: direct proof of design-to-WordPress
+  implementation.
+
+## Portfolio Sections
+
+1. Home: clear role, proof, and links to case studies.
+2. Case Studies: each project framed as problem, solution, implementation, QA,
+   outcome.
+3. Code Quality: screenshots or snippets showing architecture, tests, and docs.
+4. Contact: simple international-friendly CTA.
+
+## Near-Term Strategy
+
+1. Clone and audit both existing plugins.
+2. Make each README professional in English.
+3. Stabilize local WordPress with Elementor inside `wordpress/`.
+4. Create demos and screenshots.
+5. Collect friend reports and market data.
+6. Publish the portfolio site with proof-first case studies.

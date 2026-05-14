@@ -1,0 +1,17 @@
+{
+  "name": "wordpress-portfolio-mcp-tools",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Local MCP tooling for the WordPress portfolio workspace.",
+  "scripts": {
+    "wordpress:mcp": "mcp-wordpress",
+    "wordpress:remote": "mcp-wordpress-remote",
+    "respira": "wordpress-mcp-server"
+  },
+  "dependencies": {
+    "@automattic/mcp-wordpress-remote": "^0.3.1",
+    "@respira/wordpress-mcp-server": "^6.11.13",
+    "mcp-wordpress": "^3.3.6"
+  }
+}
+
