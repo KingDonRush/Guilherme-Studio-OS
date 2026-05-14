@@ -1,38 +1,10 @@
 {
   "mcpServers": {
-    "wordpress-local": {
-      "command": "npx",
+    "elementor-local": {
+      "type": "stdio",
+      "command": "/home/kingdonrush/Área de trabalho/Dev/Wordpress/.ai/tools/mcp/elementor-mcp-stdio.sh",
       "args": [
-        "-y",
-        "mcp-wordpress"
-      ],
-      "env": {
-        "WORDPRESS_URL": "http://localhost:8080",
-        "WORDPRESS_USERNAME": "admin",
-        "WORDPRESS_PASSWORD": "admin"
-      }
-    },
-    "wordpress-remote-automattic": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@automattic/mcp-wordpress-remote"
-      ],
-      "env": {
-        "WP_API_URL": "http://localhost:8080"
-      }
-    },
-    "respira-elementor": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@respira/wordpress-mcp-server"
-      ],
-      "env": {
-        "WORDPRESS_URL": "http://localhost:8080",
-        "RESPIRA_API_KEY": ""
-      }
+      ]
     }
   }
 }
-

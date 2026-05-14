@@ -25,6 +25,7 @@ wp-content/pages/*
 !wp-content/mu-plugins/
 wp-content/mu-plugins/*
 !wp-content/mu-plugins/.gitkeep
+!wp-content/mu-plugins/ai-local-elementor-mcp-guard.php
 
 # Local secrets and dependencies.
 .env

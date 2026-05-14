@@ -9,26 +9,26 @@ Use MCP servers only when they add clear leverage:
 - browser verification;
 - documentation lookup.
 
-## Initial Candidates
+## Current Decision
 
-1. `mcp-wordpress`
-   - general WordPress management through MCP;
-   - useful for local WordPress inspection and content operations.
+The Elementor MCP layer must be local and free.
 
-2. `@automattic/mcp-wordpress-remote`
-   - Automattic WordPress remote MCP proxy;
-   - useful when connecting to real or remote WordPress sites with stronger auth.
+Use:
 
-3. `@respira/wordpress-mcp-server`
-   - WordPress MCP with page-builder awareness, including Elementor-oriented
-     workflows;
-   - may need extra plugin/account/API setup.
+- `WordPress/mcp-adapter`
+- `msrbuilds/elementor-mcp`
+- WP-CLI stdio transport through Docker Compose
+
+Do not use `@respira/wordpress-mcp-server` for this project because it is not
+the local-only Elementor MCP path we want.
 
 ## Local Files
 
 - package setup: `.ai/tools/mcp/package.json`
 - example client config: `.ai/tools/mcp/mcp.example.json`
 - notes: `.ai/tools/mcp/README.md`
+- local Elementor MCP guide: `.ai/tools/mcp/elementor-local.md`
+- stdio runner: `.ai/tools/mcp/elementor-mcp-stdio.sh`
 
 ## Safety
 

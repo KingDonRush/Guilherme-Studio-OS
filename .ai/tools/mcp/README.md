@@ -1,18 +1,29 @@
 # MCP Tooling
 
-This folder installs local MCP packages useful for WordPress portfolio work.
+This folder stores local MCP configuration and helper scripts for the WordPress
+portfolio work.
 
-## Packages
+## Elementor MCP
 
-- `mcp-wordpress`: general WordPress MCP server.
-- `@automattic/mcp-wordpress-remote`: Automattic remote WordPress MCP proxy.
-- `@respira/wordpress-mcp-server`: WordPress MCP with page-builder awareness,
-  including Elementor-focused workflows.
+The Elementor MCP must be local and free:
+
+- no hosted MCP service;
+- no third-party API key;
+- no paid API dependency.
+
+It is implemented through local WordPress plugins and WP-CLI:
+
+- `WordPress/mcp-adapter`
+- `msrbuilds/elementor-mcp`
 
 ## Install
 
 ```bash
-npm install --prefix .ai/tools/mcp
+cd wordpress
+git clone https://github.com/WordPress/mcp-adapter wp-content/plugins/mcp-adapter
+git clone https://github.com/msrbuilds/elementor-mcp wp-content/plugins/elementor-mcp
+docker run --rm -v "$PWD/wp-content/plugins/mcp-adapter:/app" -w /app composer:2 composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
+scripts/wp.sh plugin activate mcp-adapter elementor-mcp
 ```
 
 ## Config
@@ -22,5 +33,6 @@ commit credentials.
 
 ## Safety
 
-Use MCPs against local WordPress first. For production or client sites, require
-explicit approval and prefer draft/duplicate-first operations.
+Use MCPs against local WordPress only unless production access is explicitly
+approved. The local guard disables Elementor MCP tools that call Openverse or
+external URLs.
