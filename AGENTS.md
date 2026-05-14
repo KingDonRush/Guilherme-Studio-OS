@@ -58,6 +58,7 @@ operational layer.
    - `.ai/README.md`
    - `.ai/operational/core-loop.md`
    - the relevant project or strategy note
+   - `.ai/operational/commit-message-policy.md` before committing
    - `.ai/operational/github-micromanagement.md` when touching plugin GitHub
      issues, PRs, labels, milestones, or public repo presentation
 4. Identify the layer being changed:

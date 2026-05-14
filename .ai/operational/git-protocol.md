@@ -43,3 +43,16 @@ Use concise conventional prefixes when possible:
 - `fix:`
 - `test:`
 - `chore:`
+
+Every new commit must follow `.ai/operational/commit-message-policy.md`:
+
+```text
+type: mensagem em portugues / mensaje en espanol / message in English
+
+PT: Mensagem em portugues.
+ES: Mensaje en espanol.
+EN: Message in English.
+```
+
+GitHub does not translate commit messages automatically, so the multilingual
+content must live in the commit message itself.

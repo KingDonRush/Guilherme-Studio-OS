@@ -34,6 +34,12 @@ Each plugin should have:
   gates;
 - a clean README in English before public positioning starts.
 
+## Commits
+
+Commit messages must be trilingual. GitHub will display the first line in the
+commit list, so the subject line itself should include Portuguese, Spanish, and
+English separated by slashes.
+
 ## Operating Loop
 
 1. Enter the plugin repository.
@@ -74,4 +80,3 @@ Use the same milestone logic across plugins:
 - `M1 - Stability`: bug fixes and predictable behavior.
 - `M2 - Product Polish`: settings, UX controls, docs, demos.
 - `M3 - Portfolio Evidence`: screenshots, case study, release notes.
-

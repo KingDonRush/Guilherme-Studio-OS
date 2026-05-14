@@ -17,6 +17,12 @@ blocked until GitHub auth is available.
 The local repository governance files are still useful immediately because they
 will appear on GitHub after push and standardize how issues and PRs are created.
 
+## Commit Messages
+
+GitHub does not provide separate translated commit-message fields. Every new
+commit should include Portuguese, Spanish, and English in the commit message
+itself, using the workspace policy in `.ai/operational/commit-message-policy.md`.
+
 ## What Is Prepared Locally
 
 Each plugin should carry:
