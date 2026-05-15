@@ -2,7 +2,9 @@
 
 ## Working Name
 
-WooCommerce Interaction Layer for Elementor
+Elementor Superpowers
+
+Subtitle: Implementation Toolkit for Elementor & WooCommerce
 
 ## Why This Fits The Goal
 
@@ -13,9 +15,14 @@ without adopting a huge shop builder.
 
 ## Concept
 
-This is intentionally JetWooBuilder-style in spirit: a compact WooCommerce
-builder layer for Elementor, but with a smaller, sharper scope and your own
-branding.
+This is intentionally JetWooBuilder-style in spirit: a compact implementation
+toolkit for Elementor and WooCommerce, but with a smaller, sharper scope and
+your own branding.
+
+Public dependency promise: depend on Elementor free, not Elementor Pro or Pro
+Elements. Pro Elements may exist in the local implementation environment only as
+a low-budget way to access premium editor conveniences while building demos.
+The plugin itself must not require Pro Elements for its public value.
 
 Build a compact plugin that gives Elementor implementers a few practical
 WooCommerce widgets and actions they can place anywhere:
@@ -26,6 +33,10 @@ WooCommerce widgets and actions they can place anywhere:
 - optional quick view or lightweight product summary helpers.
 
 The plugin should feel like an action layer, not a full store builder.
+
+No AI features belong inside this plugin. The "superpowers" are deterministic:
+query context, post type detection, template binding, filters, WooCommerce
+actions, inspector panels, and implementation/debug visibility inside Elementor.
 
 ## Hiring Signal
 
@@ -43,6 +54,7 @@ Do not build a huge shop builder. Build:
 - one header/cart demo area;
 - clear README;
 - before/after implementation notes.
+- polished GitHub README assets, screenshots, and edited GIF/video captures.
 
 ## Product Modules
 

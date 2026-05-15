@@ -21,6 +21,10 @@ It should not track WordPress core, uploads, generated caches, or dependency
 folders. The root directory should contain only `AGENTS.md`, `.ai/`, `docs/`,
 and `wordpress/`.
 
+The root repository may remain local-only unless the user explicitly asks to
+publish it. Its job is orchestration, evidence, planning, local WordPress
+runtime, and portfolio assembly.
+
 ## Plugin Repositories
 
 Every plugin must be treated as its own repository, not as ordinary root-repo
@@ -41,6 +45,11 @@ changing a plugin:
 Known current plugin repositories:
 - `simple-budget-plugin`: already has a GitHub repository.
 - `3d-viewer-to-elementor`: already has a GitHub repository.
+
+GitHub presentation is part of plugin work. Public plugin repositories should
+receive polished README assets, screenshots, demo GIFs or video captures,
+release notes, and links back from the portfolio site when they become evidence
+assets.
 
 ## Commit Standard
 

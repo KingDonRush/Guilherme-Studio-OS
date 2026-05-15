@@ -87,3 +87,13 @@
   their own repos before being presented publicly. `simple-budget-plugin` and
   `3d-viewer-to-elementor` already have GitHub repositories and should preserve
   those histories/remotes.
+- Public plugin promises must depend only on WordPress, Elementor free, and the
+  plugin's declared dependencies. Pro Elements/Elementor Pro may be used in the
+  local low-budget implementation environment for premium editor conveniences
+  such as custom CSS, but public plugin architecture must not require Pro
+  Elements unless a later project explicitly changes that promise.
+- Portfolio plugin repositories need strong GitHub presentation assets: README
+  visuals, edited demo GIFs or video-like captures, screenshots, clear GitHub
+  links from the site, and practical visual proof of what the plugin enables.
+  AI-generated visuals/video may be used for polished presentation as long as
+  behavior claims are grounded in real plugin evidence.
