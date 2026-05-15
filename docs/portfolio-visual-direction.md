@@ -28,8 +28,8 @@ Preferred structure:
 
 - Left profile area: dark, rich, personal, with Guilherme's photo, name,
   `kingdonrush`, compact role statement, availability, stack, and social links.
-- Right work area: light, clean, modular grid with six visible cards:
-  three plugins and three implementation projects.
+- Right projects area: light, clean, modular grid with six visible cards:
+  three custom WordPress systems and three design-to-WordPress builds.
 - Transition between areas: soft curve, diagonal, glow, layered surface, or
   another controlled shape that prevents a harsh black/white split.
 
@@ -74,19 +74,45 @@ Social/contact icons to represent in the profile area:
 Do not invent clients, job titles, years of experience, certifications, metrics,
 awards, or personal history.
 
-## Work Cards
+## Selected Projects
 
-Plugin cards:
+Use `Selected Projects` as the main work-area heading.
+
+Place one general CTA in the heading row:
+
+- `Discuss a project`
+
+Do not place separate CTAs in each category heading. The main CTA should cover
+freelance conversations, agency work, and hiring conversations without sounding
+like a generic sales banner.
+
+### Custom WordPress Systems
+
+This category proves logic, extensibility, plugin architecture, Elementor
+widgets, WooCommerce actions, and custom WordPress behavior.
 
 1. Simple Budget Plugin
 2. 3D Viewer for Elementor
 3. WooCommerce Toolkit for Elementor
 
-Implementation cards:
+Plugin/system cards may show both:
+
+- `See project`
+- GitHub icon/button when public code exists.
+
+### Design-to-WordPress Builds
+
+This category proves polished implementation, design translation, responsive
+delivery, WooCommerce builds, page structure, performance, and client-ready
+site execution.
 
 1. Landing Page Implementation
 2. Institutional Website
 3. WooCommerce Store
+
+Implementation/build cards should show `See project` only. Do not add GitHub
+icons to site/build cards unless a specific public code repository is part of
+that case study.
 
 Cards must feel public-facing and final. Do not include add buttons, empty
 project slots, builder handles, editable placeholders, software controls, fake
