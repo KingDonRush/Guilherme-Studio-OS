@@ -363,6 +363,12 @@ Asset rule:
 - For the public hero, prefer a strong 100vh-style first screen with a compact
   bio block and bolder contrast or color accents. Avoid a mostly white, overly
   sober presentation.
+- If the hero is 100vh, do not render a top header/navigation bar inside the
+  image. Put the bio and tech stack in a lateral rail, lower band, or quiet
+  background treatment.
+- Keep the biography short and direct. The stack should feel deliberate, not
+  crowded. Include WordPress, Elementor, WooCommerce, PHP, JS, CSS, Git, ACF,
+  and the Crocoblock suite.
 - The image must read as the final public portfolio seen by clients and
   recruiters, not as internal software. Do not include add-project controls,
   empty editable slots, admin dashboards, builder sidebars, placeholder rails,

@@ -26,6 +26,13 @@
   with a compact bio block, clear role statement, and higher visual contrast
   over a full-page white-heavy layout. Keep the design modular, but make the
   first impression more vivid and less sober.
+- If the hero is 100vh, do not add a top header/navigation bar inside the
+  composition. Put metadata, bio, and stack details in a lateral rail, lower
+  band, or background treatment instead.
+- Keep the bio compact and readable. Do not crowd the hero with many tech tags;
+  make the stack feel intentional by placing it in a side rail or footer strip.
+- The confirmed tech stack for public portfolio visuals includes WordPress,
+  Elementor, WooCommerce, PHP, JS, CSS, Git, ACF, and the Crocoblock suite.
 - Never infer the user's public name, personal brand, or portfolio identity from
   indirect context. Use placeholders until the user explicitly defines the name
   or brand.
