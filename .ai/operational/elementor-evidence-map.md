@@ -20,6 +20,39 @@ Relevant active plugins:
 
 Treat this as the current local truth, not as a global Elementor assumption.
 
+## Local Icon Baseline
+
+Checked on 2026-05-15 against local Elementor files:
+
+- Font Awesome Free `5.15.3` is bundled at
+  `wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/`.
+- Elementor eicons are bundled at
+  `wordpress/wp-content/plugins/elementor/assets/lib/eicons/`.
+- Font Awesome local brand/solid/regular JSON confirms native availability for:
+  WordPress, Elementor, LinkedIn, WhatsApp, Instagram, GitHub, PHP,
+  JavaScript, CSS3, Git, Yoast, envelope, eye, puzzle-piece, briefcase,
+  desktop, code, shopping-cart, and performance via `tachometer-alt`.
+- Elementor eicons CSS/JSON confirms local Elementor icons for WordPress,
+  Elementor, WooCommerce, cart, code, and desktop.
+- No local Font Awesome/eicons match was found for ACF, Crocoblock,
+  Three.js, or Rank Math.
+- Yoast is available locally as Font Awesome `brands:yoast`; do not generate a
+  duplicate Yoast raster icon unless a later visual direction explicitly needs
+  a non-native custom mark.
+
+For portfolio visuals, do not generate duplicate icons for the confirmed local
+native set. Use generated or externally verified custom assets only for missing
+icons.
+
+3D Viewer stack evidence:
+
+- `wordpress/wp-content/plugins/3d-viewer-to-elementor/assets/js/viewer-core.js`
+  imports `three`, `GLTFLoader`, `DRACOLoader`, and `OrbitControls`.
+- `wordpress/wp-content/plugins/3d-viewer-to-elementor/src/Includes/Enqueue.php`
+  maps `three` to jsDelivr `three@0.158.0`.
+
+Therefore the portfolio 3D Viewer badge should say Three.js, not generic `3D`.
+
 ## Verified Reference Links
 
 Elementor UI/customization:

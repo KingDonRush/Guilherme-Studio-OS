@@ -10,6 +10,16 @@ implementation.
 Use `docs/assets/portfolio/provisional/portfolio-hero-provisional-v1.png` as
 the current matured-but-provisional visual baseline.
 
+Divider/background correction:
+
+- Use `docs/assets/portfolio/references/portfolio-divider-background-reference-v1.png`
+  as the current divider/background standard.
+- The divider should follow that asset: a narrow diagonal versus-style break
+  with one main inward break and one return, with cyan/violet glow concentrated
+  only on the edge.
+- Do not return to the older organic wave divider for the next implementation
+  pass.
+
 Known issues to improve in the next pass:
 
 - `See project` should not sit awkwardly under project symbols or fight the
@@ -25,6 +35,34 @@ Known issues to improve in the next pass:
   placeholder divider if native Elementor shape dividers are not enough. Final
   visual dividers/background assets should be generated or refined with
   imagegen before production use.
+- `docs/assets/portfolio/final/portfolio-hero-final-v9-1672.png` is the current
+  complete hero concept after the divider correction.
+- This version restores the project-level stack badge evidence from the
+  provisional reference.
+- It also replaces generic 3D/SEO badges with Three.js and Rank Math / Yoast
+  signals.
+- Current whole-layout style direction: dark editorial bento with subtle
+  glassmorphism, fine grain texture, soft mesh/aurora lighting, warm off-white
+  paper surface, and Swiss/minimal card structure. Avoid decorative technology
+  icons/logos in the hero background unless explicitly re-approved.
+- `docs/assets/portfolio/final/profile-guilherme-light-match-cutout-v2.webp`
+  is the current profile cutout direction. Preserve Guilherme's identity; do
+  not generate a replacement person.
+- Current implementation asset split:
+  `docs/assets/portfolio/final/portfolio-main-background-elementor-1920x960-v2.webp`
+  for the background-only hero/container surface and
+  `docs/assets/portfolio/final/profile-guilherme-light-match-cutout-v2.webp`
+  for the transparent portrait.
+- Use the individual cropped icon WebPs in
+  `docs/assets/portfolio/final/icons-custom/individual-webp/` for
+  implementation and Media Library placement.
+- The generated custom icon set must remain limited to icons missing from the
+  local Elementor/Font Awesome set: ACF, Crocoblock, Three.js, and Rank Math.
+  Use native local icons for WordPress, Elementor, WooCommerce, PHP,
+  JavaScript, CSS, Git, Yoast, social/contact, GitHub/action, performance,
+  code, desktop, puzzle, and briefcase.
+- For WordPress use, raster assets must be WebP. PNG output is allowed only as
+  imagegen/chroma/intermediate source material, not as the Media Library asset.
 
 ## Core Direction
 

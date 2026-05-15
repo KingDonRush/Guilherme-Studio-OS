@@ -19,6 +19,8 @@ The runtime copy preserves the current folder structure:
 - `icons/actions/`
 - `shapes/`
 - `provisional/`
+- `references/`
+- `final/`
 
 This is intentional. WordPress core can upload media into the Media Library, but
 the default physical storage model is upload-based and date-based, not a clean
@@ -32,19 +34,34 @@ Sync tracked assets into the local WordPress uploads folder:
 wordpress/scripts/sync-portfolio-assets.sh
 ```
 
-Import the two PNG reference assets into the WordPress Media Library:
+Import the current optimized WebP implementation assets into the WordPress
+Media Library:
 
 ```bash
 wordpress/scripts/import-portfolio-media.sh
 ```
 
-Current imported attachments:
+Current WebP implementation attachments:
 
-- `Portfolio Hero Provisional V1`: attachment ID `152`
-- `Profile Photo Framed V1`: attachment ID `153`
+- `Portfolio Main Background Elementor 1920x960 V2`: attachment ID `174`
+  - `http://localhost:8080/wp-content/uploads/2026/05/portfolio-main-background-elementor-1920x960-v2.webp`
+- `Profile Guilherme Light Match Cutout V2`: attachment ID `175`
+  - `http://localhost:8080/wp-content/uploads/2026/05/profile-guilherme-light-match-cutout-v2.webp`
+- `Portfolio ACF Badge WebP V2`: attachment ID `176`
+  - `http://localhost:8080/wp-content/uploads/2026/05/portfolio-acf-badge-v2.webp`
+- `Portfolio Crocoblock Badge WebP V2`: attachment ID `177`
+  - `http://localhost:8080/wp-content/uploads/2026/05/portfolio-crocoblock-badge-v2.webp`
+- `Portfolio Three.js Badge WebP V2`: attachment ID `178`
+  - `http://localhost:8080/wp-content/uploads/2026/05/portfolio-threejs-badge-v2.webp`
+- `Portfolio Rank Math Badge WebP V2`: attachment ID `179`
+  - `http://localhost:8080/wp-content/uploads/2026/05/portfolio-rank-math-badge-v2.webp`
 
 The import script stores `_portfolio_asset_key` post meta to avoid duplicate
 imports on repeated runs.
+
+Earlier PNG attachment IDs `154` through `162` are superseded implementation
+assets. They were not deleted so existing Elementor placements do not break
+before they are manually replaced with the WebP attachments above.
 
 ## SVG Decision
 
@@ -74,6 +91,28 @@ Important visual-source correction:
 - They are not final visual assets.
 - For faithful portfolio visuals, regenerate or refine these assets with
   imagegen first, then use scripts only to sync/import the approved outputs.
+- The mature divider/background reference is now
+  `docs/assets/portfolio/references/portfolio-divider-background-reference-v1.png`.
+- The current generated complete hero is
+  `docs/assets/portfolio/final/portfolio-hero-final-v9-1672.png`.
+- The current background-only container asset is
+  `docs/assets/portfolio/final/portfolio-main-background-elementor-1920x960-v2.webp`.
+- The current transparent profile cutout for implementation is
+  `docs/assets/portfolio/final/profile-guilherme-light-match-cutout-v2.webp`.
+- The current transparent custom icon sheet is
+  `docs/assets/portfolio/final/icons-custom/portfolio-custom-icons-sheet-transparent-v1.png`.
+- The transparent custom icon sheet is a source/intermediate asset only.
+- Use these individual generated WebP icons in Elementor / Media Library:
+  `docs/assets/portfolio/final/icons-custom/individual-webp/portfolio-acf-badge-v2.webp`,
+  `docs/assets/portfolio/final/icons-custom/individual-webp/portfolio-crocoblock-badge-v2.webp`,
+  `docs/assets/portfolio/final/icons-custom/individual-webp/portfolio-threejs-badge-v2.webp`,
+  and
+  `docs/assets/portfolio/final/icons-custom/individual-webp/portfolio-rank-math-badge-v2.webp`.
+- The individual generated icons include only ACF, Crocoblock, Three.js, and
+  Rank Math. All other requested icons are available locally through Elementor
+  eicons or Elementor-bundled Font Awesome.
+- For WordPress Media Library, use WebP/SVG only. PNG is an intermediate/source
+  format for imagegen output, chroma-key removal, or references.
 
 ## Elementor Usage
 
@@ -82,8 +121,9 @@ For manual Elementor implementation:
 - Use Advanced > CSS ID or CSS Classes to identify containers and buttons.
 - Use the static SVG URLs for custom icons where native Elementor/Font Awesome
   icons are not enough.
-- Use Media Library attachment `153` for the framed profile photo if a normal
-  image widget is easier.
+- Use Media Library attachment `175` for the current WebP profile cutout.
+- Use Media Library attachment `174` for the current WebP background if the
+  container needs a Media Library-selected background.
 - Keep the hero concept image as reference, not as the implemented layout.
 
 ## Profile Wave / Shape Strategy
