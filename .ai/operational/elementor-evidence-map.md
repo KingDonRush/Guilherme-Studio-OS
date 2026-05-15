@@ -16,7 +16,7 @@ Relevant active plugins:
 - `elementor-mcp` version `1.5.1`
 - `mcp-adapter` version `0.5.0`
 - `3d-viewer-to-elementor` version `1.0.0`
-- `simple-budget-plugin` version `2.3.1`
+- `simple-budget-plugin` version `2.3.3`
 
 Treat this as the current local truth, not as a global Elementor assumption.
 
@@ -81,6 +81,11 @@ Checked during `simple-budget-plugin` v2.2.0 work on 2026-05-15:
   Budget intentionally groups those same control IDs under `Style > Icon` for
   its implementer workflow while keeping Elementor-compatible button markup and
   selector behavior.
+- Local Elementor Icon Box source (`includes/widgets/icon-box.php`) uses a
+  visual `CHOOSE` control for Start, End, Top, and Bottom positioning. Simple
+  Budget should mirror that control style for `Budget Listing` remove-button
+  positioning, but keep the existing `remove_position` setting ID so saved
+  templates remain compatible.
 
 Use this as the default architecture for free-Elementor plugin surfaces that
 need rich layout editing: plugin admin owns creation/discovery, Elementor owns

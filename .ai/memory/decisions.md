@@ -123,3 +123,8 @@
   under `Style > Icon` for implementer ergonomics, while preserving Elementor
   button-like markup and existing control IDs such as `icon_align` and
   `icon_indent` for template compatibility.
+- For Simple Budget's `Budget Listing`, keep item-action positioning controls
+  such as the remove button position under the relevant Style section, not under
+  Content. The remove button position should use an Elementor Icon Box-like
+  choose control with Start, End, Top, and Bottom while preserving
+  `remove_position` for compatibility.
