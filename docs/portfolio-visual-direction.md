@@ -5,6 +5,22 @@ Date: 2026-05-15
 Status: active direction for concept art, design prompts, and later
 implementation.
 
+## Current Provisional Baseline
+
+Use `docs/assets/portfolio/provisional/portfolio-hero-provisional-v1.png` as
+the current matured-but-provisional visual baseline.
+
+Known issues to improve in the next pass:
+
+- `See project` should not sit awkwardly under project symbols or fight the
+  card content. Prefer a hover/focus reveal with an eye icon and `See project`.
+- GitHub should be a separate small action on plugin/system cards, not the
+  primary card label.
+- The 3D Viewer stack badge should use Three.js, not a generic `3D` badge.
+- The SEO badge should name a real SEO plugin when the case study depends on
+  one. Current provisional default: Rank Math, because it has documented
+  Elementor and WooCommerce relevance in the portfolio context.
+
 ## Core Direction
 
 The portfolio should feel like a personal professional profile for a WordPress
@@ -109,8 +125,8 @@ Plugin/system cards may show both:
 - GitHub icon/button when public code exists.
 
 Plugin/system cards should also include compact project-level stack badges such
-as WordPress, Elementor, WooCommerce, PHP, JS, 3D, or Git when relevant. Keep
-these badges subtle and scannable.
+as WordPress, Elementor, WooCommerce, PHP, JS, Three.js, or Git when relevant.
+Keep these badges subtle and scannable.
 
 Each card should have a subtle unique accent color, such as a thin border,
 short top rule, or restrained glow. Keep the intensity around 3-4/10: enough to
@@ -132,8 +148,9 @@ icons to site/build cards unless a specific public code repository is part of
 that case study.
 
 Implementation/build cards should include small stack badges when useful, for
-example Elementor, WordPress, WooCommerce, ACF, CSS, SEO, or performance. These
-badges should support the case study, not become a second navigation system.
+example Elementor, WordPress, WooCommerce, ACF, CSS, Rank Math SEO, or
+performance. These badges should support the case study, not become a second
+navigation system.
 
 Implementation/build cards should also follow the unique accent-color rule.
 Prefer soft, project-relevant accents over large color fills.

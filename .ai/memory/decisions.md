@@ -54,3 +54,21 @@
   them should be polished and intentional, not an abrupt black/white cut.
 - Future portfolio mockups should include social/contact icons for LinkedIn,
   WhatsApp, email, Instagram, and GitHub in the profile area.
+- WordPress, Elementor, WooCommerce, plugin, and public technical-positioning
+  decisions must follow the evidence-first rule in
+  `.ai/operational/evidence-first.md`. Do not infer Elementor behavior, plugin
+  capability, SEO-tool quality, or compatibility claims from memory alone. For
+  Elementor-specific work, load `.ai/operational/elementor-evidence-map.md`.
+- The current provisional portfolio hero baseline is
+  `docs/assets/portfolio/provisional/portfolio-hero-provisional-v1.png`, with
+  supporting assets in `docs/assets/portfolio/`.
+- The 3D Viewer project should use a Three.js stack badge instead of a generic
+  `3D` badge when represented in portfolio visuals.
+- Rank Math is the provisional named SEO badge for portfolio implementation
+  cards because its public WordPress.org plugin page documents Elementor and
+  WooCommerce SEO relevance. This is not a universal claim that Rank Math is
+  always the best SEO plugin; Yoast remains a valid alternative and has a larger
+  install base.
+- The next project work focus is `3d-viewer-to-elementor` first and
+  `simple-budget-plugin` second. The WooCommerce Toolkit for Elementor idea
+  stays parked until those two assets are stronger.

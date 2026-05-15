@@ -14,6 +14,8 @@ Keep the AI methodical while working inside a large WordPress surface area.
 2. Load context:
    - read `AGENTS.md`;
    - read only the `.ai/` files relevant to the current task;
+   - read `operational/evidence-first.md` before WordPress, Elementor,
+     WooCommerce, plugin, or public portfolio capability work;
    - inspect existing code before proposing abstractions.
 
 3. Classify the task:
@@ -39,6 +41,8 @@ Keep the AI methodical while working inside a large WordPress surface area.
 6. Verify:
    - run targeted commands;
    - use WordPress, WP-CLI, browser, or tests as appropriate;
+   - cite official docs, local source, schema, command output, or browser
+     evidence for implementation-relevant claims;
    - record verification gaps honestly.
 
 7. Preserve memory:
@@ -49,4 +53,3 @@ Keep the AI methodical while working inside a large WordPress surface area.
    - run git status;
    - summarize changes;
    - name the next concrete move.
-

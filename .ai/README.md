@@ -28,7 +28,11 @@ For every new task, read only what is needed:
 1. `../AGENTS.md`
 2. `operational/core-loop.md`
 3. `operational/git-protocol.md`
-4. relevant project or strategy file
+4. `operational/evidence-first.md` when working on WordPress, Elementor,
+   WooCommerce, plugin behavior, or public technical claims
+5. `operational/elementor-evidence-map.md` when the task touches Elementor
+   widgets, controls, editor behavior, or Elementor implementation details
+6. relevant project or strategy file
 
 ## Folder Map
 
