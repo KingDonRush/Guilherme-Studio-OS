@@ -30,6 +30,9 @@ These are human-facing design assets, so they belong in `docs/`, not `.ai/`.
 - `icons/actions/`
   - Card action icons for the next interaction pass:
     `see-project-eye.svg` and `github-action.svg`.
+- `shapes/`
+  - CSS/SVG shape assets for the portfolio hero:
+    `profile-edge-wave.svg`.
 
 ## Implementation Notes
 
@@ -47,6 +50,9 @@ These are human-facing design assets, so they belong in `docs/`, not `.ai/`.
   - the card itself reveals an eye icon plus `See project` on hover/focus;
   - plugin/system cards keep GitHub as a separate small action;
   - site implementation cards do not need GitHub unless a public repo exists.
+- Use `shapes/profile-edge-wave.svg` for the dark-profile-to-light-grid wave
+  split if native Elementor shape dividers are too limited for the vertical
+  composition.
 
 ## Evidence Notes
 

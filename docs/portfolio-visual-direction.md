@@ -20,6 +20,9 @@ Known issues to improve in the next pass:
 - The SEO badge should name a real SEO plugin when the case study depends on
   one. Current provisional default: Rank Math, because it has documented
   Elementor and WooCommerce relevance in the portfolio context.
+- The vertical wave between the dark bio area and light project grid can use
+  `docs/assets/portfolio/shapes/profile-edge-wave.svg` as a CSS-positioned
+  divider if native Elementor shape dividers are not enough.
 
 ## Core Direction
 

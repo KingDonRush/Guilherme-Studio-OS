@@ -72,3 +72,8 @@
 - The next project work focus is `3d-viewer-to-elementor` first and
   `simple-budget-plugin` second. The WooCommerce Toolkit for Elementor idea
   stays parked until those two assets are stronger.
+- Portfolio assets should be sourced from `docs/assets/portfolio/` and synced
+  into local WordPress runtime at `wordpress/wp-content/uploads/portfolio-assets/`.
+  Import PNG reference assets into the Media Library when useful, but do not
+  import SVG icons into the Media Library unless a sanitization/upload policy is
+  deliberately added.

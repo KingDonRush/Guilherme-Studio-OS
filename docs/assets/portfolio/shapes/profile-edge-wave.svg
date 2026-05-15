@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="1080" viewBox="0 0 480 1080" preserveAspectRatio="none" role="img" aria-labelledby="title">
+  <title>Profile edge wave divider</title>
+  <defs>
+    <linearGradient id="wave-fill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071426"/>
+      <stop offset="0.42" stop-color="#101b4f"/>
+      <stop offset="0.74" stop-color="#4f46e5"/>
+      <stop offset="1" stop-color="#10d8c4"/>
+    </linearGradient>
+    <linearGradient id="wave-stroke" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#18f6df"/>
+      <stop offset="0.48" stop-color="#7c5cff"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+    <filter id="soft-glow" x="-30%" y="-10%" width="160%" height="120%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.18 0 0 0 0 0.22 0 0 0 0 1 0 0 0 0.72 0" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <path d="M132 0C64 116 64 206 136 305c74 102 78 183 10 286-74 111-72 221 8 330 38 52 54 102 44 159H480V0H132Z" fill="url(#wave-fill)" opacity="0.96"/>
+  <path d="M132 0C64 116 64 206 136 305c74 102 78 183 10 286-74 111-72 221 8 330 38 52 54 102 44 159" fill="none" stroke="url(#wave-stroke)" stroke-width="4" opacity="0.9" filter="url(#soft-glow)"/>
+  <path d="M100 140c54-38 110-40 168-6M112 520c58-34 118-31 180 9M96 834c46-28 96-30 150-5" fill="none" stroke="#18f6df" stroke-width="1.4" opacity="0.16"/>
+  <circle cx="210" cy="260" r="3" fill="#18f6df" opacity="0.34"/>
+  <circle cx="254" cy="556" r="3" fill="#7c5cff" opacity="0.36"/>
+  <circle cx="196" cy="774" r="3" fill="#38bdf8" opacity="0.28"/>
+</svg>
