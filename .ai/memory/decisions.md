@@ -33,6 +33,11 @@
   make the stack feel intentional by placing it in a side rail or footer strip.
 - The confirmed tech stack for public portfolio visuals includes WordPress,
   Elementor, WooCommerce, PHP, JS, CSS, Git, ACF, and the Crocoblock suite.
+- Avoid AI-generated visual noise in portfolio hero images. Do not use busy
+  code backgrounds, decorative micro-icons, floating labels, dense texture,
+  fake terminal snippets, or technical confetti that competes with the copy.
+  The background should be quiet and thematic, with a few large supporting
+  shapes or project previews.
 - Never infer the user's public name, personal brand, or portfolio identity from
   indirect context. Use placeholders until the user explicitly defines the name
   or brand.

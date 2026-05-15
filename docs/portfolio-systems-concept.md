@@ -369,6 +369,9 @@ Asset rule:
 - Keep the biography short and direct. The stack should feel deliberate, not
   crowded. Include WordPress, Elementor, WooCommerce, PHP, JS, CSS, Git, ACF,
   and the Crocoblock suite.
+- Keep the background clean. Avoid busy code snippets, dense decorative
+  textures, fake terminal details, floating icon clutter, or any technical
+  decoration that competes with the main copy.
 - The image must read as the final public portfolio seen by clients and
   recruiters, not as internal software. Do not include add-project controls,
   empty editable slots, admin dashboards, builder sidebars, placeholder rails,
