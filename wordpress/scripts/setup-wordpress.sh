@@ -15,6 +15,15 @@ set +a
 
 docker compose up -d db wordpress
 
+docker compose exec -T -u root wordpress \
+  mkdir -p /var/www/html/wp-content/uploads /var/www/html/wp-content/uploads/elementor/css /var/www/html/wp-content/upgrade
+
+docker compose exec -T -u root wordpress \
+  chown -R www-data:www-data /var/www/html/wp-content/uploads /var/www/html/wp-content/upgrade
+
+docker compose exec -T -u root wordpress \
+  chmod -R u+rwX,g+rwX /var/www/html/wp-content/uploads /var/www/html/wp-content/upgrade
+
 until docker compose run --rm wpcli core is-installed >/dev/null 2>&1; do
   if docker compose run --rm wpcli core version >/dev/null 2>&1; then
     break
@@ -33,6 +42,7 @@ if ! docker compose run --rm wpcli core is-installed >/dev/null 2>&1; then
 fi
 
 docker compose run --rm wpcli plugin install elementor --activate --force
+docker compose run --rm wpcli elementor flush_css || true
 
 if docker compose run --rm wpcli plugin is-installed 3d-viewer-to-elementor >/dev/null 2>&1; then
   docker compose run --rm wpcli plugin activate 3d-viewer-to-elementor || true
