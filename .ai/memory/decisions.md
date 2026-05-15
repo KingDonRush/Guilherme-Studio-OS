@@ -13,3 +13,19 @@
   WP-CLI.
 - The root directory should contain only `AGENTS.md`, `.ai/`, `docs/`, and
   `wordpress/`.
+- Generated portfolio/site images must be treated as scalable UI systems, not
+  single shots. Compose them so new sites, cards, or modules can be added later
+  without breaking the layout, and prefer modular, thematic, personality-rich
+  visuals over literal photography.
+- "Scalable UI system" means a public-facing portfolio layout that can receive
+  more case-study cards, sections, or categories later. It must not look like an
+  internal app, admin dashboard, project manager, software UI, or editable
+  canvas. Never include add-project buttons, empty editable slots, builder
+  controls, or placeholder rails in public portfolio hero images.
+- For public portfolio images, prefer a strong 100vh-style hero composition
+  with a compact bio block, clear role statement, and higher visual contrast
+  over a full-page white-heavy layout. Keep the design modular, but make the
+  first impression more vivid and less sober.
+- Never infer the user's public name, personal brand, or portfolio identity from
+  indirect context. Use placeholders until the user explicitly defines the name
+  or brand.

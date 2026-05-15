@@ -29,6 +29,19 @@ business requirements into working plugin-backed experiences.
 3. Code Quality: screenshots or snippets showing architecture, tests, and docs.
 4. Contact: simple international-friendly CTA.
 
+## Portfolio Systems
+
+See `portfolio-systems-concept.md` for the current page/system concept.
+
+The portfolio should include:
+- a portfolio home/personal positioning page;
+- three `simple-budget-plugin` pages: plugin presentation, product
+  archive/search, and product single;
+- one `3d-viewer-to-elementor` presentation page;
+- one design implementation landing page;
+- one multipage institutional website demo;
+- one multipage WooCommerce ecommerce demo.
+
 ## Near-Term Strategy
 
 1. Clone and audit both existing plugins.

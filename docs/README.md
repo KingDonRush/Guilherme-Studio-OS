@@ -15,6 +15,12 @@ The work is organized into:
 - strategy and setup documentation in `docs/`;
 - AI operating memory and MCP tooling in `.ai/`.
 
+Key planning docs:
+- `portfolio-strategy.md`: positioning and hiring strategy.
+- `portfolio-systems-concept.md`: concept map for the portfolio pages/systems.
+- `plugin-map.md`: plugin repositories and local paths.
+- `roadmap.md`: phased execution plan.
+
 Start with:
 
 ```bash
