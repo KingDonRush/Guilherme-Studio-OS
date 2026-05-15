@@ -16,7 +16,7 @@ Relevant active plugins:
 - `elementor-mcp` version `1.5.1`
 - `mcp-adapter` version `0.5.0`
 - `3d-viewer-to-elementor` version `1.0.0`
-- `simple-budget-plugin` version `2.3.0`
+- `simple-budget-plugin` version `2.3.1`
 
 Treat this as the current local truth, not as a global Elementor assumption.
 
@@ -76,6 +76,11 @@ Checked during `simple-budget-plugin` v2.2.0 work on 2026-05-15:
   behavior to `Budget Button`. Remove and quantity controls need row context;
   modal/drawer presentation can remain a configurable shell around the same
   Elementor template content.
+- Local Elementor Button source (`includes/widgets/traits/button-trait.php`)
+  places native `icon_align` and `icon_indent` in content controls. Simple
+  Budget intentionally groups those same control IDs under `Style > Icon` for
+  its implementer workflow while keeping Elementor-compatible button markup and
+  selector behavior.
 
 Use this as the default architecture for free-Elementor plugin surfaces that
 need rich layout editing: plugin admin owns creation/discovery, Elementor owns

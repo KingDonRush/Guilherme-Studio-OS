@@ -119,3 +119,7 @@
   vs drawer vs bottom-sheet presentation, overlay, animation, close behavior,
   accessibility, and preview framing. Do not inflate a focused cart plugin into
   a generic popup-condition engine unless that becomes a separate plugin scope.
+- For Simple Budget's `Budget Button`, keep icon layout/styling controls grouped
+  under `Style > Icon` for implementer ergonomics, while preserving Elementor
+  button-like markup and existing control IDs such as `icon_align` and
+  `icon_indent` for template compatibility.
