@@ -128,3 +128,7 @@
   Content. The remove button position should use an Elementor Icon Box-like
   choose control with Start, End, Top, and Bottom while preserving
   `remove_position` for compatibility.
+- For Simple Budget cart shell settings that represent dimensions, use native
+  Elementor responsive controls and carry desktop/tablet/mobile values through
+  explicit frontend `data-*` attributes. Do not use a single fixed shell width
+  when the resulting UI changes substantially across breakpoints.
