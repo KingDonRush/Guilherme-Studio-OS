@@ -16,7 +16,7 @@ Relevant active plugins:
 - `elementor-mcp` version `1.5.1`
 - `mcp-adapter` version `0.5.0`
 - `3d-viewer-to-elementor` version `1.0.0`
-- `simple-budget-plugin` version `2.2.0`
+- `simple-budget-plugin` version `2.2.1`
 
 Treat this as the current local truth, not as a global Elementor assumption.
 
@@ -62,6 +62,12 @@ Checked during `simple-budget-plugin` v2.2.0 work on 2026-05-15:
 - A plugin can create and mark its own templates with post meta, redirect the
   user into the Elementor editor, then render only those validated templates on
   the frontend with Elementor's frontend renderer.
+- Elementor Canvas is the correct editor surface for plugin-owned modal or
+  fragment templates because the local Elementor page-template module describes
+  Canvas as no header/footer, while Full Width includes header and footer.
+- For Simple Budget cart modal templates, create or normalize the document as an
+  Elementor library `page` template and set both `_wp_page_template` and the
+  Elementor page setting `template` to `elementor_canvas`.
 - This pattern gives implementers an Elementor-native editing surface without
   making the public plugin depend on Elementor Pro Theme Builder or Pro
   dynamic-tag behavior.

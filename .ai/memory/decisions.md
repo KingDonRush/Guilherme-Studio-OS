@@ -103,3 +103,9 @@
   plugin-owned admin flow creates/labels the template, redirects to the
   Elementor editor, widget controls select the template, and frontend rendering
   uses Elementor content rendering under plugin-controlled validation/fallbacks.
+- Plugin-owned Elementor modal/fragment templates must use Elementor Canvas for
+  the editor surface. Do not let these templates default to Theme or Elementor
+  Full Width because headers/footers become visible in the editor preview and
+  confuse the implementer. When using `elementor_library`, create/normalize the
+  document as a page template and set `_wp_page_template` plus page settings to
+  `elementor_canvas`.
