@@ -27,7 +27,8 @@ Use a full first-screen composition, not a tall page screenshot.
 Preferred structure:
 
 - Left profile area: dark, rich, personal, with Guilherme's photo, name,
-  `kingdonrush`, compact role statement, availability, stack, and social links.
+  `kingdonrush`, compact role statement, availability, short bio, and social
+  links.
 - Right projects area: light, clean, modular grid with six visible cards:
   three custom WordPress systems and three design-to-WordPress builds.
 - Transition between areas: soft curve, diagonal, glow, layered surface, or
@@ -62,6 +63,13 @@ Confirmed stack:
 - JS
 - CSS
 - Git
+
+Do not display the full stack as a large global chip strip in the profile area.
+That overloads the bio. Use the profile area for identity, positioning, contact,
+and availability.
+
+Show stack signals at project-card level instead. Each card should carry only
+the technologies that help explain that specific project.
 
 Social/contact icons to represent in the profile area:
 
@@ -100,6 +108,10 @@ Plugin/system cards may show both:
 - `See project`
 - GitHub icon/button when public code exists.
 
+Plugin/system cards should also include compact project-level stack badges such
+as WordPress, Elementor, WooCommerce, PHP, JS, 3D, or Git when relevant. Keep
+these badges subtle and scannable.
+
 ### Design-to-WordPress Builds
 
 This category proves polished implementation, design translation, responsive
@@ -113,6 +125,10 @@ site execution.
 Implementation/build cards should show `See project` only. Do not add GitHub
 icons to site/build cards unless a specific public code repository is part of
 that case study.
+
+Implementation/build cards should include small stack badges when useful, for
+example Elementor, WordPress, WooCommerce, ACF, CSS, SEO, or performance. These
+badges should support the case study, not become a second navigation system.
 
 Cards must feel public-facing and final. Do not include add buttons, empty
 project slots, builder handles, editable placeholders, software controls, fake
@@ -163,6 +179,9 @@ Avoid:
 The next visual is acceptable only if:
 
 - the left profile area feels richer than a plain business card;
+- the left profile area has enough breathing room and does not carry a full
+  global tech-stack strip;
+- the portrait has no `Online` badge or status label over it;
 - the right card grid stays scalable for future projects;
 - the split between dark and light areas feels intentional and polished;
 - the design has personality without becoming messy;
