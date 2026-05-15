@@ -112,6 +112,11 @@ Plugin/system cards should also include compact project-level stack badges such
 as WordPress, Elementor, WooCommerce, PHP, JS, 3D, or Git when relevant. Keep
 these badges subtle and scannable.
 
+Each card should have a subtle unique accent color, such as a thin border,
+short top rule, or restrained glow. Keep the intensity around 3-4/10: enough to
+separate cards and add personality, but not enough to look like gamer neon or a
+busy AI-generated interface.
+
 ### Design-to-WordPress Builds
 
 This category proves polished implementation, design translation, responsive
@@ -129,6 +134,9 @@ that case study.
 Implementation/build cards should include small stack badges when useful, for
 example Elementor, WordPress, WooCommerce, ACF, CSS, SEO, or performance. These
 badges should support the case study, not become a second navigation system.
+
+Implementation/build cards should also follow the unique accent-color rule.
+Prefer soft, project-relevant accents over large color fills.
 
 Cards must feel public-facing and final. Do not include add buttons, empty
 project slots, builder handles, editable placeholders, software controls, fake
@@ -163,6 +171,11 @@ Allowed:
 - very soft texture only if it does not compete with text;
 - a few large brand-neutral shapes inspired by product/community design.
 
+The left profile background should not be flat black. Use restrained depth:
+soft radial glow, subtle mesh, quiet curves, or a premium gradient field at
+roughly 3-4/10 intensity. This should support the portrait and bio, never fight
+the copy.
+
 Avoid:
 
 - random code snippets;
@@ -181,8 +194,11 @@ The next visual is acceptable only if:
 - the left profile area feels richer than a plain business card;
 - the left profile area has enough breathing room and does not carry a full
   global tech-stack strip;
+- the left profile background has subtle depth without becoming decorative
+  noise;
 - the portrait has no `Online` badge or status label over it;
 - the right card grid stays scalable for future projects;
+- each project card has a restrained unique accent color or border treatment;
 - the split between dark and light areas feels intentional and polished;
 - the design has personality without becoming messy;
 - the viewer understands the professional offer within five seconds;
