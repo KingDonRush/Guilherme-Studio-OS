@@ -82,3 +82,8 @@
   placeholders, sync/import work, optimization, or implementation wrappers after
   an imagegen-approved asset exists. The current handwritten SVG icons and
   `profile-edge-wave.svg` are placeholders until replaced or approved.
+- Plugin work must be isolated as a separate plugin repository and published to
+  GitHub when it is portfolio evidence. New plugins should be initialized as
+  their own repos before being presented publicly. `simple-budget-plugin` and
+  `3d-viewer-to-elementor` already have GitHub repositories and should preserve
+  those histories/remotes.

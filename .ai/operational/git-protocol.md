@@ -23,15 +23,24 @@ and `wordpress/`.
 
 ## Plugin Repositories
 
-Each plugin should preserve its original GitHub remote and history. When changing
-a plugin:
+Every plugin must be treated as its own repository, not as ordinary root-repo
+content. If a plugin does not already have a repository, initialize a separate
+repo for it and publish it to GitHub before treating it as a portfolio asset.
+Existing plugins should preserve their original GitHub remote and history. When
+changing a plugin:
 
 1. enter `wordpress/wp-content/plugins/<plugin-name>`;
 2. run status;
 3. create or confirm a branch;
 4. edit and test locally;
 5. commit inside that plugin repo;
-6. only then update root docs or orchestration references.
+6. push/post the plugin repository to GitHub when the work is meant to be public
+   portfolio evidence;
+7. only then update root docs or orchestration references.
+
+Known current plugin repositories:
+- `simple-budget-plugin`: already has a GitHub repository.
+- `3d-viewer-to-elementor`: already has a GitHub repository.
 
 ## Commit Standard
 
