@@ -18,8 +18,8 @@ business requirements into working plugin-backed experiences.
 
 - `3d-viewer-to-elementor`: advanced technical depth.
 - `simple-budget-plugin`: practical workflow simplification.
-- `Elementor Implementation Toolkit`: direct proof of design-to-WordPress
-  implementation.
+- `WooCommerce Toolkit for Elementor`: direct proof of WooCommerce template and
+  Elementor widget architecture.
 
 ## Portfolio Sections
 
@@ -32,6 +32,7 @@ business requirements into working plugin-backed experiences.
 ## Portfolio Systems
 
 See `portfolio-systems-concept.md` for the current page/system concept.
+See `portfolio-visual-direction.md` for the current visual direction.
 
 The portfolio should include:
 - a portfolio home/personal positioning page;

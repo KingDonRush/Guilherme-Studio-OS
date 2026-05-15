@@ -41,3 +41,16 @@
 - Never infer the user's public name, personal brand, or portfolio identity from
   indirect context. Use placeholders until the user explicitly defines the name
   or brand.
+
+## 2026-05-15
+
+- Public portfolio identity is Guilherme Silva with the handle `kingdonrush`.
+  Do not use Kaue, Kaue Rush, or any other inferred name.
+- The portfolio visual direction should blend Discord-like human/community
+  energy with OpenAI-like restraint and precision, without copying either
+  brand. Use this as a visual grammar, not as brand imitation.
+- The preferred first-screen concept is a dark, richer profile area on the left
+  and a light, modular selected-work grid on the right. The transition between
+  them should be polished and intentional, not an abrupt black/white cut.
+- Future portfolio mockups should include social/contact icons for LinkedIn,
+  WhatsApp, email, Instagram, and GitHub in the profile area.
