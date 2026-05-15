@@ -32,7 +32,9 @@ For every new task, read only what is needed:
    WooCommerce, plugin behavior, or public technical claims
 5. `operational/elementor-evidence-map.md` when the task touches Elementor
    widgets, controls, editor behavior, or Elementor implementation details
-6. relevant project or strategy file
+6. `operational/visual-asset-generation.md` when creating, refining, or
+   replacing portfolio visuals, icons, shapes, backgrounds, or image assets
+7. relevant project or strategy file
 
 ## Folder Map
 

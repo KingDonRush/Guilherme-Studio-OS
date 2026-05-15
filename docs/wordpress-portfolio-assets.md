@@ -67,6 +67,14 @@ http://localhost:8080/wp-content/uploads/portfolio-assets/icons/tech/threejs.svg
 If we later need Media Library SVG selection, add a deliberate SVG sanitization
 solution and document it. Do not silently widen upload permissions.
 
+Important visual-source correction:
+
+- The current SVG icon pack and wave shape were created manually as technical
+  placeholders.
+- They are not final visual assets.
+- For faithful portfolio visuals, regenerate or refine these assets with
+  imagegen first, then use scripts only to sync/import the approved outputs.
+
 ## Elementor Usage
 
 For manual Elementor implementation:
@@ -90,7 +98,7 @@ That does not directly model the vertical wavy split used between the dark bio
 area and the light project grid. For that effect, use a CSS-positioned SVG asset
 or pseudo-element instead of relying only on native shape dividers.
 
-Created asset:
+Current placeholder asset:
 
 ```text
 docs/assets/portfolio/shapes/profile-edge-wave.svg

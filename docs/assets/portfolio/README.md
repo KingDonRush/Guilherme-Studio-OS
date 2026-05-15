@@ -36,8 +36,10 @@ These are human-facing design assets, so they belong in `docs/`, not `.ai/`.
 
 ## Implementation Notes
 
-- The SVGs are original simplified implementation assets, not official logo
-  copies.
+- The SVGs are original simplified implementation placeholders, not official
+  logo copies and not final imagegen-approved visual assets.
+- Final high-fidelity visual assets should be regenerated or refined with
+  imagegen before portfolio production work depends on them.
 - For final production, replace social/contact marks with Elementor's native
   Font Awesome brand icons when they are available and visually consistent.
 - Keep the profile free from a global tech-stack strip. Put stack icons inside
@@ -50,9 +52,9 @@ These are human-facing design assets, so they belong in `docs/`, not `.ai/`.
   - the card itself reveals an eye icon plus `See project` on hover/focus;
   - plugin/system cards keep GitHub as a separate small action;
   - site implementation cards do not need GitHub unless a public repo exists.
-- Use `shapes/profile-edge-wave.svg` for the dark-profile-to-light-grid wave
-  split if native Elementor shape dividers are too limited for the vertical
-  composition.
+- `shapes/profile-edge-wave.svg` is a technical placeholder for the
+  dark-profile-to-light-grid wave split. Use it only until an imagegen-approved
+  divider/background asset replaces it or the user explicitly approves the SVG.
 
 ## Evidence Notes
 

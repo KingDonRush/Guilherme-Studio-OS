@@ -22,7 +22,9 @@ Known issues to improve in the next pass:
   Elementor and WooCommerce relevance in the portfolio context.
 - The vertical wave between the dark bio area and light project grid can use
   `docs/assets/portfolio/shapes/profile-edge-wave.svg` as a CSS-positioned
-  divider if native Elementor shape dividers are not enough.
+  placeholder divider if native Elementor shape dividers are not enough. Final
+  visual dividers/background assets should be generated or refined with
+  imagegen before production use.
 
 ## Core Direction
 

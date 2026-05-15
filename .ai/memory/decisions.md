@@ -77,3 +77,8 @@
   Import PNG reference assets into the Media Library when useful, but do not
   import SVG icons into the Media Library unless a sanitization/upload policy is
   deliberately added.
+- Visual portfolio assets must be generated or refined with imagegen when
+  fidelity matters. CLI/SVG/CSS generation is acceptable only for technical
+  placeholders, sync/import work, optimization, or implementation wrappers after
+  an imagegen-approved asset exists. The current handwritten SVG icons and
+  `profile-edge-wave.svg` are placeholders until replaced or approved.
