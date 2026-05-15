@@ -16,7 +16,7 @@ Relevant active plugins:
 - `elementor-mcp` version `1.5.1`
 - `mcp-adapter` version `0.5.0`
 - `3d-viewer-to-elementor` version `1.0.0`
-- `simple-budget-plugin` version `2.2.1`
+- `simple-budget-plugin` version `2.3.0`
 
 Treat this as the current local truth, not as a global Elementor assumption.
 
@@ -71,6 +71,11 @@ Checked during `simple-budget-plugin` v2.2.0 work on 2026-05-15:
 - This pattern gives implementers an Elementor-native editing surface without
   making the public plugin depend on Elementor Pro Theme Builder or Pro
   dynamic-tag behavior.
+- During `simple-budget-plugin` v2.3.0 work, the plugin architecture was kept
+  focused by assigning item-scoped behavior to `Budget Listing` and opener/global
+  behavior to `Budget Button`. Remove and quantity controls need row context;
+  modal/drawer presentation can remain a configurable shell around the same
+  Elementor template content.
 
 Use this as the default architecture for free-Elementor plugin surfaces that
 need rich layout editing: plugin admin owns creation/discovery, Elementor owns

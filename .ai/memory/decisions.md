@@ -109,3 +109,13 @@
   confuse the implementer. When using `elementor_library`, create/normalize the
   document as a page template and set `_wp_page_template` plus page settings to
   `elementor_canvas`.
+- For Elementor implementation widgets, keep action ownership aligned with
+  runtime context. Global or opener actions belong in a button widget
+  (`add`, `toggle`, `open`, `close`, `send`). Item-scoped actions that require
+  a repeated row context, especially remove and quantity controls, belong in the
+  listing/widget that renders the item and can attach the correct item ID.
+- For Simple Budget-style popup richness, separate editable content from shell
+  behavior. Elementor templates own content layout; the plugin shell owns modal
+  vs drawer vs bottom-sheet presentation, overlay, animation, close behavior,
+  accessibility, and preview framing. Do not inflate a focused cart plugin into
+  a generic popup-condition engine unless that becomes a separate plugin scope.
