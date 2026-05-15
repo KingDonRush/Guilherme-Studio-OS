@@ -97,3 +97,9 @@
   links from the site, and practical visual proof of what the plugin enables.
   AI-generated visuals/video may be used for polished presentation as long as
   behavior claims are grounded in real plugin evidence.
+- For Elementor Free plugin features that need implementer-editable layout
+  surfaces, prefer using Elementor's own `elementor_library` editor workflow
+  instead of depending on Elementor Pro Theme Builder. The useful pattern is:
+  plugin-owned admin flow creates/labels the template, redirects to the
+  Elementor editor, widget controls select the template, and frontend rendering
+  uses Elementor content rendering under plugin-controlled validation/fallbacks.

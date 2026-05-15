@@ -16,7 +16,7 @@ Relevant active plugins:
 - `elementor-mcp` version `1.5.1`
 - `mcp-adapter` version `0.5.0`
 - `3d-viewer-to-elementor` version `1.0.0`
-- `simple-budget-plugin` version `2.0.1`
+- `simple-budget-plugin` version `2.2.0`
 
 Treat this as the current local truth, not as a global Elementor assumption.
 
@@ -52,6 +52,24 @@ icons.
   maps `three` to jsDelivr `three@0.158.0`.
 
 Therefore the portfolio 3D Viewer badge should say Three.js, not generic `3D`.
+
+## Elementor Free Template Builder Pattern
+
+Checked during `simple-budget-plugin` v2.2.0 work on 2026-05-15:
+
+- Elementor Free exposes local templates through the `elementor_library` post
+  type and Elementor documents.
+- A plugin can create and mark its own templates with post meta, redirect the
+  user into the Elementor editor, then render only those validated templates on
+  the frontend with Elementor's frontend renderer.
+- This pattern gives implementers an Elementor-native editing surface without
+  making the public plugin depend on Elementor Pro Theme Builder or Pro
+  dynamic-tag behavior.
+
+Use this as the default architecture for free-Elementor plugin surfaces that
+need rich layout editing: plugin admin owns creation/discovery, Elementor owns
+layout editing, widgets own template selection, and frontend code owns
+validation, rendering, and fallback behavior.
 
 ## Verified Reference Links
 
