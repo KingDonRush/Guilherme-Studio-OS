@@ -16,7 +16,7 @@ Relevant active plugins:
 - `elementor-mcp` version `1.5.1`
 - `mcp-adapter` version `0.5.0`
 - `3d-viewer-to-elementor` version `1.0.0`
-- `simple-budget-plugin` version `2.3.5`
+- `simple-budget-plugin` version `3.0.0`
 
 Treat this as the current local truth, not as a global Elementor assumption.
 
@@ -96,6 +96,10 @@ Checked during `simple-budget-plugin` v2.2.0 work on 2026-05-15:
   overlay opacity, and listing remove-button position. Use responsive controls,
   emit explicit desktop/tablet/mobile `data-*` attributes, then resolve the
   active value in frontend JavaScript with Elementor breakpoints when available.
+- When the plugin has a native Elementor widget flow, avoid keeping shortcode or
+  fixed-ID button compatibility as a permanent public API. If a required
+  template is missing, show a setup prompt that directs implementers to the
+  plugin-owned template builder rather than rendering a second legacy cart UI.
 
 Use this as the default architecture for free-Elementor plugin surfaces that
 need rich layout editing: plugin admin owns creation/discovery, Elementor owns

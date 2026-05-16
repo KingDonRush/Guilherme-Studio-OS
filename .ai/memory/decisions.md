@@ -137,3 +137,7 @@
   fallback resolution. Current strategic responsive controls include cart shell
   type, shell animation, panel width, overlay opacity, and Budget Listing remove
   button position.
+- For Simple Budget v3+, treat the plugin as Elementor-only. Remove shortcode
+  and fixed-ID button compatibility once native widgets exist, and replace
+  missing-template fallbacks with an implementer setup prompt that points back to
+  `Simple Budget > Templates` instead of reviving legacy cart rendering.
