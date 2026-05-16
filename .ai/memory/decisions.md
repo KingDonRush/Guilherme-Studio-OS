@@ -141,3 +141,7 @@
   and fixed-ID button compatibility once native widgets exist, and replace
   missing-template fallbacks with an implementer setup prompt that points back to
   `Simple Budget > Templates` instead of reviving legacy cart rendering.
+- For public Simple Budget AJAX flows, centralize validation in shared support
+  classes before rendering output: template role/status/capability in
+  `CartTemplateManager`, and product IDs, allowed post types, item counts, and
+  quantities in `CartRenderer`.
