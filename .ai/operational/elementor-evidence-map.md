@@ -16,7 +16,7 @@ Relevant active plugins:
 - `elementor-mcp` version `1.5.1`
 - `mcp-adapter` version `0.5.0`
 - `3d-viewer-to-elementor` version `1.0.0`
-- `simple-budget-plugin` version `2.3.4`
+- `simple-budget-plugin` version `2.3.5`
 
 Treat this as the current local truth, not as a global Elementor assumption.
 
@@ -91,6 +91,11 @@ Checked during `simple-budget-plugin` v2.2.0 work on 2026-05-15:
   `data-sbp-panel-width-mobile` to the frontend. The popup shell is outside the
   widget wrapper, so selector-only responsive CSS is not enough for this runtime
   path.
+- Extend that same approach to strategic runtime options whose effect is outside
+  Elementor's generated wrapper CSS: cart shell type, cart shell animation,
+  overlay opacity, and listing remove-button position. Use responsive controls,
+  emit explicit desktop/tablet/mobile `data-*` attributes, then resolve the
+  active value in frontend JavaScript with Elementor breakpoints when available.
 
 Use this as the default architecture for free-Elementor plugin surfaces that
 need rich layout editing: plugin admin owns creation/discovery, Elementor owns

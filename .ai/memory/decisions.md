@@ -132,3 +132,8 @@
   Elementor responsive controls and carry desktop/tablet/mobile values through
   explicit frontend `data-*` attributes. Do not use a single fixed shell width
   when the resulting UI changes substantially across breakpoints.
+- For Simple Budget options that materially change layout or interaction by
+  breakpoint, prefer responsive Elementor controls plus explicit frontend
+  fallback resolution. Current strategic responsive controls include cart shell
+  type, shell animation, panel width, overlay opacity, and Budget Listing remove
+  button position.
