@@ -1,6 +1,6 @@
 # Elementor Evidence Map
 
-Date: 2026-05-15
+Date: 2026-05-16
 
 ## Local Baseline
 
@@ -16,7 +16,7 @@ Relevant active plugins:
 - `elementor-mcp` version `1.5.1`
 - `mcp-adapter` version `0.5.0`
 - `3d-viewer-to-elementor` version `1.0.0`
-- `simple-budget-plugin` version `3.0.1`
+- `simple-budget-plugin` version `3.1.0`
 
 Treat this as the current local truth, not as a global Elementor assumption.
 
@@ -104,6 +104,14 @@ Checked during `simple-budget-plugin` v2.2.0 work on 2026-05-15:
   AJAX endpoint is public. Validate the template post type, Simple Budget role
   meta, post status, and edit capability before sending Elementor-rendered HTML
   to the frontend.
+- For Elementor Free template editing that needs realistic dynamic content,
+  keep preview context editor-only and widget-owned when the context belongs to
+  one widget. In Simple Budget v3.1.0, `Budget Listing` uses PHP rendering in
+  the editor to show either real public-post previews or capped placeholders,
+  while frontend JavaScript ignores preview listings and preview actions. This
+  gives implementers visual feedback for remove buttons, images, quantities,
+  and submit styling without introducing Elementor Pro Theme Builder settings
+  as a dependency.
 
 Use this as the default architecture for free-Elementor plugin surfaces that
 need rich layout editing: plugin admin owns creation/discovery, Elementor owns

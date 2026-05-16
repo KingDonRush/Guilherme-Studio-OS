@@ -145,3 +145,10 @@
   classes before rendering output: template role/status/capability in
   `CartTemplateManager`, and product IDs, allowed post types, item counts, and
   quantities in `CartRenderer`.
+- For Elementor Free templates that depend on dynamic runtime context, prefer
+  editor-only preview controls inside the widget that renders the dynamic
+  surface instead of creating a Pro-style document/page-settings dependency.
+  In Simple Budget this means `Budget Listing` owns cart-item preview data:
+  selected public post type, optional IDs, item count, quantity, and safe
+  placeholders. Preview actions must be inert and must not mutate the visitor
+  cart or frontend behavior.
