@@ -2,9 +2,12 @@
 
 ## Status
 
-Concept and architecture specification.
+Private implementation repository active.
 
-No implementation repository exists yet.
+- Local repo: `/home/kingdonrush/Área de trabalho/Dev/agentic-ops`
+- GitHub: `https://github.com/KingDonRush/agentic-ops`
+- Visibility: private
+- Current implementation checkpoint: V1 / package version `0.2.0`
 
 ## Purpose
 
@@ -31,17 +34,28 @@ The MCP should provide context and access to allowlisted CLI operations. It
 should not become an autonomous planner. The CLI should write only
 `.agentic-ops/` by default.
 
-## V0 Scope
+## Implemented
 
-- core schemas;
+- core schemas and validators;
 - `aops inspect`;
 - `aops init --non-destructive`;
 - `aops validate`;
 - `aops plan create`;
 - `aops research brief`;
-- MCP resources/prompts/tools for the same workflow.
+- `aops phase create`;
+- `aops task create`;
+- `aops subtask create`;
+- `aops subplan create`;
+- `aops test create`;
+- `aops analyze`;
+- `aops handoff create`;
+- `aops snapshot create`;
+- `aops diff`;
+- `aops export`;
+- MCP resources/prompts/tools for V1 validation, snapshots, exports, and
+  allowlisted CLI execution.
 
-## Out Of Scope For V0
+## Still Out Of Scope
 
 - atom engine;
 - DSL;
@@ -52,5 +66,6 @@ should not become an autonomous planner. The CLI should write only
 
 ## Next Action
 
-When ready, create a standalone `agentic-ops` repository and implement
-`packages/core`, `packages/cli`, and `packages/mcp` from the docs.
+Dogfood `agentic-ops` against this WordPress workspace and the Elementor
+Implementation Toolkit repo, then decide whether V2 should add adapters,
+readiness scoring, or chain/atom composition.
