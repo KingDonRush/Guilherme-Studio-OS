@@ -7,7 +7,7 @@ Private implementation repository active.
 - Local repo: `/home/kingdonrush/Área de trabalho/Dev/agentic-ops`
 - GitHub: `https://github.com/KingDonRush/agentic-ops`
 - Visibility: private
-- Current implementation checkpoint: V1 / package version `0.2.0`
+- Current implementation checkpoint: V2 / package version `0.3.0`
 
 ## Purpose
 
@@ -44,15 +44,25 @@ should not become an autonomous planner. The CLI should write only
 - `aops research brief`;
 - `aops phase create`;
 - `aops task create`;
+- `aops task start`;
+- `aops task complete`;
 - `aops subtask create`;
 - `aops subplan create`;
 - `aops test create`;
+- `aops repo inspect`;
+- `aops ci inspect`;
+- `aops decision record`;
+- `aops adapter create`;
+- `aops readiness score`;
+- `aops drift check`;
+- `aops docs index`;
+- `aops patch suggest`;
 - `aops analyze`;
 - `aops handoff create`;
 - `aops snapshot create`;
 - `aops diff`;
 - `aops export`;
-- MCP resources/prompts/tools for V1 validation, snapshots, exports, and
+- MCP resources/prompts/tools for V2 validation, snapshots, exports, and
   allowlisted CLI execution.
 
 ## Still Out Of Scope
@@ -67,5 +77,5 @@ should not become an autonomous planner. The CLI should write only
 ## Next Action
 
 Dogfood `agentic-ops` against this WordPress workspace and the Elementor
-Implementation Toolkit repo, then decide whether V2 should add adapters,
-readiness scoring, or chain/atom composition.
+Implementation Toolkit repo, then decide whether V3 should add assisted task
+execution, optional CI adapters, readiness trends, or chain/atom composition.
