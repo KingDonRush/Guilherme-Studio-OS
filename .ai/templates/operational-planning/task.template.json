@@ -1,0 +1,32 @@
+{
+  "id": "",
+  "title": "",
+  "description": "",
+  "objective": "",
+  "priority": "critical | high | medium | low",
+  "complexity": "simple | moderate | complex | very_complex",
+  "status": "pending",
+  "depends_on": [],
+  "blocks": [],
+  "inputs_required": [],
+  "expected_outputs": [],
+  "acceptance_criteria": [],
+  "budgets": {
+    "time_budget": "",
+    "complexity_budget": "",
+    "context_budget": "",
+    "research_budget": "",
+    "iteration_budget": "",
+    "scope_budget": "",
+    "ambiguity_budget": "",
+    "validation_budget": ""
+  },
+  "risks": [],
+  "research_required": false,
+  "research_entries": [],
+  "requires_human_validation": false,
+  "verification": [],
+  "subtasks": [],
+  "subplans": [],
+  "handoff_notes": ""
+}

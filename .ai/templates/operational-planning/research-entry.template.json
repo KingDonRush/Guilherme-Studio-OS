@@ -1,0 +1,22 @@
+{
+  "research_id": "",
+  "phase_id": "",
+  "task_id": "",
+  "question": "",
+  "why_it_matters": "",
+  "source": {
+    "title": "",
+    "url_or_local_path": "",
+    "source_type": "official_docs | source_code | release_notes | issue | article | local_evidence | unknown",
+    "checked_at": "",
+    "version_or_date_scope": ""
+  },
+  "finding": "",
+  "reuse_opportunity": "",
+  "compatibility_notes": "",
+  "risk_remaining": "",
+  "decision_impact": "",
+  "requires_validation": false,
+  "validation_owner": "",
+  "analysis_reference": ""
+}

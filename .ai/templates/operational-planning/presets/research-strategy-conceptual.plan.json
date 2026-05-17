@@ -1,0 +1,34 @@
+{
+  "preset": "research_strategy_conceptual_system",
+  "use_when": "The project is still strategy, positioning, conceptual architecture, methodology, documentation, or product definition.",
+  "required_context": [
+    "known intention",
+    "current uncertainty",
+    "decision audience",
+    "constraints",
+    "what should become executable later"
+  ],
+  "phases": [
+    "intent_statement",
+    "hypotheses",
+    "alternatives",
+    "decision_criteria",
+    "benchmark_or_reference_research",
+    "risk_map",
+    "synthesis",
+    "execution_conversion_plan",
+    "handoff"
+  ],
+  "acceptance_focus": [
+    "uncertainties are explicit",
+    "alternatives are compared",
+    "decision criteria are visible",
+    "strategy can become an executable plan",
+    "handoff preserves what not to rethink"
+  ],
+  "forbidden_expansion": [
+    "turning strategy into implementation before decisions are made",
+    "inventing certainty",
+    "producing generic market commentary without decision impact"
+  ]
+}

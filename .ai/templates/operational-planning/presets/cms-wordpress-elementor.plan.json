@@ -1,0 +1,38 @@
+{
+  "preset": "cms_wordpress_elementor_no_code_low_code",
+  "use_when": "The project depends on WordPress, Elementor, plugins, themes, CMS content, builder behavior, or no-code/low-code tooling.",
+  "required_context": [
+    "WordPress root or site access",
+    "active theme",
+    "active plugins",
+    "builder version and capabilities",
+    "what must be custom code versus configured"
+  ],
+  "required_modules": [
+    ".ai/operational/evidence-first.md",
+    ".ai/operational/wordpress-containment.md",
+    ".ai/operational/elementor-evidence-map.md"
+  ],
+  "phases": [
+    "environment_inventory",
+    "version_and_compatibility_research",
+    "reuse_before_custom_code",
+    "builder_limitations",
+    "data_and_content_contract",
+    "implementation_plan",
+    "WordPress_QA",
+    "handoff"
+  ],
+  "acceptance_focus": [
+    "uses WordPress APIs instead of editing core",
+    "documents plugin/theme dependencies",
+    "names builder limitations",
+    "justifies custom code",
+    "validates with WP-CLI/browser/editor where relevant"
+  ],
+  "forbidden_expansion": [
+    "building a plugin feature that an existing stable feature already covers",
+    "depending on Pro-only tools when Free compatibility is required",
+    "editing WordPress core"
+  ]
+}

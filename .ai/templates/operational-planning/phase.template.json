@@ -1,0 +1,16 @@
+{
+  "phase_id": "",
+  "title": "",
+  "purpose": "",
+  "preset_owner": "",
+  "entry_condition": "",
+  "exit_condition": "",
+  "inputs_required": [],
+  "outputs_required": [],
+  "tasks_to_generate": [],
+  "research_required": false,
+  "human_validation_required": false,
+  "acceptance_criteria": [],
+  "failure_conditions": [],
+  "handoff_notes": ""
+}

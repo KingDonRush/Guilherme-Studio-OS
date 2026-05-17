@@ -1,0 +1,137 @@
+{
+  "purpose": "Help an agent choose a planning preset without guessing.",
+  "selection_rule": "Choose the preset that matches the strongest source of certainty. Use hybrid mode only when two sources are truly active.",
+  "presets": [
+    {
+      "preset": "visual_front_end_first",
+      "choose_when": [
+        "approved image, frame, screenshot, wireframe, or mockup exists",
+        "visual fidelity is a success criterion",
+        "states and responsive behavior must match a visual source"
+      ],
+      "avoid_when": [
+        "no visual target exists",
+        "backend behavior is the main uncertainty",
+        "the user is still choosing a product strategy"
+      ],
+      "must_load": [
+        ".ai/operational/frame-driven-ui-qa.md"
+      ],
+      "primary_success_evidence": [
+        "screenshots",
+        "viewport checks",
+        "visual difference notes",
+        "console checks for UI runtime"
+      ]
+    },
+    {
+      "preset": "full_stack_product",
+      "choose_when": [
+        "front-end, backend, data, API, auth, permissions, integrations, or deploy are all in scope",
+        "the product workflow crosses multiple system boundaries",
+        "security and observability matter"
+      ],
+      "avoid_when": [
+        "the work is only a WordPress admin UI",
+        "the work is only visual implementation",
+        "there is no backend or data model uncertainty"
+      ],
+      "must_load": [],
+      "primary_success_evidence": [
+        "API contract",
+        "data model",
+        "test results",
+        "security notes",
+        "deploy or rollback notes"
+      ]
+    },
+    {
+      "preset": "cms_wordpress_elementor_no_code_low_code",
+      "choose_when": [
+        "WordPress, Elementor, plugins, themes, CPTs, or builder constraints are central",
+        "custom code must be justified against existing platform features",
+        "Free versus Pro compatibility matters"
+      ],
+      "avoid_when": [
+        "the project has no CMS or builder dependency",
+        "the task is pure visual static HTML",
+        "the work is only external API automation"
+      ],
+      "must_load": [
+        ".ai/operational/evidence-first.md",
+        ".ai/operational/wordpress-containment.md",
+        ".ai/operational/elementor-evidence-map.md"
+      ],
+      "primary_success_evidence": [
+        "WP-CLI",
+        "plugin activation",
+        "browser/editor QA",
+        "official docs or local source",
+        "compatibility notes"
+      ]
+    },
+    {
+      "preset": "automation_integration_workflow",
+      "choose_when": [
+        "events, triggers, webhooks, APIs, agents, CRMs, sheets, or external systems are central",
+        "failure paths and retries are important",
+        "monitoring and logs are part of success"
+      ],
+      "avoid_when": [
+        "there are no external systems",
+        "the work is primarily UI",
+        "the data flow is not yet defined"
+      ],
+      "must_load": [],
+      "primary_success_evidence": [
+        "dry-run output",
+        "logs",
+        "retry behavior",
+        "failure-path proof",
+        "API limit notes"
+      ]
+    },
+    {
+      "preset": "research_strategy_conceptual_system",
+      "choose_when": [
+        "the project is still definition, strategy, methodology, or architecture",
+        "the main work is reducing ambiguity",
+        "execution should come later"
+      ],
+      "avoid_when": [
+        "the implementation target is already approved",
+        "the user explicitly asked to code now",
+        "there is enough certainty to produce executable tasks"
+      ],
+      "must_load": [],
+      "primary_success_evidence": [
+        "decision matrix",
+        "source log",
+        "hypothesis list",
+        "risk map",
+        "conversion path to execution"
+      ]
+    }
+  ],
+  "hybrid_rules": {
+    "allowed_when": [
+      "one preset owns execution and another owns validation",
+      "one preset owns platform constraints and another owns visual fidelity",
+      "research strategy is needed only to reduce a known uncertainty"
+    ],
+    "required_fields": [
+      "primary_preset",
+      "secondary_preset",
+      "execution_owner",
+      "validation_owner",
+      "forbidden_expansion"
+    ],
+    "example": {
+      "primary_preset": "cms_wordpress_elementor_no_code_low_code",
+      "secondary_preset": "visual_front_end_first",
+      "execution_owner": "CMS preset",
+      "validation_owner": "Visual preset",
+      "forbidden_expansion": "Do not turn admin frame implementation into runtime feature development."
+    }
+  }
+}

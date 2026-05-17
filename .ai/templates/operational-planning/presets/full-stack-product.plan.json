@@ -1,0 +1,36 @@
+{
+  "preset": "full_stack_product",
+  "use_when": "The project spans UI, backend, data, APIs, auth, permissions, integrations, deploy, or observability.",
+  "required_context": [
+    "functional scope",
+    "users and permissions",
+    "data entities",
+    "external integrations",
+    "deployment target"
+  ],
+  "phases": [
+    "scope_contract",
+    "architecture_contract",
+    "data_model",
+    "api_contract",
+    "auth_and_permissions",
+    "frontend_contract",
+    "integration_contract",
+    "test_strategy",
+    "security_review",
+    "deployment_and_observability",
+    "handoff"
+  ],
+  "acceptance_focus": [
+    "API behavior is testable",
+    "data model supports required workflows",
+    "permissions are explicit",
+    "security risks are named",
+    "deployment and rollback are described"
+  ],
+  "forbidden_expansion": [
+    "inventing features outside the product objective",
+    "choosing infrastructure before constraints are known",
+    "skipping auth and permission modeling"
+  ]
+}

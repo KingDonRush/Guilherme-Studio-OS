@@ -37,7 +37,9 @@ For every new task, read only what is needed:
 7. `operational/frame-driven-ui-qa.md` when implementing any UI based on an
    approved frame or screenshot target
 8. `operational/ai-operational-planning-system.md` when converting a broad,
-   nebulous, visual, technical, or legacy plan into an executable task system
+   nebulous, visual, technical, or legacy plan into an executable task system;
+   that file routes into `operational/planning-system/` and
+   `templates/operational-planning/`
 9. relevant project or strategy file
 
 ## Folder Map

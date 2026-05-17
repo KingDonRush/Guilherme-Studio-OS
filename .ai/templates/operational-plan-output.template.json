@@ -6,6 +6,14 @@
     "preset_reasoning": "",
     "execution_mode": "",
     "current_focus": "",
+    "source_base": {
+      "visual": false,
+      "technical": false,
+      "strategic": false,
+      "functional": false,
+      "legacy_plan": false,
+      "hybrid_notes": ""
+    },
     "assumptions": [],
     "research_limitations": [],
     "operational_mantra": "Como isso vai continuar funcionando depois que eu parar de explicar?"
@@ -19,60 +27,89 @@
       "research_strategy_conceptual_system"
     ],
     "selected_preset": "",
+    "secondary_preset_if_hybrid": "",
     "why_this_preset_fits": "",
     "why_other_presets_were_not_selected": [],
-    "hybridization_if_any": "",
-    "method_rules_for_this_project": []
+    "method_parts_used": [],
+    "method_parts_not_used": [],
+    "legacy_integration_strategy": "",
+    "dangerous_uncertainty": [],
+    "human_validation_needs": []
   },
   "briefing_layer": {
     "what_i_understood": "",
     "what_is_crystallized": [],
     "what_is_foggy": [],
+    "paths_that_fit": [],
+    "paths_discarded": [],
     "fit_direction": "",
     "decisions_becoming_contract": [],
     "questions_that_require_validation": [],
-    "questions_i_can_resolve_by_research": []
+    "questions_i_can_resolve_by_research": [],
+    "decisions_not_to_make_yet": []
   },
   "research_layer": {
+    "research_budget": "",
     "research_during_planning": [],
     "reuse_opportunities": [],
     "do_not_reinvent_wheel_notes": [],
     "technical_updates_needed": [],
     "research_limitations": [],
-    "final_deep_research": []
+    "final_deep_research": [],
+    "research_to_analysis_boundary": ""
   },
   "plan": {
     "objective": "",
     "scope": [],
     "out_of_scope": [],
+    "selected_preset": "",
     "phases": [],
     "technical_decisions": [],
+    "alternatives_considered": [],
+    "reusable_solutions_found": [],
     "dependencies": [],
+    "budgets": {
+      "time_budget": "",
+      "complexity_budget": "",
+      "context_budget": "",
+      "research_budget": "",
+      "iteration_budget": "",
+      "scope_budget": "",
+      "ambiguity_budget": "",
+      "validation_budget": ""
+    },
     "risks": [],
     "validation_points": [],
-    "acceptance_criteria": []
+    "acceptance_criteria": [],
+    "execution_strategy": "",
+    "handoff_strategy": ""
   },
   "analysis_layer": {
     "complexity_analysis": {
       "overall_complexity": "",
       "oversized_tasks": [],
       "vague_subtasks": [],
-      "missing_dependencies": []
+      "missing_dependencies": [],
+      "complexity_decisions": []
     },
     "fit_analysis": {
       "faithful_to_intent": "",
+      "user_would_recognize_direction": "",
       "remaining_fog": [],
       "validation_needed": []
     },
     "execution_analysis": {
       "can_another_ai_execute_without_rebriefing": "",
       "sequence_notes": "",
-      "acceptance_criteria_quality": ""
+      "acceptance_criteria_quality": "",
+      "blocked_execution_points": []
     },
     "technical_analysis": {
       "decision_quality": "",
       "reuse_quality": "",
-      "compatibility_risks": []
+      "compatibility_risks": [],
+      "manual_implementation_risks": [],
+      "ready_solutions_that_replace_custom_work": []
     },
     "scope_analysis": {
       "scope_size": "",
@@ -85,7 +122,8 @@
       "external_explanation_dependency": "",
       "handoff_risks": []
     },
-    "adjustments_made_after_analysis": []
+    "adjustments_made_after_analysis": [],
+    "readiness_status": ""
   },
   "tasks": [
     {
@@ -111,6 +149,16 @@
         "ambiguity_budget": "",
         "validation_budget": ""
       },
+      "anchoring_contract": {
+        "central_objective": "",
+        "selected_preset": "",
+        "assumptions": [],
+        "boundaries": [],
+        "recommended_sequence": [],
+        "continuity_criteria": [],
+        "anti_expansion_rule": "",
+        "how_it_works_after_user_stops_explaining": ""
+      },
       "risks": [],
       "research_required": false,
       "requires_human_validation": true,
@@ -124,43 +172,30 @@
     "parts_rewritten": [],
     "parts_discarded": [],
     "conflicts_found": [],
+    "crystallized_decisions_preserved": [],
+    "vague_blocks_converted": [],
+    "oversized_blocks_promoted_to_subplans": [],
     "integration_notes": []
   },
   "subplan_system": {
     "rules": [],
-    "subplans": [
-      {
-        "subplan_id": "",
-        "parent_task_id": "",
-        "title": "",
-        "purpose": "",
-        "scope_boundary": "",
-        "entry_condition": "",
-        "exit_condition": "",
-        "max_depth": 1,
-        "allowed_expansion": "",
-        "forbidden_expansion": "",
-        "budgets": {
-          "time_budget": "",
-          "complexity_budget": "",
-          "context_budget": "",
-          "research_budget": "",
-          "iteration_budget": "",
-          "scope_budget": "",
-          "ambiguity_budget": "",
-          "validation_budget": ""
-        },
-        "tasks": [],
-        "completion_criteria": [],
-        "handoff_notes": ""
-      }
-    ]
+    "recursion_control": {
+      "default_max_depth": 1,
+      "absolute_max_depth": 2,
+      "requires_human_validation_after_depth": 1,
+      "stop_conditions": []
+    },
+    "subplans": []
   },
   "handoff_to_next_ai": {
     "role": "",
     "mission": "",
     "context_to_preserve": [],
     "what_not_to_rethink": [],
+    "source_files_and_templates_used": [],
+    "current_status": "",
+    "validation_gaps": [],
+    "human_decisions_pending": [],
     "how_to_use_this_system": "",
     "how_to_continue_briefing_the_user": "",
     "first_action_next_ai_should_take": "",

@@ -1,0 +1,157 @@
+{
+  "project_meta": {
+    "project_name": "Elementor Implementation Toolkit Admin V0.2",
+    "selected_preset": "hybrid: cms_wordpress_elementor_no_code_low_code + visual_front_end_first",
+    "current_focus": "Rebuild plugin admin from approved frames without losing WordPress constraints.",
+    "operational_mantra": "Como isso vai continuar funcionando depois que eu parar de explicar?"
+  },
+  "phase_0_system_creation": {
+    "selected_preset": "cms_wordpress_elementor_no_code_low_code",
+    "secondary_preset_if_hybrid": "visual_front_end_first",
+    "why_this_preset_fits": "The UI lives inside WordPress admin and must preserve plugin settings, but the success source is approved visual frames.",
+    "method_parts_used": [
+      "WordPress containment",
+      "frame-driven visual QA",
+      "task contracts",
+      "subplan contracts",
+      "research entries"
+    ],
+    "method_parts_not_used": [
+      "deployment strategy",
+      "authentication modeling"
+    ],
+    "legacy_integration_strategy": "Extract existing save behavior and admin options, discard previous visual structure, rebuild from approved frames.",
+    "dangerous_uncertainty": [
+      "approved frames may contain impossible or hallucinated details",
+      "WordPress admin chrome constrains exact pixel matching"
+    ]
+  },
+  "briefing_layer": {
+    "what_i_understood": "The admin must feel like a product system inside WordPress, not like a styled default settings page.",
+    "what_is_crystallized": [
+      "Filters, CPTs, and Integrations are real admin areas",
+      "Frames are the visual source of success",
+      "Simple Budget is frozen for this phase"
+    ],
+    "what_is_foggy": [
+      "Exact runtime depth of each integration module",
+      "Which visual artifacts are hallucinations to correct in code"
+    ],
+    "decisions_becoming_contract": [
+      "No WordPress core edits",
+      "No standalone admin outside WordPress chrome",
+      "Screenshot QA is required before closing visual tasks"
+    ]
+  },
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "title": "Plano-mae e ancoragem operacional",
+      "priority": "critical",
+      "complexity": "moderate",
+      "depends_on": [],
+      "blocks": [
+        "TASK-002",
+        "TASK-003"
+      ],
+      "acceptance_criteria": [
+        "Preset and secondary preset are declared",
+        "Frame source of truth is documented",
+        "Old admin code is treated as behavior reference only"
+      ],
+      "budgets": {
+        "time_budget": "1 planning pass",
+        "complexity_budget": "moderate",
+        "context_budget": "read planning files plus approved frame notes only",
+        "research_budget": "light",
+        "iteration_budget": "1",
+        "scope_budget": "admin planning only",
+        "ambiguity_budget": "medium",
+        "validation_budget": "human validation required for frame interpretation"
+      },
+      "anchoring_contract": {
+        "central_objective": "Create executable admin rebuild tasks from approved frames and WordPress constraints.",
+        "selected_preset": "cms_wordpress_elementor_no_code_low_code",
+        "boundaries": [
+          "No runtime filter engine changes",
+          "No page/demo build",
+          "No Elementor MCP page construction"
+        ],
+        "anti_expansion_rule": "Any integration runtime work becomes a future subplan, not part of this admin rebuild."
+      },
+      "subtasks": [],
+      "subplans": []
+    },
+    {
+      "id": "TASK-002",
+      "title": "Frame inventory and visual contracts",
+      "priority": "high",
+      "complexity": "complex",
+      "depends_on": [
+        "TASK-001"
+      ],
+      "blocks": [
+        "TASK-003"
+      ],
+      "acceptance_criteria": [
+        "Each approved frame maps to a state of the same layout",
+        "Hallucinated frame details are marked as corrected-in-code",
+        "Desktop and mobile validation requirements are attached"
+      ],
+      "budgets": {
+        "time_budget": "1 focused pass",
+        "complexity_budget": "complex",
+        "context_budget": "approved frames and frame-driven QA protocol",
+        "research_budget": "none",
+        "iteration_budget": "2 visual critique loops",
+        "scope_budget": "visual contracts only",
+        "ambiguity_budget": "low after human approval",
+        "validation_budget": "must request validation if source frame is missing"
+      },
+      "research_required": false,
+      "requires_human_validation": true,
+      "subtasks": [
+        {
+          "id": "TASK-002-SUB-001",
+          "title": "List frames and states",
+          "expected_output": "Frame inventory with state names and target viewport assumptions.",
+          "acceptance_criteria": [
+            "No frame is treated as a separate product if it is a state of the same layout"
+          ]
+        }
+      ],
+      "subplans": [
+        {
+          "subplan_id": "SUBPLAN-002-A",
+          "parent_task_id": "TASK-002",
+          "title": "Visual QA Loop",
+          "purpose": "Compare implementation screenshots to approved frames in bounded iterations.",
+          "scope_boundary": "Only visual fidelity and usability of admin frames.",
+          "entry_condition": "A screen state has been implemented.",
+          "exit_condition": "Screenshot evidence shows acceptable match and no layout breakage.",
+          "max_depth": 1,
+          "allowed_expansion": "Add targeted CSS or component corrections.",
+          "forbidden_expansion": "Redesign frame architecture or add runtime features.",
+          "tasks": [],
+          "completion_criteria": [
+            "Desktop screenshot captured",
+            "Mobile screenshot captured",
+            "Console checked",
+            "Differences documented"
+          ],
+          "handoff_notes": "If screenshot evidence is missing, the visual task is not done."
+        }
+      ]
+    }
+  ],
+  "handoff_to_next_ai": {
+    "role": "WordPress admin implementation agent",
+    "mission": "Use the visual contracts and task order to rebuild the admin without rethinking the product direction.",
+    "what_not_to_rethink": [
+      "The admin stays inside WordPress chrome",
+      "Frames are source of visual success",
+      "Simple Budget remains frozen"
+    ],
+    "first_action_next_ai_should_take": "Open the approved frame inventory and generate TASK-003 for shared admin component architecture."
+  }
+}

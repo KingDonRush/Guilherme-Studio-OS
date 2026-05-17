@@ -1,0 +1,38 @@
+{
+  "preset": "visual_front_end_first",
+  "use_when": "The project starts from an approved image, mockup, screenshot, wireframe, frame, or visual reference.",
+  "required_context": [
+    "visual source path or URL",
+    "approved states",
+    "target viewport sizes",
+    "existing app or codebase constraints"
+  ],
+  "required_modules": [
+    ".ai/operational/frame-driven-ui-qa.md",
+    ".ai/operational/planning-system/phase-gates.md",
+    ".ai/operational/planning-system/task-and-subplan-contracts.md"
+  ],
+  "phases": [
+    "visual_source_inventory",
+    "component_extraction",
+    "layout_contract",
+    "design_token_map",
+    "state_map",
+    "responsive_map",
+    "implementation_sequence",
+    "visual_qa_loop",
+    "integration_handoff"
+  ],
+  "acceptance_focus": [
+    "screenshots compare against approved frames",
+    "desktop and mobile are checked",
+    "text does not overflow",
+    "interactive states are represented",
+    "known image-generation artifacts are corrected in code"
+  ],
+  "forbidden_expansion": [
+    "redesigning approved frames without approval",
+    "adding backend scope unless required by the visual contract",
+    "closing a visual task without screenshot evidence"
+  ]
+}

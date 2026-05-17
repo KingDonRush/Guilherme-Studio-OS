@@ -1,0 +1,83 @@
+{
+  "purpose": "Turn task budgets into stop conditions instead of vague estimates.",
+  "complexity_levels": {
+    "simple": {
+      "meaning": "One clear action with low ambiguity.",
+      "split_if": [
+        "more than three subtasks appear",
+        "research is needed",
+        "human validation is needed"
+      ]
+    },
+    "moderate": {
+      "meaning": "Several known steps with a familiar pattern.",
+      "split_if": [
+        "dependencies cross module boundaries",
+        "visual QA and backend QA are both required",
+        "acceptance criteria cannot fit in one concise list"
+      ]
+    },
+    "complex": {
+      "meaning": "Multiple dependencies, risks, or verification paths.",
+      "split_if": [
+        "there are multiple phases",
+        "uncertainty remains after research",
+        "implementation and strategy are mixed"
+      ]
+    },
+    "very_complex": {
+      "meaning": "Too large for a task; should become a subplan unless explicitly bounded.",
+      "split_if": [
+        "always consider subplan",
+        "requires multiple independent agents",
+        "could change project direction"
+      ]
+    }
+  },
+  "budget_defaults": {
+    "time_budget": {
+      "light": "one short pass",
+      "standard": "one focused work block",
+      "deep": "multiple passes with validation gates"
+    },
+    "context_budget": {
+      "light": "entrypoint plus one relevant template",
+      "standard": "entrypoint, phase gates, preset, task contract",
+      "deep": "full planning-system folder plus examples"
+    },
+    "research_budget": {
+      "none": "no volatile facts",
+      "light": "1-3 targeted checks",
+      "standard": "official docs plus alternatives",
+      "deep": "version, compatibility, alternatives, and risk evidence"
+    },
+    "iteration_budget": {
+      "low": "one correction pass",
+      "standard": "two correction passes",
+      "high": "bounded loop with explicit stop condition"
+    },
+    "scope_budget": {
+      "narrow": "one artifact or one screen",
+      "standard": "one feature slice",
+      "broad": "must be decomposed into tasks or subplans"
+    },
+    "ambiguity_budget": {
+      "low": "minor unknowns only",
+      "medium": "safe assumptions allowed",
+      "high": "requires human validation before execution"
+    },
+    "validation_budget": {
+      "none": "no pending human decision",
+      "one_gate": "one explicit human decision allowed",
+      "blocked": "do not execute until validated"
+    }
+  },
+  "stop_conditions": [
+    "A task exceeds its complexity budget.",
+    "A subtask needs its own research and QA loop.",
+    "The agent needs to reinterpret the user's intent.",
+    "The plan would change public positioning or product scope.",
+    "The subplan needs another subplan beyond max depth.",
+    "Verification cannot be described in observable terms."
+  ]
+}

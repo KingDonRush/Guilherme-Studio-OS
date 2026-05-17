@@ -1,0 +1,36 @@
+{
+  "preset": "automation_integration_workflow",
+  "use_when": "The project is mainly event flow between systems, APIs, webhooks, agents, CRMs, databases, sheets, or services.",
+  "required_context": [
+    "source systems",
+    "destination systems",
+    "trigger events",
+    "auth model",
+    "failure tolerance",
+    "monitoring needs"
+  ],
+  "phases": [
+    "event_inventory",
+    "systems_and_credentials",
+    "trigger_contract",
+    "api_and_rate_limit_research",
+    "data_mapping",
+    "error_handling",
+    "retry_and_fallback",
+    "logging_and_monitoring",
+    "dry_run_QA",
+    "handoff"
+  ],
+  "acceptance_focus": [
+    "happy path and failure path are both defined",
+    "credentials and secrets are not exposed",
+    "rate limits are acknowledged",
+    "retries and fallbacks are explicit",
+    "logs are sufficient for debugging"
+  ],
+  "forbidden_expansion": [
+    "adding new systems without a trigger contract",
+    "ignoring API limits",
+    "shipping automation without dry-run evidence"
+  ]
+}

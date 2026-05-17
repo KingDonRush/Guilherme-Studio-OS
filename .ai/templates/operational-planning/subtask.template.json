@@ -1,0 +1,14 @@
+{
+  "id": "",
+  "title": "",
+  "description": "",
+  "objective": "",
+  "status": "pending",
+  "depends_on": [],
+  "inputs_required": [],
+  "expected_output": "",
+  "acceptance_criteria": [],
+  "verification": [],
+  "risks": [],
+  "promote_to_subplan_if": []
+}
