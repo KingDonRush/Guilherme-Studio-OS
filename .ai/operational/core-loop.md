@@ -25,13 +25,19 @@ Keep the AI methodical while working inside a large WordPress surface area.
    - WordPress runtime;
    - portfolio content;
    - research;
+   - planning/handoff;
    - release/publishing.
 
 4. Define the smallest useful outcome:
    - one setup milestone;
    - one bug fixed;
    - one documented decision;
-   - one testable improvement.
+   - one testable improvement;
+   - one operational plan or handoff contract.
+
+   If the request is broad, nebulous, visual-frame-driven, or based on an old
+   plan that needs to become tasks, use `ai-operational-planning-system.md`
+   before decomposing it.
 
 5. Execute:
    - edit in the proper layer;

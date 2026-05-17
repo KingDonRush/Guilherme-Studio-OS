@@ -1,0 +1,169 @@
+{
+  "project_meta": {
+    "project_name": "",
+    "source_plan_summary": "",
+    "selected_preset": "",
+    "preset_reasoning": "",
+    "execution_mode": "",
+    "current_focus": "",
+    "assumptions": [],
+    "research_limitations": [],
+    "operational_mantra": "Como isso vai continuar funcionando depois que eu parar de explicar?"
+  },
+  "phase_0_system_creation": {
+    "available_presets": [
+      "visual_front_end_first",
+      "full_stack_product",
+      "cms_wordpress_elementor_no_code_low_code",
+      "automation_integration_workflow",
+      "research_strategy_conceptual_system"
+    ],
+    "selected_preset": "",
+    "why_this_preset_fits": "",
+    "why_other_presets_were_not_selected": [],
+    "hybridization_if_any": "",
+    "method_rules_for_this_project": []
+  },
+  "briefing_layer": {
+    "what_i_understood": "",
+    "what_is_crystallized": [],
+    "what_is_foggy": [],
+    "fit_direction": "",
+    "decisions_becoming_contract": [],
+    "questions_that_require_validation": [],
+    "questions_i_can_resolve_by_research": []
+  },
+  "research_layer": {
+    "research_during_planning": [],
+    "reuse_opportunities": [],
+    "do_not_reinvent_wheel_notes": [],
+    "technical_updates_needed": [],
+    "research_limitations": [],
+    "final_deep_research": []
+  },
+  "plan": {
+    "objective": "",
+    "scope": [],
+    "out_of_scope": [],
+    "phases": [],
+    "technical_decisions": [],
+    "dependencies": [],
+    "risks": [],
+    "validation_points": [],
+    "acceptance_criteria": []
+  },
+  "analysis_layer": {
+    "complexity_analysis": {
+      "overall_complexity": "",
+      "oversized_tasks": [],
+      "vague_subtasks": [],
+      "missing_dependencies": []
+    },
+    "fit_analysis": {
+      "faithful_to_intent": "",
+      "remaining_fog": [],
+      "validation_needed": []
+    },
+    "execution_analysis": {
+      "can_another_ai_execute_without_rebriefing": "",
+      "sequence_notes": "",
+      "acceptance_criteria_quality": ""
+    },
+    "technical_analysis": {
+      "decision_quality": "",
+      "reuse_quality": "",
+      "compatibility_risks": []
+    },
+    "scope_analysis": {
+      "scope_size": "",
+      "infinite_expansion_risks": [],
+      "subplan_closure_notes": "",
+      "budget_notes": ""
+    },
+    "handoff_analysis": {
+      "context_preserved": "",
+      "external_explanation_dependency": "",
+      "handoff_risks": []
+    },
+    "adjustments_made_after_analysis": []
+  },
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "title": "Plano-mae e ancoragem operacional",
+      "description": "",
+      "objective": "",
+      "priority": "critical",
+      "complexity": "",
+      "status": "pending",
+      "depends_on": [],
+      "blocks": [],
+      "inputs_required": [],
+      "expected_outputs": [],
+      "acceptance_criteria": [],
+      "budgets": {
+        "time_budget": "",
+        "complexity_budget": "",
+        "context_budget": "",
+        "research_budget": "",
+        "iteration_budget": "",
+        "scope_budget": "",
+        "ambiguity_budget": "",
+        "validation_budget": ""
+      },
+      "risks": [],
+      "research_required": false,
+      "requires_human_validation": true,
+      "subtasks": [],
+      "subplans": []
+    }
+  ],
+  "legacy_plan_integration": {
+    "source_plan_used": true,
+    "useful_parts_extracted": [],
+    "parts_rewritten": [],
+    "parts_discarded": [],
+    "conflicts_found": [],
+    "integration_notes": []
+  },
+  "subplan_system": {
+    "rules": [],
+    "subplans": [
+      {
+        "subplan_id": "",
+        "parent_task_id": "",
+        "title": "",
+        "purpose": "",
+        "scope_boundary": "",
+        "entry_condition": "",
+        "exit_condition": "",
+        "max_depth": 1,
+        "allowed_expansion": "",
+        "forbidden_expansion": "",
+        "budgets": {
+          "time_budget": "",
+          "complexity_budget": "",
+          "context_budget": "",
+          "research_budget": "",
+          "iteration_budget": "",
+          "scope_budget": "",
+          "ambiguity_budget": "",
+          "validation_budget": ""
+        },
+        "tasks": [],
+        "completion_criteria": [],
+        "handoff_notes": ""
+      }
+    ]
+  },
+  "handoff_to_next_ai": {
+    "role": "",
+    "mission": "",
+    "context_to_preserve": [],
+    "what_not_to_rethink": [],
+    "how_to_use_this_system": "",
+    "how_to_continue_briefing_the_user": "",
+    "first_action_next_ai_should_take": "",
+    "handoff_prompt": ""
+  }
+}

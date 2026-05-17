@@ -36,7 +36,9 @@ For every new task, read only what is needed:
    replacing portfolio visuals, icons, shapes, backgrounds, or image assets
 7. `operational/frame-driven-ui-qa.md` when implementing any UI based on an
    approved frame or screenshot target
-8. relevant project or strategy file
+8. `operational/ai-operational-planning-system.md` when converting a broad,
+   nebulous, visual, technical, or legacy plan into an executable task system
+9. relevant project or strategy file
 
 ## Folder Map
 
