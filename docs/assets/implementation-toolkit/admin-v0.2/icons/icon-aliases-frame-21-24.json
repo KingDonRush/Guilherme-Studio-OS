@@ -1,0 +1,519 @@
+{
+  "scope": "frames-21-24",
+  "rule": "Generate only canonical icons that are not already covered by the existing icon system; map repeated concepts as aliases.",
+  "generated_pack": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/manifest.json",
+  "records": [
+    {
+      "requested": "controller-state-machine",
+      "canonical": "controller-state-machine",
+      "mode": "generated",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/controller-state-machine.webp",
+      "exists": true
+    },
+    {
+      "requested": "detection-preview-window",
+      "canonical": "detection-preview-window",
+      "mode": "generated",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/detection-preview-window.webp",
+      "exists": true
+    },
+    {
+      "requested": "filter-object-map",
+      "canonical": "filter-object-map",
+      "mode": "generated",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/filter-object-map.webp",
+      "exists": true
+    },
+    {
+      "requested": "inherited-contract-badge",
+      "canonical": "inherited-contract-badge",
+      "mode": "generated",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/inherited-contract-badge.webp",
+      "exists": true
+    },
+    {
+      "requested": "module-schema-document",
+      "canonical": "module-schema-document",
+      "mode": "generated",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/module-schema-document.webp",
+      "exists": true
+    },
+    {
+      "requested": "options-counts",
+      "canonical": "options-counts",
+      "mode": "generated",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/options-counts.webp",
+      "exists": true
+    },
+    {
+      "requested": "override-contract-badge",
+      "canonical": "override-contract-badge",
+      "mode": "generated",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/override-contract-badge.webp",
+      "exists": true
+    },
+    {
+      "requested": "ownership-spine-connectors",
+      "canonical": "ownership-spine-connectors",
+      "mode": "generated",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/ownership-spine-connectors.webp",
+      "exists": true
+    },
+    {
+      "requested": "parent-context-layer",
+      "canonical": "parent-context-layer",
+      "mode": "generated",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/parent-context-layer.webp",
+      "exists": true
+    },
+    {
+      "requested": "provider-contract-builder",
+      "canonical": "provider-contract-builder",
+      "mode": "generated",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/provider-contract-builder.webp",
+      "exists": true
+    },
+    {
+      "requested": "resolver-confidence-threshold",
+      "canonical": "resolver-confidence-threshold",
+      "mode": "generated",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/resolver-confidence-threshold.webp",
+      "exists": true
+    },
+    {
+      "requested": "state-feedback-loop",
+      "canonical": "state-feedback-loop",
+      "mode": "generated",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/state-feedback-loop.webp",
+      "exists": true
+    },
+    {
+      "requested": "active-chips-card",
+      "canonical": "chips",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/chips.webp",
+      "exists": true
+    },
+    {
+      "requested": "advanced-tab",
+      "canonical": "inspector-sliders",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/inspector-sliders.webp",
+      "exists": true
+    },
+    {
+      "requested": "behavior-accordion",
+      "canonical": "runtime-gear",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/runtime-gear.webp",
+      "exists": true
+    },
+    {
+      "requested": "bounds-accordion",
+      "canonical": "auto-detect-bounds",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/auto-detect-bounds.webp",
+      "exists": true
+    },
+    {
+      "requested": "confidence-high",
+      "canonical": "state-valid",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/state-valid.webp",
+      "exists": true
+    },
+    {
+      "requested": "confidence-low",
+      "canonical": "state-degraded",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/state-degraded.webp",
+      "exists": true
+    },
+    {
+      "requested": "confidence-medium",
+      "canonical": "state-warning",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/state-warning.webp",
+      "exists": true
+    },
+    {
+      "requested": "confidence-threshold",
+      "canonical": "resolver-confidence-threshold",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/resolver-confidence-threshold.webp",
+      "exists": true
+    },
+    {
+      "requested": "context-root",
+      "canonical": "root-inspector",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/root-inspector.webp",
+      "exists": true
+    },
+    {
+      "requested": "data-attributes-summary",
+      "canonical": "data-availability",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/data-availability.webp",
+      "exists": true
+    },
+    {
+      "requested": "data-binding-accordion",
+      "canonical": "binding",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/binding.webp",
+      "exists": true
+    },
+    {
+      "requested": "data-store-nav",
+      "canonical": "source-database",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/source-database.webp",
+      "exists": true
+    },
+    {
+      "requested": "delete-module",
+      "canonical": "reset-refresh",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/reset-refresh.webp",
+      "exists": true
+    },
+    {
+      "requested": "detection-preview",
+      "canonical": "detection-preview-window",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/detection-preview-window.webp",
+      "exists": true
+    },
+    {
+      "requested": "display-accordion",
+      "canonical": "preview-eye",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/preview-eye.webp",
+      "exists": true
+    },
+    {
+      "requested": "duplicate-module",
+      "canonical": "module-schema-document",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/module-schema-document.webp",
+      "exists": true
+    },
+    {
+      "requested": "effect-note",
+      "canonical": "inspector",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/inspector.webp",
+      "exists": true
+    },
+    {
+      "requested": "fallback-behavior",
+      "canonical": "reset-refresh",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/reset-refresh.webp",
+      "exists": true
+    },
+    {
+      "requested": "filter-module-schema",
+      "canonical": "module-schema-document",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/module-schema-document.webp",
+      "exists": true
+    },
+    {
+      "requested": "filter-preset-root-map",
+      "canonical": "filter-object-map",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/filter-object-map.webp",
+      "exists": true
+    },
+    {
+      "requested": "identity-resolver",
+      "canonical": "identity-resolver-priority",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/identity-resolver-priority.webp",
+      "exists": true
+    },
+    {
+      "requested": "inherited-setting",
+      "canonical": "inherited-contract-badge",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/inherited-contract-badge.webp",
+      "exists": true
+    },
+    {
+      "requested": "inherits-connector",
+      "canonical": "ownership-spine-connectors",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/ownership-spine-connectors.webp",
+      "exists": true
+    },
+    {
+      "requested": "module-row-drag",
+      "canonical": "sort",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/sort.webp",
+      "exists": true
+    },
+    {
+      "requested": "module-row-menu",
+      "canonical": "module",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/module.webp",
+      "exists": true
+    },
+    {
+      "requested": "options-counts-accordion",
+      "canonical": "options-counts",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/options-counts.webp",
+      "exists": true
+    },
+    {
+      "requested": "output-behavior-overview",
+      "canonical": "output",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/output.webp",
+      "exists": true
+    },
+    {
+      "requested": "output-behavior-selected",
+      "canonical": "output",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/output.webp",
+      "exists": true
+    },
+    {
+      "requested": "override-setting",
+      "canonical": "override-contract-badge",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/override-contract-badge.webp",
+      "exists": true
+    },
+    {
+      "requested": "overrides-connector",
+      "canonical": "ownership-spine-connectors",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/ownership-spine-connectors.webp",
+      "exists": true
+    },
+    {
+      "requested": "owns-connector",
+      "canonical": "ownership-spine-connectors",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/ownership-spine-connectors.webp",
+      "exists": true
+    },
+    {
+      "requested": "pagination-card",
+      "canonical": "pagination",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/pagination.webp",
+      "exists": true
+    },
+    {
+      "requested": "parasitic-dom-provider",
+      "canonical": "dom-code",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/dom-code.webp",
+      "exists": true
+    },
+    {
+      "requested": "parent-context",
+      "canonical": "parent-context-layer",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/parent-context-layer.webp",
+      "exists": true
+    },
+    {
+      "requested": "preserve-other-params",
+      "canonical": "url-chain",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/url-chain.webp",
+      "exists": true
+    },
+    {
+      "requested": "price-range-schema",
+      "canonical": "range-sliders",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/range-sliders.webp",
+      "exists": true
+    },
+    {
+      "requested": "priority-rule",
+      "canonical": "sort",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/sort.webp",
+      "exists": true
+    },
+    {
+      "requested": "provider-adapter-placeholder",
+      "canonical": "connector-registry",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/connector-registry.webp",
+      "exists": true
+    },
+    {
+      "requested": "provider-builder",
+      "canonical": "provider-contract-builder",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/provider-contract-builder.webp",
+      "exists": true
+    },
+    {
+      "requested": "reset-empty-loading-card",
+      "canonical": "reset-refresh",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/reset-refresh.webp",
+      "exists": true
+    },
+    {
+      "requested": "result-count-card",
+      "canonical": "result-count",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/result-count.webp",
+      "exists": true
+    },
+    {
+      "requested": "root-configuration-object",
+      "canonical": "object",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/object.webp",
+      "exists": true
+    },
+    {
+      "requested": "root-object-map",
+      "canonical": "filter-object-map",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/filter-object-map.webp",
+      "exists": true
+    },
+    {
+      "requested": "runtime-ajax-resolver-card",
+      "canonical": "ajax-bolt",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/ajax-bolt.webp",
+      "exists": true
+    },
+    {
+      "requested": "runtime-apply-reset-card",
+      "canonical": "reset-refresh",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/reset-refresh.webp",
+      "exists": true
+    },
+    {
+      "requested": "runtime-dom-provider-card",
+      "canonical": "dom-code",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/dom-code.webp",
+      "exists": true
+    },
+    {
+      "requested": "runtime-url-state-card",
+      "canonical": "url-router",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/url-router.webp",
+      "exists": true
+    },
+    {
+      "requested": "save-contract-panel",
+      "canonical": "save-disk",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/save-disk.webp",
+      "exists": true
+    },
+    {
+      "requested": "scope-panel",
+      "canonical": "scope",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/scope.webp",
+      "exists": true
+    },
+    {
+      "requested": "sorting-card",
+      "canonical": "sort-arrows",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/sort-arrows.webp",
+      "exists": true
+    },
+    {
+      "requested": "state-applying",
+      "canonical": "ajax-bolt",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/ajax-bolt.webp",
+      "exists": true
+    },
+    {
+      "requested": "state-filtering",
+      "canonical": "filter-funnel",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/filter-funnel.webp",
+      "exists": true
+    },
+    {
+      "requested": "state-idle",
+      "canonical": "runtime-gear",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/runtime-gear.webp",
+      "exists": true
+    },
+    {
+      "requested": "state-loading",
+      "canonical": "state-preview",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/state-preview.webp",
+      "exists": true
+    },
+    {
+      "requested": "state-updated",
+      "canonical": "state-valid",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/state-valid.webp",
+      "exists": true
+    },
+    {
+      "requested": "system-nav",
+      "canonical": "runtime-gear",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/runtime-gear.webp",
+      "exists": true
+    },
+    {
+      "requested": "target-discovery-list",
+      "canonical": "target-bullseye",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/target-bullseye.webp",
+      "exists": true
+    },
+    {
+      "requested": "throttle-ms",
+      "canonical": "range-sliders",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/range-sliders.webp",
+      "exists": true
+    },
+    {
+      "requested": "unresolved-warning",
+      "canonical": "warning",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/warning.webp",
+      "exists": true
+    },
+    {
+      "requested": "url-state-card",
+      "canonical": "url-router",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/url-router.webp",
+      "exists": true
+    },
+    {
+      "requested": "wordpress-post-link",
+      "canonical": "url-chain",
+      "mode": "alias",
+      "path": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/url-chain.webp",
+      "exists": true
+    }
+  ],
+  "missing_targets": []
+}

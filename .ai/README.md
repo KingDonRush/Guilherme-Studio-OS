@@ -34,7 +34,9 @@ For every new task, read only what is needed:
    widgets, controls, editor behavior, or Elementor implementation details
 6. `operational/visual-asset-generation.md` when creating, refining, or
    replacing portfolio visuals, icons, shapes, backgrounds, or image assets
-7. relevant project or strategy file
+7. `operational/frame-driven-ui-qa.md` when implementing any UI based on an
+   approved frame or screenshot target
+8. relevant project or strategy file
 
 ## Folder Map
 

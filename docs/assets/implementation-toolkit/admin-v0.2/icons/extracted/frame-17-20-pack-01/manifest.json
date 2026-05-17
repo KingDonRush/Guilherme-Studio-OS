@@ -1,0 +1,200 @@
+{
+  "pack": "frame-17-20-pack-01",
+  "method": "imagegen chroma-key source -> local chroma removal -> alpha bounding-box crop -> lossless WebP",
+  "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-17-20-icon-source-sheet-01-chroma.png",
+  "processed_alpha_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/processed/frame-17-20-icon-source-sheet-01-alpha.png",
+  "icons": [
+    {
+      "name": "apply-strategy",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-17-20-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 1,
+        "column": 1
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/apply-strategy.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/apply-strategy.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/apply-strategy.webp",
+      "size": [
+        235,
+        226
+      ],
+      "status": "created"
+    },
+    {
+      "name": "manual-apply",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-17-20-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 1,
+        "column": 2
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/manual-apply.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/manual-apply.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/manual-apply.webp",
+      "size": [
+        237,
+        205
+      ],
+      "status": "created"
+    },
+    {
+      "name": "mixed-apply-mode",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-17-20-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 1,
+        "column": 3
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/mixed-apply-mode.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/mixed-apply-mode.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/mixed-apply-mode.webp",
+      "size": [
+        220,
+        212
+      ],
+      "status": "created"
+    },
+    {
+      "name": "clean-url",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-17-20-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 2,
+        "column": 1
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/clean-url.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/clean-url.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/clean-url.webp",
+      "size": [
+        228,
+        217
+      ],
+      "status": "created"
+    },
+    {
+      "name": "custom-serializer",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-17-20-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 2,
+        "column": 2
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/custom-serializer.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/custom-serializer.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/custom-serializer.webp",
+      "size": [
+        242,
+        172
+      ],
+      "status": "created"
+    },
+    {
+      "name": "currency-prefix",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-17-20-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 2,
+        "column": 3
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/currency-prefix.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/currency-prefix.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/currency-prefix.webp",
+      "size": [
+        229,
+        222
+      ],
+      "status": "created"
+    },
+    {
+      "name": "auto-detect-bounds",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-17-20-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 3,
+        "column": 1
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/auto-detect-bounds.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/auto-detect-bounds.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/auto-detect-bounds.webp",
+      "size": [
+        218,
+        215
+      ],
+      "status": "created"
+    },
+    {
+      "name": "item-boundary",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-17-20-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 3,
+        "column": 2
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/item-boundary.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/item-boundary.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/item-boundary.webp",
+      "size": [
+        225,
+        218
+      ],
+      "status": "created"
+    },
+    {
+      "name": "identity-resolver-priority",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-17-20-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 3,
+        "column": 3
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/identity-resolver-priority.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/identity-resolver-priority.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/identity-resolver-priority.webp",
+      "size": [
+        237,
+        208
+      ],
+      "status": "created"
+    },
+    {
+      "name": "data-availability",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-17-20-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 4,
+        "column": 1
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/data-availability.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/data-availability.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/data-availability.webp",
+      "size": [
+        220,
+        216
+      ],
+      "status": "created"
+    },
+    {
+      "name": "architecture-step-rail",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-17-20-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 4,
+        "column": 2
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/architecture-step-rail.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/architecture-step-rail.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/architecture-step-rail.webp",
+      "size": [
+        187,
+        228
+      ],
+      "status": "created"
+    },
+    {
+      "name": "root-inspector",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-17-20-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 4,
+        "column": 3
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/root-inspector.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-17-20-pack-01/root-inspector.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/root-inspector.webp",
+      "size": [
+        227,
+        223
+      ],
+      "status": "created"
+    }
+  ]
+}

@@ -1,0 +1,2574 @@
+{
+  "existing_icon_count": 111,
+  "alias_record_count": 233,
+  "sections": [
+    {
+      "section": "00-shared-01-04",
+      "required": 160,
+      "direct": 7,
+      "alias": 3,
+      "unresolved": 150,
+      "unresolved_names": [
+        "active-chips",
+        "advanced-custom-fields",
+        "annotation-types",
+        "annotation-warning",
+        "architecture-binding",
+        "architecture-contract",
+        "architecture-documentation",
+        "architecture-evidence",
+        "architecture-health",
+        "architecture-output",
+        "architecture-pipeline",
+        "architecture-policy",
+        "architecture-runtime",
+        "architecture-scope",
+        "assertion",
+        "assertion-budget-button",
+        "assertion-console",
+        "assertion-mobile-layout",
+        "assertion-results-update",
+        "assertion-url-sync",
+        "attachment-targets",
+        "audit-trail",
+        "budget-action",
+        "buttons",
+        "capability-contract",
+        "chevron-down",
+        "chevron-right",
+        "close-inspector",
+        "connector-types",
+        "contrast-check",
+        "controller-wrapper",
+        "cpt-field",
+        "cpt-manager-source",
+        "css-variables",
+        "dependency-note",
+        "dependency-policy",
+        "design-token-mapper",
+        "editor-handoff-notes",
+        "elementor-editor-helper",
+        "elementor-globals",
+        "elementor-pro-loop-grid",
+        "elementor-selectors",
+        "environment-check",
+        "evidence-console-log",
+        "evidence-dom-state",
+        "evidence-rest-response",
+        "evidence-retention",
+        "evidence-screenshot",
+        "evidence-timestamp",
+        "export-contract",
+        "external-link",
+        "filter-field",
+        "filter-preset",
+        "filter-source",
+        "focus-ring",
+        "hard-dependency",
+        "health-compatibility",
+        "implementation-note",
+        "integration-adapter",
+        "jetengine-connector",
+        "landing-cta",
+        "listing-provider",
+        "manual-tokens",
+        "meta-box-connector",
+        "more-actions",
+        "note-acknowledged",
+        "note-active",
+        "note-archived",
+        "note-draft",
+        "note-in-progress",
+        "note-resolved",
+        "note-scope",
+        "notifications-reminders",
+        "page-post",
+        "pipeline-apply-states",
+        "pipeline-capture-evidence",
+        "pipeline-execute-steps",
+        "pipeline-generate-report",
+        "pipeline-load-sources",
+        "pipeline-map-selectors",
+        "pipeline-normalize",
+        "pipeline-output-css",
+        "pipeline-preview",
+        "pipeline-store-results",
+        "pipeline-validate-setup",
+        "pipeline-verify-assertions",
+        "plugin-palette",
+        "plus",
+        "precondition-cpt-products",
+        "precondition-filter-preset",
+        "precondition-listing-selector",
+        "precondition-simple-budget",
+        "precondition-theme",
+        "preview-action",
+        "preview-stylesheet",
+        "qa-capture",
+        "qa-checklist",
+        "qa-scenario-runner",
+        "quote-submit",
+        "refresh",
+        "safe-fallback",
+        "save-action",
+        "scenario-scope",
+        "search-page-filters",
+        "section-cpts",
+        "section-filters",
+        "section-integrations",
+        "selector-binding",
+        "selector-contract",
+        "single-product-budget",
+        "soft-adapter",
+        "state-default",
+        "state-disabled",
+        "state-enabled",
+        "state-fail",
+        "state-focus",
+        "state-healthy",
+        "state-hover",
+        "state-limited",
+        "state-mapping",
+        "state-missing",
+        "state-optional",
+        "state-pass",
+        "state-read",
+        "state-validate",
+        "state-write",
+        "step-add-budget-item",
+        "step-open-budget-cart",
+        "step-paginate",
+        "step-set-filters",
+        "step-sort-results",
+        "step-submit-quote",
+        "step-visit-page",
+        "template",
+        "theme-json",
+        "token-border",
+        "token-color",
+        "token-groups",
+        "token-radius",
+        "token-report",
+        "token-shadow",
+        "token-sources",
+        "token-spacing",
+        "token-typography",
+        "toolkit-logo-layers",
+        "url-state-router",
+        "visibility-rules",
+        "widget-selector",
+        "woocommerce-adapter",
+        "woocommerce-blocks"
+      ]
+    },
+    {
+      "section": "05-08",
+      "required": 129,
+      "direct": 0,
+      "alias": 0,
+      "unresolved": 129,
+      "unresolved_names": [
+        "accessibility-state",
+        "action-add-class",
+        "action-collapse-group",
+        "action-disable",
+        "action-hide",
+        "action-remove-class",
+        "action-show",
+        "active-chips-panel",
+        "analytics-friendly",
+        "animation-contract",
+        "animation-duration",
+        "announce-changes",
+        "aria-label",
+        "backdrop-animation",
+        "body-scroll-lock",
+        "breakpoint-contract",
+        "browser-back",
+        "canonical-mode",
+        "canvas-safe-mode",
+        "card-count",
+        "clean-reset-url",
+        "close-behavior",
+        "condition-sources",
+        "conditional-display-rules",
+        "confidence-score",
+        "controller-placement",
+        "desktop-breakpoint",
+        "detection-apply-heuristics",
+        "detection-canvas-scan",
+        "detection-confirm-targets",
+        "detection-group-name",
+        "detection-highlight-editor",
+        "detection-scope",
+        "detection-score-candidates",
+        "dom-heuristics",
+        "drawer-side",
+        "editor-highlight",
+        "evaluation-strategy",
+        "event-deps",
+        "filter-state-condition",
+        "focus-return",
+        "focus-trap",
+        "heuristic-article",
+        "heuristic-elementor-post",
+        "heuristic-jet-listing-item",
+        "heuristic-li",
+        "heuristic-product",
+        "hover-overlay",
+        "image-presence",
+        "invalid-cleanup",
+        "item-density",
+        "keyboard-close",
+        "listing-target-detector",
+        "manual-selector-fallback",
+        "mobile-breakpoint",
+        "mobile-responsive-filter-panel",
+        "namespace-rules",
+        "naming-strategy",
+        "noindex-hints",
+        "operator-between",
+        "operator-contains",
+        "operator-empty",
+        "operator-equals",
+        "operator-exists",
+        "operator-greater-than",
+        "operator-not-contains",
+        "operator-not-equals",
+        "operator-not-exists",
+        "outline-color",
+        "overall-score",
+        "overlay",
+        "panel-animation",
+        "panel-header",
+        "panel-structure",
+        "parameter-category",
+        "parameter-color",
+        "parameter-page",
+        "parameter-price",
+        "parameter-rating",
+        "parameter-registry",
+        "parameter-search",
+        "parameter-sort",
+        "post-meta-condition",
+        "reduce-motion",
+        "repeated-class-score",
+        "repetition-scoring",
+        "restore-strategy",
+        "router-active",
+        "rule-ready",
+        "rule-scope",
+        "runtime-action-apply",
+        "runtime-breakpoint-check",
+        "runtime-close-panel",
+        "runtime-condition-check",
+        "runtime-event-emit",
+        "runtime-lock-focus",
+        "runtime-render-panel",
+        "runtime-resync",
+        "runtime-state-collection",
+        "runtime-trigger-click",
+        "schema-validation",
+        "scroll-into-view",
+        "selector-validation",
+        "serialization-boolean",
+        "serialization-contract",
+        "serialization-date-range",
+        "serialization-encoding",
+        "serialization-list",
+        "serialization-range",
+        "serialization-scalar",
+        "session-fallback",
+        "share-format",
+        "sharing-seo-boundaries",
+        "simple-budget-cart-state",
+        "state-flow-normalize",
+        "state-flow-parse-url",
+        "state-flow-persist",
+        "state-flow-sync-components",
+        "state-flow-update-url",
+        "sticky-apply-reset",
+        "tablet-breakpoint",
+        "target-action",
+        "taxonomy-term-condition",
+        "test-target",
+        "title-presence",
+        "trigger-button",
+        "url-parameter-condition",
+        "url-state-router",
+        "user-capability-condition"
+      ]
+    },
+    {
+      "section": "09-12",
+      "required": 112,
+      "direct": 0,
+      "alias": 2,
+      "unresolved": 110,
+      "unresolved_names": [
+        "action-surface",
+        "add-item-action",
+        "add-quote-button",
+        "admin-screen-preview",
+        "after-add-event",
+        "api-preview",
+        "availability-check",
+        "before-add-event",
+        "block-theme-warning",
+        "brand-taxonomy",
+        "budget-action-contract",
+        "card-button-trigger",
+        "cart-fragments-scope",
+        "cart-update-event",
+        "category-taxonomy",
+        "clear-item-action",
+        "color-meta-field",
+        "color-taxonomy",
+        "compatibility-check",
+        "compatibility-fallbacks",
+        "compatibility-preview",
+        "content-model-preview",
+        "content-source-layer",
+        "controller-ready",
+        "data-mapping",
+        "debounce",
+        "description-node",
+        "desktop-preview",
+        "disabled-state",
+        "events-compatibility",
+        "featured-meta-field",
+        "field-categories",
+        "field-id",
+        "field-image",
+        "field-price",
+        "field-rating",
+        "field-resolver",
+        "field-sale-price",
+        "field-stock",
+        "fields-preview",
+        "has-archive-node",
+        "has-query-var-node",
+        "hook-after-price",
+        "hook-before-title",
+        "hook-card-actions",
+        "hook-single-summary",
+        "item-identity",
+        "labels-node",
+        "listing-target",
+        "map-image",
+        "map-metadata",
+        "map-permalink",
+        "map-price",
+        "map-quantity",
+        "map-sku",
+        "map-title",
+        "material-meta-field",
+        "material-taxonomy",
+        "menu-icon-node",
+        "meta-field-layer",
+        "mobile-preview",
+        "modal-close",
+        "model-overview",
+        "open-budget-action",
+        "open-in-new-tab",
+        "output-events",
+        "post-slug-node",
+        "post-type-node",
+        "preview-admin-tab",
+        "preview-compatibility-tab",
+        "preview-model-tab",
+        "preview-rest-tab",
+        "price-meta-field",
+        "product-loop-scope",
+        "quantity-sync",
+        "quote-sent-event",
+        "rating-meta-field",
+        "registration-contract-layer",
+        "rest-admin-exposure-layer",
+        "rest-request",
+        "rewrite-slug-node",
+        "runtime-apply-meta",
+        "runtime-apply-taxonomy",
+        "runtime-order-paginate",
+        "runtime-request",
+        "runtime-resolve-cpt",
+        "runtime-return-response",
+        "selector-fallback",
+        "simple-budget-layer",
+        "single-product-button-trigger",
+        "single-product-scope",
+        "sku-meta-field",
+        "source-contract",
+        "source-layer",
+        "source-markup",
+        "submit-quote-action",
+        "supports-layer",
+        "tablet-preview",
+        "tag-taxonomy",
+        "taxonomies-preview",
+        "taxonomy-layer",
+        "template-hooks",
+        "theme-override-detection",
+        "trigger-rules",
+        "ui-feedback",
+        "url-structure-node",
+        "visibility-node",
+        "visual-content-architecture-builder",
+        "woocommerce-cards-adapter",
+        "woocommerce-markup-adapter"
+      ]
+    },
+    {
+      "section": "13-16",
+      "required": 80,
+      "direct": 0,
+      "alias": 2,
+      "unresolved": 78,
+      "unresolved_names": [
+        "active-filters-state",
+        "active-modules-state",
+        "admin-behavior",
+        "admin-ui-contract",
+        "all-valid",
+        "apply-mode-state",
+        "architecture-layer-dot",
+        "architecture-url",
+        "archive-url",
+        "author",
+        "brand-taxonomy",
+        "canonical-redirect",
+        "capabilities-contract",
+        "color-taxonomy",
+        "controller-active-filter-chip",
+        "controller-cache-state",
+        "controller-category-checkbox",
+        "controller-color-swatches",
+        "controller-pagination",
+        "controller-price-range",
+        "controller-rating",
+        "controller-search",
+        "controller-sort",
+        "created-at",
+        "device-desktop",
+        "device-mobile",
+        "device-tablet",
+        "editor-supports-layer",
+        "filter-controller-preview",
+        "identity-labels-layer",
+        "items-per-page-state",
+        "last-saved",
+        "managed-cpt-root",
+        "modal-apply",
+        "modal-reset",
+        "optional-layer-dot",
+        "pagination-base",
+        "pagination-type",
+        "permalink-structure",
+        "preview-controller-tab",
+        "preview-info",
+        "preview-states-tab",
+        "preview-url-params-tab",
+        "product-categories-taxonomy",
+        "product-tags-taxonomy",
+        "query-context",
+        "ready-to-save",
+        "registration-contract-selected",
+        "rewrite-contract",
+        "root-valid",
+        "runtime-query-vars",
+        "runtime-render",
+        "runtime-request",
+        "runtime-rest-admin",
+        "runtime-wp-query",
+        "save-contract",
+        "single-url",
+        "state-summary",
+        "taxonomy-admin-column",
+        "taxonomy-attached-to",
+        "taxonomy-filter-source",
+        "taxonomy-hierarchical",
+        "taxonomy-layer-selected",
+        "taxonomy-plural-label",
+        "taxonomy-public",
+        "taxonomy-relationships",
+        "taxonomy-rest-api",
+        "taxonomy-rewrite-slug",
+        "taxonomy-show-ui",
+        "taxonomy-singular-label",
+        "taxonomy-slug",
+        "term-meta-color",
+        "term-meta-featured",
+        "term-meta-icon",
+        "term-meta-order",
+        "term-meta-readiness",
+        "url-sync-state",
+        "visibility-access"
+      ]
+    },
+    {
+      "section": "17-20",
+      "required": 97,
+      "direct": 12,
+      "alias": 85,
+      "unresolved": 0,
+      "unresolved_names": []
+    },
+    {
+      "section": "21-24",
+      "required": 72,
+      "direct": 12,
+      "alias": 60,
+      "unresolved": 0,
+      "unresolved_names": []
+    },
+    {
+      "section": "25-28",
+      "required": 69,
+      "direct": 28,
+      "alias": 41,
+      "unresolved": 0,
+      "unresolved_names": []
+    }
+  ],
+  "all_required_count": 702,
+  "covered_count": 239,
+  "unresolved_count": 463,
+  "unresolved": [
+    "accessibility-state",
+    "action-add-class",
+    "action-collapse-group",
+    "action-disable",
+    "action-hide",
+    "action-remove-class",
+    "action-show",
+    "action-surface",
+    "active-chips",
+    "active-chips-panel",
+    "active-filters-state",
+    "active-modules-state",
+    "add-item-action",
+    "add-quote-button",
+    "admin-behavior",
+    "admin-screen-preview",
+    "admin-ui-contract",
+    "advanced-custom-fields",
+    "after-add-event",
+    "all-valid",
+    "analytics-friendly",
+    "animation-contract",
+    "animation-duration",
+    "annotation-types",
+    "annotation-warning",
+    "announce-changes",
+    "api-preview",
+    "apply-mode-state",
+    "architecture-binding",
+    "architecture-contract",
+    "architecture-documentation",
+    "architecture-evidence",
+    "architecture-health",
+    "architecture-layer-dot",
+    "architecture-output",
+    "architecture-pipeline",
+    "architecture-policy",
+    "architecture-runtime",
+    "architecture-scope",
+    "architecture-url",
+    "archive-url",
+    "aria-label",
+    "assertion",
+    "assertion-budget-button",
+    "assertion-console",
+    "assertion-mobile-layout",
+    "assertion-results-update",
+    "assertion-url-sync",
+    "attachment-targets",
+    "audit-trail",
+    "author",
+    "availability-check",
+    "backdrop-animation",
+    "before-add-event",
+    "block-theme-warning",
+    "body-scroll-lock",
+    "brand-taxonomy",
+    "breakpoint-contract",
+    "browser-back",
+    "budget-action",
+    "budget-action-contract",
+    "buttons",
+    "canonical-mode",
+    "canonical-redirect",
+    "canvas-safe-mode",
+    "capabilities-contract",
+    "capability-contract",
+    "card-button-trigger",
+    "card-count",
+    "cart-fragments-scope",
+    "cart-update-event",
+    "category-taxonomy",
+    "chevron-down",
+    "chevron-right",
+    "clean-reset-url",
+    "clear-item-action",
+    "close-behavior",
+    "close-inspector",
+    "color-meta-field",
+    "color-taxonomy",
+    "compatibility-check",
+    "compatibility-fallbacks",
+    "compatibility-preview",
+    "condition-sources",
+    "conditional-display-rules",
+    "confidence-score",
+    "connector-types",
+    "content-model-preview",
+    "content-source-layer",
+    "contrast-check",
+    "controller-active-filter-chip",
+    "controller-cache-state",
+    "controller-category-checkbox",
+    "controller-color-swatches",
+    "controller-pagination",
+    "controller-placement",
+    "controller-price-range",
+    "controller-rating",
+    "controller-ready",
+    "controller-search",
+    "controller-sort",
+    "controller-wrapper",
+    "cpt-field",
+    "cpt-manager-source",
+    "created-at",
+    "css-variables",
+    "data-mapping",
+    "debounce",
+    "dependency-note",
+    "dependency-policy",
+    "description-node",
+    "design-token-mapper",
+    "desktop-breakpoint",
+    "desktop-preview",
+    "detection-apply-heuristics",
+    "detection-canvas-scan",
+    "detection-confirm-targets",
+    "detection-group-name",
+    "detection-highlight-editor",
+    "detection-scope",
+    "detection-score-candidates",
+    "device-desktop",
+    "device-mobile",
+    "device-tablet",
+    "disabled-state",
+    "dom-heuristics",
+    "drawer-side",
+    "editor-handoff-notes",
+    "editor-highlight",
+    "editor-supports-layer",
+    "elementor-editor-helper",
+    "elementor-globals",
+    "elementor-pro-loop-grid",
+    "elementor-selectors",
+    "environment-check",
+    "evaluation-strategy",
+    "event-deps",
+    "events-compatibility",
+    "evidence-console-log",
+    "evidence-dom-state",
+    "evidence-rest-response",
+    "evidence-retention",
+    "evidence-screenshot",
+    "evidence-timestamp",
+    "export-contract",
+    "external-link",
+    "featured-meta-field",
+    "field-categories",
+    "field-id",
+    "field-image",
+    "field-price",
+    "field-rating",
+    "field-resolver",
+    "field-sale-price",
+    "field-stock",
+    "fields-preview",
+    "filter-controller-preview",
+    "filter-field",
+    "filter-preset",
+    "filter-source",
+    "filter-state-condition",
+    "focus-return",
+    "focus-ring",
+    "focus-trap",
+    "hard-dependency",
+    "has-archive-node",
+    "has-query-var-node",
+    "health-compatibility",
+    "heuristic-article",
+    "heuristic-elementor-post",
+    "heuristic-jet-listing-item",
+    "heuristic-li",
+    "heuristic-product",
+    "hook-after-price",
+    "hook-before-title",
+    "hook-card-actions",
+    "hook-single-summary",
+    "hover-overlay",
+    "identity-labels-layer",
+    "image-presence",
+    "implementation-note",
+    "integration-adapter",
+    "invalid-cleanup",
+    "item-density",
+    "item-identity",
+    "items-per-page-state",
+    "jetengine-connector",
+    "keyboard-close",
+    "labels-node",
+    "landing-cta",
+    "last-saved",
+    "listing-provider",
+    "listing-target",
+    "listing-target-detector",
+    "managed-cpt-root",
+    "manual-selector-fallback",
+    "manual-tokens",
+    "map-image",
+    "map-metadata",
+    "map-permalink",
+    "map-price",
+    "map-quantity",
+    "map-sku",
+    "map-title",
+    "material-meta-field",
+    "material-taxonomy",
+    "menu-icon-node",
+    "meta-box-connector",
+    "meta-field-layer",
+    "mobile-breakpoint",
+    "mobile-preview",
+    "mobile-responsive-filter-panel",
+    "modal-apply",
+    "modal-close",
+    "modal-reset",
+    "model-overview",
+    "more-actions",
+    "namespace-rules",
+    "naming-strategy",
+    "noindex-hints",
+    "note-acknowledged",
+    "note-active",
+    "note-archived",
+    "note-draft",
+    "note-in-progress",
+    "note-resolved",
+    "note-scope",
+    "notifications-reminders",
+    "open-budget-action",
+    "open-in-new-tab",
+    "operator-between",
+    "operator-contains",
+    "operator-empty",
+    "operator-equals",
+    "operator-exists",
+    "operator-greater-than",
+    "operator-not-contains",
+    "operator-not-equals",
+    "operator-not-exists",
+    "optional-layer-dot",
+    "outline-color",
+    "output-events",
+    "overall-score",
+    "overlay",
+    "page-post",
+    "pagination-base",
+    "pagination-type",
+    "panel-animation",
+    "panel-header",
+    "panel-structure",
+    "parameter-category",
+    "parameter-color",
+    "parameter-page",
+    "parameter-price",
+    "parameter-rating",
+    "parameter-registry",
+    "parameter-search",
+    "parameter-sort",
+    "permalink-structure",
+    "pipeline-apply-states",
+    "pipeline-capture-evidence",
+    "pipeline-execute-steps",
+    "pipeline-generate-report",
+    "pipeline-load-sources",
+    "pipeline-map-selectors",
+    "pipeline-normalize",
+    "pipeline-output-css",
+    "pipeline-preview",
+    "pipeline-store-results",
+    "pipeline-validate-setup",
+    "pipeline-verify-assertions",
+    "plugin-palette",
+    "plus",
+    "post-meta-condition",
+    "post-slug-node",
+    "post-type-node",
+    "precondition-cpt-products",
+    "precondition-filter-preset",
+    "precondition-listing-selector",
+    "precondition-simple-budget",
+    "precondition-theme",
+    "preview-action",
+    "preview-admin-tab",
+    "preview-compatibility-tab",
+    "preview-controller-tab",
+    "preview-info",
+    "preview-model-tab",
+    "preview-rest-tab",
+    "preview-states-tab",
+    "preview-stylesheet",
+    "preview-url-params-tab",
+    "price-meta-field",
+    "product-categories-taxonomy",
+    "product-loop-scope",
+    "product-tags-taxonomy",
+    "qa-capture",
+    "qa-checklist",
+    "qa-scenario-runner",
+    "quantity-sync",
+    "query-context",
+    "quote-sent-event",
+    "quote-submit",
+    "rating-meta-field",
+    "ready-to-save",
+    "reduce-motion",
+    "refresh",
+    "registration-contract-layer",
+    "registration-contract-selected",
+    "repeated-class-score",
+    "repetition-scoring",
+    "rest-admin-exposure-layer",
+    "rest-request",
+    "restore-strategy",
+    "rewrite-contract",
+    "rewrite-slug-node",
+    "root-valid",
+    "router-active",
+    "rule-ready",
+    "rule-scope",
+    "runtime-action-apply",
+    "runtime-apply-meta",
+    "runtime-apply-taxonomy",
+    "runtime-breakpoint-check",
+    "runtime-close-panel",
+    "runtime-condition-check",
+    "runtime-event-emit",
+    "runtime-lock-focus",
+    "runtime-order-paginate",
+    "runtime-query-vars",
+    "runtime-render",
+    "runtime-render-panel",
+    "runtime-request",
+    "runtime-resolve-cpt",
+    "runtime-rest-admin",
+    "runtime-resync",
+    "runtime-return-response",
+    "runtime-state-collection",
+    "runtime-trigger-click",
+    "runtime-wp-query",
+    "safe-fallback",
+    "save-action",
+    "save-contract",
+    "scenario-scope",
+    "schema-validation",
+    "scroll-into-view",
+    "search-page-filters",
+    "section-cpts",
+    "section-filters",
+    "section-integrations",
+    "selector-binding",
+    "selector-contract",
+    "selector-fallback",
+    "selector-validation",
+    "serialization-boolean",
+    "serialization-contract",
+    "serialization-date-range",
+    "serialization-encoding",
+    "serialization-list",
+    "serialization-range",
+    "serialization-scalar",
+    "session-fallback",
+    "share-format",
+    "sharing-seo-boundaries",
+    "simple-budget-cart-state",
+    "simple-budget-layer",
+    "single-product-budget",
+    "single-product-button-trigger",
+    "single-product-scope",
+    "single-url",
+    "sku-meta-field",
+    "soft-adapter",
+    "source-contract",
+    "source-layer",
+    "source-markup",
+    "state-default",
+    "state-disabled",
+    "state-enabled",
+    "state-fail",
+    "state-flow-normalize",
+    "state-flow-parse-url",
+    "state-flow-persist",
+    "state-flow-sync-components",
+    "state-flow-update-url",
+    "state-focus",
+    "state-healthy",
+    "state-hover",
+    "state-limited",
+    "state-mapping",
+    "state-missing",
+    "state-optional",
+    "state-pass",
+    "state-read",
+    "state-summary",
+    "state-validate",
+    "state-write",
+    "step-add-budget-item",
+    "step-open-budget-cart",
+    "step-paginate",
+    "step-set-filters",
+    "step-sort-results",
+    "step-submit-quote",
+    "step-visit-page",
+    "sticky-apply-reset",
+    "submit-quote-action",
+    "supports-layer",
+    "tablet-breakpoint",
+    "tablet-preview",
+    "tag-taxonomy",
+    "target-action",
+    "taxonomies-preview",
+    "taxonomy-admin-column",
+    "taxonomy-attached-to",
+    "taxonomy-filter-source",
+    "taxonomy-hierarchical",
+    "taxonomy-layer",
+    "taxonomy-layer-selected",
+    "taxonomy-plural-label",
+    "taxonomy-public",
+    "taxonomy-relationships",
+    "taxonomy-rest-api",
+    "taxonomy-rewrite-slug",
+    "taxonomy-show-ui",
+    "taxonomy-singular-label",
+    "taxonomy-slug",
+    "taxonomy-term-condition",
+    "template",
+    "template-hooks",
+    "term-meta-color",
+    "term-meta-featured",
+    "term-meta-icon",
+    "term-meta-order",
+    "term-meta-readiness",
+    "test-target",
+    "theme-json",
+    "theme-override-detection",
+    "title-presence",
+    "token-border",
+    "token-color",
+    "token-groups",
+    "token-radius",
+    "token-report",
+    "token-shadow",
+    "token-sources",
+    "token-spacing",
+    "token-typography",
+    "toolkit-logo-layers",
+    "trigger-button",
+    "trigger-rules",
+    "ui-feedback",
+    "url-parameter-condition",
+    "url-state-router",
+    "url-structure-node",
+    "url-sync-state",
+    "user-capability-condition",
+    "visibility-access",
+    "visibility-node",
+    "visibility-rules",
+    "visual-content-architecture-builder",
+    "widget-selector",
+    "woocommerce-adapter",
+    "woocommerce-blocks",
+    "woocommerce-cards-adapter",
+    "woocommerce-markup-adapter"
+  ],
+  "suggestions": {
+    "accessibility-state": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "action-add-class": [],
+    "action-collapse-group": [],
+    "action-disable": [],
+    "action-hide": [],
+    "action-remove-class": [],
+    "action-show": [],
+    "action-surface": [],
+    "active-chips": [
+      "state-active",
+      "active-chip",
+      "chips",
+      "active"
+    ],
+    "active-chips-panel": [
+      "state-active",
+      "mobile-panel",
+      "active-chip",
+      "chips",
+      "active"
+    ],
+    "active-filters-state": [
+      "state-active",
+      "state-feedback-loop",
+      "controller-state-machine",
+      "state-warning",
+      "state-valid"
+    ],
+    "active-modules-state": [
+      "state-active",
+      "state-feedback-loop",
+      "controller-state-machine",
+      "state-warning",
+      "state-valid"
+    ],
+    "add-item-action": [
+      "item-boundary"
+    ],
+    "add-quote-button": [],
+    "admin-behavior": [
+      "admin-screen"
+    ],
+    "admin-screen-preview": [
+      "admin-screen",
+      "detection-preview-window",
+      "state-preview",
+      "preview-eye",
+      "preview"
+    ],
+    "admin-ui-contract": [
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "admin-screen",
+      "contract"
+    ],
+    "advanced-custom-fields": [
+      "custom-serializer"
+    ],
+    "after-add-event": [],
+    "all-valid": [
+      "state-valid",
+      "valid"
+    ],
+    "analytics-friendly": [],
+    "animation-contract": [
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "contract"
+    ],
+    "animation-duration": [],
+    "annotation-types": [],
+    "annotation-warning": [
+      "state-warning",
+      "warning"
+    ],
+    "announce-changes": [],
+    "api-preview": [
+      "state-preview",
+      "preview-eye",
+      "preview",
+      "detection-preview-window"
+    ],
+    "apply-mode-state": [
+      "mixed-apply-mode",
+      "state-feedback-loop",
+      "controller-state-machine",
+      "state-warning",
+      "state-valid"
+    ],
+    "architecture-binding": [
+      "binding",
+      "architecture-step-rail"
+    ],
+    "architecture-contract": [
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "contract",
+      "architecture-step-rail"
+    ],
+    "architecture-documentation": [
+      "architecture-step-rail"
+    ],
+    "architecture-evidence": [
+      "architecture-step-rail"
+    ],
+    "architecture-health": [
+      "architecture-step-rail"
+    ],
+    "architecture-layer-dot": [
+      "parent-context-layer",
+      "architecture-step-rail"
+    ],
+    "architecture-output": [
+      "output",
+      "architecture-step-rail"
+    ],
+    "architecture-pipeline": [
+      "architecture-step-rail"
+    ],
+    "architecture-policy": [
+      "architecture-step-rail"
+    ],
+    "architecture-runtime": [
+      "runtime-gear",
+      "runtime",
+      "architecture-step-rail"
+    ],
+    "architecture-scope": [
+      "scope",
+      "architecture-step-rail"
+    ],
+    "architecture-url": [
+      "url-router",
+      "url-chain",
+      "clean-url",
+      "architecture-step-rail"
+    ],
+    "archive-url": [
+      "url-router",
+      "url-chain",
+      "clean-url"
+    ],
+    "aria-label": [],
+    "assertion": [],
+    "assertion-budget-button": [
+      "simple-budget-bridge"
+    ],
+    "assertion-console": [],
+    "assertion-mobile-layout": [
+      "mobile-panel"
+    ],
+    "assertion-results-update": [],
+    "assertion-url-sync": [
+      "url-router",
+      "url-chain",
+      "clean-url"
+    ],
+    "attachment-targets": [],
+    "audit-trail": [],
+    "author": [],
+    "availability-check": [
+      "data-availability"
+    ],
+    "backdrop-animation": [],
+    "before-add-event": [],
+    "block-theme-warning": [
+      "state-warning",
+      "warning"
+    ],
+    "body-scroll-lock": [],
+    "brand-taxonomy": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "breakpoint-contract": [
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "contract"
+    ],
+    "browser-back": [],
+    "budget-action": [
+      "simple-budget-bridge"
+    ],
+    "budget-action-contract": [
+      "simple-budget-bridge",
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "contract"
+    ],
+    "buttons": [],
+    "canonical-mode": [
+      "mixed-apply-mode"
+    ],
+    "canonical-redirect": [],
+    "canvas-safe-mode": [
+      "mixed-apply-mode"
+    ],
+    "capabilities-contract": [
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "contract"
+    ],
+    "capability-contract": [
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "contract"
+    ],
+    "card-button-trigger": [],
+    "card-count": [
+      "result-count"
+    ],
+    "cart-fragments-scope": [
+      "scope"
+    ],
+    "cart-update-event": [],
+    "category-taxonomy": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "chevron-down": [],
+    "chevron-right": [],
+    "clean-reset-url": [
+      "clean-url",
+      "url-router",
+      "url-chain",
+      "reset-refresh"
+    ],
+    "clear-item-action": [
+      "item-boundary"
+    ],
+    "close-behavior": [],
+    "close-inspector": [
+      "root-inspector",
+      "inspector-sliders",
+      "inspector"
+    ],
+    "color-meta-field": [
+      "meta-field",
+      "meta-tag",
+      "color-palette"
+    ],
+    "color-taxonomy": [
+      "taxonomy-folder",
+      "color-palette",
+      "taxonomy"
+    ],
+    "compatibility-check": [],
+    "compatibility-fallbacks": [],
+    "compatibility-preview": [
+      "state-preview",
+      "preview-eye",
+      "preview",
+      "detection-preview-window"
+    ],
+    "condition-sources": [],
+    "conditional-display-rules": [
+      "conditional-rules"
+    ],
+    "confidence-score": [
+      "resolver-confidence-threshold"
+    ],
+    "connector-types": [
+      "connector-registry"
+    ],
+    "content-model-preview": [
+      "detection-preview-window",
+      "state-preview",
+      "preview-eye",
+      "preview"
+    ],
+    "content-source-layer": [
+      "parent-context-layer",
+      "source-database"
+    ],
+    "contrast-check": [],
+    "controller-active-filter-chip": [
+      "active-chip",
+      "filter-object-map",
+      "controller-state-machine",
+      "state-active",
+      "filter-funnel"
+    ],
+    "controller-cache-state": [
+      "controller-state-machine",
+      "state-feedback-loop",
+      "state-warning",
+      "state-valid",
+      "state-preview"
+    ],
+    "controller-category-checkbox": [
+      "controller-state-machine",
+      "checkbox-control",
+      "checkbox"
+    ],
+    "controller-color-swatches": [
+      "controller-state-machine",
+      "color-palette",
+      "swatches"
+    ],
+    "controller-pagination": [
+      "pagination-dots",
+      "pagination",
+      "controller-state-machine"
+    ],
+    "controller-placement": [
+      "controller-state-machine"
+    ],
+    "controller-price-range": [
+      "controller-state-machine",
+      "range-sliders",
+      "range"
+    ],
+    "controller-rating": [
+      "rating-star",
+      "rating",
+      "controller-state-machine"
+    ],
+    "controller-ready": [
+      "controller-state-machine"
+    ],
+    "controller-search": [
+      "search",
+      "controller-state-machine"
+    ],
+    "controller-sort": [
+      "sort-arrows",
+      "sort",
+      "controller-state-machine"
+    ],
+    "controller-wrapper": [
+      "controller-state-machine"
+    ],
+    "cpt-field": [
+      "meta-field"
+    ],
+    "cpt-manager-source": [
+      "source-database"
+    ],
+    "created-at": [],
+    "css-variables": [],
+    "data-mapping": [
+      "data-availability"
+    ],
+    "debounce": [],
+    "dependency-note": [],
+    "dependency-policy": [],
+    "description-node": [],
+    "design-token-mapper": [
+      "token-mapper"
+    ],
+    "desktop-breakpoint": [],
+    "desktop-preview": [
+      "state-preview",
+      "preview-eye",
+      "preview",
+      "detection-preview-window"
+    ],
+    "detection-apply-heuristics": [
+      "mixed-apply-mode",
+      "detection-preview-window",
+      "manual-apply",
+      "apply-strategy"
+    ],
+    "detection-canvas-scan": [
+      "detection-preview-window"
+    ],
+    "detection-confirm-targets": [
+      "detection-preview-window"
+    ],
+    "detection-group-name": [
+      "detection-preview-window"
+    ],
+    "detection-highlight-editor": [
+      "detection-preview-window"
+    ],
+    "detection-scope": [
+      "scope",
+      "detection-preview-window"
+    ],
+    "detection-score-candidates": [
+      "detection-preview-window"
+    ],
+    "device-desktop": [],
+    "device-mobile": [
+      "mobile-panel"
+    ],
+    "device-tablet": [],
+    "disabled-state": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "dom-heuristics": [
+      "dom-code"
+    ],
+    "drawer-side": [],
+    "editor-handoff-notes": [
+      "handoff-notes"
+    ],
+    "editor-highlight": [],
+    "editor-supports-layer": [
+      "parent-context-layer",
+      "supports"
+    ],
+    "elementor-editor-helper": [],
+    "elementor-globals": [],
+    "elementor-pro-loop-grid": [
+      "state-feedback-loop"
+    ],
+    "elementor-selectors": [],
+    "environment-check": [],
+    "evaluation-strategy": [
+      "apply-strategy"
+    ],
+    "event-deps": [],
+    "events-compatibility": [],
+    "evidence-console-log": [],
+    "evidence-dom-state": [
+      "state-feedback-loop",
+      "controller-state-machine",
+      "state-warning",
+      "state-valid",
+      "state-preview"
+    ],
+    "evidence-rest-response": [
+      "rest"
+    ],
+    "evidence-retention": [],
+    "evidence-screenshot": [],
+    "evidence-timestamp": [],
+    "export-contract": [
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "contract"
+    ],
+    "external-link": [],
+    "featured-meta-field": [
+      "meta-field",
+      "meta-tag"
+    ],
+    "field-categories": [
+      "meta-field"
+    ],
+    "field-id": [
+      "meta-field"
+    ],
+    "field-image": [
+      "meta-field"
+    ],
+    "field-price": [
+      "meta-field"
+    ],
+    "field-rating": [
+      "rating-star",
+      "meta-field",
+      "rating"
+    ],
+    "field-resolver": [
+      "meta-field",
+      "resolver-confidence-threshold",
+      "identity-resolver-priority"
+    ],
+    "field-sale-price": [
+      "meta-field"
+    ],
+    "field-stock": [
+      "meta-field"
+    ],
+    "fields-preview": [
+      "state-preview",
+      "preview-eye",
+      "preview",
+      "detection-preview-window"
+    ],
+    "filter-controller-preview": [
+      "filter-object-map",
+      "detection-preview-window",
+      "controller-state-machine",
+      "state-preview",
+      "preview-eye"
+    ],
+    "filter-field": [
+      "meta-field",
+      "filter-funnel",
+      "filter-object-map"
+    ],
+    "filter-preset": [
+      "filter-funnel",
+      "filter-object-map"
+    ],
+    "filter-source": [
+      "source-database",
+      "filter-funnel",
+      "filter-object-map"
+    ],
+    "filter-state-condition": [
+      "state-feedback-loop",
+      "filter-object-map",
+      "controller-state-machine",
+      "state-warning",
+      "state-valid"
+    ],
+    "focus-return": [],
+    "focus-ring": [],
+    "focus-trap": [],
+    "hard-dependency": [],
+    "has-archive-node": [],
+    "has-query-var-node": [
+      "base-query-layers",
+      "query-funnel"
+    ],
+    "health-compatibility": [],
+    "heuristic-article": [],
+    "heuristic-elementor-post": [
+      "post-type-document",
+      "post-type"
+    ],
+    "heuristic-jet-listing-item": [
+      "listing-detector",
+      "item-boundary"
+    ],
+    "heuristic-li": [],
+    "heuristic-product": [],
+    "hook-after-price": [],
+    "hook-before-title": [],
+    "hook-card-actions": [],
+    "hook-single-summary": [],
+    "hover-overlay": [],
+    "identity-labels-layer": [
+      "parent-context-layer",
+      "identity-resolver-priority",
+      "labels"
+    ],
+    "image-presence": [],
+    "implementation-note": [],
+    "integration-adapter": [
+      "woo-adapter"
+    ],
+    "invalid-cleanup": [],
+    "item-density": [
+      "item-boundary"
+    ],
+    "item-identity": [
+      "item-boundary",
+      "identity-resolver-priority"
+    ],
+    "items-per-page-state": [
+      "state-feedback-loop",
+      "controller-state-machine",
+      "state-warning",
+      "state-valid",
+      "state-preview"
+    ],
+    "jetengine-connector": [
+      "connector-registry"
+    ],
+    "keyboard-close": [],
+    "labels-node": [
+      "labels"
+    ],
+    "landing-cta": [],
+    "last-saved": [],
+    "listing-provider": [
+      "provider-database",
+      "listing-detector",
+      "provider-contract-builder",
+      "provider"
+    ],
+    "listing-target": [
+      "target-bullseye",
+      "listing-detector"
+    ],
+    "listing-target-detector": [
+      "listing-detector",
+      "target-bullseye",
+      "detector"
+    ],
+    "managed-cpt-root": [
+      "root-inspector"
+    ],
+    "manual-selector-fallback": [
+      "manual-apply"
+    ],
+    "manual-tokens": [
+      "manual-apply"
+    ],
+    "map-image": [
+      "filter-object-map"
+    ],
+    "map-metadata": [
+      "filter-object-map"
+    ],
+    "map-permalink": [
+      "filter-object-map"
+    ],
+    "map-price": [
+      "filter-object-map"
+    ],
+    "map-quantity": [
+      "filter-object-map"
+    ],
+    "map-sku": [
+      "filter-object-map"
+    ],
+    "map-title": [
+      "filter-object-map"
+    ],
+    "material-meta-field": [
+      "meta-field",
+      "meta-tag"
+    ],
+    "material-taxonomy": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "menu-icon-node": [],
+    "meta-box-connector": [
+      "meta-tag",
+      "meta-field",
+      "connector-registry"
+    ],
+    "meta-field-layer": [
+      "meta-field",
+      "parent-context-layer",
+      "meta-tag"
+    ],
+    "mobile-breakpoint": [
+      "mobile-panel"
+    ],
+    "mobile-preview": [
+      "state-preview",
+      "preview-eye",
+      "mobile-panel",
+      "preview",
+      "detection-preview-window"
+    ],
+    "mobile-responsive-filter-panel": [
+      "mobile-panel",
+      "filter-object-map",
+      "filter-funnel"
+    ],
+    "modal-apply": [
+      "manual-apply",
+      "apply-strategy",
+      "mixed-apply-mode"
+    ],
+    "modal-close": [],
+    "modal-reset": [
+      "reset-refresh"
+    ],
+    "model-overview": [],
+    "more-actions": [],
+    "namespace-rules": [
+      "conditional-rules"
+    ],
+    "naming-strategy": [
+      "apply-strategy"
+    ],
+    "noindex-hints": [],
+    "note-acknowledged": [],
+    "note-active": [
+      "state-active",
+      "active-chip",
+      "active"
+    ],
+    "note-archived": [],
+    "note-draft": [
+      "state-draft",
+      "draft"
+    ],
+    "note-in-progress": [],
+    "note-resolved": [],
+    "note-scope": [
+      "scope"
+    ],
+    "notifications-reminders": [],
+    "open-budget-action": [
+      "simple-budget-bridge"
+    ],
+    "open-in-new-tab": [],
+    "operator-between": [],
+    "operator-contains": [],
+    "operator-empty": [],
+    "operator-equals": [],
+    "operator-exists": [],
+    "operator-greater-than": [],
+    "operator-not-contains": [],
+    "operator-not-equals": [],
+    "operator-not-exists": [],
+    "optional-layer-dot": [
+      "parent-context-layer"
+    ],
+    "outline-color": [
+      "color-palette"
+    ],
+    "output-events": [
+      "output"
+    ],
+    "overall-score": [],
+    "overlay": [],
+    "page-post": [
+      "post-type",
+      "post-type-document"
+    ],
+    "pagination-base": [
+      "pagination-dots",
+      "pagination",
+      "base-query-layers"
+    ],
+    "pagination-type": [
+      "post-type",
+      "pagination-dots",
+      "post-type-document",
+      "pagination"
+    ],
+    "panel-animation": [
+      "mobile-panel"
+    ],
+    "panel-header": [
+      "mobile-panel"
+    ],
+    "panel-structure": [
+      "mobile-panel"
+    ],
+    "parameter-category": [],
+    "parameter-color": [
+      "color-palette"
+    ],
+    "parameter-page": [],
+    "parameter-price": [],
+    "parameter-rating": [
+      "rating-star",
+      "rating"
+    ],
+    "parameter-registry": [
+      "connector-registry"
+    ],
+    "parameter-search": [
+      "search"
+    ],
+    "parameter-sort": [
+      "sort-arrows",
+      "sort"
+    ],
+    "permalink-structure": [],
+    "pipeline-apply-states": [
+      "mixed-apply-mode",
+      "manual-apply",
+      "apply-strategy"
+    ],
+    "pipeline-capture-evidence": [],
+    "pipeline-execute-steps": [],
+    "pipeline-generate-report": [],
+    "pipeline-load-sources": [],
+    "pipeline-map-selectors": [
+      "filter-object-map"
+    ],
+    "pipeline-normalize": [],
+    "pipeline-output-css": [
+      "output"
+    ],
+    "pipeline-preview": [
+      "state-preview",
+      "preview-eye",
+      "preview",
+      "detection-preview-window"
+    ],
+    "pipeline-store-results": [],
+    "pipeline-validate-setup": [],
+    "pipeline-verify-assertions": [],
+    "plugin-palette": [
+      "color-palette"
+    ],
+    "plus": [],
+    "post-meta-condition": [
+      "post-type-document",
+      "post-type",
+      "meta-tag",
+      "meta-field"
+    ],
+    "post-slug-node": [
+      "post-type-document",
+      "post-type"
+    ],
+    "post-type-node": [
+      "post-type-document",
+      "post-type"
+    ],
+    "precondition-cpt-products": [],
+    "precondition-filter-preset": [
+      "filter-object-map",
+      "filter-funnel"
+    ],
+    "precondition-listing-selector": [
+      "listing-detector"
+    ],
+    "precondition-simple-budget": [
+      "simple-budget-bridge"
+    ],
+    "precondition-theme": [],
+    "preview-action": [
+      "state-preview",
+      "preview-eye",
+      "preview",
+      "detection-preview-window"
+    ],
+    "preview-admin-tab": [
+      "detection-preview-window",
+      "state-preview",
+      "preview-eye",
+      "admin-screen",
+      "preview"
+    ],
+    "preview-compatibility-tab": [
+      "detection-preview-window",
+      "state-preview",
+      "preview-eye",
+      "preview"
+    ],
+    "preview-controller-tab": [
+      "detection-preview-window",
+      "controller-state-machine",
+      "state-preview",
+      "preview-eye",
+      "preview"
+    ],
+    "preview-info": [
+      "state-preview",
+      "preview-eye",
+      "preview",
+      "detection-preview-window"
+    ],
+    "preview-model-tab": [
+      "detection-preview-window",
+      "state-preview",
+      "preview-eye",
+      "preview"
+    ],
+    "preview-rest-tab": [
+      "detection-preview-window",
+      "state-preview",
+      "preview-eye",
+      "rest",
+      "preview"
+    ],
+    "preview-states-tab": [
+      "detection-preview-window",
+      "state-preview",
+      "preview-eye",
+      "preview"
+    ],
+    "preview-stylesheet": [
+      "state-preview",
+      "preview-eye",
+      "preview",
+      "detection-preview-window"
+    ],
+    "preview-url-params-tab": [
+      "detection-preview-window",
+      "url-router",
+      "url-chain",
+      "state-preview",
+      "preview-eye"
+    ],
+    "price-meta-field": [
+      "meta-field",
+      "meta-tag"
+    ],
+    "product-categories-taxonomy": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "product-loop-scope": [
+      "state-feedback-loop",
+      "scope"
+    ],
+    "product-tags-taxonomy": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "qa-capture": [
+      "qa-runner"
+    ],
+    "qa-checklist": [
+      "qa-runner"
+    ],
+    "qa-scenario-runner": [
+      "qa-runner"
+    ],
+    "quantity-sync": [],
+    "query-context": [
+      "query-funnel",
+      "context-crosshair",
+      "parent-context-layer",
+      "base-query-layers"
+    ],
+    "quote-sent-event": [],
+    "quote-submit": [],
+    "rating-meta-field": [
+      "meta-field",
+      "rating-star",
+      "meta-tag",
+      "rating"
+    ],
+    "ready-to-save": [
+      "save-disk"
+    ],
+    "reduce-motion": [],
+    "refresh": [
+      "reset-refresh"
+    ],
+    "registration-contract-layer": [
+      "provider-contract-builder",
+      "parent-context-layer",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "registration"
+    ],
+    "registration-contract-selected": [
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "registration",
+      "contract"
+    ],
+    "repeated-class-score": [],
+    "repetition-scoring": [],
+    "rest-admin-exposure-layer": [
+      "parent-context-layer",
+      "admin-screen"
+    ],
+    "rest-request": [
+      "rest"
+    ],
+    "restore-strategy": [
+      "apply-strategy"
+    ],
+    "rewrite-contract": [
+      "rewrite",
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "contract"
+    ],
+    "rewrite-slug-node": [
+      "rewrite"
+    ],
+    "root-valid": [
+      "state-valid",
+      "root-inspector",
+      "valid"
+    ],
+    "router-active": [
+      "url-router",
+      "state-active",
+      "active-chip",
+      "active"
+    ],
+    "rule-ready": [],
+    "rule-scope": [
+      "scope"
+    ],
+    "runtime-action-apply": [
+      "mixed-apply-mode",
+      "runtime-gear",
+      "manual-apply",
+      "apply-strategy",
+      "runtime"
+    ],
+    "runtime-apply-meta": [
+      "mixed-apply-mode",
+      "runtime-gear",
+      "meta-tag",
+      "meta-field",
+      "manual-apply"
+    ],
+    "runtime-apply-taxonomy": [
+      "mixed-apply-mode",
+      "taxonomy-folder",
+      "runtime-gear",
+      "manual-apply",
+      "apply-strategy"
+    ],
+    "runtime-breakpoint-check": [
+      "runtime-gear",
+      "runtime"
+    ],
+    "runtime-close-panel": [
+      "runtime-gear",
+      "mobile-panel",
+      "runtime"
+    ],
+    "runtime-condition-check": [
+      "runtime-gear",
+      "runtime"
+    ],
+    "runtime-event-emit": [
+      "runtime-gear",
+      "runtime"
+    ],
+    "runtime-lock-focus": [
+      "runtime-gear",
+      "runtime"
+    ],
+    "runtime-order-paginate": [
+      "runtime-gear",
+      "runtime"
+    ],
+    "runtime-query-vars": [
+      "base-query-layers",
+      "runtime-gear",
+      "query-funnel",
+      "runtime"
+    ],
+    "runtime-render": [
+      "runtime-gear",
+      "runtime"
+    ],
+    "runtime-render-panel": [
+      "runtime-gear",
+      "mobile-panel",
+      "runtime"
+    ],
+    "runtime-request": [
+      "runtime-gear",
+      "runtime"
+    ],
+    "runtime-resolve-cpt": [
+      "runtime-gear",
+      "runtime"
+    ],
+    "runtime-rest-admin": [
+      "runtime-gear",
+      "admin-screen",
+      "runtime",
+      "rest"
+    ],
+    "runtime-resync": [
+      "runtime-gear",
+      "runtime"
+    ],
+    "runtime-return-response": [
+      "runtime-gear",
+      "runtime"
+    ],
+    "runtime-state-collection": [
+      "state-feedback-loop",
+      "controller-state-machine",
+      "state-warning",
+      "state-valid",
+      "state-preview"
+    ],
+    "runtime-trigger-click": [
+      "runtime-gear",
+      "runtime"
+    ],
+    "runtime-wp-query": [
+      "base-query-layers",
+      "runtime-gear",
+      "query-funnel",
+      "runtime"
+    ],
+    "safe-fallback": [],
+    "save-action": [
+      "save-disk"
+    ],
+    "save-contract": [
+      "save-disk",
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "contract"
+    ],
+    "scenario-scope": [
+      "scope"
+    ],
+    "schema-validation": [
+      "schema",
+      "module-schema-document"
+    ],
+    "scroll-into-view": [],
+    "search-page-filters": [
+      "search"
+    ],
+    "section-cpts": [],
+    "section-filters": [],
+    "section-integrations": [],
+    "selector-binding": [
+      "binding"
+    ],
+    "selector-contract": [
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "contract"
+    ],
+    "selector-fallback": [],
+    "selector-validation": [],
+    "serialization-boolean": [],
+    "serialization-contract": [
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "contract"
+    ],
+    "serialization-date-range": [
+      "range-sliders",
+      "range"
+    ],
+    "serialization-encoding": [],
+    "serialization-list": [],
+    "serialization-range": [
+      "range-sliders",
+      "range"
+    ],
+    "serialization-scalar": [],
+    "session-fallback": [],
+    "share-format": [],
+    "sharing-seo-boundaries": [],
+    "simple-budget-cart-state": [
+      "simple-budget-bridge",
+      "state-feedback-loop",
+      "controller-state-machine",
+      "state-warning",
+      "state-valid"
+    ],
+    "simple-budget-layer": [
+      "simple-budget-bridge",
+      "parent-context-layer"
+    ],
+    "single-product-budget": [
+      "simple-budget-bridge"
+    ],
+    "single-product-button-trigger": [],
+    "single-product-scope": [
+      "scope"
+    ],
+    "single-url": [
+      "url-router",
+      "url-chain",
+      "clean-url"
+    ],
+    "sku-meta-field": [
+      "meta-field",
+      "meta-tag"
+    ],
+    "soft-adapter": [
+      "woo-adapter"
+    ],
+    "source-contract": [
+      "source-database",
+      "provider-contract-builder",
+      "override-contract-badge",
+      "inherited-contract-badge",
+      "contract"
+    ],
+    "source-layer": [
+      "source-database",
+      "parent-context-layer"
+    ],
+    "source-markup": [
+      "source-database"
+    ],
+    "state-default": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-disabled": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-enabled": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-fail": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-flow-normalize": [
+      "state-feedback-loop",
+      "controller-state-machine",
+      "state-warning",
+      "state-valid",
+      "state-preview"
+    ],
+    "state-flow-parse-url": [
+      "state-feedback-loop",
+      "controller-state-machine",
+      "url-router",
+      "url-chain",
+      "state-warning"
+    ],
+    "state-flow-persist": [
+      "state-feedback-loop",
+      "controller-state-machine",
+      "state-warning",
+      "state-valid",
+      "state-preview"
+    ],
+    "state-flow-sync-components": [
+      "state-feedback-loop",
+      "controller-state-machine",
+      "state-warning",
+      "state-valid",
+      "state-preview"
+    ],
+    "state-flow-update-url": [
+      "state-feedback-loop",
+      "controller-state-machine",
+      "url-router",
+      "url-chain",
+      "state-warning"
+    ],
+    "state-focus": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-healthy": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-hover": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-limited": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-mapping": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-missing": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-optional": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-pass": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-read": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-summary": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-validate": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "state-write": [
+      "state-warning",
+      "state-valid",
+      "state-preview",
+      "state-override",
+      "state-locked"
+    ],
+    "step-add-budget-item": [
+      "simple-budget-bridge",
+      "architecture-step-rail",
+      "item-boundary"
+    ],
+    "step-open-budget-cart": [
+      "simple-budget-bridge",
+      "architecture-step-rail"
+    ],
+    "step-paginate": [
+      "architecture-step-rail"
+    ],
+    "step-set-filters": [
+      "architecture-step-rail"
+    ],
+    "step-sort-results": [
+      "architecture-step-rail",
+      "sort-arrows",
+      "sort"
+    ],
+    "step-submit-quote": [
+      "architecture-step-rail"
+    ],
+    "step-visit-page": [
+      "architecture-step-rail"
+    ],
+    "sticky-apply-reset": [
+      "mixed-apply-mode",
+      "reset-refresh",
+      "manual-apply",
+      "apply-strategy"
+    ],
+    "submit-quote-action": [],
+    "supports-layer": [
+      "supports",
+      "parent-context-layer"
+    ],
+    "tablet-breakpoint": [],
+    "tablet-preview": [
+      "state-preview",
+      "preview-eye",
+      "preview",
+      "detection-preview-window"
+    ],
+    "tag-taxonomy": [
+      "taxonomy-folder",
+      "meta-tag",
+      "taxonomy"
+    ],
+    "target-action": [
+      "target-bullseye"
+    ],
+    "taxonomies-preview": [
+      "state-preview",
+      "preview-eye",
+      "preview",
+      "detection-preview-window"
+    ],
+    "taxonomy-admin-column": [
+      "taxonomy-folder",
+      "admin-screen",
+      "taxonomy"
+    ],
+    "taxonomy-attached-to": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "taxonomy-filter-source": [
+      "filter-object-map",
+      "taxonomy-folder",
+      "source-database",
+      "filter-funnel",
+      "taxonomy"
+    ],
+    "taxonomy-hierarchical": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "taxonomy-layer": [
+      "taxonomy-folder",
+      "taxonomy",
+      "parent-context-layer"
+    ],
+    "taxonomy-layer-selected": [
+      "parent-context-layer",
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "taxonomy-plural-label": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "taxonomy-public": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "taxonomy-relationships": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "taxonomy-rest-api": [
+      "taxonomy-folder",
+      "taxonomy",
+      "rest"
+    ],
+    "taxonomy-rewrite-slug": [
+      "taxonomy-folder",
+      "taxonomy",
+      "rewrite"
+    ],
+    "taxonomy-show-ui": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "taxonomy-singular-label": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "taxonomy-slug": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "taxonomy-term-condition": [
+      "taxonomy-folder",
+      "taxonomy"
+    ],
+    "template": [],
+    "template-hooks": [],
+    "term-meta-color": [
+      "meta-tag",
+      "meta-field",
+      "color-palette"
+    ],
+    "term-meta-featured": [
+      "meta-tag",
+      "meta-field"
+    ],
+    "term-meta-icon": [
+      "meta-tag",
+      "meta-field"
+    ],
+    "term-meta-order": [
+      "meta-tag",
+      "meta-field"
+    ],
+    "term-meta-readiness": [
+      "meta-tag",
+      "meta-field"
+    ],
+    "test-target": [
+      "target-bullseye"
+    ],
+    "theme-json": [],
+    "theme-override-detection": [
+      "override-contract-badge",
+      "detection-preview-window",
+      "state-override",
+      "override"
+    ],
+    "title-presence": [],
+    "token-border": [
+      "token-mapper"
+    ],
+    "token-color": [
+      "token-mapper",
+      "color-palette"
+    ],
+    "token-groups": [
+      "token-mapper"
+    ],
+    "token-radius": [
+      "token-mapper"
+    ],
+    "token-report": [
+      "token-mapper"
+    ],
+    "token-shadow": [
+      "token-mapper"
+    ],
+    "token-sources": [
+      "token-mapper"
+    ],
+    "token-spacing": [
+      "token-mapper"
+    ],
+    "token-typography": [
+      "token-mapper"
+    ],
+    "toolkit-logo-layers": [
+      "logo-layers",
+      "base-query-layers"
+    ],
+    "trigger-button": [],
+    "trigger-rules": [
+      "conditional-rules"
+    ],
+    "ui-feedback": [
+      "state-feedback-loop"
+    ],
+    "url-parameter-condition": [
+      "url-router",
+      "url-chain",
+      "clean-url"
+    ],
+    "url-state-router": [
+      "url-router",
+      "state-feedback-loop",
+      "controller-state-machine",
+      "url-chain",
+      "state-warning"
+    ],
+    "url-structure-node": [
+      "url-router",
+      "url-chain",
+      "clean-url"
+    ],
+    "url-sync-state": [
+      "state-feedback-loop",
+      "controller-state-machine",
+      "url-router",
+      "url-chain",
+      "state-warning"
+    ],
+    "user-capability-condition": [],
+    "visibility-access": [],
+    "visibility-node": [],
+    "visibility-rules": [
+      "conditional-rules"
+    ],
+    "visual-content-architecture-builder": [
+      "provider-contract-builder",
+      "architecture-step-rail"
+    ],
+    "widget-selector": [],
+    "woocommerce-adapter": [
+      "woo-adapter"
+    ],
+    "woocommerce-blocks": [],
+    "woocommerce-cards-adapter": [
+      "woo-adapter",
+      "existing-cards"
+    ],
+    "woocommerce-markup-adapter": [
+      "woo-adapter"
+    ]
+  }
+}

@@ -44,6 +44,9 @@ Keep the AI methodical while working inside a large WordPress surface area.
    - cite official docs, local source, schema, command output, or browser
      evidence for implementation-relevant claims;
    - record verification gaps honestly.
+   - when a UI is based on an approved frame, follow
+     `frame-driven-ui-qa.md` before closing the task; lint/render checks alone
+     do not close a visual task.
 
 7. Preserve memory:
    - update docs for human-facing knowledge;

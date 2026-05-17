@@ -1,0 +1,200 @@
+{
+  "pack": "frame-21-24-pack-01",
+  "method": "imagegen chroma-key source -> local chroma removal -> alpha bounding-box crop -> lossless WebP",
+  "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-21-24-icon-source-sheet-01-chroma.png",
+  "processed_alpha_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/processed/frame-21-24-icon-source-sheet-01-alpha.png",
+  "icons": [
+    {
+      "name": "controller-state-machine",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-21-24-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 1,
+        "column": 1
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/controller-state-machine.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/controller-state-machine.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/controller-state-machine.webp",
+      "size": [
+        289,
+        244
+      ],
+      "status": "created"
+    },
+    {
+      "name": "state-feedback-loop",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-21-24-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 1,
+        "column": 2
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/state-feedback-loop.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/state-feedback-loop.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/state-feedback-loop.webp",
+      "size": [
+        230,
+        240
+      ],
+      "status": "created"
+    },
+    {
+      "name": "detection-preview-window",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-21-24-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 1,
+        "column": 3
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/detection-preview-window.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/detection-preview-window.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/detection-preview-window.webp",
+      "size": [
+        278,
+        242
+      ],
+      "status": "created"
+    },
+    {
+      "name": "parent-context-layer",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-21-24-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 2,
+        "column": 1
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/parent-context-layer.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/parent-context-layer.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/parent-context-layer.webp",
+      "size": [
+        257,
+        259
+      ],
+      "status": "created"
+    },
+    {
+      "name": "inherited-contract-badge",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-21-24-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 2,
+        "column": 2
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/inherited-contract-badge.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/inherited-contract-badge.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/inherited-contract-badge.webp",
+      "size": [
+        246,
+        258
+      ],
+      "status": "created"
+    },
+    {
+      "name": "override-contract-badge",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-21-24-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 2,
+        "column": 3
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/override-contract-badge.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/override-contract-badge.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/override-contract-badge.webp",
+      "size": [
+        253,
+        263
+      ],
+      "status": "created"
+    },
+    {
+      "name": "module-schema-document",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-21-24-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 3,
+        "column": 1
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/module-schema-document.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/module-schema-document.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/module-schema-document.webp",
+      "size": [
+        213,
+        261
+      ],
+      "status": "created"
+    },
+    {
+      "name": "options-counts",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-21-24-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 3,
+        "column": 2
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/options-counts.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/options-counts.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/options-counts.webp",
+      "size": [
+        246,
+        319
+      ],
+      "status": "created"
+    },
+    {
+      "name": "provider-contract-builder",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-21-24-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 3,
+        "column": 3
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/provider-contract-builder.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/provider-contract-builder.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/provider-contract-builder.webp",
+      "size": [
+        236,
+        333
+      ],
+      "status": "created"
+    },
+    {
+      "name": "resolver-confidence-threshold",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-21-24-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 4,
+        "column": 1
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/resolver-confidence-threshold.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/resolver-confidence-threshold.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/resolver-confidence-threshold.webp",
+      "size": [
+        252,
+        227
+      ],
+      "status": "created"
+    },
+    {
+      "name": "filter-object-map",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-21-24-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 4,
+        "column": 2
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/filter-object-map.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/filter-object-map.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/filter-object-map.webp",
+      "size": [
+        231,
+        243
+      ],
+      "status": "created"
+    },
+    {
+      "name": "ownership-spine-connectors",
+      "source_sheet": "docs/assets/implementation-toolkit/admin-v0.2/icons/source/frame-21-24-icon-source-sheet-01-chroma.png",
+      "source_cell": {
+        "row": 4,
+        "column": 3
+      },
+      "doc_png": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/ownership-spine-connectors.png",
+      "doc_webp": "docs/assets/implementation-toolkit/admin-v0.2/icons/extracted/frame-21-24-pack-01/ownership-spine-connectors.webp",
+      "plugin_webp": "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/images/icons/ownership-spine-connectors.webp",
+      "size": [
+        202,
+        237
+      ],
+      "status": "created"
+    }
+  ]
+}

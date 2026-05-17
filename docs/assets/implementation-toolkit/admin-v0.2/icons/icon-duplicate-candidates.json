@@ -1,0 +1,158 @@
+{
+  "duplicate_groups": [
+    {
+      "preferred_canonical": "chips",
+      "all_names": [
+        "active-chip",
+        "meta-tag"
+      ],
+      "noncanonical_names": [
+        "active-chip",
+        "meta-tag"
+      ]
+    },
+    {
+      "preferred_canonical": "badge:active",
+      "all_names": [
+        "active",
+        "state-active",
+        "state-valid",
+        "valid"
+      ],
+      "noncanonical_names": [
+        "active",
+        "state-active",
+        "state-valid",
+        "valid"
+      ]
+    },
+    {
+      "preferred_canonical": "logo-layers",
+      "all_names": [
+        "base-query-layers",
+        "logo-layers"
+      ],
+      "noncanonical_names": [
+        "base-query-layers"
+      ]
+    },
+    {
+      "preferred_canonical": "checkbox",
+      "all_names": [
+        "checkbox-control",
+        "checkbox"
+      ],
+      "noncanonical_names": [
+        "checkbox-control"
+      ]
+    },
+    {
+      "preferred_canonical": "badge:warning",
+      "all_names": [
+        "degraded",
+        "state-degraded"
+      ],
+      "noncanonical_names": [
+        "degraded",
+        "state-degraded"
+      ]
+    },
+    {
+      "preferred_canonical": "listing-detector",
+      "all_names": [
+        "detector",
+        "listing-detector"
+      ],
+      "noncanonical_names": [
+        "detector"
+      ]
+    },
+    {
+      "preferred_canonical": "badge:draft",
+      "all_names": [
+        "draft",
+        "state-draft"
+      ],
+      "noncanonical_names": [
+        "draft",
+        "state-draft"
+      ]
+    },
+    {
+      "preferred_canonical": "provider",
+      "all_names": [
+        "inherited",
+        "provider",
+        "state-inherited"
+      ],
+      "noncanonical_names": [
+        "inherited",
+        "state-inherited"
+      ]
+    },
+    {
+      "preferred_canonical": "badge:locked",
+      "all_names": [
+        "locked",
+        "state-locked"
+      ],
+      "noncanonical_names": [
+        "locked",
+        "state-locked"
+      ]
+    },
+    {
+      "preferred_canonical": "badge:override",
+      "all_names": [
+        "override",
+        "state-override"
+      ],
+      "noncanonical_names": [
+        "override",
+        "state-override"
+      ]
+    },
+    {
+      "preferred_canonical": "preview-eye",
+      "all_names": [
+        "preview",
+        "state-preview"
+      ],
+      "noncanonical_names": [
+        "preview",
+        "state-preview"
+      ]
+    },
+    {
+      "preferred_canonical": "source-database",
+      "all_names": [
+        "provider-database",
+        "source-database"
+      ],
+      "noncanonical_names": [
+        "provider-database"
+      ]
+    },
+    {
+      "preferred_canonical": "rating-star",
+      "all_names": [
+        "rating-star",
+        "rating"
+      ],
+      "noncanonical_names": [
+        "rating"
+      ]
+    },
+    {
+      "preferred_canonical": "badge:warning",
+      "all_names": [
+        "state-warning",
+        "warning"
+      ],
+      "noncanonical_names": [
+        "state-warning",
+        "warning"
+      ]
+    }
+  ]
+}
