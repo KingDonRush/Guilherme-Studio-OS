@@ -23,7 +23,7 @@
   "evidence_required": [
     "handoff export"
   ],
-  "status": "pending",
+  "status": "passed",
   "severity": "medium",
   "depends_on": [
     "TASK-009"

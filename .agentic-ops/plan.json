@@ -25,12 +25,12 @@
     "secondary_preset": "visual_front_end_first",
     "preset_reasoning": "The work lives inside WordPress admin and must preserve plugin behavior, but the acceptance source is approved frame fidelity.",
     "mcp_workspace_inspection": {
-      "has_agentic_ops": false,
-      "recommended_mode": "overlay",
+      "has_agentic_ops": true,
+      "recommended_mode": "adopted",
       "overwrite_risks": [
         "AGENTS.md"
       ],
-      "suggested_command": "aops init --non-destructive --overlay --preset cms_wordpress_elementor_low_code"
+      "suggested_command": "No init command needed; overlay already exists."
     },
     "crystallized": [
       "Frames are source of visual success.",
@@ -625,7 +625,7 @@
       "objective": "Close frame 16 and modal behavior without adding runtime filtering.",
       "priority": "high",
       "complexity": "moderate",
-      "status": "pending",
+      "status": "done",
       "phase_id": "PHASE-020",
       "depends_on": [
         "TASK-006"
@@ -682,7 +682,7 @@
       "objective": "Prove visual fidelity, responsive behavior, and admin usability before marking implementation tasks done.",
       "priority": "critical",
       "complexity": "complex",
-      "status": "pending",
+      "status": "done",
       "phase_id": "PHASE-030",
       "depends_on": [
         "TASK-006",
@@ -774,7 +774,7 @@
             "console check result",
             "frame-drift notes"
           ],
-          "status": "pending",
+          "status": "passed",
           "severity": "critical",
           "depends_on": [
             "TASK-007"
@@ -812,7 +812,7 @@
             "console check result",
             "frame-drift notes"
           ],
-          "status": "pending",
+          "status": "passed",
           "severity": "high",
           "depends_on": [
             "TASK-006"
@@ -850,7 +850,7 @@
             "console check result",
             "frame-drift notes"
           ],
-          "status": "pending",
+          "status": "passed",
           "severity": "high",
           "depends_on": [
             "TASK-006"
@@ -888,7 +888,7 @@
             "console check result",
             "frame-drift notes"
           ],
-          "status": "pending",
+          "status": "passed",
           "severity": "high",
           "depends_on": [
             "TASK-006"
@@ -926,7 +926,7 @@
             "console check result",
             "frame-drift notes"
           ],
-          "status": "pending",
+          "status": "passed",
           "severity": "high",
           "depends_on": [
             "TASK-006"
@@ -964,7 +964,7 @@
             "console check result",
             "frame-drift notes"
           ],
-          "status": "pending",
+          "status": "passed",
           "severity": "high",
           "depends_on": [
             "TASK-006"
@@ -1002,7 +1002,7 @@
             "console check result",
             "frame-drift notes"
           ],
-          "status": "pending",
+          "status": "passed",
           "severity": "high",
           "depends_on": [
             "TASK-006"
@@ -1040,7 +1040,7 @@
             "console check result",
             "frame-drift notes"
           ],
-          "status": "pending",
+          "status": "passed",
           "severity": "high",
           "depends_on": [
             "TASK-006"
@@ -1078,7 +1078,7 @@
             "console check result",
             "frame-drift notes"
           ],
-          "status": "pending",
+          "status": "passed",
           "severity": "high",
           "depends_on": [
             "TASK-006"
@@ -1116,7 +1116,7 @@
             "console check result",
             "frame-drift notes"
           ],
-          "status": "pending",
+          "status": "passed",
           "severity": "high",
           "depends_on": [
             "TASK-006"
@@ -1154,7 +1154,7 @@
             "console check result",
             "frame-drift notes"
           ],
-          "status": "pending",
+          "status": "passed",
           "severity": "high",
           "depends_on": [
             "TASK-006"
@@ -1170,7 +1170,7 @@
       "objective": "Leave the plan, implementation evidence, and next action reproducible for the next AI or user review.",
       "priority": "high",
       "complexity": "moderate",
-      "status": "pending",
+      "status": "done",
       "phase_id": "PHASE-030",
       "depends_on": [
         "TASK-008"
@@ -1760,7 +1760,7 @@
         "console check",
         "QA report"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006",
@@ -1792,7 +1792,7 @@
       "evidence_required": [
         "handoff export"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "medium",
       "depends_on": [
         "TASK-009"
@@ -1829,7 +1829,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "critical",
       "depends_on": [
         "TASK-007"
@@ -1867,7 +1867,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -1905,7 +1905,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -1943,7 +1943,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -1981,7 +1981,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -2019,7 +2019,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -2057,7 +2057,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -2095,7 +2095,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -2133,7 +2133,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -2171,7 +2171,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -2209,7 +2209,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"

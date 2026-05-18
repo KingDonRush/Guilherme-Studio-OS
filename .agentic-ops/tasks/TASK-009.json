@@ -5,7 +5,7 @@
   "objective": "Leave the plan, implementation evidence, and next action reproducible for the next AI or user review.",
   "priority": "high",
   "complexity": "moderate",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-030",
   "depends_on": [
     "TASK-008"
@@ -34,7 +34,10 @@
   "verification": [
     "mcp__agentic_ops__.create_snapshot",
     "mcp__agentic_ops__.export_operational_plan",
-    "git status --short --branch"
+    "git status --short --branch",
+    "MCP create_snapshot succeeded after plan status synchronization and produced a snapshot under .agentic-ops/snapshots/.",
+    "MCP export_operational_plan succeeded and .agentic-ops/docs/admin-v0.2-plan-export.md now shows TASK-001 through TASK-009 done and TASK-010 pending.",
+    "Handoff readiness was refreshed so TASK-010 is the next executable MCP task."
   ],
   "budgets": {
     "time_budget": "one closeout pass",
