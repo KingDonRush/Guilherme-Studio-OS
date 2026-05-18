@@ -1,16 +1,17 @@
 {
   "id": "HANDOFF-EIT-ADMIN-V02-AGENTIC-OPS",
-  "current_state": "Agentic Ops overlay is active. TASK-001 through TASK-010 are complete. The Filter Preset first-slice implementation has code, visual QA evidence, snapshot/export evidence, and secondary CPT/Integrations frames are now bounded into future subplans.",
-  "objective": "Use the completed Agentic Ops plan as the baseline for the next approved implementation slice.",
+  "current_state": "Agentic Ops overlay is active. TASK-001 through TASK-013 are complete. The visible plugin admin has been reset from a frame-driven architecture surface to an operational WordPress backend for Filter Presets, Content Models, and provider diagnostics.",
+  "objective": "Use the operational admin reset as the baseline for the next product-focused implementation slice.",
   "preset_used": "cms_wordpress_elementor_low_code",
   "decisions_made": [
     "Use Agentic Ops overlay mode.",
     "Primary preset is CMS/WordPress/Elementor.",
     "Visual Front-End First is secondary validation preset.",
-    "First code slice is Filter Preset admin only."
+    "First code slice is Filter Preset admin only.",
+    "DEC-EIT-011 replaces architecture-builder admin with operational admin."
   ],
   "pending_decisions": [
-    "Choose the next implementation slice from the validated subplans: CPT Manager, Connector Registry, QA Scenario Runner, Editor Handoff Notes, Design Token Mapper, or remaining integration module backlog."
+    "Choose the next implementation slice from product needs, not from the old frame subplans. Likely candidates: slider/range styling depth, Filter Preset CRUD polish, listing diagnostics, or CPT model ergonomics."
   ],
   "plan_structure": {
     "first_phase": "PHASE-000",
@@ -28,12 +29,15 @@
     "TASK-007",
     "TASK-008",
     "TASK-009",
-    "TASK-010"
+    "TASK-010",
+    "TASK-011",
+    "TASK-012",
+    "TASK-013"
   ],
   "pending_tasks": [],
   "risks": [
-    "Visual frames can contain generated inconsistencies.",
-    "Implementation can drift into runtime adapters if secondary frames are not deferred.",
+    "Legacy architecture-builder classes remain in source but are no longer visible product routes.",
+    "Implementation can drift into runtime adapters if provider diagnostics are not kept honest.",
     "Browser cache can hide CSS module changes because admin assets use the plugin version as a static cache key."
   ],
   "research_packets": [
@@ -54,21 +58,22 @@
     "TEST-EIT-OVERLAY-SAFETY",
     "TEST-EIT-WP-ADMIN-SAFETY",
     "TEST-EIT-FRAME-VISUAL-QA",
-    "TEST-EIT-HANDOFF-READINESS"
+    "TEST-EIT-HANDOFF-READINESS",
+    "TEST-EIT-OPERATIONAL-ADMIN"
   ],
   "next_steps": [
-    "Select one validated subplan as a new implementation task before touching code.",
-    "Keep runtime filtering, listing grid, frontend adapters, and integration runtime scope deferred unless the new task explicitly approves them.",
-    "Use TASK-006, TASK-007, TASK-008, and TASK-009 evidence as the first-slice baseline.",
-    "Do not reopen the completed Filter Preset first-slice implementation unless a regression is found."
+    "Do not resume CPT/Integrations frame implementation from the old subplans without a fresh product decision.",
+    "Prioritize real product ergonomics: range/slider styling depth, Filter Preset CRUD polish, listing data diagnostics, and CPT model usability.",
+    "Keep runtime listing grid rendering and deep provider adapters deferred unless a new product task explicitly approves them.",
+    "Use docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-011/operational-admin-report.md as the reset evidence packet."
   ],
   "do_not_reopen": [
     "Do not reopen the decision that WordPress admin chrome remains visible.",
-    "Do not reopen the first-slice boundary unless the user explicitly changes scope.",
-    "Do not turn preview into a grid/listing renderer.",
-    "Do not treat frame 25 as a screen or frame 28 as the default shell."
+    "Do not put frame/source-plan language back into visible product UI.",
+    "Do not treat the old architecture graph as the CPT Manager foundation.",
+    "Do not turn provider diagnostics into deep adapters without explicit approval."
   ],
-  "how_to_continue_briefing_user": "Report TASK-010 as closed and ask the user which validated subplan should become the next implementation slice.",
+  "how_to_continue_briefing_user": "Report TASK-011 through TASK-013 as closed and ask whether the next product slice should focus on slider/range styling, preset CRUD polish, listing diagnostics, or CPT ergonomics.",
   "first_recommended_cli_command": "No init command needed; overlay already exists.",
-  "first_recommended_mcp_prompt": "Choose a validated subplan, create a new bounded implementation task from it, and preserve the runtime deferrals unless explicitly approved."
+  "first_recommended_mcp_prompt": "Create the next product task from the operational admin reset, not from the old frame backlog, and preserve runtime adapter deferrals unless explicitly approved."
 }

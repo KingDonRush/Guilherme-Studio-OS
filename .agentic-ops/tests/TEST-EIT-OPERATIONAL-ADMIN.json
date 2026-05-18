@@ -1,0 +1,37 @@
+{
+  "id": "TEST-EIT-OPERATIONAL-ADMIN",
+  "type": "integration_test",
+  "target": "TASK-011,TASK-012,TASK-013",
+  "objective": "Verify the visible WordPress admin surface is operational and no longer exposes architecture-builder process language.",
+  "preconditions": [
+    "Operational admin implementation exists.",
+    "Plugin is available in the local WordPress runtime."
+  ],
+  "steps": [
+    "Render Dashboard, Filter Presets, CPT Manager, and Integrations pages through WP-CLI.",
+    "Assert the rendered HTML does not include visible frame-builder product terms.",
+    "Assert Filter Presets and CPT Manager expose forms or actions for real saved options.",
+    "Check state-changing actions for nonce and capability enforcement."
+  ],
+  "expected_result": "Admin pages behave as product tools for presets and content models rather than as a visual frame plan.",
+  "pass_criteria": [
+    "no visible Frame chip or architecture-builder copy",
+    "Filter Presets page has save and delete affordances",
+    "CPT Manager page has save and delete affordances",
+    "nonce fields exist on save forms",
+    "PHP lint passes"
+  ],
+  "evidence_required": [
+    "WP-CLI render smoke output",
+    "PHP lint output",
+    "code references for capability and nonce checks"
+  ],
+  "status": "passed",
+  "severity": "critical",
+  "depends_on": [
+    "TASK-011",
+    "TASK-012",
+    "TASK-013"
+  ],
+  "subtests": []
+}
