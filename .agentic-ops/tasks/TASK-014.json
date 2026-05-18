@@ -1,0 +1,62 @@
+{
+  "id": "TASK-014",
+  "title": "Add Elementor bridge templates for filter presets",
+  "description": "Create a Simple Budget-style Elementor template bridge for filter presets so presets can be edited visually in Elementor instead of becoming a confusing admin builder.",
+  "objective": "Let an implementer create a plugin-owned Elementor template from a filter preset, open it in Elementor, and keep the preset selected in the Filter Controller starter widget.",
+  "priority": "critical",
+  "complexity": "moderate",
+  "status": "done",
+  "phase_id": "PHASE-041",
+  "depends_on": [
+    "TASK-011",
+    "TASK-012"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "DEC-EIT-012",
+    "Simple Budget CartTemplateManager pattern",
+    "FilterPresets option contract",
+    "FilterController preset selection"
+  ],
+  "expected_outputs": [
+    "Filter Presets admin shows a clear Elementor bridge panel.",
+    "Existing presets can create Elementor templates owned by the plugin.",
+    "Template rows can be edited in Elementor or deleted with nonce and ownership checks.",
+    "Starter template contains the Filter Controller configured to consume the selected preset."
+  ],
+  "acceptance_criteria": [
+    "Template creation requires manage_options and a nonce.",
+    "Template manager verifies Elementor availability before creating templates.",
+    "Created templates are elementor_library posts tagged with EIT role and preset metadata.",
+    "Edit links route to Elementor's edit URL when available.",
+    "Delete action validates ownership and delete_post capability."
+  ],
+  "verification": [
+    "MCP validate_task for TASK-014.",
+    "WP-CLI smoke creates a template for a preset when Elementor is available.",
+    "WP-CLI smoke verifies ownership metadata and starter widget settings.",
+    "PHP lint passes.",
+    "MCP validate_task for TASK-014 returned valid.",
+    "WP-CLI smoke created a plugin-owned Elementor template from a preset and verified role/preset metadata.",
+    "Full plugin PHP lint passed."
+  ],
+  "budgets": {
+    "time_budget": "one focused implementation batch",
+    "complexity_budget": "moderate",
+    "context_budget": "FilterPresetAdmin plus one template helper class",
+    "research_budget": "reuse local Simple Budget pattern only",
+    "iteration_budget": "two",
+    "scope_budget": "admin bridge and starter template only",
+    "ambiguity_budget": "low",
+    "validation_budget": "MCP plus WP-CLI smoke plus lint"
+  },
+  "risks": [
+    "Elementor may be inactive in a target site, so admin must show a warning and fail safely.",
+    "This does not register Elementor Pro Theme Builder conditions.",
+    "Template starter data can drift if Elementor changes document APIs."
+  ],
+  "research_required": false,
+  "requires_human_validation": false,
+  "subtasks": [],
+  "subplans": []
+}

@@ -1,17 +1,18 @@
 {
   "id": "HANDOFF-EIT-ADMIN-V02-AGENTIC-OPS",
-  "current_state": "Agentic Ops overlay is active. TASK-001 through TASK-013 are complete. The visible plugin admin has been reset from a frame-driven architecture surface to an operational WordPress backend for Filter Presets, Content Models, and provider diagnostics.",
-  "objective": "Use the operational admin reset as the baseline for the next product-focused implementation slice.",
+  "current_state": "Agentic Ops overlay is active. TASK-001 through TASK-016 are complete. The visible plugin admin has been reset from a frame-driven architecture surface to an operational WordPress backend for Filter Presets, Post Types, Elementor bridge templates, and provider diagnostics.",
+  "objective": "Use the product admin bridge as the baseline for the next product-focused implementation slice.",
   "preset_used": "cms_wordpress_elementor_low_code",
   "decisions_made": [
     "Use Agentic Ops overlay mode.",
     "Primary preset is CMS/WordPress/Elementor.",
     "Visual Front-End First is secondary validation preset.",
     "First code slice is Filter Preset admin only.",
-    "DEC-EIT-011 replaces architecture-builder admin with operational admin."
+    "DEC-EIT-011 replaces architecture-builder admin with operational admin.",
+    "DEC-EIT-012 makes the admin a product bridge: presets create Elementor templates, while Post Types expose a repeatable field builder with advanced WordPress options collapsed."
   ],
   "pending_decisions": [
-    "Choose the next implementation slice from product needs, not from the old frame subplans. Likely candidates: slider/range styling depth, Filter Preset CRUD polish, listing diagnostics, or CPT model ergonomics."
+    "Choose the next implementation slice from product needs, not from the old frame subplans. Likely candidates: range/slider styling depth, preset template insertion/selection ergonomics, listing diagnostics, or managed field rendering polish."
   ],
   "plan_structure": {
     "first_phase": "PHASE-000",
@@ -32,13 +33,18 @@
     "TASK-010",
     "TASK-011",
     "TASK-012",
-    "TASK-013"
+    "TASK-013",
+    "TASK-014",
+    "TASK-015",
+    "TASK-016"
   ],
   "pending_tasks": [],
   "risks": [
     "Legacy architecture-builder classes remain in source but are no longer visible product routes.",
     "Implementation can drift into runtime adapters if provider diagnostics are not kept honest.",
-    "Browser cache can hide CSS module changes because admin assets use the plugin version as a static cache key."
+    "Browser cache can hide admin asset changes if the plugin version is not bumped with JS/CSS behavior changes.",
+    "The Elementor bridge creates plugin-owned Elementor library templates but does not register Elementor Pro Theme Builder conditions.",
+    "The field builder uses dynamic browser rows but keeps an 80-field server-side safety cap."
   ],
   "research_packets": [
     "RESEARCH-EIT-001",
@@ -59,13 +65,15 @@
     "TEST-EIT-WP-ADMIN-SAFETY",
     "TEST-EIT-FRAME-VISUAL-QA",
     "TEST-EIT-HANDOFF-READINESS",
-    "TEST-EIT-OPERATIONAL-ADMIN"
+    "TEST-EIT-OPERATIONAL-ADMIN",
+    "TEST-EIT-PRODUCT-ADMIN-BRIDGE"
   ],
   "next_steps": [
     "Do not resume CPT/Integrations frame implementation from the old subplans without a fresh product decision.",
-    "Prioritize real product ergonomics: range/slider styling depth, Filter Preset CRUD polish, listing data diagnostics, and CPT model usability.",
+    "Prioritize real product ergonomics: range/slider styling depth, preset template insertion/selection ergonomics, listing data diagnostics, and managed field rendering polish.",
     "Keep runtime listing grid rendering and deep provider adapters deferred unless a new product task explicitly approves them.",
-    "Use docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-011/operational-admin-report.md as the reset evidence packet."
+    "Use docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-011/operational-admin-report.md as the reset evidence packet.",
+    "Use docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-014-016/product-admin-bridge-report.md as the product bridge evidence packet."
   ],
   "do_not_reopen": [
     "Do not reopen the decision that WordPress admin chrome remains visible.",
@@ -73,7 +81,7 @@
     "Do not treat the old architecture graph as the CPT Manager foundation.",
     "Do not turn provider diagnostics into deep adapters without explicit approval."
   ],
-  "how_to_continue_briefing_user": "Report TASK-011 through TASK-013 as closed and ask whether the next product slice should focus on slider/range styling, preset CRUD polish, listing diagnostics, or CPT ergonomics.",
+  "how_to_continue_briefing_user": "Report TASK-014 through TASK-016 as closed. The next slice should be product-specific: range/slider styling depth, preset template insertion/selection ergonomics, listing diagnostics, or managed field rendering polish.",
   "first_recommended_cli_command": "No init command needed; overlay already exists.",
-  "first_recommended_mcp_prompt": "Create the next product task from the operational admin reset, not from the old frame backlog, and preserve runtime adapter deferrals unless explicitly approved."
+  "first_recommended_mcp_prompt": "Create the next product task from the product admin bridge, not from the old frame backlog, and preserve runtime adapter deferrals unless explicitly approved."
 }

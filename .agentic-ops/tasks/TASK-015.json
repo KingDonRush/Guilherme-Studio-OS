@@ -1,0 +1,63 @@
+{
+  "id": "TASK-015",
+  "title": "Replace CPT meta UI with repeatable field builder",
+  "description": "Turn the CPT form into a clearer post type builder with dynamically repeatable fields and taxonomies, keeping advanced registration settings present but not dominant.",
+  "objective": "Make CPT creation feel like a simpler JetEngine workflow: define the post type, add as many fields as needed through an add-row control, and expose common field types without overwhelming the first view.",
+  "priority": "critical",
+  "complexity": "moderate",
+  "status": "done",
+  "phase_id": "PHASE-041",
+  "depends_on": [
+    "TASK-013"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "DEC-EIT-012",
+    "CptManager saved option contract",
+    "Current CptManagerAdmin form",
+    "WordPress nonce/capability requirements"
+  ],
+  "expected_outputs": [
+    "CPT admin uses Post Types naming instead of vague content-model wording.",
+    "Meta fields and taxonomies use add/remove repeaters instead of fixed blank row blocks.",
+    "Common field types include text, textarea, number, URL, email, date/time variants, checkbox, select, radio, color, image URL, and gallery URLs.",
+    "Advanced WordPress registration options are collapsed away from the main path.",
+    "Server-side sanitization and safety caps remain enforced."
+  ],
+  "acceptance_criteria": [
+    "A new CPT form can add multiple meta fields from the browser without predefined row count limits.",
+    "Existing saved fields still render and save through the same option schema.",
+    "Blank repeater rows are ignored server-side.",
+    "Meta field type allowlist and sanitization cover every exposed field type.",
+    "State-changing saves keep manage_options and nonce checks."
+  ],
+  "verification": [
+    "MCP validate_task for TASK-015.",
+    "WP-CLI option contract smoke saves a CPT with at least three meta fields.",
+    "PHP lint passes.",
+    "Browser smoke checks the add-field button creates additional inputs without overflow.",
+    "MCP validate_task for TASK-015 returned valid.",
+    "WP-CLI option contract smoke saved a CPT with three meta fields.",
+    "Browser smoke changed field rows from 1 to 3 and taxonomy rows from 0 to 1.",
+    "Full plugin PHP lint passed."
+  ],
+  "budgets": {
+    "time_budget": "one focused implementation batch",
+    "complexity_budget": "moderate",
+    "context_budget": "CptManagerAdmin, CptManager, admin JS/CSS",
+    "research_budget": "local code evidence only",
+    "iteration_budget": "two",
+    "scope_budget": "CPT admin UX and supported field types only",
+    "ambiguity_budget": "medium",
+    "validation_budget": "MCP plus WP-CLI smoke plus browser smoke"
+  },
+  "risks": [
+    "The UI can say unlimited while the server must still cap payload size for safety; copy should avoid promising literal infinity.",
+    "Adding unsupported JetEngine-like types would be worse than a simpler honest type set.",
+    "Changing saved option keys would break existing definitions, so the schema must remain compatible."
+  ],
+  "research_required": false,
+  "requires_human_validation": false,
+  "subtasks": [],
+  "subplans": []
+}
