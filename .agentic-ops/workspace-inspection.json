@@ -12,11 +12,11 @@
   "docs": [
     "docs"
   ],
-  "has_agentic_ops": false,
+  "has_agentic_ops": true,
   "overwrite_risks": [
     "AGENTS.md"
   ],
-  "recommended_mode": "overlay",
+  "recommended_mode": "adopted",
   "notes": [
     "Existing agentic instructions detected. Use non-destructive overlay mode."
   ]

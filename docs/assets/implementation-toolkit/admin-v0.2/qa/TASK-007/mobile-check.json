@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "hidden": false,
+  "ariaHidden": "false",
+  "activeMatchesDialog": true,
+  "viewport": {
+    "width": 390,
+    "height": 900
+  },
+  "bodyScrollWidth": 390,
+  "horizontalOverflow": false,
+  "dialogRect": {
+    "width": 342,
+    "height": 852,
+    "left": 24,
+    "right": 366
+  },
+  "maxHeight": "852px",
+  "overflow": "auto",
+  "overscrollBehavior": "contain",
+  "dialogClientHeight": 850,
+  "dialogScrollHeight": 940,
+  "dialogCanScroll": true,
+  "frontendGridSelectors": 0
+}

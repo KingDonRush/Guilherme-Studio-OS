@@ -1,0 +1,19 @@
+{
+  "ok": true,
+  "beforeEscape": {
+    "hidden": false,
+    "activeMatchesDialog": true
+  },
+  "afterEscape": {
+    "hidden": true,
+    "ariaHidden": "true",
+    "bodyOpen": false,
+    "focusReturnedToTrigger": true
+  },
+  "afterTabFromLast": {
+    "hidden": false,
+    "activeIsInsideModal": true,
+    "activeIsCloseButton": true,
+    "activeTag": "BUTTON"
+  }
+}

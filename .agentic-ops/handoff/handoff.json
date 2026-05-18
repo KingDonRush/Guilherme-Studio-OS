@@ -1,7 +1,7 @@
 {
   "id": "HANDOFF-EIT-ADMIN-V02-AGENTIC-OPS",
-  "current_state": "Agentic Ops MCP adaptation documented; .agentic-ops/ overlay not initialized by this artifact.",
-  "objective": "Continue by initializing overlay mode, importing/validating this plan, then executing the Filter Preset first slice.",
+  "current_state": "Agentic Ops overlay is active. TASK-001 through TASK-007 are complete. The Filter Preset controller-only preview modal is implemented with browser evidence and no runtime listing/grid behavior.",
+  "objective": "Continue with TASK-008 frame-driven visual QA, then TASK-009 snapshot/export and handoff.",
   "preset_used": "cms_wordpress_elementor_low_code",
   "decisions_made": [
     "Use Agentic Ops overlay mode.",
@@ -10,9 +10,8 @@
     "First code slice is Filter Preset admin only."
   ],
   "pending_decisions": [
-    "Approve root .agentic-ops/ overlay creation if strict root containment remains a concern.",
-    "Confirm current local Elementor/WordPress versions before code edits.",
-    "Confirm existing plugin source path and reusable code before implementation."
+    "Decide whether TASK-008 should re-run the full implemented frame set or only refresh evidence affected by TASK-007.",
+    "Confirm whether secondary frames should remain deferred until TASK-010 after TASK-008 closes."
   ],
   "plan_structure": {
     "first_phase": "PHASE-000",
@@ -20,23 +19,24 @@
     "first_code_task": "TASK-005",
     "first_qa_task": "TASK-008"
   },
-  "completed_tasks": [],
-  "pending_tasks": [
+  "completed_tasks": [
     "TASK-001",
     "TASK-002",
     "TASK-003",
     "TASK-004",
     "TASK-005",
     "TASK-006",
-    "TASK-007",
+    "TASK-007"
+  ],
+  "pending_tasks": [
     "TASK-008",
     "TASK-009",
     "TASK-010"
   ],
   "risks": [
-    "Root .agentic-ops/ overlay may need explicit acceptance because AGENTS.md says nothing else should live in repository root.",
     "Visual frames can contain generated inconsistencies.",
-    "Implementation can drift into runtime adapters if secondary frames are not deferred."
+    "Implementation can drift into runtime adapters if secondary frames are not deferred.",
+    "Browser cache can hide CSS module changes because admin assets use the plugin version as a static cache key."
   ],
   "research_packets": [
     "RESEARCH-EIT-001",
@@ -59,10 +59,10 @@
     "TEST-EIT-HANDOFF-READINESS"
   ],
   "next_steps": [
-    "Run mcp__agentic_ops__.validate_plan against this JSON.",
-    "If accepted, initialize overlay with aops init --non-destructive --overlay --preset cms_wordpress_elementor_low_code.",
-    "Import this plan into .agentic-ops/ and validate phases/tasks/tests before code edits.",
-    "Start TASK-004 before touching plugin source."
+    "Start TASK-008 and run frame-driven visual QA against the implemented Filter Preset states.",
+    "Use the TASK-007 evidence as the frame-16/modal baseline.",
+    "Do not reopen runtime filtering, listing grid, or frontend adapter scope during TASK-008.",
+    "After TASK-008 passes, run TASK-009 snapshot/export through the Agentic Ops MCP."
   ],
   "do_not_reopen": [
     "Do not reopen the decision that WordPress admin chrome remains visible.",
@@ -70,7 +70,7 @@
     "Do not turn preview into a grid/listing renderer.",
     "Do not treat frame 25 as a screen or frame 28 as the default shell."
   ],
-  "how_to_continue_briefing_user": "Report MCP validation status, root overlay impact, and the next executable task.",
-  "first_recommended_cli_command": "aops init --non-destructive --overlay --preset cms_wordpress_elementor_low_code",
-  "first_recommended_mcp_prompt": "Inspect this WordPress workspace, validate docs/implementation-toolkit/admin-v0.2-agentic-ops-plan.json, then prepare overlay import without overwriting AGENTS.md."
+  "how_to_continue_briefing_user": "Report TASK-007 as closed, cite the evidence folder, and name TASK-008 as the next executable MCP task.",
+  "first_recommended_cli_command": "No init command needed; overlay already exists.",
+  "first_recommended_mcp_prompt": "Validate TASK-008, run frame-driven visual QA from the existing TASK-006 and TASK-007 evidence, then prepare TASK-009 snapshot/export."
 }

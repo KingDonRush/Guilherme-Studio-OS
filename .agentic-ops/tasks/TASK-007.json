@@ -5,7 +5,7 @@
   "objective": "Close frame 16 and modal behavior without adding runtime filtering.",
   "priority": "high",
   "complexity": "moderate",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-020",
   "depends_on": [
     "TASK-006"
@@ -34,7 +34,12 @@
     "Open/close modal in browser.",
     "Capture desktop and mobile screenshots.",
     "Confirm no console errors.",
-    "Confirm preview does not save data."
+    "Confirm preview does not save data.",
+    "Implemented focus target, return-focus, Escape close, backdrop close, and Tab containment for the controller-only modal.",
+    "Added modal viewport containment so mobile uses internal dialog scrolling instead of page-level overflow.",
+    "WP-CLI render smoke returned preview-modal:ok for architecture-preview.",
+    "Playwright evidence recorded under docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-007 with desktop and mobile screenshots, open/no-save check, keyboard/focus check, mobile overflow check, and console error log.",
+    "QA confirmed No listing grid marker, 0 frontend grid selectors, 0 new resources on modal open, 0 browser console errors, no page-level horizontal overflow, and no runtime filtering or save path introduced."
   ],
   "budgets": {
     "time_budget": "one implementation pass",
