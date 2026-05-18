@@ -5,7 +5,7 @@
   "objective": "Prove visual fidelity, responsive behavior, and admin usability before marking implementation tasks done.",
   "priority": "critical",
   "complexity": "complex",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-030",
   "depends_on": [
     "TASK-006",
@@ -39,7 +39,11 @@
     "Use Playwright screenshots.",
     "Inspect console logs.",
     "Compare screenshots to source frames.",
-    "Record QA report."
+    "Record QA report.",
+    "Consolidated TASK-006 and TASK-007 screenshot evidence under docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-008/evidence-manifest.json.",
+    "Recorded TASK-008 QA report under docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-008/qa-report.md.",
+    "Confirmed desktop and mobile screenshot evidence exists for frames 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, and 27.",
+    "Confirmed QA records 0 browser console errors, no page-level horizontal overflow, no frontend grid selectors in the modal, and no runtime filtering/listing implementation."
   ],
   "budgets": {
     "time_budget": "one QA pass per state group",
@@ -97,7 +101,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "critical",
       "depends_on": [
         "TASK-007"
@@ -135,7 +139,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -173,7 +177,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -211,7 +215,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -249,7 +253,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -287,7 +291,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -325,7 +329,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -363,7 +367,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -401,7 +405,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -439,7 +443,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"
@@ -477,7 +481,7 @@
         "console check result",
         "frame-drift notes"
       ],
-      "status": "pending",
+      "status": "passed",
       "severity": "high",
       "depends_on": [
         "TASK-006"

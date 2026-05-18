@@ -1,7 +1,7 @@
 {
   "id": "HANDOFF-EIT-ADMIN-V02-AGENTIC-OPS",
-  "current_state": "Agentic Ops overlay is active. TASK-001 through TASK-007 are complete. The Filter Preset controller-only preview modal is implemented with browser evidence and no runtime listing/grid behavior.",
-  "objective": "Continue with TASK-008 frame-driven visual QA, then TASK-009 snapshot/export and handoff.",
+  "current_state": "Agentic Ops overlay is active. TASK-001 through TASK-008 are complete. The Filter Preset first-slice implementation has consolidated frame-driven QA evidence with no runtime listing/grid behavior.",
+  "objective": "Continue with TASK-009 snapshot/export and handoff, then TASK-010 secondary frame subplans.",
   "preset_used": "cms_wordpress_elementor_low_code",
   "decisions_made": [
     "Use Agentic Ops overlay mode.",
@@ -10,8 +10,8 @@
     "First code slice is Filter Preset admin only."
   ],
   "pending_decisions": [
-    "Decide whether TASK-008 should re-run the full implemented frame set or only refresh evidence affected by TASK-007.",
-    "Confirm whether secondary frames should remain deferred until TASK-010 after TASK-008 closes."
+    "Confirm whether TASK-009 should create a fresh snapshot/export immediately or after one more handoff review.",
+    "Confirm whether secondary frames should remain deferred until TASK-010 subplans are created."
   ],
   "plan_structure": {
     "first_phase": "PHASE-000",
@@ -26,10 +26,10 @@
     "TASK-004",
     "TASK-005",
     "TASK-006",
-    "TASK-007"
+    "TASK-007",
+    "TASK-008"
   ],
   "pending_tasks": [
-    "TASK-008",
     "TASK-009",
     "TASK-010"
   ],
@@ -59,10 +59,10 @@
     "TEST-EIT-HANDOFF-READINESS"
   ],
   "next_steps": [
-    "Start TASK-008 and run frame-driven visual QA against the implemented Filter Preset states.",
-    "Use the TASK-007 evidence as the frame-16/modal baseline.",
-    "Do not reopen runtime filtering, listing grid, or frontend adapter scope during TASK-008.",
-    "After TASK-008 passes, run TASK-009 snapshot/export through the Agentic Ops MCP."
+    "Start TASK-009 and create an Agentic Ops snapshot.",
+    "Export the operational plan through the Agentic Ops MCP.",
+    "Refresh handoff after snapshot/export paths are known.",
+    "Do not reopen runtime filtering, listing grid, or frontend adapter scope during TASK-009."
   ],
   "do_not_reopen": [
     "Do not reopen the decision that WordPress admin chrome remains visible.",
@@ -70,7 +70,7 @@
     "Do not turn preview into a grid/listing renderer.",
     "Do not treat frame 25 as a screen or frame 28 as the default shell."
   ],
-  "how_to_continue_briefing_user": "Report TASK-007 as closed, cite the evidence folder, and name TASK-008 as the next executable MCP task.",
+  "how_to_continue_briefing_user": "Report TASK-008 as closed, cite the consolidated evidence folder, and name TASK-009 as the next executable MCP task.",
   "first_recommended_cli_command": "No init command needed; overlay already exists.",
-  "first_recommended_mcp_prompt": "Validate TASK-008, run frame-driven visual QA from the existing TASK-006 and TASK-007 evidence, then prepare TASK-009 snapshot/export."
+  "first_recommended_mcp_prompt": "Run TASK-009 by creating an Agentic Ops snapshot, exporting the operational plan, validating the refreshed handoff, and recording the resulting paths."
 }

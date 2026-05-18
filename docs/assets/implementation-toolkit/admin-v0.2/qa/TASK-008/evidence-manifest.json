@@ -1,0 +1,53 @@
+{
+  "task_id": "TASK-008",
+  "source_frames": [
+    "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-16.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-17.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-18.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-19.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-20.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-21.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-22.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-23.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-24.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-26.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-27.png"
+  ],
+  "desktop_screenshots": [
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/desktop/frame-20-root.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/desktop/frame-19-provider.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/desktop/frame-18-price-module.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/desktop/frame-17-output.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/desktop/frame-24-object-map.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/desktop/frame-23-provider-builder.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/desktop/frame-22-price-schema.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/desktop/frame-21-output-runtime.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/desktop/frame-26-architecture-preview.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/desktop/frame-27-visual-builder.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-007/desktop/controller-preview-desktop.png"
+  ],
+  "mobile_screenshots": [
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/mobile/frame-20-root-mobile.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/mobile/frame-19-provider-mobile.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/mobile/frame-18-price-module-mobile.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/mobile/frame-17-output-mobile.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/mobile/frame-24-object-map-mobile.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/mobile/frame-23-provider-builder-mobile.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/mobile/frame-22-price-schema-mobile.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/mobile/frame-21-output-runtime-mobile.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/mobile/frame-26-architecture-preview-mobile.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/mobile/frame-27-visual-builder-mobile.png",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-007/mobile/controller-preview-mobile.png"
+  ],
+  "qa_reports": [
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-006/qa-report.md",
+    "docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-007/qa-report.md"
+  ],
+  "checks": {
+    "desktop_overflow": "TASK-006 recorded scrollWidth === clientWidth === 1440 for all ten implemented states.",
+    "mobile_overflow": "TASK-006 recorded scrollWidth === clientWidth === 390 after the frame-18 fix; TASK-007 recorded no page-level horizontal overflow for the modal.",
+    "modal_no_save": "TASK-007 open-check recorded 0 new resources on modal open.",
+    "console_errors": "TASK-006 and TASK-007 console checks recorded 0 errors.",
+    "runtime_scope": "No runtime filtering, listing/grid renderer, REST behavior, CPT registration, or adapter implementation was added."
+  }
+}
