@@ -1,44 +1,44 @@
 {
-  "id": "SUBPLAN-CPT-MANAGER",
+  "id": "SUBPLAN-EDITOR-HANDOFF-NOTES",
   "parent_task_id": "TASK-010",
-  "title": "CPT Manager admin states",
-  "purpose": "Promote CPT frames into a future bounded Admin V0.2 subplan after the Filter Preset slice passes QA.",
-  "scope_boundary": "CPT Manager admin contract states only; no new CPT runtime behavior unless separately approved.",
-  "entry_condition": "TASK-009 snapshot/export exists and first-slice QA has passed or gaps are explicit.",
-  "exit_condition": "CPT frames are mapped into executable tasks with tests and forbidden runtime expansion.",
+  "title": "Editor Handoff Notes admin contract",
+  "purpose": "Promote frame 03 into a bounded future admin handoff/annotation state.",
+  "scope_boundary": "Admin-only handoff notes, selector contracts, dependency notes, and audit trail UI; no live Elementor editor overlay or notification workflow.",
+  "entry_condition": "TASK-009 snapshot/export is complete and the WordPress-contained Toolkit shell remains the canonical container.",
+  "exit_condition": "Editor Handoff Notes tasks and visual tests are defined with editor runtime deferred.",
   "max_depth": 1,
   "allowed_expansion": [
-    "Create CPT admin state tasks.",
-    "Create CPT visual QA tests."
+    "Define handoff note cards and statuses.",
+    "Define selector/dependency/visibility note sections.",
+    "Define audit trail and attachment target admin display."
   ],
   "forbidden_expansion": [
-    "Template binding runtime.",
-    "Archive helper runtime.",
-    "WooCommerce-style builder surface."
+    "Inject annotations into the Elementor editor canvas.",
+    "Send notifications or reminders.",
+    "Create live collaboration, assignment, or workflow automation."
   ],
   "budgets": {
-    "time_budget": "one planning pass after first slice",
+    "time_budget": "one planning pass",
     "complexity_budget": "complex",
-    "context_budget": "secondary frames plus first-slice evidence",
+    "context_budget": "frame 03 plus source-of-truth handoff rules",
     "research_budget": "light",
     "iteration_budget": "one",
-    "scope_budget": "future backlog/subplans only",
+    "scope_budget": "admin contract only",
     "ambiguity_budget": "medium",
-    "validation_budget": "validate_subplan for each"
+    "validation_budget": "validate_subplan"
   },
   "tasks": [
-    "Frame 15: plan Managed CPT Root Overview as the CPT manager entry state.",
-    "Frame 12: plan CPT Manager Meta Field Selected as selected-child architecture state.",
-    "Frame 13: plan CPT Taxonomy Layer Selected as selected-child architecture state.",
-    "Frame 14: plan CPT Registration Contract Selected as contract-flow architecture state.",
-    "Frame 11: plan Content Model Preview Modal as a controller/admin preview, not runtime registration output."
+    "Frame 03: Editor Handoff Notes overview.",
+    "Define note scope, page/template/widget target, filter preset target, CPT field target, and integration adapter target.",
+    "Define warning, implementation note, QA checklist, selector contract, dependency note, and visibility rule note types.",
+    "Define visual QA for note state badges, inspector, and attachment targets."
   ],
   "tests": [
     {
-      "id": "TEST-CPT-MANAGER-001",
+      "id": "TEST-EDITOR-HANDOFF-NOTES-001",
       "type": "handoff_test",
-      "target": "SUBPLAN-CPT-MANAGER",
-      "objective": "Create one visual test per CPT frame before implementation.",
+      "target": "SUBPLAN-EDITOR-HANDOFF-NOTES",
+      "objective": "Visual test for frame 03 desktop and mobile.",
       "preconditions": [
         "TASK-010 has promoted secondary frames into bounded subplans.",
         "Runtime adapter work remains deferred unless separately approved."
@@ -55,7 +55,7 @@
         "future visual or regression check is named"
       ],
       "evidence_required": [
-        ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+        ".agentic-ops/subplans/SUBPLAN-EDITOR-HANDOFF-NOTES.json"
       ],
       "status": "pending",
       "severity": "medium",
@@ -65,10 +65,10 @@
       "subtests": []
     },
     {
-      "id": "TEST-CPT-MANAGER-002",
+      "id": "TEST-EDITOR-HANDOFF-NOTES-002",
       "type": "handoff_test",
-      "target": "SUBPLAN-CPT-MANAGER",
-      "objective": "Create a regression test that existing eit_cpt_definitions save/register behavior remains intact.",
+      "target": "SUBPLAN-EDITOR-HANDOFF-NOTES",
+      "objective": "Regression test that no Elementor editor overlay or notification runtime is introduced.",
       "preconditions": [
         "TASK-010 has promoted secondary frames into bounded subplans.",
         "Runtime adapter work remains deferred unless separately approved."
@@ -85,7 +85,7 @@
         "future visual or regression check is named"
       ],
       "evidence_required": [
-        ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+        ".agentic-ops/subplans/SUBPLAN-EDITOR-HANDOFF-NOTES.json"
       ],
       "status": "pending",
       "severity": "medium",
@@ -95,10 +95,10 @@
       "subtests": []
     },
     {
-      "id": "TEST-CPT-MANAGER-003",
+      "id": "TEST-EDITOR-HANDOFF-NOTES-003",
       "type": "handoff_test",
-      "target": "SUBPLAN-CPT-MANAGER",
-      "objective": "Create a security test for existing CPT nonce, capability, sanitization, and escaping boundaries.",
+      "target": "SUBPLAN-EDITOR-HANDOFF-NOTES",
+      "objective": "Console check for the handoff notes admin state.",
       "preconditions": [
         "TASK-010 has promoted secondary frames into bounded subplans.",
         "Runtime adapter work remains deferred unless separately approved."
@@ -115,7 +115,7 @@
         "future visual or regression check is named"
       ],
       "evidence_required": [
-        ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+        ".agentic-ops/subplans/SUBPLAN-EDITOR-HANDOFF-NOTES.json"
       ],
       "status": "pending",
       "severity": "medium",
@@ -127,8 +127,8 @@
   ],
   "completion_criteria": [
     "Subplan validates.",
-    "Each CPT frame has a bounded task or explicit deferral.",
-    "Runtime work remains deferred."
+    "Frame 03 can become implementation tasks without editor runtime scope.",
+    "Annotation and notification work remains deferred."
   ],
-  "handoff_notes": "Use source-of-truth frame classification before tasking CPT work."
+  "handoff_notes": "Keep handoff notes as a documented admin contract until a separate editor integration task exists."
 }

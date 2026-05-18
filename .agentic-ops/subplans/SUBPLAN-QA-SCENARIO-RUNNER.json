@@ -1,44 +1,44 @@
 {
-  "id": "SUBPLAN-CPT-MANAGER",
+  "id": "SUBPLAN-QA-SCENARIO-RUNNER",
   "parent_task_id": "TASK-010",
-  "title": "CPT Manager admin states",
-  "purpose": "Promote CPT frames into a future bounded Admin V0.2 subplan after the Filter Preset slice passes QA.",
-  "scope_boundary": "CPT Manager admin contract states only; no new CPT runtime behavior unless separately approved.",
-  "entry_condition": "TASK-009 snapshot/export exists and first-slice QA has passed or gaps are explicit.",
-  "exit_condition": "CPT frames are mapped into executable tasks with tests and forbidden runtime expansion.",
+  "title": "QA Scenario Runner admin contract",
+  "purpose": "Promote frame 02 into a bounded future admin QA scenario dossier.",
+  "scope_boundary": "Admin-only scenario planning, precondition, step, assertion, and evidence UI; no real browser runner or test automation engine inside the plugin.",
+  "entry_condition": "TASK-009 snapshot/export is complete and QA evidence patterns from TASK-006 through TASK-008 are available.",
+  "exit_condition": "QA Scenario Runner tasks and tests are defined with execution runtime deferred.",
   "max_depth": 1,
   "allowed_expansion": [
-    "Create CPT admin state tasks.",
-    "Create CPT visual QA tests."
+    "Define scenario cards, precondition rows, step rows, assertion rows, and evidence slots.",
+    "Define admin-only result state examples.",
+    "Define visual QA requirements based on frame 02."
   ],
   "forbidden_expansion": [
-    "Template binding runtime.",
-    "Archive helper runtime.",
-    "WooCommerce-style builder surface."
+    "Build a Playwright runner inside WordPress.",
+    "Execute live page visits from the plugin.",
+    "Persist test evidence beyond documented admin contract mock state."
   ],
   "budgets": {
-    "time_budget": "one planning pass after first slice",
+    "time_budget": "one planning pass",
     "complexity_budget": "complex",
-    "context_budget": "secondary frames plus first-slice evidence",
+    "context_budget": "frame 02 plus existing QA evidence conventions",
     "research_budget": "light",
     "iteration_budget": "one",
-    "scope_budget": "future backlog/subplans only",
+    "scope_budget": "admin contract only",
     "ambiguity_budget": "medium",
-    "validation_budget": "validate_subplan for each"
+    "validation_budget": "validate_subplan"
   },
   "tasks": [
-    "Frame 15: plan Managed CPT Root Overview as the CPT manager entry state.",
-    "Frame 12: plan CPT Manager Meta Field Selected as selected-child architecture state.",
-    "Frame 13: plan CPT Taxonomy Layer Selected as selected-child architecture state.",
-    "Frame 14: plan CPT Registration Contract Selected as contract-flow architecture state.",
-    "Frame 11: plan Content Model Preview Modal as a controller/admin preview, not runtime registration output."
+    "Frame 02: QA Scenario Runner overview.",
+    "Define scenario scope, preconditions, steps, assertions, evidence, and report pipeline as admin data.",
+    "Define pass/fail/degraded visual states without executing tests.",
+    "Define visual QA for scenario rows, inspector, and evidence slots."
   ],
   "tests": [
     {
-      "id": "TEST-CPT-MANAGER-001",
+      "id": "TEST-QA-SCENARIO-RUNNER-001",
       "type": "handoff_test",
-      "target": "SUBPLAN-CPT-MANAGER",
-      "objective": "Create one visual test per CPT frame before implementation.",
+      "target": "SUBPLAN-QA-SCENARIO-RUNNER",
+      "objective": "Visual test for frame 02 desktop and mobile.",
       "preconditions": [
         "TASK-010 has promoted secondary frames into bounded subplans.",
         "Runtime adapter work remains deferred unless separately approved."
@@ -55,7 +55,7 @@
         "future visual or regression check is named"
       ],
       "evidence_required": [
-        ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+        ".agentic-ops/subplans/SUBPLAN-QA-SCENARIO-RUNNER.json"
       ],
       "status": "pending",
       "severity": "medium",
@@ -65,10 +65,10 @@
       "subtests": []
     },
     {
-      "id": "TEST-CPT-MANAGER-002",
+      "id": "TEST-QA-SCENARIO-RUNNER-002",
       "type": "handoff_test",
-      "target": "SUBPLAN-CPT-MANAGER",
-      "objective": "Create a regression test that existing eit_cpt_definitions save/register behavior remains intact.",
+      "target": "SUBPLAN-QA-SCENARIO-RUNNER",
+      "objective": "Regression test that no local browser automation runtime is added to the plugin.",
       "preconditions": [
         "TASK-010 has promoted secondary frames into bounded subplans.",
         "Runtime adapter work remains deferred unless separately approved."
@@ -85,7 +85,7 @@
         "future visual or regression check is named"
       ],
       "evidence_required": [
-        ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+        ".agentic-ops/subplans/SUBPLAN-QA-SCENARIO-RUNNER.json"
       ],
       "status": "pending",
       "severity": "medium",
@@ -95,10 +95,10 @@
       "subtests": []
     },
     {
-      "id": "TEST-CPT-MANAGER-003",
+      "id": "TEST-QA-SCENARIO-RUNNER-003",
       "type": "handoff_test",
-      "target": "SUBPLAN-CPT-MANAGER",
-      "objective": "Create a security test for existing CPT nonce, capability, sanitization, and escaping boundaries.",
+      "target": "SUBPLAN-QA-SCENARIO-RUNNER",
+      "objective": "Console check for the QA admin state.",
       "preconditions": [
         "TASK-010 has promoted secondary frames into bounded subplans.",
         "Runtime adapter work remains deferred unless separately approved."
@@ -115,7 +115,7 @@
         "future visual or regression check is named"
       ],
       "evidence_required": [
-        ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+        ".agentic-ops/subplans/SUBPLAN-QA-SCENARIO-RUNNER.json"
       ],
       "status": "pending",
       "severity": "medium",
@@ -127,8 +127,8 @@
   ],
   "completion_criteria": [
     "Subplan validates.",
-    "Each CPT frame has a bounded task or explicit deferral.",
-    "Runtime work remains deferred."
+    "Frame 02 can become implementation tasks without runtime automation scope.",
+    "QA execution remains external to the plugin unless separately approved."
   ],
-  "handoff_notes": "Use source-of-truth frame classification before tasking CPT work."
+  "handoff_notes": "This subplan documents QA scenarios as product evidence; it does not turn the plugin into a test runner."
 }

@@ -1,44 +1,49 @@
 {
-  "id": "SUBPLAN-CPT-MANAGER",
+  "id": "SUBPLAN-INTEGRATION-MODULE-BACKLOG",
   "parent_task_id": "TASK-010",
-  "title": "CPT Manager admin states",
-  "purpose": "Promote CPT frames into a future bounded Admin V0.2 subplan after the Filter Preset slice passes QA.",
-  "scope_boundary": "CPT Manager admin contract states only; no new CPT runtime behavior unless separately approved.",
-  "entry_condition": "TASK-009 snapshot/export exists and first-slice QA has passed or gaps are explicit.",
-  "exit_condition": "CPT frames are mapped into executable tasks with tests and forbidden runtime expansion.",
+  "title": "Remaining integration module backlog",
+  "purpose": "Keep frames 05 through 10 available as future bounded admin contract modules without expanding runtime scope.",
+  "scope_boundary": "Backlog planning for admin contract states only; no conditional display runtime, URL routing runtime, target detector runtime, mobile panel runtime, WooCommerce adapter, or Simple Budget bridge behavior.",
+  "entry_condition": "TASK-009 snapshot/export is complete and the four named Integrations subplans have explicit boundaries.",
+  "exit_condition": "Frames 05 through 10 are either mapped to future admin-only tasks or explicitly deferred with stop conditions.",
   "max_depth": 1,
   "allowed_expansion": [
-    "Create CPT admin state tasks.",
-    "Create CPT visual QA tests."
+    "Create future admin-only tasks for frames 05 through 10.",
+    "Create visual QA tests for each frame before implementation.",
+    "Record runtime adapter decisions as deferred."
   ],
   "forbidden_expansion": [
-    "Template binding runtime.",
-    "Archive helper runtime.",
-    "WooCommerce-style builder surface."
+    "Build Conditional Display Rules runtime.",
+    "Build URL State Router runtime.",
+    "Build Listing Target Detector runtime.",
+    "Build Mobile Responsive Filter Panel runtime.",
+    "Build WooCommerce Cards Adapter runtime.",
+    "Build Simple Budget Bridge runtime."
   ],
   "budgets": {
-    "time_budget": "one planning pass after first slice",
+    "time_budget": "one planning pass",
     "complexity_budget": "complex",
-    "context_budget": "secondary frames plus first-slice evidence",
+    "context_budget": "frames 05 through 10 plus source-of-truth deferral rules",
     "research_budget": "light",
     "iteration_budget": "one",
-    "scope_budget": "future backlog/subplans only",
+    "scope_budget": "backlog only",
     "ambiguity_budget": "medium",
-    "validation_budget": "validate_subplan for each"
+    "validation_budget": "validate_subplan"
   },
   "tasks": [
-    "Frame 15: plan Managed CPT Root Overview as the CPT manager entry state.",
-    "Frame 12: plan CPT Manager Meta Field Selected as selected-child architecture state.",
-    "Frame 13: plan CPT Taxonomy Layer Selected as selected-child architecture state.",
-    "Frame 14: plan CPT Registration Contract Selected as contract-flow architecture state.",
-    "Frame 11: plan Content Model Preview Modal as a controller/admin preview, not runtime registration output."
+    "Frame 05: Conditional Display Rules admin contract, runtime deferred.",
+    "Frame 06: URL State Router admin contract, runtime deferred.",
+    "Frame 07: Listing Target Detector admin contract, runtime deferred.",
+    "Frame 08: Mobile Responsive Filter Panel admin contract, runtime deferred.",
+    "Frame 09: WooCommerce Cards Adapter admin contract, runtime deferred.",
+    "Frame 10: Simple Budget Bridge admin contract, runtime deferred."
   ],
   "tests": [
     {
-      "id": "TEST-CPT-MANAGER-001",
+      "id": "TEST-INTEGRATION-MODULE-BACKLOG-001",
       "type": "handoff_test",
-      "target": "SUBPLAN-CPT-MANAGER",
-      "objective": "Create one visual test per CPT frame before implementation.",
+      "target": "SUBPLAN-INTEGRATION-MODULE-BACKLOG",
+      "objective": "Create visual tests for frames 05 through 10 before implementation.",
       "preconditions": [
         "TASK-010 has promoted secondary frames into bounded subplans.",
         "Runtime adapter work remains deferred unless separately approved."
@@ -55,7 +60,7 @@
         "future visual or regression check is named"
       ],
       "evidence_required": [
-        ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+        ".agentic-ops/subplans/SUBPLAN-INTEGRATION-MODULE-BACKLOG.json"
       ],
       "status": "pending",
       "severity": "medium",
@@ -65,10 +70,10 @@
       "subtests": []
     },
     {
-      "id": "TEST-CPT-MANAGER-002",
+      "id": "TEST-INTEGRATION-MODULE-BACKLOG-002",
       "type": "handoff_test",
-      "target": "SUBPLAN-CPT-MANAGER",
-      "objective": "Create a regression test that existing eit_cpt_definitions save/register behavior remains intact.",
+      "target": "SUBPLAN-INTEGRATION-MODULE-BACKLOG",
+      "objective": "Create regression tests proving no runtime adapter behavior is introduced by admin-only states.",
       "preconditions": [
         "TASK-010 has promoted secondary frames into bounded subplans.",
         "Runtime adapter work remains deferred unless separately approved."
@@ -85,7 +90,7 @@
         "future visual or regression check is named"
       ],
       "evidence_required": [
-        ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+        ".agentic-ops/subplans/SUBPLAN-INTEGRATION-MODULE-BACKLOG.json"
       ],
       "status": "pending",
       "severity": "medium",
@@ -95,10 +100,10 @@
       "subtests": []
     },
     {
-      "id": "TEST-CPT-MANAGER-003",
+      "id": "TEST-INTEGRATION-MODULE-BACKLOG-003",
       "type": "handoff_test",
-      "target": "SUBPLAN-CPT-MANAGER",
-      "objective": "Create a security test for existing CPT nonce, capability, sanitization, and escaping boundaries.",
+      "target": "SUBPLAN-INTEGRATION-MODULE-BACKLOG",
+      "objective": "Create console and responsive checks for each future state.",
       "preconditions": [
         "TASK-010 has promoted secondary frames into bounded subplans.",
         "Runtime adapter work remains deferred unless separately approved."
@@ -115,7 +120,7 @@
         "future visual or regression check is named"
       ],
       "evidence_required": [
-        ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+        ".agentic-ops/subplans/SUBPLAN-INTEGRATION-MODULE-BACKLOG.json"
       ],
       "status": "pending",
       "severity": "medium",
@@ -127,8 +132,8 @@
   ],
   "completion_criteria": [
     "Subplan validates.",
-    "Each CPT frame has a bounded task or explicit deferral.",
-    "Runtime work remains deferred."
+    "Every frame from 05 through 10 has a named future task or explicit deferral.",
+    "Runtime adapter work remains deferred unless separately approved."
   ],
-  "handoff_notes": "Use source-of-truth frame classification before tasking CPT work."
+  "handoff_notes": "This backlog prevents frames 05 through 10 from leaking into the completed Filter Preset first slice."
 }

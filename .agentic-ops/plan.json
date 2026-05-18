@@ -654,7 +654,12 @@
         "Open/close modal in browser.",
         "Capture desktop and mobile screenshots.",
         "Confirm no console errors.",
-        "Confirm preview does not save data."
+        "Confirm preview does not save data.",
+        "Implemented focus target, return-focus, Escape close, backdrop close, and Tab containment for the controller-only modal.",
+        "Added modal viewport containment so mobile uses internal dialog scrolling instead of page-level overflow.",
+        "WP-CLI render smoke returned preview-modal:ok for architecture-preview.",
+        "Playwright evidence recorded under docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-007 with desktop and mobile screenshots, open/no-save check, keyboard/focus check, mobile overflow check, and console error log.",
+        "QA confirmed No listing grid marker, 0 frontend grid selectors, 0 new resources on modal open, 0 browser console errors, no page-level horizontal overflow, and no runtime filtering or save path introduced."
       ],
       "budgets": {
         "time_budget": "one implementation pass",
@@ -716,7 +721,11 @@
         "Use Playwright screenshots.",
         "Inspect console logs.",
         "Compare screenshots to source frames.",
-        "Record QA report."
+        "Record QA report.",
+        "Consolidated TASK-006 and TASK-007 screenshot evidence under docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-008/evidence-manifest.json.",
+        "Recorded TASK-008 QA report under docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-008/qa-report.md.",
+        "Confirmed desktop and mobile screenshot evidence exists for frames 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, and 27.",
+        "Confirmed QA records 0 browser console errors, no page-level horizontal overflow, no frontend grid selectors in the modal, and no runtime filtering/listing implementation."
       ],
       "budgets": {
         "time_budget": "one QA pass per state group",
@@ -1199,7 +1208,10 @@
       "verification": [
         "mcp__agentic_ops__.create_snapshot",
         "mcp__agentic_ops__.export_operational_plan",
-        "git status --short --branch"
+        "git status --short --branch",
+        "MCP create_snapshot succeeded after plan status synchronization and produced a snapshot under .agentic-ops/snapshots/.",
+        "MCP export_operational_plan succeeded and .agentic-ops/docs/admin-v0.2-plan-export.md now shows TASK-001 through TASK-009 done and TASK-010 pending.",
+        "Handoff readiness was refreshed so TASK-010 is the next executable MCP task."
       ],
       "budgets": {
         "time_budget": "one closeout pass",
@@ -1226,7 +1238,7 @@
       "objective": "Keep frames 01-15 useful without bloating the first implementation pass.",
       "priority": "medium",
       "complexity": "complex",
-      "status": "pending",
+      "status": "done",
       "phase_id": "PHASE-040",
       "depends_on": [
         "TASK-009"
@@ -1252,7 +1264,12 @@
       ],
       "verification": [
         "mcp__agentic_ops__.validate_subplan for each created subplan.",
-        "MCP export after subplans are added."
+        "MCP export after subplans are added.",
+        "Expanded SUBPLAN-CPT-MANAGER with frame 11 through 15 tasks and tests.",
+        "Expanded SUBPLAN-INTEGRATIONS-DOSSIER with child subplan routing.",
+        "Created bounded subplans for Connector Registry, QA Scenario Runner, Editor Handoff Notes, Design Token Mapper, and remaining integration module backlog.",
+        "Validated all TASK-010 subplans with mcp__agentic_ops__.validate_subplan.",
+        "Kept all runtime adapter work explicitly forbidden or deferred."
       ],
       "budgets": {
         "time_budget": "one planning pass after first slice",
@@ -1281,6 +1298,31 @@
           "id": "SUBPLAN-INTEGRATIONS-DOSSIER",
           "title": "Integrations dossier frames",
           "path": ".agentic-ops/subplans/SUBPLAN-INTEGRATIONS-DOSSIER.json"
+        },
+        {
+          "id": "SUBPLAN-CONNECTOR-REGISTRY",
+          "title": "Connector Registry admin contract",
+          "path": ".agentic-ops/subplans/SUBPLAN-CONNECTOR-REGISTRY.json"
+        },
+        {
+          "id": "SUBPLAN-QA-SCENARIO-RUNNER",
+          "title": "QA Scenario Runner admin contract",
+          "path": ".agentic-ops/subplans/SUBPLAN-QA-SCENARIO-RUNNER.json"
+        },
+        {
+          "id": "SUBPLAN-EDITOR-HANDOFF-NOTES",
+          "title": "Editor Handoff Notes admin contract",
+          "path": ".agentic-ops/subplans/SUBPLAN-EDITOR-HANDOFF-NOTES.json"
+        },
+        {
+          "id": "SUBPLAN-DESIGN-TOKEN-MAPPER",
+          "title": "Design Token Mapper admin contract",
+          "path": ".agentic-ops/subplans/SUBPLAN-DESIGN-TOKEN-MAPPER.json"
+        },
+        {
+          "id": "SUBPLAN-INTEGRATION-MODULE-BACKLOG",
+          "title": "Remaining integration module backlog",
+          "path": ".agentic-ops/subplans/SUBPLAN-INTEGRATION-MODULE-BACKLOG.json"
         }
       ]
     }

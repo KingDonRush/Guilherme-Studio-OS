@@ -5,7 +5,7 @@
   "objective": "Keep frames 01-15 useful without bloating the first implementation pass.",
   "priority": "medium",
   "complexity": "complex",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-040",
   "depends_on": [
     "TASK-009"
@@ -31,7 +31,12 @@
   ],
   "verification": [
     "mcp__agentic_ops__.validate_subplan for each created subplan.",
-    "MCP export after subplans are added."
+    "MCP export after subplans are added.",
+    "Expanded SUBPLAN-CPT-MANAGER with frame 11 through 15 tasks and tests.",
+    "Expanded SUBPLAN-INTEGRATIONS-DOSSIER with child subplan routing.",
+    "Created bounded subplans for Connector Registry, QA Scenario Runner, Editor Handoff Notes, Design Token Mapper, and remaining integration module backlog.",
+    "Validated all TASK-010 subplans with mcp__agentic_ops__.validate_subplan.",
+    "Kept all runtime adapter work explicitly forbidden or deferred."
   ],
   "budgets": {
     "time_budget": "one planning pass after first slice",
@@ -60,6 +65,31 @@
       "id": "SUBPLAN-INTEGRATIONS-DOSSIER",
       "title": "Integrations dossier frames",
       "path": ".agentic-ops/subplans/SUBPLAN-INTEGRATIONS-DOSSIER.json"
+    },
+    {
+      "id": "SUBPLAN-CONNECTOR-REGISTRY",
+      "title": "Connector Registry admin contract",
+      "path": ".agentic-ops/subplans/SUBPLAN-CONNECTOR-REGISTRY.json"
+    },
+    {
+      "id": "SUBPLAN-QA-SCENARIO-RUNNER",
+      "title": "QA Scenario Runner admin contract",
+      "path": ".agentic-ops/subplans/SUBPLAN-QA-SCENARIO-RUNNER.json"
+    },
+    {
+      "id": "SUBPLAN-EDITOR-HANDOFF-NOTES",
+      "title": "Editor Handoff Notes admin contract",
+      "path": ".agentic-ops/subplans/SUBPLAN-EDITOR-HANDOFF-NOTES.json"
+    },
+    {
+      "id": "SUBPLAN-DESIGN-TOKEN-MAPPER",
+      "title": "Design Token Mapper admin contract",
+      "path": ".agentic-ops/subplans/SUBPLAN-DESIGN-TOKEN-MAPPER.json"
+    },
+    {
+      "id": "SUBPLAN-INTEGRATION-MODULE-BACKLOG",
+      "title": "Remaining integration module backlog",
+      "path": ".agentic-ops/subplans/SUBPLAN-INTEGRATION-MODULE-BACKLOG.json"
     }
   ]
 }

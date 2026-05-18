@@ -1,7 +1,7 @@
 {
   "id": "HANDOFF-EIT-ADMIN-V02-AGENTIC-OPS",
-  "current_state": "Agentic Ops overlay is active. TASK-001 through TASK-009 are complete. The Filter Preset first-slice implementation has code, visual QA evidence, snapshot/export evidence, and no runtime listing/grid behavior.",
-  "objective": "Continue with TASK-010 secondary frame subplans.",
+  "current_state": "Agentic Ops overlay is active. TASK-001 through TASK-010 are complete. The Filter Preset first-slice implementation has code, visual QA evidence, snapshot/export evidence, and secondary CPT/Integrations frames are now bounded into future subplans.",
+  "objective": "Use the completed Agentic Ops plan as the baseline for the next approved implementation slice.",
   "preset_used": "cms_wordpress_elementor_low_code",
   "decisions_made": [
     "Use Agentic Ops overlay mode.",
@@ -10,7 +10,7 @@
     "First code slice is Filter Preset admin only."
   ],
   "pending_decisions": [
-    "Confirm whether secondary frames should remain deferred until TASK-010 subplans are created."
+    "Choose the next implementation slice from the validated subplans: CPT Manager, Connector Registry, QA Scenario Runner, Editor Handoff Notes, Design Token Mapper, or remaining integration module backlog."
   ],
   "plan_structure": {
     "first_phase": "PHASE-000",
@@ -27,11 +27,10 @@
     "TASK-006",
     "TASK-007",
     "TASK-008",
-    "TASK-009"
-  ],
-  "pending_tasks": [
+    "TASK-009",
     "TASK-010"
   ],
+  "pending_tasks": [],
   "risks": [
     "Visual frames can contain generated inconsistencies.",
     "Implementation can drift into runtime adapters if secondary frames are not deferred.",
@@ -58,10 +57,10 @@
     "TEST-EIT-HANDOFF-READINESS"
   ],
   "next_steps": [
-    "Start TASK-010 and promote secondary CPT/Integrations frames into bounded subplans.",
-    "Keep runtime filtering, listing grid, frontend adapters, and integration runtime scope deferred unless a new task explicitly approves them.",
-    "Use TASK-006, TASK-007, and TASK-008 evidence as the first-slice baseline.",
-    "Do not reopen the completed Filter Preset first-slice implementation during TASK-010."
+    "Select one validated subplan as a new implementation task before touching code.",
+    "Keep runtime filtering, listing grid, frontend adapters, and integration runtime scope deferred unless the new task explicitly approves them.",
+    "Use TASK-006, TASK-007, TASK-008, and TASK-009 evidence as the first-slice baseline.",
+    "Do not reopen the completed Filter Preset first-slice implementation unless a regression is found."
   ],
   "do_not_reopen": [
     "Do not reopen the decision that WordPress admin chrome remains visible.",
@@ -69,7 +68,7 @@
     "Do not turn preview into a grid/listing renderer.",
     "Do not treat frame 25 as a screen or frame 28 as the default shell."
   ],
-  "how_to_continue_briefing_user": "Report TASK-009 as closed, cite snapshot/export evidence, and name TASK-010 as the next executable MCP task.",
+  "how_to_continue_briefing_user": "Report TASK-010 as closed and ask the user which validated subplan should become the next implementation slice.",
   "first_recommended_cli_command": "No init command needed; overlay already exists.",
-  "first_recommended_mcp_prompt": "Validate TASK-010, then split secondary frames into bounded CPT and Integrations subplans without adding runtime adapters."
+  "first_recommended_mcp_prompt": "Choose a validated subplan, create a new bounded implementation task from it, and preserve the runtime deferrals unless explicitly approved."
 }

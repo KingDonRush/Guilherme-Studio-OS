@@ -1,44 +1,45 @@
 {
-  "id": "SUBPLAN-CPT-MANAGER",
+  "id": "SUBPLAN-DESIGN-TOKEN-MAPPER",
   "parent_task_id": "TASK-010",
-  "title": "CPT Manager admin states",
-  "purpose": "Promote CPT frames into a future bounded Admin V0.2 subplan after the Filter Preset slice passes QA.",
-  "scope_boundary": "CPT Manager admin contract states only; no new CPT runtime behavior unless separately approved.",
-  "entry_condition": "TASK-009 snapshot/export exists and first-slice QA has passed or gaps are explicit.",
-  "exit_condition": "CPT frames are mapped into executable tasks with tests and forbidden runtime expansion.",
+  "title": "Design Token Mapper admin contract",
+  "purpose": "Promote frame 04 into a bounded future admin token-mapping dossier.",
+  "scope_boundary": "Admin-only token source, token group, selector binding, state mapping, preview stylesheet, and report UI; no frontend CSS export or design-system builder runtime.",
+  "entry_condition": "TASK-009 snapshot/export is complete and design-token scope remains explicitly deferred from the Filter Preset first slice.",
+  "exit_condition": "Design Token Mapper tasks and visual tests are defined with CSS export/runtime deferred.",
   "max_depth": 1,
   "allowed_expansion": [
-    "Create CPT admin state tasks.",
-    "Create CPT visual QA tests."
+    "Define token source and token group admin models.",
+    "Define selector binding and state mapping tables.",
+    "Define preview/report states and visual QA requirements."
   ],
   "forbidden_expansion": [
-    "Template binding runtime.",
-    "Archive helper runtime.",
-    "WooCommerce-style builder surface."
+    "Generate frontend CSS for production.",
+    "Mutate Elementor globals or theme.json.",
+    "Build a full design-system manager."
   ],
   "budgets": {
-    "time_budget": "one planning pass after first slice",
+    "time_budget": "one planning pass",
     "complexity_budget": "complex",
-    "context_budget": "secondary frames plus first-slice evidence",
+    "context_budget": "frame 04 plus token mapper source notes",
     "research_budget": "light",
     "iteration_budget": "one",
-    "scope_budget": "future backlog/subplans only",
+    "scope_budget": "admin contract only",
     "ambiguity_budget": "medium",
-    "validation_budget": "validate_subplan for each"
+    "validation_budget": "validate_subplan"
   },
   "tasks": [
-    "Frame 15: plan Managed CPT Root Overview as the CPT manager entry state.",
-    "Frame 12: plan CPT Manager Meta Field Selected as selected-child architecture state.",
-    "Frame 13: plan CPT Taxonomy Layer Selected as selected-child architecture state.",
-    "Frame 14: plan CPT Registration Contract Selected as contract-flow architecture state.",
-    "Frame 11: plan Content Model Preview Modal as a controller/admin preview, not runtime registration output."
+    "Frame 04: Design Token Mapper overview.",
+    "Define token sources: theme.json, CSS variables, Elementor globals, plugin palette, and manual tokens.",
+    "Define token groups: color, typography, spacing, radius, border, and shadow.",
+    "Define selector binding and state mapping preview as admin-only contract data.",
+    "Define visual QA for token tables, pipeline, inspector, and contrast/focus ring report states."
   ],
   "tests": [
     {
-      "id": "TEST-CPT-MANAGER-001",
+      "id": "TEST-DESIGN-TOKEN-MAPPER-001",
       "type": "handoff_test",
-      "target": "SUBPLAN-CPT-MANAGER",
-      "objective": "Create one visual test per CPT frame before implementation.",
+      "target": "SUBPLAN-DESIGN-TOKEN-MAPPER",
+      "objective": "Visual test for frame 04 desktop and mobile.",
       "preconditions": [
         "TASK-010 has promoted secondary frames into bounded subplans.",
         "Runtime adapter work remains deferred unless separately approved."
@@ -55,7 +56,7 @@
         "future visual or regression check is named"
       ],
       "evidence_required": [
-        ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+        ".agentic-ops/subplans/SUBPLAN-DESIGN-TOKEN-MAPPER.json"
       ],
       "status": "pending",
       "severity": "medium",
@@ -65,10 +66,10 @@
       "subtests": []
     },
     {
-      "id": "TEST-CPT-MANAGER-002",
+      "id": "TEST-DESIGN-TOKEN-MAPPER-002",
       "type": "handoff_test",
-      "target": "SUBPLAN-CPT-MANAGER",
-      "objective": "Create a regression test that existing eit_cpt_definitions save/register behavior remains intact.",
+      "target": "SUBPLAN-DESIGN-TOKEN-MAPPER",
+      "objective": "Regression test that no frontend CSS export, Elementor global mutation, or theme.json write path is introduced.",
       "preconditions": [
         "TASK-010 has promoted secondary frames into bounded subplans.",
         "Runtime adapter work remains deferred unless separately approved."
@@ -85,7 +86,7 @@
         "future visual or regression check is named"
       ],
       "evidence_required": [
-        ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+        ".agentic-ops/subplans/SUBPLAN-DESIGN-TOKEN-MAPPER.json"
       ],
       "status": "pending",
       "severity": "medium",
@@ -95,10 +96,10 @@
       "subtests": []
     },
     {
-      "id": "TEST-CPT-MANAGER-003",
+      "id": "TEST-DESIGN-TOKEN-MAPPER-003",
       "type": "handoff_test",
-      "target": "SUBPLAN-CPT-MANAGER",
-      "objective": "Create a security test for existing CPT nonce, capability, sanitization, and escaping boundaries.",
+      "target": "SUBPLAN-DESIGN-TOKEN-MAPPER",
+      "objective": "Console check for the token mapper admin state.",
       "preconditions": [
         "TASK-010 has promoted secondary frames into bounded subplans.",
         "Runtime adapter work remains deferred unless separately approved."
@@ -115,7 +116,7 @@
         "future visual or regression check is named"
       ],
       "evidence_required": [
-        ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+        ".agentic-ops/subplans/SUBPLAN-DESIGN-TOKEN-MAPPER.json"
       ],
       "status": "pending",
       "severity": "medium",
@@ -127,8 +128,8 @@
   ],
   "completion_criteria": [
     "Subplan validates.",
-    "Each CPT frame has a bounded task or explicit deferral.",
-    "Runtime work remains deferred."
+    "Frame 04 can become implementation tasks without CSS export/runtime scope.",
+    "Design-system builder scope remains deferred."
   ],
-  "handoff_notes": "Use source-of-truth frame classification before tasking CPT work."
+  "handoff_notes": "The token mapper is a future admin contract first; production CSS export requires a separately approved adapter task."
 }

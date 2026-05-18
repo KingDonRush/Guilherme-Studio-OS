@@ -38,4 +38,4 @@ Adapt the Elementor Implementation Toolkit Admin V0.2 frame-first plan into an A
 - TASK-007: Implement controller-only preview modal [done]
 - TASK-008: Run frame-driven visual QA [done]
 - TASK-009: Snapshot, export, and handoff [done]
-- TASK-010: Promote secondary frames into bounded subplans [pending]
+- TASK-010: Promote secondary frames into bounded subplans [done]
