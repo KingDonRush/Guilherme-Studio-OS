@@ -1,0 +1,23 @@
+{
+  "id": "DEC-EIT-003",
+  "title": "Use Visual Front-End First as secondary validation preset",
+  "summary": "Approved frames define visual success and require screenshot-based QA.",
+  "rationale": "The implementation must match product-system frames, but visual matching is a validation layer under WordPress containment.",
+  "status": "accepted",
+  "affects": [
+    "TASK-004",
+    "TASK-008"
+  ],
+  "alternatives_considered": [
+    "No secondary preset",
+    "Treat frames as loose inspiration"
+  ],
+  "evidence": [
+    "admin-v0.2-source-of-truth.md Core Rule.",
+    "frame-driven UI QA protocol requirement."
+  ],
+  "risks": [
+    "Generated frames may contain inconsistent details that need source-of-truth decisions."
+  ],
+  "created_at": "2026-05-17T00:00:00.000Z"
+}

@@ -1,5 +1,5 @@
 {
-  "preset": "cms_wordpress_elementor_no_code_low_code",
+  "preset": "cms_wordpress_elementor_low_code",
   "use_when": "The project depends on WordPress, Elementor, plugins, themes, CMS content, builder behavior, or no-code/low-code tooling.",
   "required_context": [
     "WordPress root or site access",

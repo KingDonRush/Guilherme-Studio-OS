@@ -1,0 +1,37 @@
+{
+  "id": "SUBPLAN-CPT-MANAGER",
+  "parent_task_id": "TASK-010",
+  "title": "CPT Manager admin states",
+  "purpose": "Promote CPT frames into a future bounded Admin V0.2 subplan after the Filter Preset slice passes QA.",
+  "scope_boundary": "CPT Manager admin contract states only; no new CPT runtime behavior unless separately approved.",
+  "entry_condition": "TASK-009 snapshot/export exists and first-slice QA has passed or gaps are explicit.",
+  "exit_condition": "CPT frames are mapped into executable tasks with tests and forbidden runtime expansion.",
+  "max_depth": 1,
+  "allowed_expansion": [
+    "Create CPT admin state tasks.",
+    "Create CPT visual QA tests."
+  ],
+  "forbidden_expansion": [
+    "Template binding runtime.",
+    "Archive helper runtime.",
+    "WooCommerce-style builder surface."
+  ],
+  "budgets": {
+    "time_budget": "one planning pass after first slice",
+    "complexity_budget": "complex",
+    "context_budget": "secondary frames plus first-slice evidence",
+    "research_budget": "light",
+    "iteration_budget": "one",
+    "scope_budget": "future backlog/subplans only",
+    "ambiguity_budget": "medium",
+    "validation_budget": "validate_subplan for each"
+  },
+  "tasks": [],
+  "tests": [],
+  "completion_criteria": [
+    "Subplan validates.",
+    "Each CPT frame has a bounded task or explicit deferral.",
+    "Runtime work remains deferred."
+  ],
+  "handoff_notes": "Use source-of-truth frame classification before tasking CPT work."
+}

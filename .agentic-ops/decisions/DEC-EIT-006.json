@@ -1,0 +1,24 @@
+{
+  "id": "DEC-EIT-006",
+  "title": "Lock frame classification for first slice",
+  "summary": "Frames 16-24 and 26-27 define the first Filter Preset implementation target; frames 01-15 are secondary; frame 25 is reference-only; frame 28 is interaction reference only.",
+  "rationale": "The first slice must prove one coherent Filter Preset architecture before CPT and Integrations frames expand scope.",
+  "status": "accepted",
+  "affects": [
+    "TASK-004",
+    "TASK-006",
+    "TASK-010"
+  ],
+  "alternatives_considered": [
+    "Implement all 28 frames together",
+    "Start from Integrations frames 01-04"
+  ],
+  "evidence": [
+    "docs/implementation-toolkit/admin-v0.2-source-of-truth.md#frame-classification",
+    "docs/implementation-toolkit/admin-v0.2-source-contract.md#primary-frames"
+  ],
+  "risks": [
+    "Secondary frames may look ready, but implementing them now would weaken QA and component reuse."
+  ],
+  "created_at": "2026-05-17T23:43:22.931Z"
+}

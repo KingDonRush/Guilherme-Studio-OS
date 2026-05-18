@@ -17,6 +17,18 @@ Detailed planning artifact:
 
 `docs/implementation-toolkit/admin-v0.2-frame-implementation-plan.md`
 
+Agentic Ops MCP adaptation:
+
+`docs/implementation-toolkit/admin-v0.2-agentic-ops-mcp-adaptation.md`
+
+Machine-readable Agentic Ops plan:
+
+`docs/implementation-toolkit/admin-v0.2-agentic-ops-plan.json`
+
+Locked source contract:
+
+`docs/implementation-toolkit/admin-v0.2-source-contract.md`
+
 Canonical icon system:
 
 `docs/assets/implementation-toolkit/admin-v0.2/icons/canonical-icon-manifest.json`

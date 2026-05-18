@@ -1,0 +1,31 @@
+{
+  "id": "TEST-EIT-HANDOFF-READINESS",
+  "type": "handoff_test",
+  "target": "TASK-009",
+  "objective": "Confirm another AI can continue without rebriefing the whole project.",
+  "preconditions": [
+    "Plan has validated.",
+    "QA evidence is recorded or gaps are explicit."
+  ],
+  "steps": [
+    "Read handoff packet.",
+    "Confirm first next action is concrete.",
+    "Confirm do_not_rethink list exists.",
+    "Confirm validation gaps are explicit."
+  ],
+  "expected_result": "Handoff is executable and does not transfer hidden context back to the user.",
+  "pass_criteria": [
+    "first next action exists",
+    "context to preserve exists",
+    "do_not_reopen/do_not_rethink exists",
+    "validation gaps are named"
+  ],
+  "evidence_required": [
+    "handoff export"
+  ],
+  "status": "pending",
+  "severity": "medium",
+  "depends_on": [
+    "TASK-009"
+  ]
+}

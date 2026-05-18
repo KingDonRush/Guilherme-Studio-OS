@@ -1,0 +1,114 @@
+{
+  "id": "TASK-001",
+  "title": "Plano-mae e ancoragem operacional",
+  "description": "Anchor the legacy Admin V0.2 frame plan inside Agentic Ops before generating implementation work.",
+  "objective": "Make the plan executable by another AI through explicit preset, boundaries, sequence, and continuity criteria.",
+  "priority": "critical",
+  "complexity": "moderate",
+  "status": "done",
+  "phase_id": "PHASE-000",
+  "depends_on": [],
+  "blocks": [
+    "TASK-002",
+    "TASK-003",
+    "TASK-004",
+    "TASK-005",
+    "TASK-006",
+    "TASK-007",
+    "TASK-008",
+    "TASK-009",
+    "TASK-010"
+  ],
+  "inputs_required": [
+    "AGENTS.md",
+    "docs/implementation-toolkit/admin-v0.2-source-of-truth.md",
+    "docs/implementation-toolkit/admin-v0.2-frame-implementation-plan.md",
+    "docs/agentic-ops/mcp-reference.md"
+  ],
+  "expected_outputs": [
+    "Agentic Ops preset decision",
+    "overlay mode decision",
+    "execution boundaries",
+    "continuity rules"
+  ],
+  "acceptance_criteria": [
+    "Primary preset is cms_wordpress_elementor_low_code.",
+    "Secondary validation preset is visual_front_end_first.",
+    "The plan states that .agentic-ops/ must be initialized in overlay mode.",
+    "The plan explains what must still work after the user stops explaining context."
+  ],
+  "verification": [
+    "Run MCP inspect_workspace.",
+    "Run MCP suggest_non_destructive_init.",
+    "Run MCP validate_plan on this artifact.",
+    "MCP inspect_workspace returned overlay before init",
+    "plan validated successfully",
+    "source docs linked"
+  ],
+  "budgets": {
+    "time_budget": "one planning pass",
+    "complexity_budget": "moderate",
+    "context_budget": "AGENTS, source-of-truth, frame plan, Agentic Ops MCP reference",
+    "research_budget": "light",
+    "iteration_budget": "one adaptation pass plus validation fixes",
+    "scope_budget": "planning artifact only",
+    "ambiguity_budget": "medium",
+    "validation_budget": "MCP validation required"
+  },
+  "risks": [
+    "The plan may become too broad if all 28 frames are treated as one implementation batch.",
+    "Agentic Ops overlay may conflict with the repository root containment rule unless explicitly accepted."
+  ],
+  "research_required": false,
+  "tests": [
+    {
+      "id": "TEST-EIT-PLAN-VALIDATE",
+      "type": "handoff_test",
+      "target": "PLAN-EIT-ADMIN-V02-AGENTIC-OPS",
+      "objective": "Confirm the operational plan is schema-valid enough for Agentic Ops MCP use.",
+      "preconditions": [
+        "Plan JSON exists.",
+        "Agentic Ops MCP validate_plan tool is available."
+      ],
+      "steps": [
+        "Call mcp__agentic_ops__.validate_plan with this plan object.",
+        "Fix required errors before implementation starts."
+      ],
+      "expected_result": "The plan validates with no blocking schema errors.",
+      "pass_criteria": [
+        "valid is true",
+        "no required-field errors are returned"
+      ],
+      "evidence_required": [
+        "MCP validation result"
+      ],
+      "status": "pending",
+      "severity": "critical",
+      "depends_on": []
+    }
+  ],
+  "requires_human_validation": true,
+  "subtasks": [
+    {
+      "id": "TASK-001-SUB-001",
+      "title": "Record overlay mode",
+      "description": "Use MCP inspection output to document overlay mode and overwrite risks.",
+      "objective": "Prevent Agentic Ops from replacing existing instructions.",
+      "status": "pending",
+      "depends_on": [],
+      "inputs_required": [
+        "MCP inspect_workspace output"
+      ],
+      "expected_output": "Overlay decision recorded in briefing.",
+      "acceptance_criteria": [
+        "The suggested command uses --non-destructive --overlay."
+      ],
+      "verification": [
+        "MCP suggest_non_destructive_init output is cited."
+      ],
+      "risks": [],
+      "promote_to_subplan_if": []
+    }
+  ],
+  "subplans": []
+}

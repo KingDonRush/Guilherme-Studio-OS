@@ -1,0 +1,23 @@
+{
+  "id": "PHASE-040",
+  "title": "Secondary frame backlog",
+  "purpose": "Promote later frames into bounded subplans only after the Filter Preset slice is stable.",
+  "entry_condition": "First slice has passed visual and functional acceptance.",
+  "exit_condition": "CPT and Integrations frames are split into closed subplans with stop conditions.",
+  "required_outputs": [
+    "CPT admin subplan",
+    "Integrations dossier subplans",
+    "runtime-deferred decision list"
+  ],
+  "tasks": [
+    "TASK-010"
+  ],
+  "acceptance_criteria": [
+    "Frames 01-15 are not mixed into the first slice.",
+    "Each future module has an exit condition and forbidden expansion list.",
+    "Runtime adapter work remains deferred until separately approved."
+  ],
+  "validation_required": [
+    "validate_subplan"
+  ]
+}

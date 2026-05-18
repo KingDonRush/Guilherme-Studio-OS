@@ -1,0 +1,65 @@
+{
+  "id": "TASK-010",
+  "title": "Promote secondary frames into bounded subplans",
+  "description": "Split CPT and Integrations frames into future subplans after the Filter Preset slice is stable.",
+  "objective": "Keep frames 01-15 useful without bloating the first implementation pass.",
+  "priority": "medium",
+  "complexity": "complex",
+  "status": "pending",
+  "phase_id": "PHASE-040",
+  "depends_on": [
+    "TASK-009"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "secondary frame list",
+    "first-slice QA outcomes",
+    "runtime-deferred decisions"
+  ],
+  "expected_outputs": [
+    "CPT manager subplan",
+    "Connector Registry subplan",
+    "QA Scenario Runner subplan",
+    "Editor Handoff Notes subplan",
+    "Design Token Mapper subplan",
+    "remaining integration module backlog"
+  ],
+  "acceptance_criteria": [
+    "Each subplan has scope boundary, entry condition, exit condition, and max depth.",
+    "Runtime adapter work remains explicitly forbidden unless separately approved.",
+    "Subplans do not depend on re-reading the whole legacy frame plan."
+  ],
+  "verification": [
+    "mcp__agentic_ops__.validate_subplan for each created subplan.",
+    "MCP export after subplans are added."
+  ],
+  "budgets": {
+    "time_budget": "one planning pass after first slice",
+    "complexity_budget": "complex",
+    "context_budget": "secondary frames plus first-slice evidence",
+    "research_budget": "light",
+    "iteration_budget": "one",
+    "scope_budget": "future backlog/subplans only",
+    "ambiguity_budget": "medium",
+    "validation_budget": "validate_subplan for each"
+  },
+  "risks": [
+    "Secondary modules can accidentally turn into runtime product scope.",
+    "Design Token Mapper can drift into a full design-system builder."
+  ],
+  "research_required": true,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [
+    {
+      "id": "SUBPLAN-CPT-MANAGER",
+      "title": "CPT Manager admin states",
+      "path": ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+    },
+    {
+      "id": "SUBPLAN-INTEGRATIONS-DOSSIER",
+      "title": "Integrations dossier frames",
+      "path": ".agentic-ops/subplans/SUBPLAN-INTEGRATIONS-DOSSIER.json"
+    }
+  ]
+}

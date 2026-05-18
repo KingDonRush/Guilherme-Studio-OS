@@ -1,0 +1,25 @@
+{
+  "id": "DEC-EIT-010",
+  "title": "Defer secondary frames into bounded backlog",
+  "summary": "CPT Manager and Integrations frames remain future Agentic Ops subplans until the Filter Preset first slice passes QA.",
+  "rationale": "The implementation needs one stable shared admin architecture before adding more module families.",
+  "status": "accepted",
+  "affects": [
+    "TASK-010",
+    "SUBPLAN-CPT-MANAGER",
+    "SUBPLAN-INTEGRATIONS-DOSSIER"
+  ],
+  "alternatives_considered": [
+    "Mix CPT and Integrations frames into first-slice tasks",
+    "Discard secondary frames entirely"
+  ],
+  "evidence": [
+    "docs/implementation-toolkit/admin-v0.2-source-contract.md#secondary-frames",
+    ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json",
+    ".agentic-ops/subplans/SUBPLAN-INTEGRATIONS-DOSSIER.json"
+  ],
+  "risks": [
+    "Future module plans must still revalidate whether runtime adapters are in scope."
+  ],
+  "created_at": "2026-05-17T23:43:22.931Z"
+}

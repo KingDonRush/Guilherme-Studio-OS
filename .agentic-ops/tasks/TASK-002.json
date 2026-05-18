@@ -1,0 +1,56 @@
+{
+  "id": "TASK-002",
+  "title": "Initialize Agentic Ops overlay",
+  "description": "Create the .agentic-ops/ operational overlay only when the user accepts the root-level overlay.",
+  "objective": "Make the workspace consumable by Agentic Ops CLI/MCP without overwriting AGENTS.md or project docs.",
+  "priority": "critical",
+  "complexity": "simple",
+  "status": "done",
+  "phase_id": "PHASE-000",
+  "depends_on": [
+    "TASK-001"
+  ],
+  "blocks": [
+    "TASK-003"
+  ],
+  "inputs_required": [
+    "MCP suggested init command",
+    "Clean or understood git status"
+  ],
+  "expected_outputs": [
+    ".agentic-ops/ manifest",
+    "workspace inspection artifact",
+    "validated overlay mode"
+  ],
+  "acceptance_criteria": [
+    "Only .agentic-ops/ is written.",
+    "AGENTS.md is not modified.",
+    "Manifest records overlay mode and active preset.",
+    "Git status shows only expected Agentic Ops overlay files."
+  ],
+  "verification": [
+    "Run aops init --non-destructive --overlay --preset cms_wordpress_elementor_low_code.",
+    "Run MCP inspect_workspace again.",
+    "Run git status --short --branch.",
+    "aops init created .agentic-ops overlay",
+    "AGENTS.md unchanged",
+    "MCP inspect_workspace now reports has_agentic_ops true"
+  ],
+  "budgets": {
+    "time_budget": "one CLI action",
+    "complexity_budget": "simple",
+    "context_budget": "MCP inspection output and AGENTS root policy",
+    "research_budget": "none",
+    "iteration_budget": "one",
+    "scope_budget": "Agentic Ops overlay only",
+    "ambiguity_budget": "low after user accepts overlay",
+    "validation_budget": "git status plus MCP inspect"
+  },
+  "risks": [
+    "The repository guide currently says nothing else should live in the root; user approval may be needed before creating .agentic-ops/."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

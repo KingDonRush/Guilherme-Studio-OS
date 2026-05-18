@@ -114,9 +114,9 @@ Choose one or hybridize deliberately:
 
 1. `visual_front_end_first`
 2. `full_stack_product`
-3. `cms_wordpress_elementor_no_code_low_code`
+3. `cms_wordpress_elementor_low_code`
 4. `automation_integration_workflow`
-5. `research_strategy_conceptual_system`
+5. `research_strategy_conceptual`
 
 Justify the selection by:
 

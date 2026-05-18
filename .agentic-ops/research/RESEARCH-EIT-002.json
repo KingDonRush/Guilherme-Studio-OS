@@ -1,0 +1,44 @@
+{
+  "id": "RESEARCH-EIT-002",
+  "question": "Which existing plugin admin code, saved options, icons, and QA artifacts can be reused?",
+  "reason": "Preserve behavior and reduce unnecessary rewrite risk.",
+  "decision_dependency": "How much of the current admin implementation becomes data/model reference versus direct reusable code.",
+  "allowed_scope": [
+    "wordpress/wp-content/plugins/elementor-implementation-toolkit",
+    "docs/assets/implementation-toolkit/admin-v0.2",
+    "docs/implementation-toolkit"
+  ],
+  "forbidden_scope": [
+    "WordPress core edits",
+    "new third-party dependencies",
+    "full visual redesign"
+  ],
+  "desired_sources": [
+    "local source code",
+    "canonical icon manifest",
+    "existing QA reports"
+  ],
+  "update_policy": "Run before first code edit and again before final QA.",
+  "reliability_signals": [
+    "git-tracked source",
+    "existing screenshots",
+    "valid manifest"
+  ],
+  "alternatives_to_compare": [
+    "reuse existing render methods",
+    "extract data structures",
+    "replace markup only"
+  ],
+  "wheel_reinvention_risk": "high",
+  "plan_impact": "Can reduce TASK-005/TASK-006 scope or reveal a needed subplan.",
+  "task_impact": "May create a source-mapping subtask before implementation.",
+  "recommendation": "Inspect existing plugin source before proposing abstractions.",
+  "remaining_uncertainties": [
+    "Plugin directory may not exist in this checkout yet.",
+    "Some assets may be docs-only and not copied into plugin source."
+  ],
+  "validation_required": [
+    "file path inventory",
+    "git status before edits"
+  ]
+}

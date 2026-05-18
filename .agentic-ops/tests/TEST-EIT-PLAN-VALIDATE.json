@@ -1,0 +1,25 @@
+{
+  "id": "TEST-EIT-PLAN-VALIDATE",
+  "type": "handoff_test",
+  "target": "PLAN-EIT-ADMIN-V02-AGENTIC-OPS",
+  "objective": "Confirm the operational plan is schema-valid enough for Agentic Ops MCP use.",
+  "preconditions": [
+    "Plan JSON exists.",
+    "Agentic Ops MCP validate_plan tool is available."
+  ],
+  "steps": [
+    "Call mcp__agentic_ops__.validate_plan with this plan object.",
+    "Fix required errors before implementation starts."
+  ],
+  "expected_result": "The plan validates with no blocking schema errors.",
+  "pass_criteria": [
+    "valid is true",
+    "no required-field errors are returned"
+  ],
+  "evidence_required": [
+    "MCP validation result"
+  ],
+  "status": "pending",
+  "severity": "critical",
+  "depends_on": []
+}

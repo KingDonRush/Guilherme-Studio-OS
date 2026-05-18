@@ -46,7 +46,7 @@
       ]
     },
     {
-      "preset": "cms_wordpress_elementor_no_code_low_code",
+      "preset": "cms_wordpress_elementor_low_code",
       "choose_when": [
         "WordPress, Elementor, plugins, themes, CPTs, or builder constraints are central",
         "custom code must be justified against existing platform features",
@@ -92,7 +92,7 @@
       ]
     },
     {
-      "preset": "research_strategy_conceptual_system",
+      "preset": "research_strategy_conceptual",
       "choose_when": [
         "the project is still definition, strategy, methodology, or architecture",
         "the main work is reducing ambiguity",
@@ -127,7 +127,7 @@
       "forbidden_expansion"
     ],
     "example": {
-      "primary_preset": "cms_wordpress_elementor_no_code_low_code",
+      "primary_preset": "cms_wordpress_elementor_low_code",
       "secondary_preset": "visual_front_end_first",
       "execution_owner": "CMS preset",
       "validation_owner": "Visual preset",

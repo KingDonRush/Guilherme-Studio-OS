@@ -161,6 +161,6 @@ Example:
 
 For a WordPress admin UI based on approved frames, use:
 
-- primary: `cms_wordpress_elementor_no_code_low_code`;
+- primary: `cms_wordpress_elementor_low_code`;
 - secondary: `visual_front_end_first`;
 - owner: CMS preset owns WordPress constraints, visual preset owns frame QA.

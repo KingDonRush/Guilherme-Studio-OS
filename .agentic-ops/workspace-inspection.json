@@ -1,0 +1,23 @@
+{
+  "root": "/home/kingdonrush/Área de trabalho/Dev/Wordpress",
+  "project_type": "wordpress",
+  "detected_stack": [
+    "wordpress"
+  ],
+  "package_managers": [],
+  "frameworks": [],
+  "agentic_files": [
+    "AGENTS.md"
+  ],
+  "docs": [
+    "docs"
+  ],
+  "has_agentic_ops": false,
+  "overwrite_risks": [
+    "AGENTS.md"
+  ],
+  "recommended_mode": "overlay",
+  "notes": [
+    "Existing agentic instructions detected. Use non-destructive overlay mode."
+  ]
+}

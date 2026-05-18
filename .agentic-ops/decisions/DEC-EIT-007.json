@@ -1,0 +1,24 @@
+{
+  "id": "DEC-EIT-007",
+  "title": "Freeze first-slice icon vocabulary",
+  "summary": "The first implementation slice uses the 58 canonical WebP icons and non-asset primitives; no new icon generation is allowed before the first slice passes QA.",
+  "rationale": "The old frame plan implies hundreds of one-off icon concepts, but the canonical manifest deliberately reduces that to a reusable vocabulary.",
+  "status": "accepted",
+  "affects": [
+    "TASK-004",
+    "TASK-005",
+    "TASK-006"
+  ],
+  "alternatives_considered": [
+    "Generate missing frame-specific icons now",
+    "Use extracted noncanonical icons directly"
+  ],
+  "evidence": [
+    "docs/assets/implementation-toolkit/admin-v0.2/icons/canonical-icon-manifest.json",
+    "All 58 manifest icon paths were checked as present in the workspace."
+  ],
+  "risks": [
+    "If generated icons resume too early, the implementation can accumulate asset drift and inconsistent visual language."
+  ],
+  "created_at": "2026-05-17T23:43:22.931Z"
+}

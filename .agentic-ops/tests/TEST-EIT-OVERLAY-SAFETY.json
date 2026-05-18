@@ -1,0 +1,30 @@
+{
+  "id": "TEST-EIT-OVERLAY-SAFETY",
+  "type": "acceptance_test",
+  "target": "TASK-002",
+  "objective": "Confirm Agentic Ops initialization is non-destructive and overlay-only.",
+  "preconditions": [
+    "User has accepted root .agentic-ops/ overlay if needed.",
+    "git status is recorded."
+  ],
+  "steps": [
+    "Run aops init --non-destructive --overlay --preset cms_wordpress_elementor_low_code.",
+    "Run mcp__agentic_ops__.inspect_workspace.",
+    "Run git status --short --branch."
+  ],
+  "expected_result": "Only .agentic-ops/ overlay files appear and existing instructions remain unchanged.",
+  "pass_criteria": [
+    "AGENTS.md unchanged",
+    "recommended_mode is overlay or has_agentic_ops is true",
+    "no unexpected root files are created"
+  ],
+  "evidence_required": [
+    "MCP inspection output",
+    "git status output"
+  ],
+  "status": "pending",
+  "severity": "critical",
+  "depends_on": [
+    "TASK-001"
+  ]
+}

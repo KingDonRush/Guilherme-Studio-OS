@@ -1,5 +1,5 @@
 {
-  "preset": "research_strategy_conceptual_system",
+  "preset": "research_strategy_conceptual",
   "use_when": "The project is still strategy, positioning, conceptual architecture, methodology, documentation, or product definition.",
   "required_context": [
     "known intention",

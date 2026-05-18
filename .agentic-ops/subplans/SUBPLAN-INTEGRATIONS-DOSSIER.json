@@ -1,0 +1,38 @@
+{
+  "id": "SUBPLAN-INTEGRATIONS-DOSSIER",
+  "parent_task_id": "TASK-010",
+  "title": "Integrations dossier frames",
+  "purpose": "Promote Integrations and Superpowers frames into future bounded module subplans.",
+  "scope_boundary": "Admin contract/dossier screens only; no deep adapter runtime or external service behavior.",
+  "entry_condition": "TASK-009 snapshot/export exists and first-slice QA has passed or gaps are explicit.",
+  "exit_condition": "Connector Registry, QA Scenario Runner, Handoff Notes, Token Mapper, and remaining integration modules are split or deferred.",
+  "max_depth": 1,
+  "allowed_expansion": [
+    "Create one bounded module task or child subplan per integration frame group.",
+    "Create admin-only schema and QA tests."
+  ],
+  "forbidden_expansion": [
+    "Deep WooCommerce adapter runtime.",
+    "Real QA automation runner inside the plugin.",
+    "Elementor editor annotation overlay runtime.",
+    "Frontend design token export."
+  ],
+  "budgets": {
+    "time_budget": "one planning pass after first slice",
+    "complexity_budget": "complex",
+    "context_budget": "secondary frames plus first-slice evidence",
+    "research_budget": "light",
+    "iteration_budget": "one",
+    "scope_budget": "future backlog/subplans only",
+    "ambiguity_budget": "medium",
+    "validation_budget": "validate_subplan for each"
+  },
+  "tasks": [],
+  "tests": [],
+  "completion_criteria": [
+    "Subplan validates.",
+    "Every secondary module has a stop condition.",
+    "Runtime adapter work is deferred unless separately approved."
+  ],
+  "handoff_notes": "Do not mix Integrations runtime execution into Admin V0.2 planning."
+}

@@ -1,0 +1,488 @@
+{
+  "id": "TASK-008",
+  "title": "Run frame-driven visual QA",
+  "description": "Verify implemented states against source frames with browser evidence.",
+  "objective": "Prove visual fidelity, responsive behavior, and admin usability before marking implementation tasks done.",
+  "priority": "critical",
+  "complexity": "complex",
+  "status": "pending",
+  "phase_id": "PHASE-030",
+  "depends_on": [
+    "TASK-006",
+    "TASK-007"
+  ],
+  "blocks": [
+    "TASK-009",
+    "TASK-010"
+  ],
+  "inputs_required": [
+    "implemented local WordPress admin",
+    "source frames",
+    "Playwright",
+    "QA report path under docs/assets/implementation-toolkit/admin-v0.2/qa/"
+  ],
+  "expected_outputs": [
+    "desktop screenshots",
+    "mobile screenshots",
+    "console report",
+    "frame drift notes",
+    "QA report"
+  ],
+  "acceptance_criteria": [
+    "Each completed state has desktop screenshot evidence.",
+    "Mobile/tablet layout has no incoherent overlap or page-level horizontal overflow.",
+    "Console has no relevant JS errors.",
+    "Any frame divergence is documented as intentional or unresolved.",
+    "Visual tasks are not marked done without screenshot evidence."
+  ],
+  "verification": [
+    "Use Playwright screenshots.",
+    "Inspect console logs.",
+    "Compare screenshots to source frames.",
+    "Record QA report."
+  ],
+  "budgets": {
+    "time_budget": "one QA pass per state group",
+    "complexity_budget": "complex",
+    "context_budget": "source frames plus implementation URL",
+    "research_budget": "none",
+    "iteration_budget": "two correction loops",
+    "scope_budget": "visual QA only",
+    "ambiguity_budget": "medium",
+    "validation_budget": "human validation if visual source conflict remains"
+  },
+  "risks": [
+    "Lint/render checks alone can falsely pass a visual implementation.",
+    "WordPress admin chrome may shift pixel expectations from generated frames."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [
+    {
+      "id": "SUBPLAN-VISUAL-QA",
+      "title": "Frame-driven QA loop",
+      "path": ".agentic-ops/subplans/SUBPLAN-VISUAL-QA.json"
+    }
+  ],
+  "tests": [
+    {
+      "id": "TEST-EIT-FRAME-016",
+      "type": "visual_test",
+      "target": "frame-16",
+      "objective": "Verify frame-16 (Filter Controller Preview Modal) against the implemented Admin V0.2 state.",
+      "preconditions": [
+        "Source frame exists at docs/assets/implementation-toolkit/admin-v0.2/frames/frame-16.png.",
+        "Local WordPress admin implementation for the corresponding state is reachable.",
+        "TASK-006 or TASK-007 has implemented the state."
+      ],
+      "steps": [
+        "Open the matching WordPress admin state.",
+        "Capture desktop screenshot.",
+        "Capture responsive screenshot when layout behavior is in scope.",
+        "Check browser console for relevant errors.",
+        "Compare against source frame and record frame-drift notes."
+      ],
+      "expected_result": "Implementation preserves controller-only modal, no listing/grid and remains inside the WordPress-contained Toolkit shell.",
+      "pass_criteria": [
+        "source frame reference is recorded",
+        "desktop screenshot exists",
+        "no relevant console errors are present",
+        "no incoherent overlap or page-level horizontal overflow is present",
+        "drift notes are documented as accepted, fixed, or blocked"
+      ],
+      "evidence_required": [
+        "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-16.png",
+        "desktop screenshot under docs/assets/implementation-toolkit/admin-v0.2/qa/<task-id>/",
+        "console check result",
+        "frame-drift notes"
+      ],
+      "status": "pending",
+      "severity": "critical",
+      "depends_on": [
+        "TASK-007"
+      ],
+      "subtests": []
+    },
+    {
+      "id": "TEST-EIT-FRAME-017",
+      "type": "visual_test",
+      "target": "frame-17",
+      "objective": "Verify frame-17 (Controller Output Behavior Selected) against the implemented Admin V0.2 state.",
+      "preconditions": [
+        "Source frame exists at docs/assets/implementation-toolkit/admin-v0.2/frames/frame-17.png.",
+        "Local WordPress admin implementation for the corresponding state is reachable.",
+        "TASK-006 or TASK-007 has implemented the state."
+      ],
+      "steps": [
+        "Open the matching WordPress admin state.",
+        "Capture desktop screenshot.",
+        "Capture responsive screenshot when layout behavior is in scope.",
+        "Check browser console for relevant errors.",
+        "Compare against source frame and record frame-drift notes."
+      ],
+      "expected_result": "Implementation preserves output contract, runtime flow, URL state inspector and remains inside the WordPress-contained Toolkit shell.",
+      "pass_criteria": [
+        "source frame reference is recorded",
+        "desktop screenshot exists",
+        "no relevant console errors are present",
+        "no incoherent overlap or page-level horizontal overflow is present",
+        "drift notes are documented as accepted, fixed, or blocked"
+      ],
+      "evidence_required": [
+        "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-17.png",
+        "desktop screenshot under docs/assets/implementation-toolkit/admin-v0.2/qa/<task-id>/",
+        "console check result",
+        "frame-drift notes"
+      ],
+      "status": "pending",
+      "severity": "high",
+      "depends_on": [
+        "TASK-006"
+      ],
+      "subtests": []
+    },
+    {
+      "id": "TEST-EIT-FRAME-018",
+      "type": "visual_test",
+      "target": "frame-18",
+      "objective": "Verify frame-18 (Price Range Module Selected) against the implemented Admin V0.2 state.",
+      "preconditions": [
+        "Source frame exists at docs/assets/implementation-toolkit/admin-v0.2/frames/frame-18.png.",
+        "Local WordPress admin implementation for the corresponding state is reachable.",
+        "TASK-006 or TASK-007 has implemented the state."
+      ],
+      "steps": [
+        "Open the matching WordPress admin state.",
+        "Capture desktop screenshot.",
+        "Capture responsive screenshot when layout behavior is in scope.",
+        "Check browser console for relevant errors.",
+        "Compare against source frame and record frame-drift notes."
+      ],
+      "expected_result": "Implementation preserves expanded modules, selected Price Range, inherited/override badges and remains inside the WordPress-contained Toolkit shell.",
+      "pass_criteria": [
+        "source frame reference is recorded",
+        "desktop screenshot exists",
+        "no relevant console errors are present",
+        "no incoherent overlap or page-level horizontal overflow is present",
+        "drift notes are documented as accepted, fixed, or blocked"
+      ],
+      "evidence_required": [
+        "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-18.png",
+        "desktop screenshot under docs/assets/implementation-toolkit/admin-v0.2/qa/<task-id>/",
+        "console check result",
+        "frame-drift notes"
+      ],
+      "status": "pending",
+      "severity": "high",
+      "depends_on": [
+        "TASK-006"
+      ],
+      "subtests": []
+    },
+    {
+      "id": "TEST-EIT-FRAME-019",
+      "type": "visual_test",
+      "target": "frame-19",
+      "objective": "Verify frame-19 (Provider Contract Selected) against the implemented Admin V0.2 state.",
+      "preconditions": [
+        "Source frame exists at docs/assets/implementation-toolkit/admin-v0.2/frames/frame-19.png.",
+        "Local WordPress admin implementation for the corresponding state is reachable.",
+        "TASK-006 or TASK-007 has implemented the state."
+      ],
+      "steps": [
+        "Open the matching WordPress admin state.",
+        "Capture desktop screenshot.",
+        "Capture responsive screenshot when layout behavior is in scope.",
+        "Check browser console for relevant errors.",
+        "Compare against source frame and record frame-drift notes."
+      ],
+      "expected_result": "Implementation preserves DOM provider, detected targets, manual selector, provider inspector and remains inside the WordPress-contained Toolkit shell.",
+      "pass_criteria": [
+        "source frame reference is recorded",
+        "desktop screenshot exists",
+        "no relevant console errors are present",
+        "no incoherent overlap or page-level horizontal overflow is present",
+        "drift notes are documented as accepted, fixed, or blocked"
+      ],
+      "evidence_required": [
+        "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-19.png",
+        "desktop screenshot under docs/assets/implementation-toolkit/admin-v0.2/qa/<task-id>/",
+        "console check result",
+        "frame-drift notes"
+      ],
+      "status": "pending",
+      "severity": "high",
+      "depends_on": [
+        "TASK-006"
+      ],
+      "subtests": []
+    },
+    {
+      "id": "TEST-EIT-FRAME-020",
+      "type": "visual_test",
+      "target": "frame-20",
+      "objective": "Verify frame-20 (Filter Preset Root Overview) against the implemented Admin V0.2 state.",
+      "preconditions": [
+        "Source frame exists at docs/assets/implementation-toolkit/admin-v0.2/frames/frame-20.png.",
+        "Local WordPress admin implementation for the corresponding state is reachable.",
+        "TASK-006 or TASK-007 has implemented the state."
+      ],
+      "steps": [
+        "Open the matching WordPress admin state.",
+        "Capture desktop screenshot.",
+        "Capture responsive screenshot when layout behavior is in scope.",
+        "Check browser console for relevant errors.",
+        "Compare against source frame and record frame-drift notes."
+      ],
+      "expected_result": "Implementation preserves root object, five layer bands, root inspector and remains inside the WordPress-contained Toolkit shell.",
+      "pass_criteria": [
+        "source frame reference is recorded",
+        "desktop screenshot exists",
+        "no relevant console errors are present",
+        "no incoherent overlap or page-level horizontal overflow is present",
+        "drift notes are documented as accepted, fixed, or blocked"
+      ],
+      "evidence_required": [
+        "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-20.png",
+        "desktop screenshot under docs/assets/implementation-toolkit/admin-v0.2/qa/<task-id>/",
+        "console check result",
+        "frame-drift notes"
+      ],
+      "status": "pending",
+      "severity": "high",
+      "depends_on": [
+        "TASK-006"
+      ],
+      "subtests": []
+    },
+    {
+      "id": "TEST-EIT-FRAME-021",
+      "type": "visual_test",
+      "target": "frame-21",
+      "objective": "Verify frame-21 (Output Behavior Runtime Surface) against the implemented Admin V0.2 state.",
+      "preconditions": [
+        "Source frame exists at docs/assets/implementation-toolkit/admin-v0.2/frames/frame-21.png.",
+        "Local WordPress admin implementation for the corresponding state is reachable.",
+        "TASK-006 or TASK-007 has implemented the state."
+      ],
+      "steps": [
+        "Open the matching WordPress admin state.",
+        "Capture desktop screenshot.",
+        "Capture responsive screenshot when layout behavior is in scope.",
+        "Check browser console for relevant errors.",
+        "Compare against source frame and record frame-drift notes."
+      ],
+      "expected_result": "Implementation preserves runtime flow and state machine as admin contract and remains inside the WordPress-contained Toolkit shell.",
+      "pass_criteria": [
+        "source frame reference is recorded",
+        "desktop screenshot exists",
+        "no relevant console errors are present",
+        "no incoherent overlap or page-level horizontal overflow is present",
+        "drift notes are documented as accepted, fixed, or blocked"
+      ],
+      "evidence_required": [
+        "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-21.png",
+        "desktop screenshot under docs/assets/implementation-toolkit/admin-v0.2/qa/<task-id>/",
+        "console check result",
+        "frame-drift notes"
+      ],
+      "status": "pending",
+      "severity": "high",
+      "depends_on": [
+        "TASK-006"
+      ],
+      "subtests": []
+    },
+    {
+      "id": "TEST-EIT-FRAME-022",
+      "type": "visual_test",
+      "target": "frame-22",
+      "objective": "Verify frame-22 (Filter Module Schema Price Range) against the implemented Admin V0.2 state.",
+      "preconditions": [
+        "Source frame exists at docs/assets/implementation-toolkit/admin-v0.2/frames/frame-22.png.",
+        "Local WordPress admin implementation for the corresponding state is reachable.",
+        "TASK-006 or TASK-007 has implemented the state."
+      ],
+      "steps": [
+        "Open the matching WordPress admin state.",
+        "Capture desktop screenshot.",
+        "Capture responsive screenshot when layout behavior is in scope.",
+        "Check browser console for relevant errors.",
+        "Compare against source frame and record frame-drift notes."
+      ],
+      "expected_result": "Implementation preserves parent context, inherited versus override sections and remains inside the WordPress-contained Toolkit shell.",
+      "pass_criteria": [
+        "source frame reference is recorded",
+        "desktop screenshot exists",
+        "no relevant console errors are present",
+        "no incoherent overlap or page-level horizontal overflow is present",
+        "drift notes are documented as accepted, fixed, or blocked"
+      ],
+      "evidence_required": [
+        "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-22.png",
+        "desktop screenshot under docs/assets/implementation-toolkit/admin-v0.2/qa/<task-id>/",
+        "console check result",
+        "frame-drift notes"
+      ],
+      "status": "pending",
+      "severity": "high",
+      "depends_on": [
+        "TASK-006"
+      ],
+      "subtests": []
+    },
+    {
+      "id": "TEST-EIT-FRAME-023",
+      "type": "visual_test",
+      "target": "frame-23",
+      "objective": "Verify frame-23 (Provider Contract Builder) against the implemented Admin V0.2 state.",
+      "preconditions": [
+        "Source frame exists at docs/assets/implementation-toolkit/admin-v0.2/frames/frame-23.png.",
+        "Local WordPress admin implementation for the corresponding state is reachable.",
+        "TASK-006 or TASK-007 has implemented the state."
+      ],
+      "steps": [
+        "Open the matching WordPress admin state.",
+        "Capture desktop screenshot.",
+        "Capture responsive screenshot when layout behavior is in scope.",
+        "Check browser console for relevant errors.",
+        "Compare against source frame and record frame-drift notes."
+      ],
+      "expected_result": "Implementation preserves step-based contract builder, identity resolver selected and remains inside the WordPress-contained Toolkit shell.",
+      "pass_criteria": [
+        "source frame reference is recorded",
+        "desktop screenshot exists",
+        "no relevant console errors are present",
+        "no incoherent overlap or page-level horizontal overflow is present",
+        "drift notes are documented as accepted, fixed, or blocked"
+      ],
+      "evidence_required": [
+        "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-23.png",
+        "desktop screenshot under docs/assets/implementation-toolkit/admin-v0.2/qa/<task-id>/",
+        "console check result",
+        "frame-drift notes"
+      ],
+      "status": "pending",
+      "severity": "high",
+      "depends_on": [
+        "TASK-006"
+      ],
+      "subtests": []
+    },
+    {
+      "id": "TEST-EIT-FRAME-024",
+      "type": "visual_test",
+      "target": "frame-24",
+      "objective": "Verify frame-24 (Filter Preset Object Map) against the implemented Admin V0.2 state.",
+      "preconditions": [
+        "Source frame exists at docs/assets/implementation-toolkit/admin-v0.2/frames/frame-24.png.",
+        "Local WordPress admin implementation for the corresponding state is reachable.",
+        "TASK-006 or TASK-007 has implemented the state."
+      ],
+      "steps": [
+        "Open the matching WordPress admin state.",
+        "Capture desktop screenshot.",
+        "Capture responsive screenshot when layout behavior is in scope.",
+        "Check browser console for relevant errors.",
+        "Compare against source frame and record frame-drift notes."
+      ],
+      "expected_result": "Implementation preserves ownership/inheritance/override graph and remains inside the WordPress-contained Toolkit shell.",
+      "pass_criteria": [
+        "source frame reference is recorded",
+        "desktop screenshot exists",
+        "no relevant console errors are present",
+        "no incoherent overlap or page-level horizontal overflow is present",
+        "drift notes are documented as accepted, fixed, or blocked"
+      ],
+      "evidence_required": [
+        "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-24.png",
+        "desktop screenshot under docs/assets/implementation-toolkit/admin-v0.2/qa/<task-id>/",
+        "console check result",
+        "frame-drift notes"
+      ],
+      "status": "pending",
+      "severity": "high",
+      "depends_on": [
+        "TASK-006"
+      ],
+      "subtests": []
+    },
+    {
+      "id": "TEST-EIT-FRAME-026",
+      "type": "visual_test",
+      "target": "frame-26",
+      "objective": "Verify frame-26 (Filter Architecture With Contextual Preview) against the implemented Admin V0.2 state.",
+      "preconditions": [
+        "Source frame exists at docs/assets/implementation-toolkit/admin-v0.2/frames/frame-26.png.",
+        "Local WordPress admin implementation for the corresponding state is reachable.",
+        "TASK-006 or TASK-007 has implemented the state."
+      ],
+      "steps": [
+        "Open the matching WordPress admin state.",
+        "Capture desktop screenshot.",
+        "Capture responsive screenshot when layout behavior is in scope.",
+        "Check browser console for relevant errors.",
+        "Compare against source frame and record frame-drift notes."
+      ],
+      "expected_result": "Implementation preserves architecture bands plus controller-only preview and remains inside the WordPress-contained Toolkit shell.",
+      "pass_criteria": [
+        "source frame reference is recorded",
+        "desktop screenshot exists",
+        "no relevant console errors are present",
+        "no incoherent overlap or page-level horizontal overflow is present",
+        "drift notes are documented as accepted, fixed, or blocked"
+      ],
+      "evidence_required": [
+        "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-26.png",
+        "desktop screenshot under docs/assets/implementation-toolkit/admin-v0.2/qa/<task-id>/",
+        "console check result",
+        "frame-drift notes"
+      ],
+      "status": "pending",
+      "severity": "high",
+      "depends_on": [
+        "TASK-006"
+      ],
+      "subtests": []
+    },
+    {
+      "id": "TEST-EIT-FRAME-027",
+      "type": "visual_test",
+      "target": "frame-27",
+      "objective": "Verify frame-27 (Visual Filter Architecture Builder) against the implemented Admin V0.2 state.",
+      "preconditions": [
+        "Source frame exists at docs/assets/implementation-toolkit/admin-v0.2/frames/frame-27.png.",
+        "Local WordPress admin implementation for the corresponding state is reachable.",
+        "TASK-006 or TASK-007 has implemented the state."
+      ],
+      "steps": [
+        "Open the matching WordPress admin state.",
+        "Capture desktop screenshot.",
+        "Capture responsive screenshot when layout behavior is in scope.",
+        "Check browser console for relevant errors.",
+        "Compare against source frame and record frame-drift notes."
+      ],
+      "expected_result": "Implementation preserves Source, Query Contract, Filter Layer, Target Listing, Runtime columns and remains inside the WordPress-contained Toolkit shell.",
+      "pass_criteria": [
+        "source frame reference is recorded",
+        "desktop screenshot exists",
+        "no relevant console errors are present",
+        "no incoherent overlap or page-level horizontal overflow is present",
+        "drift notes are documented as accepted, fixed, or blocked"
+      ],
+      "evidence_required": [
+        "docs/assets/implementation-toolkit/admin-v0.2/frames/frame-27.png",
+        "desktop screenshot under docs/assets/implementation-toolkit/admin-v0.2/qa/<task-id>/",
+        "console check result",
+        "frame-drift notes"
+      ],
+      "status": "pending",
+      "severity": "high",
+      "depends_on": [
+        "TASK-006"
+      ],
+      "subtests": []
+    }
+  ]
+}

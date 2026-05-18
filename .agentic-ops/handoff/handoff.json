@@ -1,0 +1,76 @@
+{
+  "id": "HANDOFF-EIT-ADMIN-V02-AGENTIC-OPS",
+  "current_state": "Agentic Ops MCP adaptation documented; .agentic-ops/ overlay not initialized by this artifact.",
+  "objective": "Continue by initializing overlay mode, importing/validating this plan, then executing the Filter Preset first slice.",
+  "preset_used": "cms_wordpress_elementor_low_code",
+  "decisions_made": [
+    "Use Agentic Ops overlay mode.",
+    "Primary preset is CMS/WordPress/Elementor.",
+    "Visual Front-End First is secondary validation preset.",
+    "First code slice is Filter Preset admin only."
+  ],
+  "pending_decisions": [
+    "Approve root .agentic-ops/ overlay creation if strict root containment remains a concern.",
+    "Confirm current local Elementor/WordPress versions before code edits.",
+    "Confirm existing plugin source path and reusable code before implementation."
+  ],
+  "plan_structure": {
+    "first_phase": "PHASE-000",
+    "first_task": "TASK-001",
+    "first_code_task": "TASK-005",
+    "first_qa_task": "TASK-008"
+  },
+  "completed_tasks": [],
+  "pending_tasks": [
+    "TASK-001",
+    "TASK-002",
+    "TASK-003",
+    "TASK-004",
+    "TASK-005",
+    "TASK-006",
+    "TASK-007",
+    "TASK-008",
+    "TASK-009",
+    "TASK-010"
+  ],
+  "risks": [
+    "Root .agentic-ops/ overlay may need explicit acceptance because AGENTS.md says nothing else should live in repository root.",
+    "Visual frames can contain generated inconsistencies.",
+    "Implementation can drift into runtime adapters if secondary frames are not deferred."
+  ],
+  "research_packets": [
+    "RESEARCH-EIT-001",
+    "RESEARCH-EIT-002",
+    "RESEARCH-EIT-003"
+  ],
+  "validations": [
+    "validate_plan",
+    "validate_phase",
+    "validate_task",
+    "validate_test",
+    "create_snapshot",
+    "export_operational_plan"
+  ],
+  "tests": [
+    "TEST-EIT-PLAN-VALIDATE",
+    "TEST-EIT-OVERLAY-SAFETY",
+    "TEST-EIT-WP-ADMIN-SAFETY",
+    "TEST-EIT-FRAME-VISUAL-QA",
+    "TEST-EIT-HANDOFF-READINESS"
+  ],
+  "next_steps": [
+    "Run mcp__agentic_ops__.validate_plan against this JSON.",
+    "If accepted, initialize overlay with aops init --non-destructive --overlay --preset cms_wordpress_elementor_low_code.",
+    "Import this plan into .agentic-ops/ and validate phases/tasks/tests before code edits.",
+    "Start TASK-004 before touching plugin source."
+  ],
+  "do_not_reopen": [
+    "Do not reopen the decision that WordPress admin chrome remains visible.",
+    "Do not reopen the first-slice boundary unless the user explicitly changes scope.",
+    "Do not turn preview into a grid/listing renderer.",
+    "Do not treat frame 25 as a screen or frame 28 as the default shell."
+  ],
+  "how_to_continue_briefing_user": "Report MCP validation status, root overlay impact, and the next executable task.",
+  "first_recommended_cli_command": "aops init --non-destructive --overlay --preset cms_wordpress_elementor_low_code",
+  "first_recommended_mcp_prompt": "Inspect this WordPress workspace, validate docs/implementation-toolkit/admin-v0.2-agentic-ops-plan.json, then prepare overlay import without overwriting AGENTS.md."
+}

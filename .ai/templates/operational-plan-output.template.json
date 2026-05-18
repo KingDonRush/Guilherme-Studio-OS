@@ -22,9 +22,9 @@
     "available_presets": [
       "visual_front_end_first",
       "full_stack_product",
-      "cms_wordpress_elementor_no_code_low_code",
+      "cms_wordpress_elementor_low_code",
       "automation_integration_workflow",
-      "research_strategy_conceptual_system"
+      "research_strategy_conceptual"
     ],
     "selected_preset": "",
     "secondary_preset_if_hybrid": "",

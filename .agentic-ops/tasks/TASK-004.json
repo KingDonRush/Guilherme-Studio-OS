@@ -1,0 +1,65 @@
+{
+  "id": "TASK-004",
+  "title": "Lock source contract and frame inventory",
+  "description": "Map source-of-truth, frames, icon manifest, and QA method into decisions and tests before code changes.",
+  "objective": "Prevent the old frame plan from expanding into unrelated implementation work.",
+  "priority": "high",
+  "complexity": "complex",
+  "status": "done",
+  "phase_id": "PHASE-010",
+  "depends_on": [
+    "TASK-003"
+  ],
+  "blocks": [
+    "TASK-005",
+    "TASK-006",
+    "TASK-007"
+  ],
+  "inputs_required": [
+    "admin-v0.2-source-of-truth.md",
+    "admin-v0.2-frame-implementation-plan.md",
+    "canonical-icon-manifest.json",
+    "frame-driven UI QA protocol"
+  ],
+  "expected_outputs": [
+    "decision records for shell, icons, runtime boundary, preview boundary, and frame classification",
+    "visual tests for primary frames",
+    "secondary backlog boundary",
+    "locked source contract document",
+    "primary frame visual test matrix"
+  ],
+  "acceptance_criteria": [
+    "Primary implementation frames are separated from secondary frames.",
+    "Reference-only and interaction-reference frames are not implemented as screens.",
+    "Canonical icon vocabulary is the only first-slice asset source.",
+    "Frame-driven QA is linked to implementation tasks."
+  ],
+  "verification": [
+    "Validate decisions.",
+    "Validate visual tests.",
+    "Confirm paths exist with rg --files.",
+    "Created docs/implementation-toolkit/admin-v0.2-source-contract.md",
+    "registered DEC-EIT-005 through DEC-EIT-010",
+    "registered TEST-EIT-FRAME-016 through TEST-EIT-FRAME-027",
+    "validated plan/tasks/tests/decisions",
+    "confirmed 28 frame files and 58 canonical icon paths exist"
+  ],
+  "budgets": {
+    "time_budget": "one focused planning pass",
+    "complexity_budget": "complex",
+    "context_budget": "source docs, frames README, icon manifest",
+    "research_budget": "light",
+    "iteration_budget": "two",
+    "scope_budget": "source mapping only",
+    "ambiguity_budget": "medium",
+    "validation_budget": "human validation if frame source conflicts with source-of-truth"
+  },
+  "risks": [
+    "Frame details can be hallucinated or inconsistent.",
+    "Icon names in the old plan exceed the canonical manifest."
+  ],
+  "research_required": true,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

@@ -1,0 +1,57 @@
+{
+  "id": "TASK-007",
+  "title": "Implement controller-only preview modal",
+  "description": "Implement the Filter Controller preview modal as a contextual contract preview, not a frontend listing preview.",
+  "objective": "Close frame 16 and modal behavior without adding runtime filtering.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-020",
+  "depends_on": [
+    "TASK-006"
+  ],
+  "blocks": [
+    "TASK-008"
+  ],
+  "inputs_required": [
+    "frame-16 source",
+    "PreviewModal base",
+    "current in-memory form state"
+  ],
+  "expected_outputs": [
+    "controller controls preview",
+    "state summary",
+    "chips/count/actions/pagination contract preview",
+    "modal open/close behavior"
+  ],
+  "acceptance_criteria": [
+    "The modal opens from current in-memory form state without saving.",
+    "No listing/grid output is rendered.",
+    "The modal remains contextual to the selected preset/state.",
+    "Keyboard close and escape behavior are safe enough for WP admin."
+  ],
+  "verification": [
+    "Open/close modal in browser.",
+    "Capture desktop and mobile screenshots.",
+    "Confirm no console errors.",
+    "Confirm preview does not save data."
+  ],
+  "budgets": {
+    "time_budget": "one implementation pass",
+    "complexity_budget": "moderate",
+    "context_budget": "PreviewModal base and frame 16",
+    "research_budget": "none",
+    "iteration_budget": "two",
+    "scope_budget": "controller-only preview",
+    "ambiguity_budget": "low",
+    "validation_budget": "browser evidence required"
+  },
+  "risks": [
+    "Preview may accidentally imply runtime filtering exists.",
+    "Modal focus behavior may conflict with WordPress admin chrome."
+  ],
+  "research_required": false,
+  "requires_human_validation": false,
+  "subtasks": [],
+  "subplans": []
+}

@@ -1,0 +1,26 @@
+{
+  "id": "PHASE-000",
+  "title": "MCP overlay orientation",
+  "purpose": "Use Agentic Ops safely in this WordPress workspace without overwriting existing agent instructions.",
+  "entry_condition": "Workspace root is available and git status is clean enough to plan.",
+  "exit_condition": "MCP inspection, overlay decision, preset, and first command are recorded.",
+  "required_outputs": [
+    "workspace inspection",
+    "overlay init command",
+    "preset decision",
+    "TASK-001"
+  ],
+  "tasks": [
+    "TASK-001",
+    "TASK-002"
+  ],
+  "acceptance_criteria": [
+    "MCP inspect_workspace reports recommended_mode overlay.",
+    "No existing instructions are overwritten.",
+    "The selected preset is explicit and justified."
+  ],
+  "validation_required": [
+    "mcp__agentic_ops__.inspect_workspace",
+    "mcp__agentic_ops__.suggest_non_destructive_init"
+  ]
+}

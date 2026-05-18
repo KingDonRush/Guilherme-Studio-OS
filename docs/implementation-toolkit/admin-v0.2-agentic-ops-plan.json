@@ -1,0 +1,1319 @@
+{
+  "id": "PLAN-EIT-ADMIN-V02-AGENTIC-OPS",
+  "objective": "Adapt the Elementor Implementation Toolkit Admin V0.2 frame-first plan into an Agentic Ops operational contract that can be inspected, initialized in overlay mode, validated, executed, snapshotted, exported, and handed off through the Agentic Ops MCP.",
+  "scope": [
+    "Use the WordPress workspace as an Agentic Ops overlay target without replacing AGENTS.md.",
+    "Keep the Admin V0.2 source of truth, frame implementation plan, canonical icons, and QA evidence as the source inputs.",
+    "Use cms_wordpress_elementor_low_code as the primary preset and visual_front_end_first as the secondary validation preset.",
+    "Turn the first implementation slice into ordered phases, tasks, tests, decisions, and handoff context.",
+    "Limit code execution scope to the Elementor Implementation Toolkit admin UI/config state when implementation begins.",
+    "Use MCP validation before treating any plan, task, phase, test, or handoff as executable."
+  ],
+  "out_of_scope": [
+    "Do not edit WordPress core.",
+    "Do not replace existing AGENTS.md instructions.",
+    "Do not initialize .agentic-ops/ automatically as part of this documentation adaptation.",
+    "Do not build runtime filtering, listing, grid rendering, or frontend token export in Admin V0.2.",
+    "Do not claim deep WooCommerce, Simple Budget, JetEngine, Elementor Pro, or Elementor Globals runtime integration until separately researched and implemented.",
+    "Do not use production WordPress access or destructive CLI flags."
+  ],
+  "preset": "cms_wordpress_elementor_low_code",
+  "briefing": {
+    "operational_mantra": "Como isso vai continuar funcionando depois que eu parar de explicar?",
+    "source_base": "hybrid: WordPress/Elementor technical constraints plus approved visual frames and legacy planning notes.",
+    "primary_preset": "cms_wordpress_elementor_low_code",
+    "secondary_preset": "visual_front_end_first",
+    "preset_reasoning": "The work lives inside WordPress admin and must preserve plugin behavior, but the acceptance source is approved frame fidelity.",
+    "mcp_workspace_inspection": {
+      "has_agentic_ops": false,
+      "recommended_mode": "overlay",
+      "overwrite_risks": [
+        "AGENTS.md"
+      ],
+      "suggested_command": "aops init --non-destructive --overlay --preset cms_wordpress_elementor_low_code"
+    },
+    "crystallized": [
+      "Frames are source of visual success.",
+      "Source-of-truth document owns canonical decisions when frames conflict.",
+      "The first implementation slice is Filter Preset admin architecture only.",
+      "Secondary integration frames become bounded backlog/subplans after the first slice is stable.",
+      "Visual QA requires Playwright screenshots, responsive checks, console checks, and drift notes."
+    ],
+    "foggy": [
+      "Exact current Elementor and WordPress API limits must be rechecked when implementation starts.",
+      "Existing plugin admin code reuse must be inspected before changing source files.",
+      "Some frame details may be generated artifacts and must be corrected against the source-of-truth document."
+    ],
+    "do_not_rethink": [
+      "The plugin remains WordPress-admin contained.",
+      "The plugin remains self-contained and Elementor Free-compatible.",
+      "The first slice does not create a listing/grid renderer.",
+      "Preview is controller-only unless a later task explicitly expands scope."
+    ]
+  },
+  "phases": [
+    {
+      "id": "PHASE-000",
+      "title": "MCP overlay orientation",
+      "purpose": "Use Agentic Ops safely in this WordPress workspace without overwriting existing agent instructions.",
+      "entry_condition": "Workspace root is available and git status is clean enough to plan.",
+      "exit_condition": "MCP inspection, overlay decision, preset, and first command are recorded.",
+      "required_outputs": [
+        "workspace inspection",
+        "overlay init command",
+        "preset decision",
+        "TASK-001"
+      ],
+      "tasks": [
+        "TASK-001",
+        "TASK-002"
+      ],
+      "acceptance_criteria": [
+        "MCP inspect_workspace reports recommended_mode overlay.",
+        "No existing instructions are overwritten.",
+        "The selected preset is explicit and justified."
+      ],
+      "validation_required": [
+        "mcp__agentic_ops__.inspect_workspace",
+        "mcp__agentic_ops__.suggest_non_destructive_init"
+      ]
+    },
+    {
+      "id": "PHASE-010",
+      "title": "Source contract consolidation",
+      "purpose": "Lock the source files that govern Admin V0.2 before implementation tasks are generated.",
+      "entry_condition": "Phase 000 has recorded overlay and preset decisions.",
+      "exit_condition": "Source-of-truth, frame plan, icon manifest, and QA rules are mapped to Agentic Ops decisions and tests.",
+      "required_outputs": [
+        "source file inventory",
+        "decision records",
+        "research packets",
+        "visual QA test contract"
+      ],
+      "tasks": [
+        "TASK-003",
+        "TASK-004"
+      ],
+      "acceptance_criteria": [
+        "The legacy frame plan is supporting input, not the controlling structure.",
+        "Frame 25 remains reference evidence, not a screen.",
+        "Frame 28 remains interaction reference, not the default shell."
+      ],
+      "validation_required": [
+        "validate_plan",
+        "validate_task",
+        "validate_test"
+      ]
+    },
+    {
+      "id": "PHASE-020",
+      "title": "Filter Preset slice preparation",
+      "purpose": "Prepare the first implementation slice around reusable admin components and a single object graph.",
+      "entry_condition": "Source contract is consolidated and visual scope is bounded.",
+      "exit_condition": "Shared component tasks, object graph tasks, and preview modal tasks are executable.",
+      "required_outputs": [
+        "component architecture task",
+        "object graph task",
+        "preview modal task",
+        "implementation safety tests"
+      ],
+      "tasks": [
+        "TASK-005",
+        "TASK-006",
+        "TASK-007"
+      ],
+      "acceptance_criteria": [
+        "Implementation starts from structure, not CSS polish.",
+        "Existing save behavior and security checks are preserved.",
+        "No runtime filtering or listing renderer is introduced."
+      ],
+      "validation_required": [
+        "validate_task",
+        "validate_test"
+      ]
+    },
+    {
+      "id": "PHASE-030",
+      "title": "Visual QA and evidence",
+      "purpose": "Close implementation states only when browser evidence matches the source frames closely enough.",
+      "entry_condition": "A screen state or modal state has been implemented in local WordPress.",
+      "exit_condition": "Desktop/mobile screenshots, console checks, frame drift notes, and Agentic Ops snapshot/export are complete.",
+      "required_outputs": [
+        "Playwright desktop screenshots",
+        "Playwright mobile screenshots",
+        "console check",
+        "QA report",
+        "Agentic Ops snapshot",
+        "Agentic Ops export"
+      ],
+      "tasks": [
+        "TASK-008",
+        "TASK-009"
+      ],
+      "acceptance_criteria": [
+        "Every completed visual task has observable evidence.",
+        "The admin reads as the approved product system, not a generic settings page.",
+        "MCP snapshot/export are created after validation passes."
+      ],
+      "validation_required": [
+        "mcp__agentic_ops__.create_snapshot",
+        "mcp__agentic_ops__.export_operational_plan"
+      ]
+    },
+    {
+      "id": "PHASE-040",
+      "title": "Secondary frame backlog",
+      "purpose": "Promote later frames into bounded subplans only after the Filter Preset slice is stable.",
+      "entry_condition": "First slice has passed visual and functional acceptance.",
+      "exit_condition": "CPT and Integrations frames are split into closed subplans with stop conditions.",
+      "required_outputs": [
+        "CPT admin subplan",
+        "Integrations dossier subplans",
+        "runtime-deferred decision list"
+      ],
+      "tasks": [
+        "TASK-010"
+      ],
+      "acceptance_criteria": [
+        "Frames 01-15 are not mixed into the first slice.",
+        "Each future module has an exit condition and forbidden expansion list.",
+        "Runtime adapter work remains deferred until separately approved."
+      ],
+      "validation_required": [
+        "validate_subplan"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "title": "Plano-mae e ancoragem operacional",
+      "description": "Anchor the legacy Admin V0.2 frame plan inside Agentic Ops before generating implementation work.",
+      "objective": "Make the plan executable by another AI through explicit preset, boundaries, sequence, and continuity criteria.",
+      "priority": "critical",
+      "complexity": "moderate",
+      "status": "pending",
+      "phase_id": "PHASE-000",
+      "depends_on": [],
+      "blocks": [
+        "TASK-002",
+        "TASK-003",
+        "TASK-004",
+        "TASK-005",
+        "TASK-006",
+        "TASK-007",
+        "TASK-008",
+        "TASK-009",
+        "TASK-010"
+      ],
+      "inputs_required": [
+        "AGENTS.md",
+        "docs/implementation-toolkit/admin-v0.2-source-of-truth.md",
+        "docs/implementation-toolkit/admin-v0.2-frame-implementation-plan.md",
+        "docs/agentic-ops/mcp-reference.md"
+      ],
+      "expected_outputs": [
+        "Agentic Ops preset decision",
+        "overlay mode decision",
+        "execution boundaries",
+        "continuity rules"
+      ],
+      "acceptance_criteria": [
+        "Primary preset is cms_wordpress_elementor_low_code.",
+        "Secondary validation preset is visual_front_end_first.",
+        "The plan states that .agentic-ops/ must be initialized in overlay mode.",
+        "The plan explains what must still work after the user stops explaining context."
+      ],
+      "verification": [
+        "Run MCP inspect_workspace.",
+        "Run MCP suggest_non_destructive_init.",
+        "Run MCP validate_plan on this artifact."
+      ],
+      "budgets": {
+        "time_budget": "one planning pass",
+        "complexity_budget": "moderate",
+        "context_budget": "AGENTS, source-of-truth, frame plan, Agentic Ops MCP reference",
+        "research_budget": "light",
+        "iteration_budget": "one adaptation pass plus validation fixes",
+        "scope_budget": "planning artifact only",
+        "ambiguity_budget": "medium",
+        "validation_budget": "MCP validation required"
+      },
+      "risks": [
+        "The plan may become too broad if all 28 frames are treated as one implementation batch.",
+        "Agentic Ops overlay may conflict with the repository root containment rule unless explicitly accepted."
+      ],
+      "research_required": false,
+      "tests": [
+        {
+          "id": "TEST-EIT-PLAN-VALIDATE",
+          "type": "handoff_test",
+          "target": "PLAN-EIT-ADMIN-V02-AGENTIC-OPS",
+          "objective": "Confirm the operational plan is schema-valid enough for Agentic Ops MCP use.",
+          "preconditions": [
+            "Plan JSON exists.",
+            "Agentic Ops MCP validate_plan tool is available."
+          ],
+          "steps": [
+            "Call mcp__agentic_ops__.validate_plan with this plan object.",
+            "Fix required errors before implementation starts."
+          ],
+          "expected_result": "The plan validates with no blocking schema errors.",
+          "pass_criteria": [
+            "valid is true",
+            "no required-field errors are returned"
+          ],
+          "evidence_required": [
+            "MCP validation result"
+          ],
+          "status": "pending",
+          "severity": "critical",
+          "depends_on": []
+        }
+      ],
+      "requires_human_validation": true,
+      "subtasks": [
+        {
+          "id": "TASK-001-SUB-001",
+          "title": "Record overlay mode",
+          "description": "Use MCP inspection output to document overlay mode and overwrite risks.",
+          "objective": "Prevent Agentic Ops from replacing existing instructions.",
+          "status": "pending",
+          "depends_on": [],
+          "inputs_required": [
+            "MCP inspect_workspace output"
+          ],
+          "expected_output": "Overlay decision recorded in briefing.",
+          "acceptance_criteria": [
+            "The suggested command uses --non-destructive --overlay."
+          ],
+          "verification": [
+            "MCP suggest_non_destructive_init output is cited."
+          ],
+          "risks": [],
+          "promote_to_subplan_if": []
+        }
+      ],
+      "subplans": []
+    },
+    {
+      "id": "TASK-002",
+      "title": "Initialize Agentic Ops overlay",
+      "description": "Create the .agentic-ops/ operational overlay only when the user accepts the root-level overlay.",
+      "objective": "Make the workspace consumable by Agentic Ops CLI/MCP without overwriting AGENTS.md or project docs.",
+      "priority": "critical",
+      "complexity": "simple",
+      "status": "pending",
+      "phase_id": "PHASE-000",
+      "depends_on": [
+        "TASK-001"
+      ],
+      "blocks": [
+        "TASK-003"
+      ],
+      "inputs_required": [
+        "MCP suggested init command",
+        "Clean or understood git status"
+      ],
+      "expected_outputs": [
+        ".agentic-ops/ manifest",
+        "workspace inspection artifact",
+        "validated overlay mode"
+      ],
+      "acceptance_criteria": [
+        "Only .agentic-ops/ is written.",
+        "AGENTS.md is not modified.",
+        "Manifest records overlay mode and active preset.",
+        "Git status shows only expected Agentic Ops overlay files."
+      ],
+      "verification": [
+        "Run aops init --non-destructive --overlay --preset cms_wordpress_elementor_low_code.",
+        "Run MCP inspect_workspace again.",
+        "Run git status --short --branch."
+      ],
+      "budgets": {
+        "time_budget": "one CLI action",
+        "complexity_budget": "simple",
+        "context_budget": "MCP inspection output and AGENTS root policy",
+        "research_budget": "none",
+        "iteration_budget": "one",
+        "scope_budget": "Agentic Ops overlay only",
+        "ambiguity_budget": "low after user accepts overlay",
+        "validation_budget": "git status plus MCP inspect"
+      },
+      "risks": [
+        "The repository guide currently says nothing else should live in the root; user approval may be needed before creating .agentic-ops/."
+      ],
+      "research_required": false,
+      "requires_human_validation": true,
+      "subtasks": [],
+      "subplans": []
+    },
+    {
+      "id": "TASK-003",
+      "title": "Import operational contract into Agentic Ops",
+      "description": "Move this validated plan into the Agentic Ops overlay as the executable plan source.",
+      "objective": "Create plan, phase, task, test, decision, and handoff artifacts that MCP tools can validate independently.",
+      "priority": "critical",
+      "complexity": "moderate",
+      "status": "pending",
+      "phase_id": "PHASE-010",
+      "depends_on": [
+        "TASK-002"
+      ],
+      "blocks": [
+        "TASK-004",
+        "TASK-005"
+      ],
+      "inputs_required": [
+        "docs/implementation-toolkit/admin-v0.2-agentic-ops-plan.json",
+        ".agentic-ops/ overlay"
+      ],
+      "expected_outputs": [
+        ".agentic-ops/plan.json or equivalent imported plan artifact",
+        "validated phase artifacts",
+        "validated task artifacts",
+        "validated test artifacts"
+      ],
+      "acceptance_criteria": [
+        "MCP validate_plan succeeds.",
+        "Every phase has entry and exit conditions.",
+        "Every implementation task has observable acceptance criteria.",
+        "TASK-001 remains the first task."
+      ],
+      "verification": [
+        "mcp__agentic_ops__.validate_plan",
+        "mcp__agentic_ops__.validate_phase for each phase",
+        "mcp__agentic_ops__.validate_task for each task"
+      ],
+      "budgets": {
+        "time_budget": "one import pass",
+        "complexity_budget": "moderate",
+        "context_budget": "this JSON plus Agentic Ops schema",
+        "research_budget": "none",
+        "iteration_budget": "two validation repair loops",
+        "scope_budget": "operational artifacts only",
+        "ambiguity_budget": "low",
+        "validation_budget": "all schema validators pass or warnings are documented"
+      },
+      "risks": [
+        "Manual import can drift from this docs copy if not snapshotted/exported."
+      ],
+      "research_required": false,
+      "requires_human_validation": false,
+      "subtasks": [],
+      "subplans": []
+    },
+    {
+      "id": "TASK-004",
+      "title": "Lock source contract and frame inventory",
+      "description": "Map source-of-truth, frames, icon manifest, and QA method into decisions and tests before code changes.",
+      "objective": "Prevent the old frame plan from expanding into unrelated implementation work.",
+      "priority": "high",
+      "complexity": "complex",
+      "status": "pending",
+      "phase_id": "PHASE-010",
+      "depends_on": [
+        "TASK-003"
+      ],
+      "blocks": [
+        "TASK-005",
+        "TASK-006",
+        "TASK-007"
+      ],
+      "inputs_required": [
+        "admin-v0.2-source-of-truth.md",
+        "admin-v0.2-frame-implementation-plan.md",
+        "canonical-icon-manifest.json",
+        "frame-driven UI QA protocol"
+      ],
+      "expected_outputs": [
+        "decision records for shell, icons, runtime boundary, preview boundary, and frame classification",
+        "visual tests for primary frames",
+        "secondary backlog boundary"
+      ],
+      "acceptance_criteria": [
+        "Primary implementation frames are separated from secondary frames.",
+        "Reference-only and interaction-reference frames are not implemented as screens.",
+        "Canonical icon vocabulary is the only first-slice asset source.",
+        "Frame-driven QA is linked to implementation tasks."
+      ],
+      "verification": [
+        "Validate decisions.",
+        "Validate visual tests.",
+        "Confirm paths exist with rg --files."
+      ],
+      "budgets": {
+        "time_budget": "one focused planning pass",
+        "complexity_budget": "complex",
+        "context_budget": "source docs, frames README, icon manifest",
+        "research_budget": "light",
+        "iteration_budget": "two",
+        "scope_budget": "source mapping only",
+        "ambiguity_budget": "medium",
+        "validation_budget": "human validation if frame source conflicts with source-of-truth"
+      },
+      "risks": [
+        "Frame details can be hallucinated or inconsistent.",
+        "Icon names in the old plan exceed the canonical manifest."
+      ],
+      "research_required": true,
+      "requires_human_validation": true,
+      "subtasks": [],
+      "subplans": []
+    },
+    {
+      "id": "TASK-005",
+      "title": "Build shared admin primitives",
+      "description": "Implement reusable admin shell and component primitives before frame-specific UI.",
+      "objective": "Create the stable component base for Admin V0.2 without starting from CSS-only frame matching.",
+      "priority": "high",
+      "complexity": "complex",
+      "status": "pending",
+      "phase_id": "PHASE-020",
+      "depends_on": [
+        "TASK-004"
+      ],
+      "blocks": [
+        "TASK-006",
+        "TASK-007",
+        "TASK-008"
+      ],
+      "inputs_required": [
+        "existing plugin admin source",
+        "ToolkitShell component list",
+        "canonical icon assets",
+        "WordPress capability/nonce/sanitization patterns"
+      ],
+      "expected_outputs": [
+        "WordPress-contained Toolkit shell",
+        "Top bar",
+        "IconGlyph renderer",
+        "StatusBadge and chip primitives",
+        "ArchitectureCanvas and ArchitectureBand primitives",
+        "InspectorPanel primitives",
+        "PreviewModal base"
+      ],
+      "acceptance_criteria": [
+        "WordPress admin chrome remains visible.",
+        "Existing saving, nonce, capability, sanitization, and escaping patterns are preserved.",
+        "Components are reusable across Filter, CPT, and Integrations areas.",
+        "No new runtime dependency is added without a decision record."
+      ],
+      "verification": [
+        "PHP lint changed plugin files.",
+        "Activate plugin in local WordPress.",
+        "Open admin page without PHP fatal errors.",
+        "Run browser console check."
+      ],
+      "budgets": {
+        "time_budget": "one implementation slice",
+        "complexity_budget": "complex",
+        "context_budget": "plugin admin source plus source-of-truth",
+        "research_budget": "light",
+        "iteration_budget": "two code/QA loops",
+        "scope_budget": "shared admin UI primitives only",
+        "ambiguity_budget": "medium",
+        "validation_budget": "WP admin smoke test plus code lint"
+      },
+      "risks": [
+        "A broad component rewrite could break existing saves.",
+        "CSS-only implementation could create fragile visual matches."
+      ],
+      "research_required": true,
+      "requires_human_validation": false,
+      "subtasks": [],
+      "subplans": []
+    },
+    {
+      "id": "TASK-006",
+      "title": "Implement Filter Preset object graph states",
+      "description": "Render the first-slice Filter Preset architecture states from a single object graph.",
+      "objective": "Implement frames 20, 19, 18, 17, 24, 23, 22, 21, 26, and 27 as states of one admin product system.",
+      "priority": "high",
+      "complexity": "very_complex",
+      "status": "pending",
+      "phase_id": "PHASE-020",
+      "depends_on": [
+        "TASK-005"
+      ],
+      "blocks": [
+        "TASK-007",
+        "TASK-008"
+      ],
+      "inputs_required": [
+        "Filter Preset source frames",
+        "object graph minimum model",
+        "existing eit_filter_presets save behavior"
+      ],
+      "expected_outputs": [
+        "Filter Preset root overview",
+        "Provider Contract selected state",
+        "Price Range selected state",
+        "Controller Output selected state",
+        "object map state",
+        "provider contract builder state",
+        "price range schema state",
+        "output runtime surface state",
+        "architecture with contextual preview state",
+        "visual builder state"
+      ],
+      "acceptance_criteria": [
+        "All states read from one coherent object graph.",
+        "The inspector context matches the selected object/layer/module.",
+        "No listing/grid renderer appears.",
+        "Inherited, override, feeds, owns, and controls relationships are visually meaningful.",
+        "Dense content does not cause page-level horizontal overflow."
+      ],
+      "verification": [
+        "Open each state in WP admin.",
+        "Capture desktop screenshot for each implemented frame state.",
+        "Check mobile/tablet layout for overflow.",
+        "Confirm console has no JS errors."
+      ],
+      "budgets": {
+        "time_budget": "bounded first-slice subplan",
+        "complexity_budget": "very_complex",
+        "context_budget": "primary frame docs and existing admin source only",
+        "research_budget": "light",
+        "iteration_budget": "two visual QA loops per state group",
+        "scope_budget": "Filter Preset admin state only",
+        "ambiguity_budget": "medium",
+        "validation_budget": "visual QA evidence required before done"
+      },
+      "risks": [
+        "This task can expand endlessly if every frame becomes a separate screen.",
+        "Object graph and saved option shape can drift apart."
+      ],
+      "research_required": true,
+      "requires_human_validation": true,
+      "subtasks": [],
+      "subplans": [
+        {
+          "id": "SUBPLAN-FILTER-PRESET-STATES",
+          "title": "Filter Preset state implementation loop",
+          "path": ".agentic-ops/subplans/SUBPLAN-FILTER-PRESET-STATES.json"
+        }
+      ]
+    },
+    {
+      "id": "TASK-007",
+      "title": "Implement controller-only preview modal",
+      "description": "Implement the Filter Controller preview modal as a contextual contract preview, not a frontend listing preview.",
+      "objective": "Close frame 16 and modal behavior without adding runtime filtering.",
+      "priority": "high",
+      "complexity": "moderate",
+      "status": "pending",
+      "phase_id": "PHASE-020",
+      "depends_on": [
+        "TASK-006"
+      ],
+      "blocks": [
+        "TASK-008"
+      ],
+      "inputs_required": [
+        "frame-16 source",
+        "PreviewModal base",
+        "current in-memory form state"
+      ],
+      "expected_outputs": [
+        "controller controls preview",
+        "state summary",
+        "chips/count/actions/pagination contract preview",
+        "modal open/close behavior"
+      ],
+      "acceptance_criteria": [
+        "The modal opens from current in-memory form state without saving.",
+        "No listing/grid output is rendered.",
+        "The modal remains contextual to the selected preset/state.",
+        "Keyboard close and escape behavior are safe enough for WP admin."
+      ],
+      "verification": [
+        "Open/close modal in browser.",
+        "Capture desktop and mobile screenshots.",
+        "Confirm no console errors.",
+        "Confirm preview does not save data."
+      ],
+      "budgets": {
+        "time_budget": "one implementation pass",
+        "complexity_budget": "moderate",
+        "context_budget": "PreviewModal base and frame 16",
+        "research_budget": "none",
+        "iteration_budget": "two",
+        "scope_budget": "controller-only preview",
+        "ambiguity_budget": "low",
+        "validation_budget": "browser evidence required"
+      },
+      "risks": [
+        "Preview may accidentally imply runtime filtering exists.",
+        "Modal focus behavior may conflict with WordPress admin chrome."
+      ],
+      "research_required": false,
+      "requires_human_validation": false,
+      "subtasks": [],
+      "subplans": []
+    },
+    {
+      "id": "TASK-008",
+      "title": "Run frame-driven visual QA",
+      "description": "Verify implemented states against source frames with browser evidence.",
+      "objective": "Prove visual fidelity, responsive behavior, and admin usability before marking implementation tasks done.",
+      "priority": "critical",
+      "complexity": "complex",
+      "status": "pending",
+      "phase_id": "PHASE-030",
+      "depends_on": [
+        "TASK-006",
+        "TASK-007"
+      ],
+      "blocks": [
+        "TASK-009",
+        "TASK-010"
+      ],
+      "inputs_required": [
+        "implemented local WordPress admin",
+        "source frames",
+        "Playwright",
+        "QA report path under docs/assets/implementation-toolkit/admin-v0.2/qa/"
+      ],
+      "expected_outputs": [
+        "desktop screenshots",
+        "mobile screenshots",
+        "console report",
+        "frame drift notes",
+        "QA report"
+      ],
+      "acceptance_criteria": [
+        "Each completed state has desktop screenshot evidence.",
+        "Mobile/tablet layout has no incoherent overlap or page-level horizontal overflow.",
+        "Console has no relevant JS errors.",
+        "Any frame divergence is documented as intentional or unresolved.",
+        "Visual tasks are not marked done without screenshot evidence."
+      ],
+      "verification": [
+        "Use Playwright screenshots.",
+        "Inspect console logs.",
+        "Compare screenshots to source frames.",
+        "Record QA report."
+      ],
+      "budgets": {
+        "time_budget": "one QA pass per state group",
+        "complexity_budget": "complex",
+        "context_budget": "source frames plus implementation URL",
+        "research_budget": "none",
+        "iteration_budget": "two correction loops",
+        "scope_budget": "visual QA only",
+        "ambiguity_budget": "medium",
+        "validation_budget": "human validation if visual source conflict remains"
+      },
+      "risks": [
+        "Lint/render checks alone can falsely pass a visual implementation.",
+        "WordPress admin chrome may shift pixel expectations from generated frames."
+      ],
+      "research_required": false,
+      "requires_human_validation": true,
+      "subtasks": [],
+      "subplans": [
+        {
+          "id": "SUBPLAN-VISUAL-QA",
+          "title": "Frame-driven QA loop",
+          "path": ".agentic-ops/subplans/SUBPLAN-VISUAL-QA.json"
+        }
+      ]
+    },
+    {
+      "id": "TASK-009",
+      "title": "Snapshot, export, and handoff",
+      "description": "Use Agentic Ops MCP to capture operational evidence and hand off the next step.",
+      "objective": "Leave the plan, implementation evidence, and next action reproducible for the next AI or user review.",
+      "priority": "high",
+      "complexity": "moderate",
+      "status": "pending",
+      "phase_id": "PHASE-030",
+      "depends_on": [
+        "TASK-008"
+      ],
+      "blocks": [
+        "TASK-010"
+      ],
+      "inputs_required": [
+        "validated plan",
+        "QA report",
+        "git status",
+        "changed file list"
+      ],
+      "expected_outputs": [
+        "Agentic Ops snapshot",
+        "exported operational plan",
+        "handoff packet",
+        "final git status"
+      ],
+      "acceptance_criteria": [
+        "MCP create_snapshot succeeds after validation.",
+        "MCP export_operational_plan produces a readable export.",
+        "Handoff includes next concrete action and what not to rethink.",
+        "Final status names validation gaps honestly."
+      ],
+      "verification": [
+        "mcp__agentic_ops__.create_snapshot",
+        "mcp__agentic_ops__.export_operational_plan",
+        "git status --short --branch"
+      ],
+      "budgets": {
+        "time_budget": "one closeout pass",
+        "complexity_budget": "moderate",
+        "context_budget": "validated artifacts and QA report",
+        "research_budget": "none",
+        "iteration_budget": "one",
+        "scope_budget": "evidence and handoff only",
+        "ambiguity_budget": "low",
+        "validation_budget": "snapshot/export plus final status"
+      },
+      "risks": [
+        "Snapshot/export before QA can preserve an unverified state."
+      ],
+      "research_required": false,
+      "requires_human_validation": false,
+      "subtasks": [],
+      "subplans": []
+    },
+    {
+      "id": "TASK-010",
+      "title": "Promote secondary frames into bounded subplans",
+      "description": "Split CPT and Integrations frames into future subplans after the Filter Preset slice is stable.",
+      "objective": "Keep frames 01-15 useful without bloating the first implementation pass.",
+      "priority": "medium",
+      "complexity": "complex",
+      "status": "pending",
+      "phase_id": "PHASE-040",
+      "depends_on": [
+        "TASK-009"
+      ],
+      "blocks": [],
+      "inputs_required": [
+        "secondary frame list",
+        "first-slice QA outcomes",
+        "runtime-deferred decisions"
+      ],
+      "expected_outputs": [
+        "CPT manager subplan",
+        "Connector Registry subplan",
+        "QA Scenario Runner subplan",
+        "Editor Handoff Notes subplan",
+        "Design Token Mapper subplan",
+        "remaining integration module backlog"
+      ],
+      "acceptance_criteria": [
+        "Each subplan has scope boundary, entry condition, exit condition, and max depth.",
+        "Runtime adapter work remains explicitly forbidden unless separately approved.",
+        "Subplans do not depend on re-reading the whole legacy frame plan."
+      ],
+      "verification": [
+        "mcp__agentic_ops__.validate_subplan for each created subplan.",
+        "MCP export after subplans are added."
+      ],
+      "budgets": {
+        "time_budget": "one planning pass after first slice",
+        "complexity_budget": "complex",
+        "context_budget": "secondary frames plus first-slice evidence",
+        "research_budget": "light",
+        "iteration_budget": "one",
+        "scope_budget": "future backlog/subplans only",
+        "ambiguity_budget": "medium",
+        "validation_budget": "validate_subplan for each"
+      },
+      "risks": [
+        "Secondary modules can accidentally turn into runtime product scope.",
+        "Design Token Mapper can drift into a full design-system builder."
+      ],
+      "research_required": true,
+      "requires_human_validation": true,
+      "subtasks": [],
+      "subplans": [
+        {
+          "id": "SUBPLAN-CPT-MANAGER",
+          "title": "CPT Manager admin states",
+          "path": ".agentic-ops/subplans/SUBPLAN-CPT-MANAGER.json"
+        },
+        {
+          "id": "SUBPLAN-INTEGRATIONS-DOSSIER",
+          "title": "Integrations dossier frames",
+          "path": ".agentic-ops/subplans/SUBPLAN-INTEGRATIONS-DOSSIER.json"
+        }
+      ]
+    }
+  ],
+  "research_packets": [
+    {
+      "id": "RESEARCH-EIT-001",
+      "question": "Which current WordPress, Elementor, and Elementor Free APIs constrain the Admin V0.2 implementation?",
+      "reason": "Avoid custom code that duplicates stable platform APIs and avoid relying on stale plugin assumptions.",
+      "decision_dependency": "Whether shared admin components, icon loading, preview modal behavior, and saved options can reuse existing WordPress/Elementor APIs.",
+      "allowed_scope": [
+        "local WordPress source",
+        "local Elementor plugin source",
+        "official WordPress developer docs",
+        "official Elementor developer docs"
+      ],
+      "forbidden_scope": [
+        "paid hosted services",
+        "production access",
+        "runtime adapter implementation"
+      ],
+      "desired_sources": [
+        "official documentation",
+        "local plugin source",
+        "release notes"
+      ],
+      "update_policy": "Recheck when implementation starts because WordPress and Elementor APIs can change.",
+      "reliability_signals": [
+        "official source",
+        "local installed version",
+        "active maintenance"
+      ],
+      "alternatives_to_compare": [
+        "native WordPress Settings API",
+        "current plugin save handlers",
+        "custom admin renderer"
+      ],
+      "wheel_reinvention_risk": "medium",
+      "plan_impact": "May adjust TASK-005 component architecture and security checks.",
+      "task_impact": "May split TASK-005 if existing admin save behavior is more coupled than expected.",
+      "recommendation": "Research before editing plugin source.",
+      "remaining_uncertainties": [
+        "Installed Elementor version details must be checked locally.",
+        "Existing plugin source path must be confirmed before implementation."
+      ],
+      "validation_required": [
+        "source citations or local code references"
+      ]
+    },
+    {
+      "id": "RESEARCH-EIT-002",
+      "question": "Which existing plugin admin code, saved options, icons, and QA artifacts can be reused?",
+      "reason": "Preserve behavior and reduce unnecessary rewrite risk.",
+      "decision_dependency": "How much of the current admin implementation becomes data/model reference versus direct reusable code.",
+      "allowed_scope": [
+        "wordpress/wp-content/plugins/elementor-implementation-toolkit",
+        "docs/assets/implementation-toolkit/admin-v0.2",
+        "docs/implementation-toolkit"
+      ],
+      "forbidden_scope": [
+        "WordPress core edits",
+        "new third-party dependencies",
+        "full visual redesign"
+      ],
+      "desired_sources": [
+        "local source code",
+        "canonical icon manifest",
+        "existing QA reports"
+      ],
+      "update_policy": "Run before first code edit and again before final QA.",
+      "reliability_signals": [
+        "git-tracked source",
+        "existing screenshots",
+        "valid manifest"
+      ],
+      "alternatives_to_compare": [
+        "reuse existing render methods",
+        "extract data structures",
+        "replace markup only"
+      ],
+      "wheel_reinvention_risk": "high",
+      "plan_impact": "Can reduce TASK-005/TASK-006 scope or reveal a needed subplan.",
+      "task_impact": "May create a source-mapping subtask before implementation.",
+      "recommendation": "Inspect existing plugin source before proposing abstractions.",
+      "remaining_uncertainties": [
+        "Plugin directory may not exist in this checkout yet.",
+        "Some assets may be docs-only and not copied into plugin source."
+      ],
+      "validation_required": [
+        "file path inventory",
+        "git status before edits"
+      ]
+    },
+    {
+      "id": "RESEARCH-EIT-003",
+      "question": "Can the local WordPress environment and Playwright capture reliable admin screenshots for frame-driven QA?",
+      "reason": "Visual tasks cannot close without evidence, and local tooling must be reproducible.",
+      "decision_dependency": "Whether TASK-008 can use the standard local browser QA flow or needs setup work first.",
+      "allowed_scope": [
+        "wordpress/scripts",
+        "local WordPress admin",
+        "Playwright tooling",
+        "docs/assets/implementation-toolkit/admin-v0.2/qa"
+      ],
+      "forbidden_scope": [
+        "production credentials",
+        "manual-only visual approval without screenshots"
+      ],
+      "desired_sources": [
+        "local scripts",
+        "browser evidence",
+        "existing QA reports"
+      ],
+      "update_policy": "Check at QA start and whenever local environment changes.",
+      "reliability_signals": [
+        "repeatable command",
+        "timestamped screenshot",
+        "console output"
+      ],
+      "alternatives_to_compare": [
+        "Playwright screenshots",
+        "manual browser screenshots",
+        "WP-CLI smoke checks"
+      ],
+      "wheel_reinvention_risk": "low",
+      "plan_impact": "May add a setup task before TASK-008.",
+      "task_impact": "May block QA until environment setup is fixed.",
+      "recommendation": "Do not close visual tasks without screenshot evidence.",
+      "remaining_uncertainties": [
+        "Current local WordPress server state is unknown at planning time."
+      ],
+      "validation_required": [
+        "screenshot paths",
+        "console check result"
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DEC-EIT-001",
+      "title": "Use Agentic Ops overlay mode",
+      "summary": "This workspace has AGENTS.md and no .agentic-ops/ yet, so the MCP path is overlay mode.",
+      "rationale": "Overlay mode preserves existing repository instructions and keeps Agentic Ops removable.",
+      "status": "accepted",
+      "affects": [
+        "TASK-002",
+        "handoff"
+      ],
+      "alternatives_considered": [
+        "Replace existing agent instructions",
+        "Avoid Agentic Ops artifacts entirely"
+      ],
+      "evidence": [
+        "mcp__agentic_ops__.inspect_workspace reported has_agentic_ops false and recommended_mode overlay.",
+        "mcp__agentic_ops__.suggest_non_destructive_init recommended aops init --non-destructive --overlay --preset cms_wordpress_elementor_low_code."
+      ],
+      "risks": [
+        "Root repository policy must accept .agentic-ops/ as an operational overlay."
+      ],
+      "created_at": "2026-05-17T00:00:00.000Z"
+    },
+    {
+      "id": "DEC-EIT-002",
+      "title": "Use CMS/WordPress/Elementor as primary preset",
+      "summary": "The execution environment, safety boundaries, and compatibility risks are WordPress/Elementor concerns.",
+      "rationale": "The visual frames are important, but the plugin must preserve WordPress admin behavior, saved options, nonces, capabilities, escaping, and Elementor Free compatibility.",
+      "status": "accepted",
+      "affects": [
+        "all tasks"
+      ],
+      "alternatives_considered": [
+        "Visual Front-End First as primary preset",
+        "Full Stack Product"
+      ],
+      "evidence": [
+        "AGENTS.md WordPress containment rules.",
+        "admin-v0.2-source-of-truth.md functional acceptance."
+      ],
+      "risks": [
+        "The plan must still enforce visual QA or it can drift into a generic settings screen."
+      ],
+      "created_at": "2026-05-17T00:00:00.000Z"
+    },
+    {
+      "id": "DEC-EIT-003",
+      "title": "Use Visual Front-End First as secondary validation preset",
+      "summary": "Approved frames define visual success and require screenshot-based QA.",
+      "rationale": "The implementation must match product-system frames, but visual matching is a validation layer under WordPress containment.",
+      "status": "accepted",
+      "affects": [
+        "TASK-004",
+        "TASK-008"
+      ],
+      "alternatives_considered": [
+        "No secondary preset",
+        "Treat frames as loose inspiration"
+      ],
+      "evidence": [
+        "admin-v0.2-source-of-truth.md Core Rule.",
+        "frame-driven UI QA protocol requirement."
+      ],
+      "risks": [
+        "Generated frames may contain inconsistent details that need source-of-truth decisions."
+      ],
+      "created_at": "2026-05-17T00:00:00.000Z"
+    },
+    {
+      "id": "DEC-EIT-004",
+      "title": "First code slice is Filter Preset admin only",
+      "summary": "The first implementation slice proves the admin architecture without runtime filtering or integration modules.",
+      "rationale": "A smaller slice creates reusable primitives and evidence before CPT/Integrations frames expand scope.",
+      "status": "accepted",
+      "affects": [
+        "TASK-005",
+        "TASK-006",
+        "TASK-007",
+        "TASK-010"
+      ],
+      "alternatives_considered": [
+        "Build all frames in one pass",
+        "Start with Integrations frames 01-04"
+      ],
+      "evidence": [
+        "admin-v0.2-source-of-truth.md First Implementation Slice."
+      ],
+      "risks": [
+        "Secondary frames may become stale if not promoted into subplans after the first slice."
+      ],
+      "created_at": "2026-05-17T00:00:00.000Z"
+    }
+  ],
+  "budgets": {
+    "time_budget": "Plan adaptation now; implementation split into bounded Agentic Ops phases.",
+    "complexity_budget": "Complex overall, with very_complex Filter Preset state implementation isolated as a subplan.",
+    "context_budget": "Load AGENTS, relevant .ai planning files, Agentic Ops MCP reference, source-of-truth, frame plan, icon manifest, and plugin source when implementation starts.",
+    "research_budget": "Light during planning; targeted current-source checks before code edits.",
+    "iteration_budget": "Two validation repair loops for plan artifacts; two visual QA correction loops for implemented state groups.",
+    "scope_budget": "Admin V0.2 first slice only until snapshot/export passes.",
+    "ambiguity_budget": "Medium, with human validation required for frame conflicts and root overlay acceptance.",
+    "validation_budget": "MCP schema validation, git status, WP admin smoke checks, Playwright screenshots, console checks, QA report, snapshot/export."
+  },
+  "tests": [
+    {
+      "id": "TEST-EIT-OVERLAY-SAFETY",
+      "type": "acceptance_test",
+      "target": "TASK-002",
+      "objective": "Confirm Agentic Ops initialization is non-destructive and overlay-only.",
+      "preconditions": [
+        "User has accepted root .agentic-ops/ overlay if needed.",
+        "git status is recorded."
+      ],
+      "steps": [
+        "Run aops init --non-destructive --overlay --preset cms_wordpress_elementor_low_code.",
+        "Run mcp__agentic_ops__.inspect_workspace.",
+        "Run git status --short --branch."
+      ],
+      "expected_result": "Only .agentic-ops/ overlay files appear and existing instructions remain unchanged.",
+      "pass_criteria": [
+        "AGENTS.md unchanged",
+        "recommended_mode is overlay or has_agentic_ops is true",
+        "no unexpected root files are created"
+      ],
+      "evidence_required": [
+        "MCP inspection output",
+        "git status output"
+      ],
+      "status": "pending",
+      "severity": "critical",
+      "depends_on": [
+        "TASK-001"
+      ]
+    },
+    {
+      "id": "TEST-EIT-WP-ADMIN-SAFETY",
+      "type": "security_test",
+      "target": "TASK-005",
+      "objective": "Preserve WordPress admin safety while rebuilding UI primitives.",
+      "preconditions": [
+        "Plugin source has been inspected.",
+        "Implementation edits exist."
+      ],
+      "steps": [
+        "Inspect save handlers for nonce and capability checks.",
+        "Inspect render output for escaping.",
+        "Run PHP lint on changed PHP files.",
+        "Activate/open plugin admin locally."
+      ],
+      "expected_result": "Existing safety behavior remains intact and admin page opens without fatal errors.",
+      "pass_criteria": [
+        "nonces present on state-changing actions",
+        "capability checks present",
+        "user-controlled output escaped",
+        "PHP lint passes"
+      ],
+      "evidence_required": [
+        "code references",
+        "lint output",
+        "admin smoke result"
+      ],
+      "status": "pending",
+      "severity": "critical",
+      "depends_on": [
+        "TASK-005"
+      ]
+    },
+    {
+      "id": "TEST-EIT-FRAME-VISUAL-QA",
+      "type": "visual_test",
+      "target": "TASK-008",
+      "objective": "Verify the implemented Filter Preset states against approved frames.",
+      "preconditions": [
+        "Local WordPress admin page is reachable.",
+        "Filter Preset states are implemented.",
+        "Source frames are available."
+      ],
+      "steps": [
+        "Capture desktop screenshots for each implemented state.",
+        "Capture mobile/tablet screenshots for representative states.",
+        "Check browser console.",
+        "Record drift notes and evidence paths."
+      ],
+      "expected_result": "Implemented states are recognizably the same product system as the frames and have no blocking layout or console issues.",
+      "pass_criteria": [
+        "desktop evidence exists",
+        "mobile/tablet evidence exists",
+        "no incoherent overlap",
+        "no page-level horizontal overflow",
+        "no relevant JS console errors"
+      ],
+      "evidence_required": [
+        "screenshot paths",
+        "console check",
+        "QA report"
+      ],
+      "status": "pending",
+      "severity": "high",
+      "depends_on": [
+        "TASK-006",
+        "TASK-007"
+      ]
+    },
+    {
+      "id": "TEST-EIT-HANDOFF-READINESS",
+      "type": "handoff_test",
+      "target": "TASK-009",
+      "objective": "Confirm another AI can continue without rebriefing the whole project.",
+      "preconditions": [
+        "Plan has validated.",
+        "QA evidence is recorded or gaps are explicit."
+      ],
+      "steps": [
+        "Read handoff packet.",
+        "Confirm first next action is concrete.",
+        "Confirm do_not_rethink list exists.",
+        "Confirm validation gaps are explicit."
+      ],
+      "expected_result": "Handoff is executable and does not transfer hidden context back to the user.",
+      "pass_criteria": [
+        "first next action exists",
+        "context to preserve exists",
+        "do_not_reopen/do_not_rethink exists",
+        "validation gaps are named"
+      ],
+      "evidence_required": [
+        "handoff export"
+      ],
+      "status": "pending",
+      "severity": "medium",
+      "depends_on": [
+        "TASK-009"
+      ]
+    }
+  ],
+  "analysis_reports": [
+    {
+      "id": "ANALYSIS-EIT-001",
+      "type": "scope",
+      "target": "PLAN-EIT-ADMIN-V02-AGENTIC-OPS",
+      "summary": "The old plan is broad, so Agentic Ops should treat Filter Preset as the first slice and move CPT/Integrations into future subplans.",
+      "findings": [
+        "The frame plan contains first-slice frames, secondary frames, reference-only frames, and interaction references.",
+        "Trying to implement all frames in one batch would break budget and validation quality.",
+        "MCP overlay mode introduces a root-level artifact that should be accepted intentionally."
+      ],
+      "recommendations": [
+        "Initialize Agentic Ops overlay only after accepting the root overlay.",
+        "Validate this plan before generating implementation tasks.",
+        "Do not start plugin source edits before source contract consolidation is complete."
+      ],
+      "related_research_packets": [
+        "RESEARCH-EIT-001",
+        "RESEARCH-EIT-002",
+        "RESEARCH-EIT-003"
+      ],
+      "status": "ready",
+      "created_at": "2026-05-17T00:00:00.000Z"
+    }
+  ],
+  "readiness_reports": [],
+  "drift_reports": [],
+  "validation_results": [],
+  "handoff": {
+    "id": "HANDOFF-EIT-ADMIN-V02-AGENTIC-OPS",
+    "current_state": "Agentic Ops MCP adaptation documented; .agentic-ops/ overlay not initialized by this artifact.",
+    "objective": "Continue by initializing overlay mode, importing/validating this plan, then executing the Filter Preset first slice.",
+    "preset_used": "cms_wordpress_elementor_low_code",
+    "decisions_made": [
+      "Use Agentic Ops overlay mode.",
+      "Primary preset is CMS/WordPress/Elementor.",
+      "Visual Front-End First is secondary validation preset.",
+      "First code slice is Filter Preset admin only."
+    ],
+    "pending_decisions": [
+      "Approve root .agentic-ops/ overlay creation if strict root containment remains a concern.",
+      "Confirm current local Elementor/WordPress versions before code edits.",
+      "Confirm existing plugin source path and reusable code before implementation."
+    ],
+    "plan_structure": {
+      "first_phase": "PHASE-000",
+      "first_task": "TASK-001",
+      "first_code_task": "TASK-005",
+      "first_qa_task": "TASK-008"
+    },
+    "completed_tasks": [],
+    "pending_tasks": [
+      "TASK-001",
+      "TASK-002",
+      "TASK-003",
+      "TASK-004",
+      "TASK-005",
+      "TASK-006",
+      "TASK-007",
+      "TASK-008",
+      "TASK-009",
+      "TASK-010"
+    ],
+    "risks": [
+      "Root .agentic-ops/ overlay may need explicit acceptance because AGENTS.md says nothing else should live in repository root.",
+      "Visual frames can contain generated inconsistencies.",
+      "Implementation can drift into runtime adapters if secondary frames are not deferred."
+    ],
+    "research_packets": [
+      "RESEARCH-EIT-001",
+      "RESEARCH-EIT-002",
+      "RESEARCH-EIT-003"
+    ],
+    "validations": [
+      "validate_plan",
+      "validate_phase",
+      "validate_task",
+      "validate_test",
+      "create_snapshot",
+      "export_operational_plan"
+    ],
+    "tests": [
+      "TEST-EIT-PLAN-VALIDATE",
+      "TEST-EIT-OVERLAY-SAFETY",
+      "TEST-EIT-WP-ADMIN-SAFETY",
+      "TEST-EIT-FRAME-VISUAL-QA",
+      "TEST-EIT-HANDOFF-READINESS"
+    ],
+    "next_steps": [
+      "Run mcp__agentic_ops__.validate_plan against this JSON.",
+      "If accepted, initialize overlay with aops init --non-destructive --overlay --preset cms_wordpress_elementor_low_code.",
+      "Import this plan into .agentic-ops/ and validate phases/tasks/tests before code edits.",
+      "Start TASK-004 before touching plugin source."
+    ],
+    "do_not_reopen": [
+      "Do not reopen the decision that WordPress admin chrome remains visible.",
+      "Do not reopen the first-slice boundary unless the user explicitly changes scope.",
+      "Do not turn preview into a grid/listing renderer.",
+      "Do not treat frame 25 as a screen or frame 28 as the default shell."
+    ],
+    "how_to_continue_briefing_user": "Report MCP validation status, root overlay impact, and the next executable task.",
+    "first_recommended_cli_command": "aops init --non-destructive --overlay --preset cms_wordpress_elementor_low_code",
+    "first_recommended_mcp_prompt": "Inspect this WordPress workspace, validate docs/implementation-toolkit/admin-v0.2-agentic-ops-plan.json, then prepare overlay import without overwriting AGENTS.md."
+  }
+}

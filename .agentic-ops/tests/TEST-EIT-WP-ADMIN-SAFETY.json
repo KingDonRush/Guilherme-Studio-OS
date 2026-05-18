@@ -1,0 +1,33 @@
+{
+  "id": "TEST-EIT-WP-ADMIN-SAFETY",
+  "type": "security_test",
+  "target": "TASK-005",
+  "objective": "Preserve WordPress admin safety while rebuilding UI primitives.",
+  "preconditions": [
+    "Plugin source has been inspected.",
+    "Implementation edits exist."
+  ],
+  "steps": [
+    "Inspect save handlers for nonce and capability checks.",
+    "Inspect render output for escaping.",
+    "Run PHP lint on changed PHP files.",
+    "Activate/open plugin admin locally."
+  ],
+  "expected_result": "Existing safety behavior remains intact and admin page opens without fatal errors.",
+  "pass_criteria": [
+    "nonces present on state-changing actions",
+    "capability checks present",
+    "user-controlled output escaped",
+    "PHP lint passes"
+  ],
+  "evidence_required": [
+    "code references",
+    "lint output",
+    "admin smoke result"
+  ],
+  "status": "pending",
+  "severity": "critical",
+  "depends_on": [
+    "TASK-005"
+  ]
+}

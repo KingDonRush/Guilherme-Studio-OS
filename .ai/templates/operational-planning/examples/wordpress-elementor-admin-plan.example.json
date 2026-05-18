@@ -1,12 +1,12 @@
 {
   "project_meta": {
     "project_name": "Elementor Implementation Toolkit Admin V0.2",
-    "selected_preset": "hybrid: cms_wordpress_elementor_no_code_low_code + visual_front_end_first",
+    "selected_preset": "hybrid: cms_wordpress_elementor_low_code + visual_front_end_first",
     "current_focus": "Rebuild plugin admin from approved frames without losing WordPress constraints.",
     "operational_mantra": "Como isso vai continuar funcionando depois que eu parar de explicar?"
   },
   "phase_0_system_creation": {
-    "selected_preset": "cms_wordpress_elementor_no_code_low_code",
+    "selected_preset": "cms_wordpress_elementor_low_code",
     "secondary_preset_if_hybrid": "visual_front_end_first",
     "why_this_preset_fits": "The UI lives inside WordPress admin and must preserve plugin settings, but the success source is approved visual frames.",
     "method_parts_used": [
@@ -71,7 +71,7 @@
       },
       "anchoring_contract": {
         "central_objective": "Create executable admin rebuild tasks from approved frames and WordPress constraints.",
-        "selected_preset": "cms_wordpress_elementor_no_code_low_code",
+        "selected_preset": "cms_wordpress_elementor_low_code",
         "boundaries": [
           "No runtime filter engine changes",
           "No page/demo build",
