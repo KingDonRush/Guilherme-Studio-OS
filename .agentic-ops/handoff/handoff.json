@@ -1,6 +1,6 @@
 {
   "id": "HANDOFF-EIT-ADMIN-V02-AGENTIC-OPS",
-  "current_state": "Agentic Ops overlay is active. TASK-001 through TASK-016 are complete. The visible plugin admin has been reset from a frame-driven architecture surface to an operational WordPress backend for Filter Presets, Post Types, Elementor bridge templates, and provider diagnostics.",
+  "current_state": "Agentic Ops overlay is active. TASK-001 through TASK-017 are complete. The visible plugin admin has been reset from a frame-driven architecture surface to an operational WordPress backend for Filter Presets, Post Types, Elementor bridge templates, and provider diagnostics. TASK-017 corrected the visual direction into a quieter WordPress/product hybrid and moved the Filter Preset Theme Builder handoff into the setup workflow.",
   "objective": "Use the product admin bridge as the baseline for the next product-focused implementation slice.",
   "preset_used": "cms_wordpress_elementor_low_code",
   "decisions_made": [
@@ -9,7 +9,8 @@
     "Visual Front-End First is secondary validation preset.",
     "First code slice is Filter Preset admin only.",
     "DEC-EIT-011 replaces architecture-builder admin with operational admin.",
-    "DEC-EIT-012 makes the admin a product bridge: presets create Elementor templates, while Post Types expose a repeatable field builder with advanced WordPress options collapsed."
+    "DEC-EIT-012 makes the admin a product bridge: presets create Elementor templates, while Post Types expose a repeatable field builder with advanced WordPress options collapsed.",
+    "DEC-EIT-013 uses a hybrid WordPress product admin instead of a separate app shell: Theme Builder handoff first, advanced preset options staged behind a deliberate disclosure, and CSS toned down across all admin pages."
   ],
   "pending_decisions": [
     "Choose the next implementation slice from product needs, not from the old frame subplans. Likely candidates: range/slider styling depth, preset template insertion/selection ergonomics, listing diagnostics, or managed field rendering polish."
@@ -36,7 +37,8 @@
     "TASK-013",
     "TASK-014",
     "TASK-015",
-    "TASK-016"
+    "TASK-016",
+    "TASK-017"
   ],
   "pending_tasks": [],
   "risks": [
@@ -44,7 +46,8 @@
     "Implementation can drift into runtime adapters if provider diagnostics are not kept honest.",
     "Browser cache can hide admin asset changes if the plugin version is not bumped with JS/CSS behavior changes.",
     "The Elementor bridge creates plugin-owned Elementor library templates but does not register Elementor Pro Theme Builder conditions.",
-    "The field builder uses dynamic browser rows but keeps an 80-field server-side safety cap."
+    "The field builder uses dynamic browser rows but keeps an 80-field server-side safety cap.",
+    "Theme Builder handoff wording must remain honest: the plugin opens Elementor templates, but full Elementor Pro condition registration remains out of scope."
   ],
   "research_packets": [
     "RESEARCH-EIT-001",
@@ -66,14 +69,16 @@
     "TEST-EIT-FRAME-VISUAL-QA",
     "TEST-EIT-HANDOFF-READINESS",
     "TEST-EIT-OPERATIONAL-ADMIN",
-    "TEST-EIT-PRODUCT-ADMIN-BRIDGE"
+    "TEST-EIT-PRODUCT-ADMIN-BRIDGE",
+    "TEST-EIT-HYBRID-ADMIN-FLOW"
   ],
   "next_steps": [
     "Do not resume CPT/Integrations frame implementation from the old subplans without a fresh product decision.",
     "Prioritize real product ergonomics: range/slider styling depth, preset template insertion/selection ergonomics, listing data diagnostics, and managed field rendering polish.",
     "Keep runtime listing grid rendering and deep provider adapters deferred unless a new product task explicitly approves them.",
     "Use docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-011/operational-admin-report.md as the reset evidence packet.",
-    "Use docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-014-016/product-admin-bridge-report.md as the product bridge evidence packet."
+    "Use docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-014-016/product-admin-bridge-report.md as the product bridge evidence packet.",
+    "Use docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-017/hybrid-admin-flow-report.md as the hybrid admin correction evidence packet."
   ],
   "do_not_reopen": [
     "Do not reopen the decision that WordPress admin chrome remains visible.",

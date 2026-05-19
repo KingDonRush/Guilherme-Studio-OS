@@ -1,0 +1,79 @@
+{
+  "id": "TASK-017",
+  "title": "Reconcile admin visual language and Filter Preset handoff",
+  "description": "Use screenshot evidence and a generated visual concept to correct the admin direction without reopening the CPT builder scope.",
+  "objective": "Make Filter Preset creation understandable at first glance: define a preset, immediately hand it to Elementor/Theme Builder, add filters, and keep advanced runtime settings available but intentionally collapsed.",
+  "priority": "critical",
+  "complexity": "moderate",
+  "status": "done",
+  "phase_id": "PHASE-041",
+  "depends_on": [
+    "TASK-014",
+    "TASK-015",
+    "TASK-016"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "DEC-EIT-013",
+    "Current screenshot audit under docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-017/screenshots/current",
+    "Generated hybrid admin concept image",
+    "Simple Budget Plugin Elementor template bridge reference",
+    "FilterPresetAdmin current form",
+    "Admin shell CSS"
+  ],
+  "expected_outputs": [
+    "Filter Preset form places the Elementor/Theme Builder handoff near preset setup instead of after the full form.",
+    "New presets can use a save-and-open action that creates the preset and immediately opens its Elementor template when Elementor is available.",
+    "Preset behavior exposes only first-pass essentials at first glance.",
+    "Provider, selectors, text overrides, pagination, result count, sort, and per-filter matching controls remain available behind advanced disclosures.",
+    "Admin CSS shifts to a quieter hybrid WordPress/product style shared by Presets, Post Types, Dashboard, and Diagnostics.",
+    "Evidence screenshots are recaptured after implementation."
+  ],
+  "acceptance_criteria": [
+    "The first viewport of a preset form shows preset setup and Theme Builder handoff before filter rows.",
+    "A user can save a new preset and create/open an Elementor template from the same primary workflow.",
+    "Provider mode and target/item selectors are not visible in the default first-glance flow.",
+    "Advanced settings are not removed from the saved option schema.",
+    "CPT repeatable field behavior remains unchanged.",
+    "Screenshots no longer show a heavy custom app shell competing with WordPress admin chrome."
+  ],
+  "verification": [
+    "MCP validate_decision for DEC-EIT-013.",
+    "MCP validate_task for TASK-017.",
+    "MCP validate_test for TEST-EIT-HYBRID-ADMIN-FLOW.",
+    "PHP lint passes.",
+    "JS syntax check passes.",
+    "WP-CLI smoke saves a new preset through the save-and-open path and verifies template metadata.",
+    "Browser smoke checks preset add-filter behavior, advanced options disclosure, and CPT add-field behavior.",
+    "Playwright screenshots capture Dashboard, Filter Presets, Preset form, Post Types, Post Type form, and Diagnostics after changes.",
+    "MCP validate_decision for DEC-EIT-013 returned valid.",
+    "MCP validate_task for TASK-017 returned valid.",
+    "MCP validate_test for TEST-EIT-HYBRID-ADMIN-FLOW returned valid.",
+    "PHP lint passed through Docker PHP runtime.",
+    "JS syntax check passed for assets/js/eit-admin.js.",
+    "Browser smoke confirmed Add filter, Advanced options disclosure, Save and open in Elementor, and Add field behaviors.",
+    "WP-CLI metadata smoke verified preset task-017-qa-filters had two filters and Elementor template 291 had filter_controller metadata.",
+    "After screenshots were captured under docs/assets/implementation-toolkit/admin-v0.2/qa/TASK-017/screenshots/after.",
+    "QA preset, template 291, and QA user were removed after evidence capture.",
+    "Agentic Ops snapshot SNAPSHOT-1779158060112 was created."
+  ],
+  "budgets": {
+    "time_budget": "one focused correction batch",
+    "complexity_budget": "moderate",
+    "context_budget": "FilterPresetAdmin, admin CSS, admin JS, screenshot evidence",
+    "research_budget": "local evidence only",
+    "iteration_budget": "two screenshot passes",
+    "scope_budget": "admin visual language and preset handoff only",
+    "ambiguity_budget": "medium",
+    "validation_budget": "MCP plus WP-CLI smoke plus browser screenshots"
+  },
+  "risks": [
+    "The bridge still creates Elementor Library templates, not full Elementor Pro Theme Builder conditions.",
+    "The UI can become too native and lose product identity if all custom affordances are removed.",
+    "Over-collapsing settings can make advanced capability feel hidden instead of intentionally staged."
+  ],
+  "research_required": false,
+  "requires_human_validation": false,
+  "subtasks": [],
+  "subplans": []
+}

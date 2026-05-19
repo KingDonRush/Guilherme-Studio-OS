@@ -1,0 +1,290 @@
+{
+  "id": "SNAPSHOT-1779158060112",
+  "created_at": "2026-05-19T02:34:20.146Z",
+  "files": [
+    {
+      "path": "decisions/DEC-EIT-001.json",
+      "sha256": "25298d17c6a52d733e3eabc4a97deec03f832e0eef025bf02d24233fea6f8527"
+    },
+    {
+      "path": "decisions/DEC-EIT-002.json",
+      "sha256": "31e71e72d81109f88262094fdfa773eed10ce38ce286319065f081011d4bd01c"
+    },
+    {
+      "path": "decisions/DEC-EIT-003.json",
+      "sha256": "61a22451bad19971b2aab094be934924dc82204bd8ad7ebf0aa69bc63a06f3eb"
+    },
+    {
+      "path": "decisions/DEC-EIT-004.json",
+      "sha256": "124f5b8b25fd3ac1e36d18c2c82eee433ac56e9769d4ea5a28f4e9d0dd0efc59"
+    },
+    {
+      "path": "decisions/DEC-EIT-005.json",
+      "sha256": "a3589e89f7a10aeed2c08a9c94f08de93b0ef81651373e7e3591cca201f9fa8e"
+    },
+    {
+      "path": "decisions/DEC-EIT-006.json",
+      "sha256": "50afd6d5419716cd03ff81fe5e7b4f8f3dc6bfaf8781786c99de1cbf292070e2"
+    },
+    {
+      "path": "decisions/DEC-EIT-007.json",
+      "sha256": "4013baf9fa1187470d2950efb2c443d67907a43c359084de9894cc040ed0e86c"
+    },
+    {
+      "path": "decisions/DEC-EIT-008.json",
+      "sha256": "77d83c357297d140f6ed84aa000f67111681d2cce5950ef28e940f88e1015858"
+    },
+    {
+      "path": "decisions/DEC-EIT-009.json",
+      "sha256": "6748cc51edeb62733bcd2a0c076484146b152f967763cd3f1ad9c4a970d87d0e"
+    },
+    {
+      "path": "decisions/DEC-EIT-010.json",
+      "sha256": "fe716db6617188aa46ae98b97fe0af4415a1fed73ec8a3663b1a10271484144b"
+    },
+    {
+      "path": "decisions/DEC-EIT-011.json",
+      "sha256": "00d3fe1d8da99105c972e35511ec6dfb2b15d3c78673fa0d90fc087044ec3f65"
+    },
+    {
+      "path": "decisions/DEC-EIT-012.json",
+      "sha256": "500658c806c27501bab65436359462b1f73c51ea46baafdf030bd78733caeb7b"
+    },
+    {
+      "path": "decisions/DEC-EIT-013.json",
+      "sha256": "c70649fabbb7bf6a07b4766c8d89cf4476b2bc059f8a5f7d0d599510c1ea8d41"
+    },
+    {
+      "path": "docs/admin-v0.2-plan-export.md",
+      "sha256": "83935c8c16d3b56c6a82d57360df16125a5fe88dd3059cc8f93abb69fc11c179"
+    },
+    {
+      "path": "handoff/handoff.json",
+      "sha256": "a5fb443de66a4e33dc7168fa256709b396c707af5c388ef798602d9b2786474e"
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "ed9322acf5b80120e6b1efc89544c2bddc81fdc1a83957aa5248ef6d415dc874"
+    },
+    {
+      "path": "phases/PHASE-000.json",
+      "sha256": "844faa6f4de8a54e9a7dfc2a8856a5f728964418f7f66f4650106d8cfe10fa5a"
+    },
+    {
+      "path": "phases/PHASE-010.json",
+      "sha256": "6954ad72f171431245cec048f3874eb0ca46cb362f9ace58236dba8b0debb8ed"
+    },
+    {
+      "path": "phases/PHASE-020.json",
+      "sha256": "722ea8bdcd8067926ef1266c2085d3aa297a78ac4311b769669b5ce6fe179ebd"
+    },
+    {
+      "path": "phases/PHASE-030.json",
+      "sha256": "4b3b4deb9bfad55054e7e92664ee8d48bf80faee6c5098c0f4ba4a402b17fb31"
+    },
+    {
+      "path": "phases/PHASE-040.json",
+      "sha256": "8c820ce7a14afcf58df68780c0ed690c6fea78b7052ded231603be499d1c263c"
+    },
+    {
+      "path": "plan.json",
+      "sha256": "8472a9c3c6901506206a1b9a08afd2bd71808cd372257a38ba6e58a916f11493"
+    },
+    {
+      "path": "research/RESEARCH-EIT-001.json",
+      "sha256": "5b70940c7853421e13254c7843473366959e0af4366c09afd6d40315f794550f"
+    },
+    {
+      "path": "research/RESEARCH-EIT-002.json",
+      "sha256": "cfcb71c666fb7e62efb8855f6a6f9c53661e6727a6dd3c128651106a56fb1994"
+    },
+    {
+      "path": "research/RESEARCH-EIT-003.json",
+      "sha256": "e3dc922843eb3c1906087d6ab0ed85152d9b19cc8192613c735fd2bd668bf136"
+    },
+    {
+      "path": "subplans/SUBPLAN-CONNECTOR-REGISTRY.json",
+      "sha256": "6cd68292a6e350e626a7b29e89dcd16f4c11cae67f1deab461166fe14899ab80"
+    },
+    {
+      "path": "subplans/SUBPLAN-CPT-MANAGER.json",
+      "sha256": "49039af224ee7e7a00784568f15718ce15d5034a8f5be9d0db162d9441589a85"
+    },
+    {
+      "path": "subplans/SUBPLAN-DESIGN-TOKEN-MAPPER.json",
+      "sha256": "74e73a3d14c348a671aae1db4917963ffbded6a7e56844acb2a6ccf8202c0fd4"
+    },
+    {
+      "path": "subplans/SUBPLAN-EDITOR-HANDOFF-NOTES.json",
+      "sha256": "0353c9382594a9b6f8c77eff8abd18258ebbe62682cfbc2c22e842e708c6f5c1"
+    },
+    {
+      "path": "subplans/SUBPLAN-FILTER-PRESET-STATES.json",
+      "sha256": "d958d39036ea2d7c15e3884c0443a762cca245dcf5464d0a1afbb0edc547e1a7"
+    },
+    {
+      "path": "subplans/SUBPLAN-INTEGRATION-MODULE-BACKLOG.json",
+      "sha256": "b9f4c2325bac35e5b28756ddf5c223888302983cf7a50de0762398b51ec697cd"
+    },
+    {
+      "path": "subplans/SUBPLAN-INTEGRATIONS-DOSSIER.json",
+      "sha256": "fafd11b6e9a710e208be1ef7f7fe9bc9235b9c9262c9fee8be463cb6d82bb478"
+    },
+    {
+      "path": "subplans/SUBPLAN-QA-SCENARIO-RUNNER.json",
+      "sha256": "07c8fc74ce1c907828d9c3e893875357421ace2e9da2946ee2e3f887ea2d4dc0"
+    },
+    {
+      "path": "subplans/SUBPLAN-VISUAL-QA.json",
+      "sha256": "cad1846e9fe332bce3f9a1bd14fb9b75864b1dc54cf059b0d30aaf5d545cc8c9"
+    },
+    {
+      "path": "tasks/TASK-001.json",
+      "sha256": "95a8239baab6ba1d24b1d076285395ab3e7b52b0baefabcb74f11901ae63001d"
+    },
+    {
+      "path": "tasks/TASK-002.json",
+      "sha256": "c371336b2bb40692dedb434e6140a95c6d971bb607089953ea9e9ad8d4161207"
+    },
+    {
+      "path": "tasks/TASK-003.json",
+      "sha256": "6d1b93bab8f83866febe9797105e7632a107a32220a8e8ec76320e3e6288fde0"
+    },
+    {
+      "path": "tasks/TASK-004.json",
+      "sha256": "4ed0e926110a5579c2475438820c3bb999e59b2b8b0c97b24c809a6e59763d87"
+    },
+    {
+      "path": "tasks/TASK-005.json",
+      "sha256": "693a2716bac231dd152a1ec6f663c95cb007950ef1b766fcfdcedd044676eae7"
+    },
+    {
+      "path": "tasks/TASK-006.json",
+      "sha256": "d33bf16abbf3891dd021aa607702a576d0f53ab24fcff282cdb44108c2e23452"
+    },
+    {
+      "path": "tasks/TASK-007.json",
+      "sha256": "2f12b58a05ccea08b4cdbba4da9e327d0d738d13d5cf18a00efdd11a5d54e469"
+    },
+    {
+      "path": "tasks/TASK-008.json",
+      "sha256": "0281e1b2a6b4f189f83dadd862b463b504bb929a380006280cc25db92ac1f4be"
+    },
+    {
+      "path": "tasks/TASK-009.json",
+      "sha256": "d50e94db17efb660b6b0d176cdb915f77da19860c74259d58674e10479fe904c"
+    },
+    {
+      "path": "tasks/TASK-010.json",
+      "sha256": "d254194554f3787a1126e991fe6431dba360ae7b47135af81ad911b44ff86222"
+    },
+    {
+      "path": "tasks/TASK-011.json",
+      "sha256": "2739a9d40dbb63f793d5cfc62266d0a44b0d261ad097a3d161169bb42158ceb7"
+    },
+    {
+      "path": "tasks/TASK-012.json",
+      "sha256": "61a8b1e2e11a07cabea2b57a4ef9fab9ce016533127453eaa9680f5497c495b8"
+    },
+    {
+      "path": "tasks/TASK-013.json",
+      "sha256": "9db24ad238bafc6aec484fa6253d4dd7d96aee8e793dd767db2ae0dd6c1bcbbc"
+    },
+    {
+      "path": "tasks/TASK-014.json",
+      "sha256": "3ddd49b4e244b56dd42f5ccf0989b324a14b71e28227736bbb76938b235c8f9e"
+    },
+    {
+      "path": "tasks/TASK-015.json",
+      "sha256": "c91cb2ad396b8d8b27739ef42311394e5dc589f3598c990492c8ca6d1b0c5ca0"
+    },
+    {
+      "path": "tasks/TASK-016.json",
+      "sha256": "5265000d9600c27544e1db4b4839acaf757e0c43d54bdae436ad2925f833fa12"
+    },
+    {
+      "path": "tasks/TASK-017.json",
+      "sha256": "6f472ad100352cc0498e7b1d74ecc9a95f5c967a7ebf5005ce1d5157d6223a13"
+    },
+    {
+      "path": "tests/TEST-EIT-FRAME-016.json",
+      "sha256": "d15f7234d6c4fa7e95a2b14c32a872ef8ffb00fd275fbcf9b4d5d09c03fa2c68"
+    },
+    {
+      "path": "tests/TEST-EIT-FRAME-017.json",
+      "sha256": "cf4b80e5926eb66770874a1c31480205563dc7c88ab0d0e5293610d84b720556"
+    },
+    {
+      "path": "tests/TEST-EIT-FRAME-018.json",
+      "sha256": "3b4cbf3df9bf75d3e1333853cc1242ad8881b4eed76128b8069e2397a5e06a7e"
+    },
+    {
+      "path": "tests/TEST-EIT-FRAME-019.json",
+      "sha256": "4d9ecfe10887a5e5568b582dd4cbc2242e337e372d4ff1ffb645fa3ae01aa4f7"
+    },
+    {
+      "path": "tests/TEST-EIT-FRAME-020.json",
+      "sha256": "d6cc37db5af23cbf5eab0b90b5ef41d627ff08f438fe0dfc5c2ca483cba8495e"
+    },
+    {
+      "path": "tests/TEST-EIT-FRAME-021.json",
+      "sha256": "2344d3bc8f26303b53df122845fff12bdb3a2b61de788d95969594f28fd04504"
+    },
+    {
+      "path": "tests/TEST-EIT-FRAME-022.json",
+      "sha256": "c5017f7b41e968f421911c54e1af1916897075f7a5ffea2b3847e7617b354884"
+    },
+    {
+      "path": "tests/TEST-EIT-FRAME-023.json",
+      "sha256": "966c1f849db3dcfc9984edc5bdef64b0cfd2f2e5e480731fb609f4061eaa4689"
+    },
+    {
+      "path": "tests/TEST-EIT-FRAME-024.json",
+      "sha256": "a1fa0d1bbfd86f6b05d59d93944dfcdfbe9e0fc9b538be84681bd1ca482f222b"
+    },
+    {
+      "path": "tests/TEST-EIT-FRAME-026.json",
+      "sha256": "a8826118197e33dde2becc58b44c0519376e7caf4fd5d3635267ea4f7567fd12"
+    },
+    {
+      "path": "tests/TEST-EIT-FRAME-027.json",
+      "sha256": "265b0245710a5fb4688d2507e0ca84d64a58899d5234cd002d80aaff7f123fb1"
+    },
+    {
+      "path": "tests/TEST-EIT-FRAME-VISUAL-QA.json",
+      "sha256": "b7b3f6332f626c2fe37ee3a8d539caf115af806ca0c796c1495fcdf1bef0591e"
+    },
+    {
+      "path": "tests/TEST-EIT-HANDOFF-READINESS.json",
+      "sha256": "8f188aaded4fef837f09e266270507d61a304779905f1f6b15d01c5ab5472e40"
+    },
+    {
+      "path": "tests/TEST-EIT-HYBRID-ADMIN-FLOW.json",
+      "sha256": "d364fd1eeb6695fd6ecf332c54c8871f586228fccd57f27a8bb11b60edf17c36"
+    },
+    {
+      "path": "tests/TEST-EIT-OPERATIONAL-ADMIN.json",
+      "sha256": "a9d243d9fbb61d6b6c7284cf710bf4db06b02b325df98aed5499d00f2d8db5dd"
+    },
+    {
+      "path": "tests/TEST-EIT-OVERLAY-SAFETY.json",
+      "sha256": "4c13c7a52fef8110abb09fa51cd15a52df5fbe3b0621570d0562522285f5fd38"
+    },
+    {
+      "path": "tests/TEST-EIT-PLAN-VALIDATE.json",
+      "sha256": "8290df46d41b8f2d209693c992a03faaa58477aee37f754a74e87c87bfe30f69"
+    },
+    {
+      "path": "tests/TEST-EIT-PRODUCT-ADMIN-BRIDGE.json",
+      "sha256": "f7e072f96187b2515eb8e6b27fe746a25e080bc8a527c1140070f4bab1c2f1a9"
+    },
+    {
+      "path": "tests/TEST-EIT-WP-ADMIN-SAFETY.json",
+      "sha256": "3c656b03af6b6f0551c011e68621144f49550def9e9ce1d32830033e2ca2601b"
+    },
+    {
+      "path": "workspace-inspection.json",
+      "sha256": "c757bd9836865500710c9ef5034b89969dc8dc7026b0d3151572df92320b9f7a"
+    }
+  ]
+}

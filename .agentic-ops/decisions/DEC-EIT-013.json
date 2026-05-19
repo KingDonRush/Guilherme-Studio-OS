@@ -1,0 +1,34 @@
+{
+  "id": "DEC-EIT-013",
+  "title": "Use a hybrid WordPress product admin instead of a separate app shell",
+  "summary": "The plugin admin should read as a professional wp-admin extension with a product workflow, not as a custom SaaS interface pasted into WordPress. Filter Presets should make the Theme Builder/Elementor handoff visible during preset creation, while advanced runtime options stay available behind a single deliberate disclosure.",
+  "rationale": "Visual QA and user feedback showed that the current admin mixes incompatible design signals: WordPress chrome, custom app cards, colored chips, and scattered advanced controls. This makes the intent of each action harder to understand. The product direction still needs a backend admin because reusable presets and CPT definitions belong in WordPress, but the admin must complement Elementor instead of pretending to replace it.",
+  "status": "accepted",
+  "affects": [
+    "TASK-017",
+    "includes/Admin/AdminOperationalRenderer.php",
+    "includes/Admin/FilterPresetAdmin.php",
+    "assets/css/admin/tokens.css",
+    "assets/css/admin/shell.css",
+    "assets/css/admin/primitives.css",
+    "assets/css/admin/operational.css",
+    "assets/js/eit-admin.js"
+  ],
+  "alternatives_considered": [
+    "Make the admin look completely native to WordPress",
+    "Keep the current custom operational shell and only edit copy",
+    "Remove the admin UI and put everything into Elementor widgets",
+    "Build a full custom visual filter builder inside wp-admin"
+  ],
+  "evidence": [
+    "Current screenshot audit for TASK-017 captured Dashboard, Filter Presets, Post Types, and Diagnostics pages before changes.",
+    "Generated concept image docs/assets/implementation-toolkit/admin-v0.2/concepts/hybrid-wp-admin-filter-preset.png established a compact hybrid direction with Theme Builder handoff first and advanced options collapsed.",
+    "Simple Budget Plugin reference shows that plugin-owned Elementor templates are an effective bridge between backend configuration and Elementor visual editing."
+  ],
+  "risks": [
+    "Calling the bridge Theme Builder can overpromise Elementor Pro condition integration if the UI does not clarify that it creates/open Elementor templates.",
+    "Hiding advanced controls can frustrate power users if the disclosure is not obvious and persistent enough.",
+    "CSS changes can improve coherence but still need screenshot validation across all existing admin pages."
+  ],
+  "created_at": "2026-05-18T00:00:00Z"
+}

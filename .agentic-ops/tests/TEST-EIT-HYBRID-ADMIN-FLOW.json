@@ -1,0 +1,41 @@
+{
+  "id": "TEST-EIT-HYBRID-ADMIN-FLOW",
+  "type": "integration_test",
+  "target": "TASK-017",
+  "objective": "Verify the admin correction produces a coherent WordPress/product hybrid and a practical preset-to-Elementor handoff.",
+  "preconditions": [
+    "Elementor Implementation Toolkit is active in the local WordPress runtime.",
+    "Elementor is active for template bridge verification.",
+    "TASK-014 through TASK-016 behavior remains present."
+  ],
+  "steps": [
+    "Capture current admin screenshots before changes.",
+    "Generate and store a visual concept image for the hybrid admin direction.",
+    "Save a new Filter Preset through the save-and-open Elementor template path.",
+    "Verify the created Elementor template is plugin-owned and tagged with the preset id.",
+    "Run browser smoke against Filter Presets and Post Types repeaters.",
+    "Capture after screenshots for Dashboard, Presets list, Preset form, Post Types list, Post Type form, and Diagnostics."
+  ],
+  "expected_result": "The admin presents a clear workflow in WordPress: setup, Theme Builder handoff, filters, then advanced options, while preserving the existing CPT builder and advanced preset contract.",
+  "pass_criteria": [
+    "Theme Builder/Elementor handoff is visible near the top of the preset form.",
+    "Advanced preset options are collapsed by default and can be opened.",
+    "Save-and-open creates an Elementor template with _eit_template_role=filter_controller and _eit_filter_preset metadata.",
+    "Add filter and Add field browser actions still work.",
+    "No obvious desktop/mobile overflow appears in the captured pages."
+  ],
+  "evidence_required": [
+    "Generated concept image path",
+    "MCP validation output",
+    "WP-CLI smoke output",
+    "Playwright screenshots",
+    "PHP lint output",
+    "JS syntax check output"
+  ],
+  "status": "passed",
+  "severity": "critical",
+  "depends_on": [
+    "TASK-017"
+  ],
+  "subtests": []
+}
