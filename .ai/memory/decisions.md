@@ -152,3 +152,11 @@
   selected public post type, optional IDs, item count, quantity, and safe
   placeholders. Preview actions must be inert and must not mutate the visitor
   cart or frontend behavior.
+
+## 2026-05-19
+
+- Elementor Implementation Toolkit must not resurrect the rejected admin v0.2
+  custom shell/canvas direction. The plugin admin should stay closer to native
+  WordPress admin patterns unless a future approved design explicitly justifies
+  a new product surface. The backend complements WordPress/Elementor workflows;
+  it is not a second builder.

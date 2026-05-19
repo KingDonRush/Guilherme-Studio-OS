@@ -1,0 +1,1591 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Implementation Toolkit Admin Mockups</title>
+  <style>
+    :root {
+      --wp-bg: #f0f0f1;
+      --wp-panel: #fff;
+      --wp-border: #c3c4c7;
+      --wp-border-soft: #dcdcde;
+      --wp-text: #1d2327;
+      --wp-muted: #646970;
+      --wp-blue: #2271b1;
+      --wp-blue-dark: #135e96;
+      --wp-side: #1d2327;
+      --wp-side-2: #2c3338;
+      --wp-side-muted: #c3c4c7;
+      --wp-green: #008a20;
+      --wp-red: #d63638;
+      --wp-yellow: #996800;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      color: var(--wp-text);
+      background: var(--wp-bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .wpbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #1d2327;
+      color: #f0f0f1;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, .28);
+    }
+
+    .wpbar-left,
+    .wpbar-right {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .wpbar-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 10px;
+      color: #f0f0f1;
+      white-space: nowrap;
+    }
+
+    .wpbar-item.dim {
+      color: #c3c4c7;
+    }
+
+    .wpmark {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #8c8f94;
+      border-radius: 50%;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .bubble {
+      min-width: 18px;
+      height: 18px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      background: #3c434a;
+      color: #f0f0f1;
+      font-size: 12px;
+    }
+
+    .avatar {
+      width: 24px;
+      height: 24px;
+      background: #f0f0f1;
+      border-radius: 2px;
+      border: 1px solid #c3c4c7;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 40px;
+      left: 0;
+      bottom: 0;
+      width: 190px;
+      z-index: 10;
+      background: var(--wp-side);
+      color: var(--wp-side-muted);
+      overflow: hidden;
+    }
+
+    .menu {
+      list-style: none;
+      margin: 14px 0 0;
+      padding: 0;
+    }
+
+    .menu li,
+    .submenu a,
+    .collapse {
+      height: 38px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 14px;
+      color: #f0f0f1;
+      text-decoration: none;
+    }
+
+    .menu li {
+      color: var(--wp-side-muted);
+    }
+
+    .menu li .mi {
+      width: 18px;
+      height: 18px;
+      position: relative;
+      display: inline-block;
+      border-radius: 3px;
+      border: 2px solid #a7aaad;
+    }
+
+    .menu li .mi.dot {
+      border-radius: 50%;
+    }
+
+    .menu li .mi.bar:after {
+      content: "";
+      position: absolute;
+      left: -3px;
+      right: -3px;
+      top: 7px;
+      border-top: 2px solid #a7aaad;
+    }
+
+    .menu li.active {
+      position: relative;
+      background: var(--wp-blue);
+      color: #fff;
+    }
+
+    .menu li.active:after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: 10px;
+      border-top: 9px solid transparent;
+      border-bottom: 9px solid transparent;
+      border-right: 9px solid var(--wp-bg);
+    }
+
+    .submenu {
+      background: #23282d;
+      padding: 6px 0 8px;
+      margin: 0;
+      list-style: none;
+    }
+
+    .submenu a {
+      height: 30px;
+      padding-left: 14px;
+      color: #c3c4c7;
+      font-size: 14px;
+    }
+
+    .submenu a.active {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .collapse {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 42px;
+      background: #23282d;
+      color: #c3c4c7;
+    }
+
+    main {
+      margin-left: 190px;
+      padding-top: 40px;
+      min-height: 100vh;
+    }
+
+    .wrap {
+      position: relative;
+      padding: 28px 28px 36px;
+      max-width: none;
+    }
+
+    .screen-options {
+      position: absolute;
+      top: 0;
+      right: 28px;
+      min-width: 168px;
+      height: 40px;
+      border: 1px solid var(--wp-border);
+      border-top: 0;
+      border-radius: 0 0 3px 3px;
+      background: #fff;
+      color: #3c434a;
+      text-align: left;
+      padding: 0 20px;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 23px;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0;
+      color: var(--wp-muted);
+      line-height: 1.45;
+    }
+
+    .page-action,
+    .button,
+    .button-primary,
+    .button-link {
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 14px;
+      border-radius: 3px;
+      border: 1px solid var(--wp-blue);
+      background: #f6f7f7;
+      color: var(--wp-blue);
+      text-decoration: none;
+      cursor: default;
+      white-space: nowrap;
+    }
+
+    .page-action {
+      height: 35px;
+      background: #fff;
+      font-size: 15px;
+    }
+
+    .button-primary {
+      color: #fff;
+      background: var(--wp-blue);
+      border-color: var(--wp-blue-dark);
+      box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .16);
+    }
+
+    .button-primary:hover {
+      background: var(--wp-blue-dark);
+    }
+
+    .button.muted {
+      color: #50575e;
+      border-color: var(--wp-border);
+      background: #fff;
+    }
+
+    .button.danger {
+      color: var(--wp-red);
+      border-color: #ff8085;
+      background: #fff;
+    }
+
+    .nav-tab-wrapper {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--wp-border);
+      margin-bottom: 16px;
+    }
+
+    .nav-tab {
+      min-height: 47px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 16px;
+      margin: 0 4px -1px 0;
+      border: 1px solid var(--wp-border);
+      background: #e5e5e5;
+      color: #50575e;
+      font-size: 15px;
+      text-decoration: none;
+    }
+
+    .nav-tab.active {
+      background: #fff;
+      border-bottom-color: #fff;
+      color: #1d2327;
+      font-weight: 600;
+    }
+
+    .panel {
+      border: 1px solid var(--wp-border-soft);
+      background: var(--wp-panel);
+      border-radius: 4px;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+      margin-bottom: 14px;
+    }
+
+    .panel-head {
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--wp-border-soft);
+      background: #fff;
+    }
+
+    .panel-body {
+      padding: 18px 20px;
+    }
+
+    .panel-foot {
+      min-height: 59px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 20px;
+      border-top: 1px solid var(--wp-border-soft);
+      background: #fff;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(390px, 48%);
+      gap: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field-stack {
+      display: grid;
+      gap: 20px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    label {
+      color: #1d2327;
+      font-weight: 500;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 38px;
+      border: 1px solid #8c8f94;
+      border-radius: 4px;
+      background: #fff;
+      color: #1d2327;
+      padding: 7px 10px;
+    }
+
+    textarea {
+      min-height: 76px;
+      resize: none;
+    }
+
+    .description {
+      color: var(--wp-muted);
+      font-size: 13px;
+    }
+
+    .handoff-card {
+      border: 1px solid var(--wp-border-soft);
+      border-radius: 4px;
+      background: #fff;
+      padding: 16px;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    }
+
+    .handoff-head {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      margin-bottom: 16px;
+    }
+
+    .elementor-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #0c4da2;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .handoff-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .ok-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--wp-muted);
+      font-size: 13px;
+    }
+
+    .check {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      color: var(--wp-green);
+      display: inline-grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    .table-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .search-box input {
+      width: 250px;
+      min-height: 36px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border: 1px solid var(--wp-border);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--wp-border-soft);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f6f7f7;
+      color: #2c3338;
+      font-weight: 500;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .row-title {
+      color: var(--wp-blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .row-sub {
+      display: block;
+      margin-top: 3px;
+      color: var(--wp-muted);
+      font-size: 12px;
+    }
+
+    .row-actions {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .mini-button {
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 10px;
+      border: 1px solid var(--wp-blue);
+      border-radius: 3px;
+      color: var(--wp-blue);
+      background: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .mini-button.danger {
+      color: var(--wp-red);
+      border-color: #ff8085;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 24px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #edfaef;
+      color: #007017;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status.warn {
+      background: #fcf9e8;
+      color: var(--wp-yellow);
+    }
+
+    .status.neutral {
+      background: #f6f7f7;
+      color: #50575e;
+    }
+
+    .filter-icon {
+      width: 46px;
+      height: 46px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid var(--wp-border-soft);
+      border-radius: 4px;
+      background: #fff;
+      position: relative;
+    }
+
+    .filter-icon.search:before {
+      content: "";
+      width: 17px;
+      height: 17px;
+      border: 2px solid var(--wp-blue);
+      border-radius: 50%;
+      transform: translate(-2px, -2px);
+    }
+
+    .filter-icon.search:after {
+      content: "";
+      width: 10px;
+      border-top: 2px solid var(--wp-blue);
+      transform: rotate(45deg) translate(7px, 5px);
+      position: absolute;
+    }
+
+    .filter-icon.folder:before {
+      content: "";
+      width: 25px;
+      height: 17px;
+      border: 2px solid #50575e;
+      border-radius: 2px;
+      margin-top: 5px;
+    }
+
+    .filter-icon.range:before,
+    .filter-icon.range:after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      border-top: 2px solid #50575e;
+    }
+
+    .filter-icon.range:before {
+      top: 17px;
+    }
+
+    .filter-icon.range:after {
+      top: 28px;
+    }
+
+    .dots {
+      width: 16px;
+      height: 28px;
+      display: grid;
+      grid-template-columns: repeat(2, 4px);
+      gap: 4px;
+      align-content: center;
+    }
+
+    .dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #8c8f94;
+    }
+
+    .advanced-toggle {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0;
+      color: #1d2327;
+      background: transparent;
+      border: 0;
+      font-weight: 600;
+    }
+
+    .advanced-toggle .chev {
+      width: 12px;
+      height: 12px;
+      border-right: 2px solid #50575e;
+      border-bottom: 2px solid #50575e;
+      transform: rotate(45deg) translateY(-2px);
+      margin-left: 5px;
+    }
+
+    .gear-icon {
+      width: 22px;
+      height: 22px;
+      position: relative;
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .gear-icon:before {
+      content: "";
+      width: 16px;
+      height: 16px;
+      border: 3px solid #50575e;
+      border-radius: 50%;
+      box-shadow:
+        0 -6px 0 -4px #50575e,
+        0 6px 0 -4px #50575e,
+        6px 0 0 -4px #50575e,
+        -6px 0 0 -4px #50575e;
+    }
+
+    .gear-icon:after {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #50575e;
+    }
+
+    .meta-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: 32px 1.2fr 1fr 140px 190px;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--wp-border-soft);
+      border-radius: 4px;
+      background: #fff;
+    }
+
+    .field-type {
+      font-size: 12px;
+      color: #50575e;
+      background: #f6f7f7;
+      border: 1px solid var(--wp-border-soft);
+      border-radius: 999px;
+      padding: 3px 8px;
+      width: max-content;
+    }
+
+    .notice-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-left: 4px solid var(--wp-blue);
+      background: #fff;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    }
+
+    .metric {
+      border: 1px solid var(--wp-border-soft);
+      background: #fff;
+      border-radius: 4px;
+      padding: 16px;
+    }
+
+    .metric strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 28px;
+      font-weight: 500;
+    }
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .setting-card {
+      border: 1px solid var(--wp-border-soft);
+      background: #fff;
+      border-radius: 4px;
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .switch-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 8px 0;
+      border-top: 1px solid #f0f0f1;
+    }
+
+    .switch-line:first-of-type {
+      border-top: 0;
+    }
+
+    .switch {
+      width: 38px;
+      height: 20px;
+      border-radius: 999px;
+      background: #2271b1;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .switch:after {
+      content: "";
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      right: 2px;
+      top: 2px;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 40px 0 0 190px;
+      z-index: 30;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      background: rgba(0, 0, 0, .35);
+    }
+
+    .screen.active .overlay {
+      display: flex;
+    }
+
+    .modal {
+      width: min(780px, 90vw);
+      max-height: 86vh;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border: 1px solid #8c8f94;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
+    }
+
+    .modal.wide {
+      width: min(920px, 92vw);
+    }
+
+    .modal-head {
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--wp-border-soft);
+      background: #fff;
+    }
+
+    .modal-close {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--wp-border-soft);
+      border-radius: 3px;
+      background: #f6f7f7;
+      color: #50575e;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .modal-body {
+      padding: 20px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .modal-foot {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 20px;
+      border-top: 1px solid var(--wp-border-soft);
+      background: #f6f7f7;
+    }
+
+    .modal-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .preview-box {
+      border: 1px solid var(--wp-border-soft);
+      border-radius: 4px;
+      background: #f6f7f7;
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .range-preview {
+      height: 62px;
+      border: 1px solid var(--wp-border-soft);
+      background: #fff;
+      border-radius: 4px;
+      padding: 16px 12px;
+    }
+
+    .range-track {
+      height: 4px;
+      background: #2271b1;
+      border-radius: 999px;
+      position: relative;
+      margin-top: 12px;
+    }
+
+    .range-track:before,
+    .range-track:after {
+      content: "";
+      position: absolute;
+      top: -6px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #2271b1;
+    }
+
+    .range-track:before {
+      left: 18%;
+    }
+
+    .range-track:after {
+      right: 14%;
+    }
+
+    .small-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .muted-strip {
+      background: #f6f7f7;
+      border: 1px solid var(--wp-border-soft);
+      border-radius: 4px;
+      padding: 12px;
+      color: var(--wp-muted);
+      font-size: 13px;
+    }
+
+    .savebar {
+      position: sticky;
+      bottom: 0;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      border: 1px solid var(--wp-border-soft);
+      background: #fff;
+      border-radius: 4px;
+      padding: 12px 16px;
+      box-shadow: 0 -1px 2px rgba(0, 0, 0, .04);
+    }
+
+    .actions-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .caption {
+      margin-top: 8px;
+      font-style: italic;
+      color: var(--wp-muted);
+    }
+
+    @media (max-width: 1100px) {
+      .grid-2,
+      .settings-grid,
+      .modal-main {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wpbar">
+    <div class="wpbar-left">
+      <span class="wpbar-item"><span class="wpmark">W</span></span>
+      <span class="wpbar-item">Demo Store</span>
+      <span class="wpbar-item dim"><span class="bubble">0</span></span>
+      <span class="wpbar-item">+ New</span>
+      <span class="wpbar-item view-link">View Preset</span>
+    </div>
+    <div class="wpbar-right">
+      <span class="wpbar-item">Howdy, admin <span class="avatar"></span></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <ul class="menu">
+      <li><span class="mi dot"></span>Dashboard</li>
+      <li><span class="mi"></span>Posts</li>
+      <li><span class="mi bar"></span>Media</li>
+      <li><span class="mi"></span>Pages</li>
+      <li><span class="mi dot"></span>Comments</li>
+      <li><span class="mi bar"></span>WooCommerce</li>
+      <li><span class="mi"></span>Products</li>
+      <li><span class="mi bar"></span>Analytics</li>
+      <li><span class="mi dot"></span>Marketing</li>
+      <li><span class="mi"></span>Appearance</li>
+      <li><span class="mi"></span>Plugins</li>
+      <li><span class="mi dot"></span>Users</li>
+      <li><span class="mi bar"></span>Tools</li>
+      <li><span class="mi"></span>Settings</li>
+      <li class="active"><span class="mi"></span>Implementation Toolkit</li>
+    </ul>
+    <nav class="submenu">
+      <a href="#" data-sub="dashboard">Dashboard</a>
+      <a href="#" data-sub="filters">Filter Presets</a>
+      <a href="#" data-sub="cpt">CPT / Post Types</a>
+      <a href="#" data-sub="settings">Settings</a>
+      <a href="#" data-sub="license">License</a>
+    </nav>
+    <div class="collapse">Collapse menu</div>
+  </aside>
+
+  <main>
+    <div class="wrap">
+      <button class="screen-options">Screen Options</button>
+
+      <section class="screen" id="dashboard" data-active-sub="dashboard">
+        <div class="title-row">
+          <h1>Implementation Toolkit</h1>
+          <a class="page-action">Add Filter Preset</a>
+        </div>
+        <div class="notice-line">
+          <span class="check">✓</span>
+          <p>Elementor bridge is ready. Presets and post types can be edited from WordPress and opened in Elementor when visual work begins.</p>
+        </div>
+        <div class="grid-3">
+          <div class="metric"><strong>4</strong><p>Filter presets</p></div>
+          <div class="metric"><strong>3</strong><p>Custom post types</p></div>
+          <div class="metric"><strong>7</strong><p>Elementor templates linked</p></div>
+        </div>
+        <div style="height:14px"></div>
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Recent presets</h2>
+              <a class="button muted">View all</a>
+            </div>
+            <div class="panel-body">
+              <table>
+                <thead>
+                  <tr><th>Preset</th><th>Filters</th><th>Template</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><a class="row-title">Shop - Main Filters</a><span class="row-sub">shop-main-filters</span></td><td>3 filters</td><td>Archive template</td><td><span class="status">Ready</span></td></tr>
+                  <tr><td><a class="row-title">Portfolio Cases</a><span class="row-sub">portfolio-cases</span></td><td>4 filters</td><td>Case grid</td><td><span class="status warn">Needs review</span></td></tr>
+                  <tr><td><a class="row-title">Services Directory</a><span class="row-sub">services-directory</span></td><td>2 filters</td><td>Not linked</td><td><span class="status neutral">Draft</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Next actions</h2>
+            </div>
+            <div class="panel-body field-stack">
+              <div class="handoff-card">
+                <div class="handoff-head">
+                  <span class="elementor-mark">E</span>
+                  <div>
+                    <h3>Open the Shop archive in Elementor</h3>
+                    <p>Continue the visual layout from the linked preset.</p>
+                  </div>
+                </div>
+                <div class="handoff-actions">
+                  <a class="button-primary">Open in Elementor</a>
+                  <a class="button">Manage linked template</a>
+                </div>
+              </div>
+              <div class="muted-strip">CPT setup stays in WordPress. Visual placement stays in Elementor.</div>
+            </div>
+          </div>
+        </div>
+        <div class="savebar">
+          <button class="advanced-toggle"><span class="gear-icon"></span>Advanced diagnostics<span class="chev"></span></button>
+          <div class="actions-right"><a class="button-primary">Save Dashboard Settings</a></div>
+        </div>
+      </section>
+
+      <section class="screen" id="filters-list" data-active-sub="filters">
+        <div class="title-row">
+          <h1>Filter Presets</h1>
+          <a class="page-action">Add New</a>
+        </div>
+        <div class="nav-tab-wrapper">
+          <a class="nav-tab active">Filter Presets</a>
+          <a class="nav-tab">CPT / Post Types</a>
+        </div>
+        <div class="table-tools">
+          <div>
+            <a class="row-title">All</a> <span class="description">(4)</span>
+            <span class="description"> | </span>
+            <a class="row-title">Draft</a> <span class="description">(1)</span>
+          </div>
+          <div class="search-box">
+            <input value="shop">
+            <a class="button">Search Presets</a>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:34px"><input type="checkbox"></th>
+              <th>Preset</th>
+              <th>Filters</th>
+              <th>Elementor handoff</th>
+              <th>Data source</th>
+              <th>Status</th>
+              <th style="width:220px">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><a class="row-title">Shop - Main Filters</a><span class="row-sub">shop-main-filters</span></td>
+              <td>Search, Category, Price Slider</td>
+              <td>Archive template connected</td>
+              <td>Products</td>
+              <td><span class="status">Ready</span></td>
+              <td><div class="row-actions"><a class="mini-button">Edit</a><a class="mini-button">Open in Elementor</a></div></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><a class="row-title">Portfolio Case Filters</a><span class="row-sub">portfolio-case-filters</span></td>
+              <td>Search, Service, Year, Featured</td>
+              <td>Case grid draft</td>
+              <td>Portfolio Items</td>
+              <td><span class="status warn">Review</span></td>
+              <td><div class="row-actions"><a class="mini-button">Edit</a><a class="mini-button">Open in Elementor</a></div></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><a class="row-title">Services Directory</a><span class="row-sub">services-directory</span></td>
+              <td>Search, Area</td>
+              <td>Not linked</td>
+              <td>Services</td>
+              <td><span class="status neutral">Draft</span></td>
+              <td><div class="row-actions"><a class="mini-button">Edit</a><a class="mini-button">Duplicate</a></div></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="caption">Presets describe filter behavior. Elementor handles layout and visual placement.</div>
+        <div style="height:16px"></div>
+        <div class="savebar">
+          <button class="advanced-toggle"><span class="gear-icon"></span>Advanced preset defaults<span class="chev"></span></button>
+          <div class="actions-right"><a class="button">Export</a><a class="button-primary">Add New Preset</a></div>
+        </div>
+      </section>
+
+      <section class="screen" id="filter-modal" data-active-sub="filters">
+        <div class="title-row">
+          <h1>Edit Filter Preset</h1>
+          <a class="page-action">Add New</a>
+        </div>
+        <div class="nav-tab-wrapper">
+          <a class="nav-tab active">Filter Preset</a>
+          <a class="nav-tab">CPT / Post Types</a>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Filters</h2>
+            <a class="button-primary">Add filter</a>
+          </div>
+          <div class="panel-body">
+            <table>
+              <thead>
+                <tr><th>#</th><th>Filter</th><th>Label</th><th>Type</th><th>Settings</th><th>Actions</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td><span class="filter-icon search"></span> Search</td><td>Search</td><td>Search</td><td>Placeholder: Search products...</td><td><a class="mini-button">Edit</a></td></tr>
+                <tr><td>2</td><td><span class="filter-icon folder"></span> Category</td><td>Category</td><td>Dropdown</td><td>Show count: Yes</td><td><a class="mini-button">Edit</a></td></tr>
+                <tr><td>3</td><td><span class="filter-icon range"></span> Price Slider</td><td>Price</td><td>Range Slider</td><td>Currency: USD - Min: Auto - Max: Auto</td><td><a class="mini-button">Edit</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="savebar">
+          <button class="advanced-toggle"><span class="gear-icon"></span>Advanced options<span class="chev"></span></button>
+          <div class="actions-right"><a class="button muted">Cancel</a><a class="button-primary">Save Preset</a></div>
+        </div>
+        <div class="overlay">
+          <div class="modal wide">
+            <div class="modal-head">
+              <h2>Edit Filter: Price Slider</h2>
+              <button class="modal-close">x</button>
+            </div>
+            <div class="modal-body">
+              <div class="modal-main">
+                <div class="field-stack">
+                  <div class="small-grid">
+                    <div class="field">
+                      <label>Label</label>
+                      <input value="Price">
+                    </div>
+                    <div class="field">
+                      <label>Filter type</label>
+                      <select><option>Range Slider</option></select>
+                    </div>
+                  </div>
+                  <div class="small-grid">
+                    <div class="field">
+                      <label>Query field</label>
+                      <select><option>Product price</option></select>
+                    </div>
+                    <div class="field">
+                      <label>Currency prefix</label>
+                      <input value="$">
+                    </div>
+                  </div>
+                  <div class="small-grid">
+                    <div class="field">
+                      <label>Minimum value</label>
+                      <select><option>Auto detect</option></select>
+                    </div>
+                    <div class="field">
+                      <label>Maximum value</label>
+                      <select><option>Auto detect</option></select>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label>Apply behavior</label>
+                    <select><option>Apply when user releases the handle</option></select>
+                    <span class="description">Keep the common slider behavior visible. Query tuning stays below.</span>
+                  </div>
+                </div>
+                <aside class="preview-box">
+                  <h3>Preview</h3>
+                  <div class="range-preview">
+                    <span class="description">$20 - $240</span>
+                    <div class="range-track"></div>
+                  </div>
+                  <div class="muted-strip">This filter will be available in Elementor as part of the selected preset.</div>
+                </aside>
+              </div>
+            </div>
+            <div class="modal-foot">
+              <button class="advanced-toggle"><span class="gear-icon"></span>Advanced settings<span class="chev"></span></button>
+              <div class="actions-right"><a class="button muted">Cancel</a><a class="button-primary">Save Filter</a></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="cpt-list" data-active-sub="cpt">
+        <div class="title-row">
+          <h1>CPT / Post Types</h1>
+          <a class="page-action">Add New</a>
+        </div>
+        <div class="nav-tab-wrapper">
+          <a class="nav-tab">Filter Presets</a>
+          <a class="nav-tab active">CPT / Post Types</a>
+        </div>
+        <div class="table-tools">
+          <div>
+            <a class="row-title">All</a> <span class="description">(3)</span>
+            <span class="description"> | </span>
+            <a class="row-title">Active</a> <span class="description">(3)</span>
+          </div>
+          <div class="search-box">
+            <input value="">
+            <a class="button">Search Post Types</a>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:34px"><input type="checkbox"></th>
+              <th>Post type</th>
+              <th>Meta fields</th>
+              <th>Taxonomies</th>
+              <th>Elementor use</th>
+              <th>Status</th>
+              <th style="width:220px">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><a class="row-title">Portfolio Item</a><span class="row-sub">portfolio_item</span></td>
+              <td>Client, Service, Case URL, Featured</td>
+              <td>Services, Year</td>
+              <td>Archive + single templates</td>
+              <td><span class="status">Active</span></td>
+              <td><div class="row-actions"><a class="mini-button">Edit</a><a class="mini-button">Open Archive</a></div></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><a class="row-title">Case Study</a><span class="row-sub">case_study</span></td>
+              <td>Outcome, Stack, Year</td>
+              <td>Expertise</td>
+              <td>Single template</td>
+              <td><span class="status">Active</span></td>
+              <td><div class="row-actions"><a class="mini-button">Edit</a><a class="mini-button">Open Single</a></div></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><a class="row-title">Service</a><span class="row-sub">service</span></td>
+              <td>Price range, Duration, Level</td>
+              <td>Area</td>
+              <td>Archive template</td>
+              <td><span class="status">Active</span></td>
+              <td><div class="row-actions"><a class="mini-button">Edit</a><a class="mini-button">Duplicate</a></div></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="height:16px"></div>
+        <div class="savebar">
+          <button class="advanced-toggle"><span class="gear-icon"></span>Advanced post type defaults<span class="chev"></span></button>
+          <div class="actions-right"><a class="button-primary">Add New Post Type</a></div>
+        </div>
+      </section>
+
+      <section class="screen" id="cpt-edit" data-active-sub="cpt">
+        <div class="title-row">
+          <h1>Edit Post Type</h1>
+          <a class="page-action">Add New</a>
+        </div>
+        <div class="nav-tab-wrapper">
+          <a class="nav-tab active">Post Type Setup</a>
+          <a class="nav-tab">Meta Fields</a>
+          <a class="nav-tab">Taxonomies</a>
+        </div>
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Post type setup</h2>
+            </div>
+            <div class="panel-body field-stack">
+              <div class="small-grid">
+                <div class="field">
+                  <label>Name</label>
+                  <input value="Portfolio Item">
+                </div>
+                <div class="field">
+                  <label>Slug</label>
+                  <input value="portfolio_item">
+                </div>
+              </div>
+              <div class="small-grid">
+                <div class="field">
+                  <label>Singular label</label>
+                  <input value="Portfolio Item">
+                </div>
+                <div class="field">
+                  <label>Plural label</label>
+                  <input value="Portfolio Items">
+                </div>
+              </div>
+              <div class="field">
+                <label>Description</label>
+                <textarea>Portfolio entries used in Elementor archive and single templates.</textarea>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Elementor bridge</h2>
+            </div>
+            <div class="panel-body field-stack">
+              <div class="handoff-card">
+                <div class="handoff-head">
+                  <span class="elementor-mark">E</span>
+                  <div>
+                    <h3>Templates connected</h3>
+                    <p>Archive and single templates can use this post type and its meta fields.</p>
+                  </div>
+                </div>
+                <div class="handoff-actions">
+                  <a class="button-primary">Open archive template</a>
+                  <a class="button">Open single template</a>
+                </div>
+              </div>
+              <div class="muted-strip">Create the data model here. Style it in Elementor.</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Meta fields</h2>
+              <p>Add as many fields as the post type needs.</p>
+            </div>
+            <a class="button-primary">Add meta field</a>
+          </div>
+          <div class="panel-body">
+            <div class="meta-list">
+              <div class="meta-row">
+                <div class="dots"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                <div><a class="row-title">Client name</a><span class="row-sub">client_name</span></div>
+                <span class="field-type">Text</span>
+                <span class="status">Shown in REST</span>
+                <div class="row-actions"><a class="mini-button">Edit</a><a class="mini-button danger">Delete</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="dots"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                <div><a class="row-title">Case URL</a><span class="row-sub">case_url</span></div>
+                <span class="field-type">URL</span>
+                <span class="status">Shown in REST</span>
+                <div class="row-actions"><a class="mini-button">Edit</a><a class="mini-button danger">Delete</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="dots"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                <div><a class="row-title">Featured case</a><span class="row-sub">featured_case</span></div>
+                <span class="field-type">Toggle</span>
+                <span class="status neutral">Admin only</span>
+                <div class="row-actions"><a class="mini-button">Edit</a><a class="mini-button danger">Delete</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="savebar">
+          <button class="advanced-toggle"><span class="gear-icon"></span>Advanced post type settings<span class="chev"></span></button>
+          <div class="actions-right"><a class="button muted">Cancel</a><a class="button-primary">Save Post Type</a></div>
+        </div>
+      </section>
+
+      <section class="screen" id="meta-modal" data-active-sub="cpt">
+        <div class="title-row">
+          <h1>Edit Post Type</h1>
+          <a class="page-action">Add New</a>
+        </div>
+        <div class="nav-tab-wrapper">
+          <a class="nav-tab">Post Type Setup</a>
+          <a class="nav-tab active">Meta Fields</a>
+          <a class="nav-tab">Taxonomies</a>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Meta fields</h2>
+              <p>Add, reorder and configure fields for Portfolio Item.</p>
+            </div>
+            <a class="button-primary">Add meta field</a>
+          </div>
+          <div class="panel-body">
+            <div class="meta-list">
+              <div class="meta-row">
+                <div class="dots"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                <div><a class="row-title">Client name</a><span class="row-sub">client_name</span></div>
+                <span class="field-type">Text</span>
+                <span class="status">Shown in REST</span>
+                <div class="row-actions"><a class="mini-button">Edit</a><a class="mini-button danger">Delete</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="dots"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                <div><a class="row-title">Case URL</a><span class="row-sub">case_url</span></div>
+                <span class="field-type">URL</span>
+                <span class="status">Shown in REST</span>
+                <div class="row-actions"><a class="mini-button">Edit</a><a class="mini-button danger">Delete</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="overlay">
+          <div class="modal">
+            <div class="modal-head">
+              <h2>Edit Meta Field: Case URL</h2>
+              <button class="modal-close">x</button>
+            </div>
+            <div class="modal-body">
+              <div class="field-stack">
+                <div class="small-grid">
+                  <div class="field">
+                    <label>Field label</label>
+                    <input value="Case URL">
+                  </div>
+                  <div class="field">
+                    <label>Meta key</label>
+                    <input value="case_url">
+                  </div>
+                </div>
+                <div class="small-grid">
+                  <div class="field">
+                    <label>Field type</label>
+                    <select><option>URL</option></select>
+                  </div>
+                  <div class="field">
+                    <label>Required</label>
+                    <select><option>No</option></select>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Help text</label>
+                  <input value="Link to the published case study or live project.">
+                </div>
+                <div class="muted-strip">Simple fields stay simple. Validation, REST exposure and storage details are advanced settings.</div>
+              </div>
+            </div>
+            <div class="modal-foot">
+              <button class="advanced-toggle"><span class="gear-icon"></span>Advanced settings<span class="chev"></span></button>
+              <div class="actions-right"><a class="button muted">Cancel</a><a class="button-primary">Save Field</a></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="settings" data-active-sub="settings">
+        <div class="title-row">
+          <h1>Settings</h1>
+        </div>
+        <div class="settings-grid">
+          <div class="setting-card">
+            <h2>Elementor bridge</h2>
+            <p>Controls how presets and post types are handed off to Elementor templates.</p>
+            <div class="switch-line"><span>Show "Open in Elementor" after saving</span><span class="switch"></span></div>
+            <div class="switch-line"><span>Create missing template drafts automatically</span><span class="switch"></span></div>
+            <div class="switch-line"><span>Expose preset selector in widgets</span><span class="switch"></span></div>
+          </div>
+          <div class="setting-card">
+            <h2>Admin behavior</h2>
+            <p>Keep creation workflows predictable inside WordPress.</p>
+            <div class="field">
+              <label>Default post type status</label>
+              <select><option>Active after save</option></select>
+            </div>
+            <div class="field">
+              <label>Default filter apply mode</label>
+              <select><option>Auto apply common filters</option></select>
+            </div>
+          </div>
+          <div class="setting-card">
+            <h2>Data cleanup</h2>
+            <p>Choose how plugin data should behave when disabling features.</p>
+            <div class="switch-line"><span>Keep presets on plugin deactivate</span><span class="switch"></span></div>
+            <div class="switch-line"><span>Keep CPT definitions on plugin deactivate</span><span class="switch"></span></div>
+          </div>
+          <div class="setting-card">
+            <h2>Diagnostics</h2>
+            <p>Compatibility checks for Elementor, CPT registration and template links.</p>
+            <table>
+              <tbody>
+                <tr><td>Elementor</td><td><span class="status">Ready</span></td></tr>
+                <tr><td>Rewrite rules</td><td><span class="status">Ready</span></td></tr>
+                <tr><td>Template links</td><td><span class="status warn">2 warnings</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div style="height:16px"></div>
+        <div class="savebar">
+          <button class="advanced-toggle"><span class="gear-icon"></span>Advanced system settings<span class="chev"></span></button>
+          <div class="actions-right"><a class="button muted">Reset visible settings</a><a class="button-primary">Save Settings</a></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const screenId = params.get('screen') || 'filters-list';
+    const current = document.getElementById(screenId) || document.getElementById('filters-list');
+    current.classList.add('active');
+    const activeSub = current.dataset.activeSub || 'filters';
+    document.querySelectorAll('[data-sub]').forEach((item) => {
+      if (item.dataset.sub === activeSub) item.classList.add('active');
+    });
+    if (screenId !== 'filter-modal') {
+      document.querySelector('.view-link').textContent = screenId === 'cpt-list' || screenId === 'cpt-edit' || screenId === 'meta-modal'
+        ? 'View Post Type'
+        : 'View Preset';
+    }
+  </script>
+</body>
+</html>

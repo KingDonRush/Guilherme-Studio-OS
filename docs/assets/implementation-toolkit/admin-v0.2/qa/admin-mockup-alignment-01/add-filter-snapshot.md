@@ -1,0 +1,320 @@
+- generic [ref=e2]:
+  - navigation "Main menu":
+    - link "Skip to main content" [ref=e3] [cursor=pointer]:
+      - /url: "#wpbody-content"
+    - link "Skip to toolbar" [ref=e4] [cursor=pointer]:
+      - /url: "#wp-toolbar"
+    - list [ref=e7]:
+      - listitem [ref=e8]:
+        - link "Dashboard" [ref=e9] [cursor=pointer]:
+          - /url: index.php
+          - generic [ref=e10]: 
+          - generic [ref=e11]: Dashboard
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Home" [ref=e14] [cursor=pointer]:
+              - /url: index.php
+          - listitem [ref=e15]:
+            - link "Updates 1" [ref=e16] [cursor=pointer]:
+              - /url: update-core.php
+              - text: Updates
+              - generic [ref=e17]: "1"
+      - listitem [ref=e18]:
+        - link "Elementor" [ref=e19] [cursor=pointer]:
+          - /url: admin.php?page=elementor-home
+          - generic [ref=e21]: Elementor
+        - list [ref=e22]:
+          - listitem [ref=e23]:
+            - link "Home" [ref=e24] [cursor=pointer]:
+              - /url: admin.php?page=elementor-home
+          - listitem [ref=e25]:
+            - link "Editor" [ref=e26] [cursor=pointer]:
+              - /url: admin.php?page=elementor
+          - listitem [ref=e27]:
+            - link "Theme Builder" [ref=e28] [cursor=pointer]:
+              - /url: http://localhost:8080/wp-admin/admin.php?page=elementor-app&ver=4.0.8&return_to=/wp-admin/admin.php?page=eit-filter-presets&view=new&qa=mockup-align-6#/site-editor
+          - listitem [ref=e29]:
+            - link "Submissions" [ref=e30] [cursor=pointer]:
+              - /url: admin.php?page=e-form-submissions
+      - listitem [ref=e31]
+      - listitem [ref=e33]:
+        - link "Posts" [ref=e34] [cursor=pointer]:
+          - /url: edit.php
+          - generic [ref=e35]: 
+          - generic [ref=e36]: Posts
+        - list [ref=e37]:
+          - listitem [ref=e38]:
+            - link "All Posts" [ref=e39] [cursor=pointer]:
+              - /url: edit.php
+          - listitem [ref=e40]:
+            - link "Add Post" [ref=e41] [cursor=pointer]:
+              - /url: post-new.php
+          - listitem [ref=e42]:
+            - link "Categories" [ref=e43] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=category
+          - listitem [ref=e44]:
+            - link "Tags" [ref=e45] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=post_tag
+      - listitem [ref=e46]:
+        - link "Media" [ref=e47] [cursor=pointer]:
+          - /url: upload.php
+          - generic [ref=e48]: 
+          - generic [ref=e49]: Media
+        - list [ref=e50]:
+          - listitem [ref=e51]:
+            - link "Library" [ref=e52] [cursor=pointer]:
+              - /url: upload.php
+          - listitem [ref=e53]:
+            - link "Add Media File" [ref=e54] [cursor=pointer]:
+              - /url: media-new.php
+      - listitem [ref=e55]:
+        - link "Pages" [ref=e56] [cursor=pointer]:
+          - /url: edit.php?post_type=page
+          - generic [ref=e57]: 
+          - generic [ref=e58]: Pages
+        - list [ref=e59]:
+          - listitem [ref=e60]:
+            - link "All Pages" [ref=e61] [cursor=pointer]:
+              - /url: edit.php?post_type=page
+          - listitem [ref=e62]:
+            - link "Add Page" [ref=e63] [cursor=pointer]:
+              - /url: post-new.php?post_type=page
+      - listitem [ref=e64]:
+        - link "Comments" [ref=e65] [cursor=pointer]:
+          - /url: edit-comments.php
+          - generic [ref=e66]: 
+          - generic [ref=e67]: Comments
+      - text: 
+      - listitem [ref=e68]:
+        - link "Implementation Toolkit" [ref=e69] [cursor=pointer]:
+          - /url: admin.php?page=eit-toolkit
+          - generic [ref=e70]: 
+          - generic [ref=e71]: Implementation Toolkit
+        - list [ref=e72]:
+          - listitem [ref=e73]:
+            - link "Dashboard" [ref=e74] [cursor=pointer]:
+              - /url: admin.php?page=eit-toolkit
+          - listitem [ref=e75]:
+            - link "Filter Presets" [ref=e76] [cursor=pointer]:
+              - /url: admin.php?page=eit-filter-presets
+          - listitem [ref=e77]:
+            - link "Post Types" [ref=e78] [cursor=pointer]:
+              - /url: admin.php?page=eit-cpt-manager
+          - listitem [ref=e79]:
+            - link "Diagnostics" [ref=e80] [cursor=pointer]:
+              - /url: admin.php?page=eit-integrations
+      - text: 
+      - listitem [ref=e81]
+      - listitem [ref=e83]:
+        - link "Hello" [ref=e84] [cursor=pointer]:
+          - /url: admin.php?page=hello-elementor
+          - generic [ref=e85]: 
+          - generic [ref=e86]: Hello
+        - list [ref=e87]:
+          - listitem [ref=e88]:
+            - link "Home" [ref=e89] [cursor=pointer]:
+              - /url: admin.php?page=hello-elementor
+          - listitem [ref=e90]:
+            - link "Settings" [ref=e91] [cursor=pointer]:
+              - /url: admin.php?page=hello-elementor-settings
+          - listitem [ref=e92]:
+            - link "Theme Builder" [ref=e93] [cursor=pointer]:
+              - /url: admin.php?page=elementor-app&ver=4.0.8#site-editor
+          - listitem [ref=e94]:
+            - link "AI Site Planner" [ref=e95] [cursor=pointer]:
+              - /url: admin.php?page=hello-elementor-ai-site-planner
+      - listitem [ref=e96]:
+        - link "Appearance" [ref=e97] [cursor=pointer]:
+          - /url: themes.php
+          - generic [ref=e98]: 
+          - generic [ref=e99]: Appearance
+        - list [ref=e100]:
+          - listitem [ref=e101]:
+            - link "Themes" [ref=e102] [cursor=pointer]:
+              - /url: themes.php
+          - listitem [ref=e103]:
+            - link "Design" [ref=e104] [cursor=pointer]:
+              - /url: site-editor.php
+          - listitem [ref=e105]:
+            - link "Customize" [ref=e106] [cursor=pointer]:
+              - /url: customize.php?return=%2Fwp-admin%2Fadmin.php%3Fpage%3Deit-filter-presets%26view%3Dnew%26qa%3Dmockup-align-6
+          - listitem [ref=e107]:
+            - link "Menus" [ref=e108] [cursor=pointer]:
+              - /url: nav-menus.php
+          - listitem [ref=e109]:
+            - link "Theme File Editor" [ref=e110] [cursor=pointer]:
+              - /url: theme-editor.php
+      - listitem [ref=e111]:
+        - link "Plugins 1" [ref=e112] [cursor=pointer]:
+          - /url: plugins.php
+          - generic [ref=e113]: 
+          - generic [ref=e114]:
+            - text: Plugins
+            - generic [ref=e115]: "1"
+        - list [ref=e116]:
+          - listitem [ref=e117]:
+            - link "Installed Plugins" [ref=e118] [cursor=pointer]:
+              - /url: plugins.php
+          - listitem [ref=e119]:
+            - link "Add Plugin" [ref=e120] [cursor=pointer]:
+              - /url: plugin-install.php
+          - listitem [ref=e121]:
+            - link "Plugin File Editor" [ref=e122] [cursor=pointer]:
+              - /url: plugin-editor.php
+      - listitem [ref=e123]:
+        - link "Users" [ref=e124] [cursor=pointer]:
+          - /url: users.php
+          - generic [ref=e125]: 
+          - generic [ref=e126]: Users
+        - list [ref=e127]:
+          - listitem [ref=e128]:
+            - link "All Users" [ref=e129] [cursor=pointer]:
+              - /url: users.php
+          - listitem [ref=e130]:
+            - link "Add User" [ref=e131] [cursor=pointer]:
+              - /url: user-new.php
+          - listitem [ref=e132]:
+            - link "Profile" [ref=e133] [cursor=pointer]:
+              - /url: profile.php
+      - listitem [ref=e134]:
+        - link "Tools" [ref=e135] [cursor=pointer]:
+          - /url: tools.php
+          - generic [ref=e136]: 
+          - generic [ref=e137]: Tools
+        - list [ref=e138]:
+          - listitem [ref=e139]:
+            - link "Available Tools" [ref=e140] [cursor=pointer]:
+              - /url: tools.php
+          - listitem [ref=e141]:
+            - link "Import" [ref=e142] [cursor=pointer]:
+              - /url: import.php
+          - listitem [ref=e143]:
+            - link "Export" [ref=e144] [cursor=pointer]:
+              - /url: export.php
+          - listitem [ref=e145]:
+            - link "Site Health" [ref=e146] [cursor=pointer]:
+              - /url: site-health.php
+          - listitem [ref=e147]:
+            - link "Export Personal Data" [ref=e148] [cursor=pointer]:
+              - /url: export-personal-data.php
+          - listitem [ref=e149]:
+            - link "Erase Personal Data" [ref=e150] [cursor=pointer]:
+              - /url: erase-personal-data.php
+      - listitem [ref=e151]:
+        - link "Settings" [ref=e152] [cursor=pointer]:
+          - /url: options-general.php
+          - generic [ref=e153]: 
+          - generic [ref=e154]: Settings
+        - list [ref=e155]:
+          - listitem [ref=e156]:
+            - link "General" [ref=e157] [cursor=pointer]:
+              - /url: options-general.php
+          - listitem [ref=e158]:
+            - link "Writing" [ref=e159] [cursor=pointer]:
+              - /url: options-writing.php
+          - listitem [ref=e160]:
+            - link "Reading" [ref=e161] [cursor=pointer]:
+              - /url: options-reading.php
+          - listitem [ref=e162]:
+            - link "Discussion" [ref=e163] [cursor=pointer]:
+              - /url: options-discussion.php
+          - listitem [ref=e164]:
+            - link "Media" [ref=e165] [cursor=pointer]:
+              - /url: options-media.php
+          - listitem [ref=e166]:
+            - link "Permalinks" [ref=e167] [cursor=pointer]:
+              - /url: options-permalink.php
+          - listitem [ref=e168]:
+            - link "Privacy" [ref=e169] [cursor=pointer]:
+              - /url: options-privacy.php
+          - listitem [ref=e170]:
+            - link "EMCP Tools" [ref=e171] [cursor=pointer]:
+              - /url: options-general.php?page=elementor-mcp
+      - listitem [ref=e172]
+      - listitem [ref=e174]:
+        - link "Simple Budget" [ref=e175] [cursor=pointer]:
+          - /url: admin.php?page=sbp-settings
+          - generic [ref=e176]: 
+          - generic [ref=e177]: Simple Budget
+        - list [ref=e178]:
+          - listitem [ref=e179]:
+            - link "Simple Budget" [ref=e180] [cursor=pointer]:
+              - /url: admin.php?page=sbp-settings
+          - listitem [ref=e181]:
+            - link "Templates" [ref=e182] [cursor=pointer]:
+              - /url: admin.php?page=sbp-templates
+      - listitem [ref=e183]:
+        - button "Collapse Main menu" [expanded] [ref=e184] [cursor=pointer]:
+          - generic [ref=e186]: Collapse Menu
+  - generic [ref=e187]:
+    - generic [ref=e188]:
+      - navigation "Toolbar":
+        - menu:
+          - group [ref=e189]:
+            - menuitem "About WordPress" [ref=e190] [cursor=pointer]:
+              - generic [ref=e192]: About WordPress
+          - group [ref=e193]:
+            - menuitem "KingDonRush WordPress Portfolio Lab" [ref=e194] [cursor=pointer]
+          - group [ref=e195]:
+            - menuitem "1 update available" [ref=e196] [cursor=pointer]:
+              - generic [ref=e198]: "1"
+              - generic [ref=e199]: 1 update available
+          - group [ref=e200]:
+            - menuitem "0 Comments in moderation" [ref=e201] [cursor=pointer]:
+              - generic [ref=e203]: "0"
+              - generic [ref=e204]: 0 Comments in moderation
+          - group [ref=e205]:
+            - menuitem "New" [ref=e206] [cursor=pointer]:
+              - generic [ref=e208]: New
+        - menu [ref=e209]:
+          - group [ref=e210]:
+            - menuitem "Howdy, eit_mockup_qa_0519" [ref=e211] [cursor=pointer]
+    - main [ref=e212]:
+      - generic [ref=e214]:
+        - heading "Edit Filter Preset" [level=1] [ref=e215]
+        - link "Add New" [ref=e216] [cursor=pointer]:
+          - /url: http://localhost:8080/wp-admin/admin.php?page=eit-filter-presets&view=new
+        - navigation "Toolkit admin sections" [ref=e217]:
+          - link "Filter Preset" [ref=e218] [cursor=pointer]:
+            - /url: http://localhost:8080/wp-admin/admin.php?page=eit-filter-presets
+          - link "CPT / Post Types" [ref=e219] [cursor=pointer]:
+            - /url: http://localhost:8080/wp-admin/admin.php?page=eit-cpt-manager
+        - generic [ref=e221]:
+          - generic [ref=e222]:
+            - generic [ref=e224]:
+              - heading "Preset setup" [level=3] [ref=e225]
+              - paragraph [ref=e226]: Name the preset, then hand it to Elementor when you need a reusable Theme Builder filter area.
+            - generic [ref=e227]:
+              - generic [ref=e228]
+              - complementary [ref=e235]
+          - generic [ref=e249]:
+            - generic [ref=e250]:
+              - generic [ref=e251]
+              - button "Add filter" [active] [ref=e254] [cursor=pointer]
+            - generic [ref=e256]:
+              - table [ref=e257]
+              - paragraph [ref=e280]: Drag and drop to reorder filters.
+          - generic [ref=e281]:
+            - group [ref=e283]:
+              - generic "Advanced options" [ref=e284] [cursor=pointer]
+              - option "Auto apply on change" [selected]
+              - option "Apply button"
+              - option "Numbers" [selected]
+              - option "Previous / Next"
+              - option "Numbers + Arrows"
+              - option "None"
+              - option "Read visible listing HTML" [selected]
+              - option "Read listing HTML and enrich from WordPress posts"
+              - option "Custom adapter"
+            - generic [ref=e288]:
+              - link "Cancel" [ref=e289] [cursor=pointer]:
+                - /url: http://localhost:8080/wp-admin/admin.php?page=eit-filter-presets
+              - button "Save Preset" [ref=e290] [cursor=pointer]
+  - contentinfo [ref=e291]:
+    - paragraph [ref=e292]:
+      - generic [ref=e293]:
+        - text: Thank you for creating with
+        - link "WordPress" [ref=e294] [cursor=pointer]:
+          - /url: https://wordpress.org/
+        - text: .
+    - paragraph [ref=e295]: Version 6.9.4

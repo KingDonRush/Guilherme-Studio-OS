@@ -9,7 +9,8 @@ Keep the AI methodical while working inside a large WordPress surface area.
 1. Locate yourself:
    - run `pwd`;
    - run `git status --short --branch`;
-   - identify whether you are in the root repo or inside a plugin repo.
+   - identify whether you are in the root repo or inside a plugin repo;
+   - inspect modified and untracked files before deciding what can be touched.
 
 2. Load context:
    - read `AGENTS.md`;
@@ -42,7 +43,9 @@ Keep the AI methodical while working inside a large WordPress surface area.
 5. Execute:
    - edit in the proper layer;
    - keep `.ai/` free of implementation artifacts;
-   - avoid broad refactors unless they are needed.
+   - avoid broad refactors unless they are needed;
+   - after creating new artifacts, run a targeted git status so useful work does
+     not stay invisible as accidental untracked output.
 
 6. Verify:
    - run targeted commands;
@@ -59,6 +62,8 @@ Keep the AI methodical while working inside a large WordPress surface area.
    - update `.ai/memory/` for durable agent assumptions or decisions.
 
 8. Close:
-   - run git status;
+   - run `git status --short --branch`;
+   - state which files remain modified or untracked, especially evidence,
+     mockups, generated assets, and plugin changes;
    - summarize changes;
    - name the next concrete move.

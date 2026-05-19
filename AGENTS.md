@@ -39,8 +39,11 @@ operational layer.
 
 ## Non-Negotiables
 
-1. Use git before, during, and after work.
-2. Start with `git status --short --branch` before editing.
+1. Use git before, during, and after work. This is mandatory, not optional
+   hygiene.
+2. Start with `git status --short --branch` before editing and read the output
+   as a contract: identify the branch, modified files, untracked files, and
+   whether the change belongs to the root repo or to a plugin repo.
 3. Never edit WordPress core directly. Work through plugins, themes, mu-plugins,
    configuration, or documented scripts.
 4. Keep `.ai/` as the brain. Put implementation artifacts inside `wordpress/`
@@ -49,6 +52,18 @@ operational layer.
    about. See `.ai/operational/modularization-policy.md`.
 6. Prefer reproducible local setup over one-off manual steps.
 7. Preserve user changes. Do not revert unrelated work.
+8. Do not leave useful work as accidental untracked files. Before pausing,
+   switching tasks, or reporting completion, decide whether each new file must
+   be committed, documented as intentionally temporary, or removed if it is only
+   disposable output.
+9. When the user asks for a commit, commit the relevant scope before continuing
+   implementation. Do not keep building on top of uncommitted work that the user
+   explicitly asked to checkpoint.
+10. Commits must pass the repository quality gate: precise scope, reviewed diff,
+    relevant verification, agentic evidence when the work used Agentic Ops, and
+    the mandatory trilingual Commit Standard from
+    `.ai/operational/git-protocol.md` plus
+    `.ai/operational/commit-message-policy.md`.
 
 ## Default Agent Loop
 
@@ -58,7 +73,8 @@ operational layer.
    - `.ai/README.md`
    - `.ai/operational/core-loop.md`
    - the relevant project or strategy note
-   - `.ai/operational/commit-message-policy.md` before committing
+   - `.ai/operational/git-protocol.md` and
+     `.ai/operational/commit-message-policy.md` before committing
    - `.ai/operational/github-micromanagement.md` when touching plugin GitHub
      issues, PRs, labels, milestones, or public repo presentation
 4. Identify the layer being changed:
@@ -69,7 +85,8 @@ operational layer.
 5. Make a focused change.
 6. Run the smallest useful verification.
 7. Update docs or memory when the decision matters later.
-8. End with git status and clear next steps.
+8. End with `git status --short --branch`, call out remaining modified or
+   untracked files, and give clear next steps.
 
 ## WordPress Containment
 
