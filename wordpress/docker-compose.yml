@@ -1,7 +1,6 @@
 services:
   db:
     image: mysql:8.4
-    restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${WORDPRESS_DB_NAME:-wordpress}
       MYSQL_USER: ${WORDPRESS_DB_USER:-wordpress}
@@ -17,7 +16,6 @@ services:
 
   wordpress:
     image: wordpress:php8.3-apache
-    restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
