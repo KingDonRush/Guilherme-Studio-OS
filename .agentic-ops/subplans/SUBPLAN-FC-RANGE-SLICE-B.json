@@ -1,0 +1,53 @@
+{
+  "id": "SUBPLAN-FC-RANGE-SLICE-B",
+  "parent_task_id": "TASK-FC-019",
+  "title": "Range Slice B numeric input visibility and sizing",
+  "status": "done",
+  "purpose": "Implement the range audit's numeric-input slice without adding broad range customization.",
+  "objective": "Make numeric inputs an explicit range subelement with visibility, side placement, and vertical width contracts.",
+  "scope_boundary": "In scope: Elementor controls for input visibility, vertical side placement, numeric input width, wrapper classes, CSS show/hide/width behavior, and mechanical verification. Out of scope: custom dual-range engine, selected-track overlay, tick count controls, handle icons, and final visual approval.",
+  "entry_condition": "TASK-FC-018 is done and the plugin worktree is clean.",
+  "exit_condition": "Range number inputs can be hidden without reserving layout, and vertical input width/side placement are explicit.",
+  "completion_criteria": [
+    "Range inputs remain visible by default for existing widgets.",
+    "Hidden inputs do not reserve the large vertical rail.",
+    "Vertical input side placement is represented by stable wrapper classes.",
+    "Range sync and reset behavior still use the existing JS contract.",
+    "No deferred range controls are implemented in this slice."
+  ],
+  "phases": [
+    {
+      "id": "RANGE-SLICE-B-001",
+      "title": "Controls and markup",
+      "purpose": "Add Elementor controls and range wrapper classes."
+    },
+    {
+      "id": "RANGE-SLICE-B-002",
+      "title": "CSS contract",
+      "purpose": "Hide input rail cleanly and constrain vertical input width."
+    },
+    {
+      "id": "RANGE-SLICE-B-003",
+      "title": "Verification",
+      "purpose": "Run syntax/diff checks and record QA boundary."
+    }
+  ],
+  "acceptance_criteria": [
+    "Implementation follows docs/implementation-toolkit/filter-controller-audit-range.md Slice B.",
+    "No plugin source outside range render/style/CSS is changed unless verification proves it necessary.",
+    "Guilherme visual QA remains required for final craft approval."
+  ],
+  "verification": [
+    "validate_subplan passes.",
+    "TASK-FC-019 validate_task passes.",
+    "Plugin PHP lint, JS syntax check, Composer validation, and diff checks pass."
+  ],
+  "stop_conditions": [
+    "The slice starts implementing a custom range engine.",
+    "The change breaks current min/max value synchronization."
+  ],
+  "documentation": [
+    "docs/implementation-toolkit/filter-controller-audit-range.md",
+    "docs/implementation-toolkit/filter-controller-range-slice-b-implementation.md"
+  ]
+}

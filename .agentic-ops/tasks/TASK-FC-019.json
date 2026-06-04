@@ -1,0 +1,60 @@
+{
+  "id": "TASK-FC-019",
+  "title": "Implement range numeric input visibility and vertical sizing",
+  "description": "Apply the second range implementation slice: let the Elementor widget hide/show range number inputs, constrain their vertical width, and choose their vertical side placement without changing filtering semantics.",
+  "objective": "Reduce the visual weight of range number inputs in vertical mode while preserving the existing min/max sync, reset, and filtering behavior.",
+  "priority": "critical",
+  "complexity": "moderate",
+  "status": "done",
+  "phase_id": "PHASE-FC-005",
+  "depends_on": [
+    "TASK-FC-018"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-range.md",
+    "docs/implementation-toolkit/filter-controller-range-slice-a-implementation.md",
+    "includes/Elementor/Widgets/FilterController.php",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "assets/css/eit-frontend.css",
+    "assets/js/eit-frontend.js"
+  ],
+  "expected_outputs": [
+    "Range number input visibility control",
+    "Range vertical input side placement control",
+    "Range numeric input width control",
+    "CSS contract that hidden inputs do not reserve layout",
+    "Mechanical verification plus Guilherme visual QA scenario"
+  ],
+  "acceptance_criteria": [
+    "Existing widgets show number inputs by default for backward compatibility.",
+    "Turning number inputs off hides the input rail without breaking slider filtering.",
+    "Vertical number inputs no longer expand into a large flexible column by default.",
+    "The slice does not implement deferred custom range engine or selected track work.",
+    "Guilherme remains responsible for final visual QA in Elementor."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "PHP lint passes for changed PHP files.",
+    "JS syntax check passes because range sync depends on existing JS.",
+    "git diff --check passes in root and plugin.",
+    "Generated range markup exposes the expected input visibility and placement classes."
+  ],
+  "budgets": {
+    "time_budget": "one implementation slice",
+    "complexity_budget": "moderate",
+    "context_budget": "range render, range style controls, range CSS, existing JS sync",
+    "research_budget": "local source plus TASK-FC-006 and TASK-FC-018 outputs",
+    "validation_budget": "lint plus static contract checks"
+  },
+  "risks": [
+    "Hiding number inputs can reduce direct keyboard entry even though native sliders remain keyboard accessible.",
+    "Vertical placement still needs Guilherme's visual judgment across Elementor breakpoints."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [
+    "SUBPLAN-FC-RANGE-SLICE-B"
+  ]
+}

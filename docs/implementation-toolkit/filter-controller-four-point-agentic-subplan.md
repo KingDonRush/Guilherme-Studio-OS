@@ -244,6 +244,11 @@ Execution status:
   current value labels and scale ticks now have distinct copy/control targets,
   range markup exposes explicit state classes, and vertical CSS no longer uses
   one fixed four-rail grid when value/tick rails are disabled.
+- `TASK-FC-019`: done. Second implementation slice from the range audit is
+  recorded in
+  `docs/implementation-toolkit/filter-controller-range-slice-b-implementation.md`:
+  number inputs now have show/hide, vertical side placement, and width
+  contracts while preserving the existing range sync behavior.
 
 Child subplans:
 
