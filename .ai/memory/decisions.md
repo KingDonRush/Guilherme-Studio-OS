@@ -160,3 +160,37 @@
   WordPress admin patterns unless a future approved design explicitly justifies
   a new product surface. The backend complements WordPress/Elementor workflows;
   it is not a second builder.
+
+## 2026-06-04
+
+- Elementor Implementation Toolkit filter work should move toward a
+  widget-first preset model. The primary filter-building surface is the
+  Elementor widget because filter composition, target listing selection, and
+  visual customization are page-contextual. The admin should act as a saved
+  preset library, preview/status surface, diagnostics area, and optional
+  recovery/editing surface, not as the required filter builder.
+- Saved filter presets should be creatable from the Elementor widget, then
+  visible in the WordPress admin as reusable records with preview and metadata.
+  This mirrors the Simple Budget pattern where Elementor owns editable visual
+  content while the plugin owns persistence, shell/runtime behavior, and safe
+  handoff.
+- Next implementation direction, not immediate work: make the Filter Controller
+  cleaner and more intimate with Elementor by showing style controls only for
+  filter types selected in Content, then audit every filter type for deeper
+  Elementor-native frontend customization.
+- QA boundary: Guilherme is the final frontend QA for visual judgment, motion,
+  Elementor editing flows, hierarchy discernment, and interaction-heavy tests
+  that require many screens, many clicks, or concatenated nuance. Codex visual
+  inspection is still valid for punctual, honest checks such as obvious
+  overlap, clipped text, blank renders, broken screenshots, missing assets, and
+  simple responsive regressions. Codex may validate backend behavior, syntax,
+  static checks, simple runtime paths, generated HTML, screenshots for gross
+  breakage, and other mechanical evidence, but must not treat AI visual
+  inspection as final approval for complex frontend craft or Elementor editor
+  UX.
+- Git/GitHub workflow must distinguish local checkpoints, implementation
+  evidence, and public GitHub history before work starts. Public plugin work
+  should declare a Git mode and commit map before accumulating commits. If a
+  feature branch or main branch is ahead by more than three unpublished commits
+  for one delivery slice, Codex must stop and create a publication plan instead
+  of pushing or using reactive squash as the default repair.

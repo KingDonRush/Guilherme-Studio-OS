@@ -55,6 +55,16 @@ when it meets the workspace quality standard:
 If any item fails, do not commit yet. Fix the scope, run or document
 verification, or split the commit.
 
+## Publication Policy
+
+Before accumulating commits in a public plugin repository, load
+`.ai/operational/git-github-publication-policy.md` and declare the Git mode:
+`hotfix`, `public-unit`, `checkpoint-branch`, or `release`.
+
+If one feature or delivery slice is ahead of its remote by more than three
+commits, do not push reflexively. Stop and create a publication plan or subplan
+first. History cleanup is allowed only while unpublished, backed up, and planned.
+
 ## Root Repository
 
 The root repo tracks:
