@@ -1,0 +1,35 @@
+{
+  "id": "SUBPLAN-FC-AUDIT-RATING",
+  "parent_task_id": "TASK-FC-017",
+  "title": "Rating filter component audit",
+  "status": "pending",
+  "purpose": "Audit rating as either its own filter type or an option-family variant before adding deeper controls.",
+  "objective": "Classify rating, define anatomy, threshold behavior, icon/star strategy, states, responsive behavior, and customization backlog.",
+  "scope_boundary": "In scope: rating options, threshold semantics, star/icon/numeric labels, selected state, hover/focus/disabled states, classification decision, responsive behavior, and QA scenario. Out of scope: implementing rating controls and other filter types.",
+  "entry_condition": "TASK-FC-001 has classified preset/widget setting ownership and current rating render/CSS/JS files are available.",
+  "exit_condition": "A rating audit sheet exists with classification decision and controls prioritized.",
+  "completion_criteria": [
+    "Rating DOM anatomy is mapped.",
+    "Rating is classified as own type or option-family variant.",
+    "Threshold behavior is explicit.",
+    "Icon/star/numeric strategy is documented.",
+    "QA scenario is written."
+  ],
+  "phases": [
+    { "id": "RATING-001", "title": "Anatomy", "purpose": "Map rating render and CSS." },
+    { "id": "RATING-002", "title": "Classification", "purpose": "Decide own type vs option-family variant." },
+    { "id": "RATING-003", "title": "Controls", "purpose": "Prioritize rating controls." },
+    { "id": "RATING-004", "title": "QA", "purpose": "Write Guilherme QA scenario." }
+  ],
+  "acceptance_criteria": [
+    "Audit references source paths.",
+    "Audit resolves rating classification.",
+    "No plugin source changes are made."
+  ],
+  "verification": [ "validate_subplan passes." ],
+  "stop_conditions": [
+    "Rating classification remains ambiguous.",
+    "Audit starts implementing code."
+  ],
+  "documentation": [ "future docs/implementation-toolkit/filter-controller-audit-rating.md" ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "TASK-FC-014",
+  "title": "Produce search component audit sheet",
+  "description": "Audit the search filter as an individual text-input component with placeholder, clear action, debounce, feedback, and state contracts.",
+  "objective": "Define search as a first-class filter component rather than generic field styling.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-FC-005",
+  "depends_on": [
+    "TASK-FC-001"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "includes/Elementor/Widgets/FilterController.php",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "assets/css/eit-frontend.css",
+    "assets/js/eit-frontend.js"
+  ],
+  "expected_outputs": [
+    "Search anatomy sheet",
+    "Placeholder and label behavior contract",
+    "Clear/debounce feedback notes",
+    "Search-specific controls backlog",
+    "Guilherme QA scenario for search"
+  ],
+  "acceptance_criteria": [
+    "Label, input, placeholder, optional icon, clear action, focus, hover, disabled, debounce/loading feedback, and responsive behavior are treated as separate subelements.",
+    "Search clear/debounce behavior is explicit.",
+    "Search is distinguished from generic input styling.",
+    "The audit does not implement search fixes yet."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Linked subplan validates.",
+    "No plugin source changes are made."
+  ],
+  "budgets": {
+    "time_budget": "one audit pass",
+    "complexity_budget": "moderate",
+    "context_budget": "search render, field CSS, frontend JS",
+    "research_budget": "local source only",
+    "validation_budget": "Agentic Ops validation"
+  },
+  "risks": [
+    "Search can appear simple while hiding debounce, clear, and feedback edge cases.",
+    "A missing empty/loading state can make filtering feel broken."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [
+    "SUBPLAN-FC-AUDIT-SEARCH"
+  ]
+}

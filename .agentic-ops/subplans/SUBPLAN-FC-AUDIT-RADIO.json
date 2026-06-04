@@ -1,0 +1,35 @@
+{
+  "id": "SUBPLAN-FC-AUDIT-RADIO",
+  "parent_task_id": "TASK-FC-010",
+  "title": "Radio filter component audit",
+  "status": "pending",
+  "purpose": "Audit radio as its own single-choice component.",
+  "objective": "Define radio anatomy, single-choice behavior, selected/deselect semantics, layout modes, states, and styling backlog.",
+  "scope_boundary": "In scope: group label, radio input, option label, selected state, reset relationship, segmented-control potential, responsive layout, and QA scenario. Out of scope: checkbox, chips, toggle, swatch, and implementation.",
+  "entry_condition": "TASK-FC-001 has classified preset/widget setting ownership and current radio render/CSS/JS files are available.",
+  "exit_condition": "A radio audit sheet exists with single-choice contracts and customization backlog.",
+  "completion_criteria": [
+    "Radio DOM anatomy is mapped.",
+    "Single-choice contract is explicit.",
+    "Reset/deselect behavior is documented.",
+    "State matrix and responsive behavior are documented.",
+    "QA scenario is written."
+  ],
+  "phases": [
+    { "id": "RADIO-001", "title": "Anatomy", "purpose": "Map radio render and CSS." },
+    { "id": "RADIO-002", "title": "Behavior", "purpose": "Define single-choice and reset contracts." },
+    { "id": "RADIO-003", "title": "Controls", "purpose": "Prioritize radio-specific controls." },
+    { "id": "RADIO-004", "title": "QA", "purpose": "Write Guilherme QA scenario." }
+  ],
+  "acceptance_criteria": [
+    "Audit references source paths.",
+    "Audit distinguishes radio from checkbox and chips.",
+    "No plugin source changes are made."
+  ],
+  "verification": [ "validate_subplan passes." ],
+  "stop_conditions": [
+    "Single-choice semantics remain ambiguous.",
+    "Audit starts implementing code."
+  ],
+  "documentation": [ "future docs/implementation-toolkit/filter-controller-audit-radio.md" ]
+}

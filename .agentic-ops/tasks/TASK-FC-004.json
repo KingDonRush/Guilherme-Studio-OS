@@ -1,0 +1,63 @@
+{
+  "id": "TASK-FC-004",
+  "title": "Reframe admin presets as library, preview, and diagnostics",
+  "description": "Adjust the Filter Preset admin surface so it reflects saved widget presets, previews their structure, and reports health without becoming the primary builder.",
+  "objective": "Make wp-admin answer what presets exist, where they came from, whether they are healthy, and how they can be reused or recovered.",
+  "priority": "high",
+  "complexity": "complex",
+  "status": "pending",
+  "phase_id": "PHASE-FC-003",
+  "depends_on": [
+    "TASK-FC-001",
+    "TASK-FC-003"
+  ],
+  "blocks": [
+    "TASK-FC-005"
+  ],
+  "inputs_required": [
+    "TASK-FC-001 output",
+    "TASK-FC-003 output",
+    "includes/Admin/FilterPresetAdmin.php",
+    "includes/Admin/AdminRenderer.php",
+    "includes/Support/FilterPresets.php",
+    "assets/css/eit-admin.css",
+    "assets/js/eit-admin.js"
+  ],
+  "expected_outputs": [
+    "Preset library metadata table or list",
+    "Preset structure preview",
+    "Diagnostics for missing target, empty options, unsupported fields, unknown types, and unverified selectors",
+    "Preserved rename, duplicate, delete, and recovery flows",
+    "Documentation of admin role boundaries"
+  ],
+  "acceptance_criteria": [
+    "Admin does not present itself as the required filter builder.",
+    "Saved widget presets are visible with name, key, source, filter count, selectors, and updated date.",
+    "Preview uses the same normalized data loaded by the widget.",
+    "Diagnostics reveal obvious preset health issues.",
+    "Destructive actions remain nonce and capability protected."
+  ],
+  "verification": [
+    "PHP lint passes.",
+    "JS syntax check passes for assets/js/eit-admin.js if touched.",
+    "WP-CLI smoke creates a preset and confirms it appears in admin data.",
+    "Browser/simple screenshot check may be used for gross admin rendering only.",
+    "Guilherme remains final QA for nuanced admin visual judgment.",
+    "git diff --check passes."
+  ],
+  "budgets": {
+    "time_budget": "one admin implementation slice",
+    "complexity_budget": "high",
+    "context_budget": "admin preset UI, admin renderer, preset support",
+    "research_budget": "local source only",
+    "validation_budget": "syntax plus WP-CLI smoke plus simple browser check"
+  },
+  "risks": [
+    "Admin can drift back into a second builder if too much composition UI is added.",
+    "Preview can become expensive if it requires full Elementor rendering too early."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

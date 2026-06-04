@@ -1,0 +1,56 @@
+{
+  "id": "TASK-FC-017",
+  "title": "Produce rating component audit sheet",
+  "description": "Audit the rating filter as an individual component or explicitly classify it as an option-family variant before adding controls.",
+  "objective": "Resolve rating anatomy, threshold semantics, icon strategy, states, responsive behavior, and control backlog.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-FC-005",
+  "depends_on": [
+    "TASK-FC-001"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "includes/Elementor/Widgets/FilterController.php",
+    "includes/Elementor/FilterController/FilterOptions.php",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "assets/css/eit-frontend.css",
+    "assets/js/eit-frontend.js"
+  ],
+  "expected_outputs": [
+    "Rating anatomy sheet",
+    "Own type vs option-family decision",
+    "Threshold behavior contract",
+    "Rating icon/numeric controls backlog",
+    "Guilherme QA scenario for rating"
+  ],
+  "acceptance_criteria": [
+    "Rating options, threshold semantics, star/icon/numeric labels, selected state, hover, focus, disabled, and responsive behavior are treated as separate subelements.",
+    "Rating is classified as its own type or as an option-family variant with a clear reason.",
+    "Icon/star/numeric strategy is documented.",
+    "The audit does not implement rating fixes yet."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Linked subplan validates.",
+    "No plugin source changes are made."
+  ],
+  "budgets": {
+    "time_budget": "one audit pass",
+    "complexity_budget": "moderate",
+    "context_budget": "rating render, option parser, option CSS, frontend JS",
+    "research_budget": "local source only",
+    "validation_budget": "Agentic Ops validation"
+  },
+  "risks": [
+    "Rating can duplicate radio or chips behavior if classification stays vague.",
+    "Icon strategy can become visual polish without a filtering contract."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [
+    "SUBPLAN-FC-AUDIT-RATING"
+  ]
+}

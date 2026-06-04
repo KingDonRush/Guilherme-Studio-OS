@@ -1,0 +1,64 @@
+{
+  "id": "TASK-FC-003",
+  "title": "Implement save preset from Elementor widget",
+  "description": "Implement the protected widget-side flow that saves a manually built Filter Controller configuration as a reusable preset.",
+  "objective": "Allow an implementer to build filters in Elementor and persist that configuration as a saved preset without leaving the widget workflow.",
+  "priority": "critical",
+  "complexity": "complex",
+  "status": "done",
+  "phase_id": "PHASE-FC-002",
+  "depends_on": [
+    "TASK-FC-001",
+    "TASK-FC-002"
+  ],
+  "blocks": [
+    "TASK-FC-004",
+    "TASK-FC-005"
+  ],
+  "inputs_required": [
+    "TASK-FC-001 output",
+    "TASK-FC-002 output",
+    "assets/js/eit-editor.js",
+    "includes/Support/FilterPresets.php",
+    "includes/Elementor/FilterController/ContentControls.php",
+    "Chosen REST/AJAX handler"
+  ],
+  "expected_outputs": [
+    "Widget-side save action",
+    "Protected save handler",
+    "Normalized saved preset",
+    "Editor state update after save",
+    "WP-CLI or HTTP smoke test",
+    "Documentation of save behavior and remaining UX gaps"
+  ],
+  "acceptance_criteria": [
+    "A widget-built filter configuration can be saved as a preset.",
+    "The saved preset appears in preset storage.",
+    "The save path validates capability and nonce.",
+    "Malformed filter rows fail without corrupting existing presets.",
+    "The implementation does not require Elementor Pro.",
+    "Manual widget composition remains available."
+  ],
+  "verification": [
+    "PHP lint passes.",
+    "JS syntax check passes for assets/js/eit-editor.js.",
+    "Composer validation/autoload passes if PHP files change.",
+    "WP-CLI or HTTP smoke saves a preset and verifies stored normalized fields.",
+    "git diff --check passes."
+  ],
+  "budgets": {
+    "time_budget": "one implementation slice",
+    "complexity_budget": "high",
+    "context_budget": "editor JS, preset persistence, security handler",
+    "research_budget": "local source only unless blocked",
+    "validation_budget": "syntax plus smoke save"
+  },
+  "risks": [
+    "Editor UX may need Guilherme QA after the mechanical save path works.",
+    "Saving style settings too broadly can make shared presets hard to reuse."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

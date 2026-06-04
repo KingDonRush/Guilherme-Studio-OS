@@ -1,0 +1,63 @@
+{
+  "id": "TASK-FC-005",
+  "title": "Implement widget preset load and reuse states",
+  "description": "Let another Filter Controller widget select, load, link, detach, or import a saved preset without silently overwriting local settings.",
+  "objective": "Make saved presets reusable across Elementor pages and widget instances while keeping mutation semantics explicit.",
+  "priority": "critical",
+  "complexity": "complex",
+  "status": "pending",
+  "phase_id": "PHASE-FC-004",
+  "depends_on": [
+    "TASK-FC-001",
+    "TASK-FC-003",
+    "TASK-FC-004"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "TASK-FC-001 output",
+    "TASK-FC-003 output",
+    "TASK-FC-004 output",
+    "includes/Elementor/FilterController/ContentControls.php",
+    "includes/Elementor/FilterController/FilterSettings.php",
+    "includes/Support/FilterPresets.php",
+    "assets/js/eit-editor.js"
+  ],
+  "expected_outputs": [
+    "Widget preset selector",
+    "Linked or detached state representation",
+    "Conflict behavior when local filters already exist",
+    "Recoverable missing/deleted preset state",
+    "Mechanical render/load smoke test",
+    "Guilherme QA checklist for editor copy and interaction"
+  ],
+  "acceptance_criteria": [
+    "A second widget can select a saved preset and render the same filter structure.",
+    "Detached import does not silently mutate the saved preset.",
+    "Linked preset behavior is explicit if implemented.",
+    "Existing local filters are not overwritten without clear user intent.",
+    "A missing preset produces a recoverable state instead of a broken widget."
+  ],
+  "verification": [
+    "PHP lint passes.",
+    "JS syntax checks pass if editor JS changes.",
+    "WP-CLI render smoke verifies loaded preset structure.",
+    "Generated HTML contract includes expected filters and runtime config.",
+    "Guilherme performs frontend/editor QA for interaction nuance.",
+    "git diff --check passes."
+  ],
+  "budgets": {
+    "time_budget": "one implementation slice",
+    "complexity_budget": "high",
+    "context_budget": "widget controls, preset resolver, editor copy/state",
+    "research_budget": "local source only unless blocked",
+    "validation_budget": "syntax plus render/load smoke"
+  },
+  "risks": [
+    "Linked presets can surprise users if edits mutate shared configuration.",
+    "Editor copy must be clear enough to distinguish shared preset from local copy."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

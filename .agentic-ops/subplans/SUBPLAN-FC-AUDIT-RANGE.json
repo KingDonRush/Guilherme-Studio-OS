@@ -1,0 +1,42 @@
+{
+  "id": "SUBPLAN-FC-AUDIT-RANGE",
+  "parent_task_id": "TASK-FC-006",
+  "title": "Range filter component audit",
+  "status": "pending",
+  "purpose": "Audit range as its own component before adding more controls.",
+  "objective": "Define range anatomy, switcher contracts, vertical/horizontal behavior, state matrix, responsive rules, and customization backlog.",
+  "scope_boundary": "In scope: label, min/max number inputs, slider handles, selected/base track, orientation, current value markers, scale ticks, units/prefix/suffix, responsive layout, generated HTML contracts, and Guilherme QA scenario. Out of scope: implementing fixes or auditing other types.",
+  "entry_condition": "TASK-FC-001 has classified preset/widget setting ownership and current range render/CSS/JS files are available.",
+  "exit_condition": "A range audit sheet exists with mechanical bugs, product controls, deferred ideas, and QA scenario separated.",
+  "completion_criteria": [
+    "DOM anatomy is mapped.",
+    "Value/tick switcher contracts are explicit.",
+    "Vertical and horizontal layouts are specified separately.",
+    "Track, handles, labels, ticks, and numeric inputs are first-class subelements.",
+    "State matrix and responsive behavior are documented.",
+    "Backlog is split into now/later/deferred."
+  ],
+  "phases": [
+    { "id": "RANGE-001", "title": "Anatomy", "purpose": "Map render, CSS, JS, and screenshot evidence." },
+    { "id": "RANGE-002", "title": "Contracts", "purpose": "Define switchers, states, layout reservation, and accessibility rules." },
+    { "id": "RANGE-003", "title": "Backlog", "purpose": "Prioritize fixes and controls." },
+    { "id": "RANGE-004", "title": "QA", "purpose": "Write Guilherme QA scenario." }
+  ],
+  "acceptance_criteria": [
+    "Audit references source paths.",
+    "Audit explains the vertical marker issue.",
+    "Audit separates mechanical bugs from product customization.",
+    "No plugin source changes are made."
+  ],
+  "verification": [
+    "validate_subplan passes.",
+    "TASK-FC-006 validate_task passes with this child."
+  ],
+  "stop_conditions": [
+    "Audit starts implementing code.",
+    "Controls are proposed without anatomy-based justification."
+  ],
+  "documentation": [
+    "future docs/implementation-toolkit/filter-controller-audit-range.md"
+  ]
+}

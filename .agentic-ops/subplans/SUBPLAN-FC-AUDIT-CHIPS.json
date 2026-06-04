@@ -1,0 +1,35 @@
+{
+  "id": "SUBPLAN-FC-AUDIT-CHIPS",
+  "parent_task_id": "TASK-FC-011",
+  "title": "Chips filter component audit",
+  "status": "pending",
+  "purpose": "Audit chips as a button-like option component with its own interaction expectations.",
+  "objective": "Define chip anatomy, selected state, wrap behavior, optional icons/visuals, density, states, and customization backlog.",
+  "scope_boundary": "In scope: chip label, selected state, hover/focus, wrapping, spacing, compact mode, optional visuals, active affordance, and QA scenario. Out of scope: checkbox, radio, toggle, swatch, and implementation.",
+  "entry_condition": "TASK-FC-001 has classified preset/widget setting ownership and current chips render/CSS/JS files are available.",
+  "exit_condition": "A chips audit sheet exists with layout, states, and style controls prioritized.",
+  "completion_criteria": [
+    "Chips DOM anatomy is mapped.",
+    "Selected/unselected affordances are documented.",
+    "Wrap and responsive behavior are documented.",
+    "Shared vs chip-specific controls are separated.",
+    "QA scenario is written."
+  ],
+  "phases": [
+    { "id": "CHIPS-001", "title": "Anatomy", "purpose": "Map chips render and CSS." },
+    { "id": "CHIPS-002", "title": "States", "purpose": "Define selected, hover, focus, disabled, and wrap behavior." },
+    { "id": "CHIPS-003", "title": "Controls", "purpose": "Prioritize chip-specific controls." },
+    { "id": "CHIPS-004", "title": "QA", "purpose": "Write Guilherme QA scenario." }
+  ],
+  "acceptance_criteria": [
+    "Audit references source paths.",
+    "Audit treats chips as button-like options, not generic checkboxes.",
+    "No plugin source changes are made."
+  ],
+  "verification": [ "validate_subplan passes." ],
+  "stop_conditions": [
+    "Chip selected state is visually underspecified.",
+    "Audit starts implementing code."
+  ],
+  "documentation": [ "future docs/implementation-toolkit/filter-controller-audit-chips.md" ]
+}

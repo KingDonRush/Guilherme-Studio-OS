@@ -1,0 +1,58 @@
+{
+  "id": "TASK-FC-006",
+  "title": "Produce range component audit sheet",
+  "description": "Audit the range filter as a component system before adding more controls, with special attention to vertical mode, labels, ticks, number inputs, handles, track, switchers, and responsive behavior.",
+  "objective": "Turn the range slider from a technically working control into a component with explicit anatomy, switcher contracts, subelement controls, state matrix, and Guilherme QA scenarios.",
+  "priority": "critical",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-FC-005",
+  "depends_on": [
+    "TASK-FC-001"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "includes/Elementor/Widgets/FilterController.php",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "assets/css/eit-frontend.css",
+    "assets/js/eit-frontend.js",
+    "Guilherme screenshot feedback for vertical range labels"
+  ],
+  "expected_outputs": [
+    "Range anatomy sheet",
+    "Range switcher contract",
+    "Range state matrix",
+    "Range responsive behavior notes",
+    "Range controls backlog split into now/later",
+    "Guilherme QA scenario for range"
+  ],
+  "acceptance_criteria": [
+    "Labels, ticks, handles, track, selected track, base track, number inputs, orientation, and markers are treated as separate subelements.",
+    "Switcher-off behavior states whether markup should disappear or remain hidden without reserving layout.",
+    "Vertical-specific layout requirements are explicit.",
+    "The audit does not implement the range fixes yet.",
+    "The audit identifies which changes are mechanical bugs versus product customization."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Audit document references the current render/CSS/JS files.",
+    "No plugin source changes are made."
+  ],
+  "budgets": {
+    "time_budget": "one audit pass",
+    "complexity_budget": "moderate",
+    "context_budget": "range render, range CSS, range JS, user screenshot",
+    "research_budget": "local source plus user feedback",
+    "validation_budget": "Agentic Ops validation"
+  },
+  "risks": [
+    "Skipping this audit would repeat the current bug pattern: technically working, visually underdesigned.",
+    "Overloading range with too many controls at once can bloat the Style panel."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [
+    "SUBPLAN-FC-AUDIT-RANGE"
+  ]
+}

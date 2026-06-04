@@ -1,0 +1,56 @@
+{
+  "id": "TASK-FC-009",
+  "title": "Produce checkbox component audit sheet",
+  "description": "Audit the checkbox filter as an individual component, preserving native semantics while defining its visual, layout, state, and Elementor styling needs.",
+  "objective": "Turn checkbox from a generic option renderer into a documented component with explicit anatomy, checked/focus/disabled states, layout contracts, and a Guilherme QA scenario.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-FC-005",
+  "depends_on": [
+    "TASK-FC-001"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "includes/Elementor/Widgets/FilterController.php",
+    "includes/Elementor/FilterController/FilterOptions.php",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "assets/css/eit-frontend.css",
+    "assets/js/eit-frontend.js"
+  ],
+  "expected_outputs": [
+    "Checkbox anatomy sheet",
+    "Checkbox state matrix",
+    "Checkbox layout contract",
+    "Shared vs checkbox-specific controls list",
+    "Guilherme QA scenario for checkbox"
+  ],
+  "acceptance_criteria": [
+    "Checkbox input, option label, group label, selected state, focus, hover, disabled, spacing, and count/visual slots are treated as separate subelements.",
+    "Native checkbox semantics are preserved instead of replaced by a visual-only control.",
+    "Shared option-family controls are separated from checkbox-only controls.",
+    "The audit does not implement checkbox fixes yet."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Linked subplan validates.",
+    "No plugin source changes are made."
+  ],
+  "budgets": {
+    "time_budget": "one audit pass",
+    "complexity_budget": "moderate",
+    "context_budget": "checkbox render, option parser, option CSS, frontend JS",
+    "research_budget": "local source only",
+    "validation_budget": "Agentic Ops validation"
+  },
+  "risks": [
+    "Checkbox can accidentally inherit radio/chip assumptions and lose its multi-select affordance.",
+    "Over-customizing the input can break accessibility or browser behavior."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [
+    "SUBPLAN-FC-AUDIT-CHECKBOX"
+  ]
+}
