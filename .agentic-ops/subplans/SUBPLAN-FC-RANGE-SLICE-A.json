@@ -1,0 +1,52 @@
+{
+  "id": "SUBPLAN-FC-RANGE-SLICE-A",
+  "parent_task_id": "TASK-FC-018",
+  "title": "Range Slice A contract and vertical layout repair",
+  "status": "done",
+  "purpose": "Implement the smallest useful range repair derived from the component audit.",
+  "objective": "Make range current values, scale ticks, numeric inputs, and vertical rails behave as explicit subelements before adding broader design controls.",
+  "scope_boundary": "In scope: Elementor control copy, range wrapper classes, vertical CSS grid contracts, long-value overflow handling, and mechanical verification. Out of scope: custom dual-range engine, selected-track overlay, tick count controls, handle icons, number input visibility controls, and visual final approval.",
+  "entry_condition": "TASK-FC-006 is done and the plugin worktree is clean.",
+  "exit_condition": "Range vertical mode has explicit layout states for values/ticks and the plugin passes lint/diff checks.",
+  "completion_criteria": [
+    "Current value labels and scale ticks are named distinctly in code-facing UI copy.",
+    "Range markup exposes classes that match enabled subelements.",
+    "Vertical CSS does not reserve hidden value or tick rails.",
+    "Long numeric labels have overflow handling.",
+    "No deferred range controls are implemented in this slice."
+  ],
+  "phases": [
+    {
+      "id": "RANGE-SLICE-A-001",
+      "title": "Copy and state classes",
+      "purpose": "Clarify Elementor labels and expose wrapper state classes."
+    },
+    {
+      "id": "RANGE-SLICE-A-002",
+      "title": "Vertical CSS contract",
+      "purpose": "Define grid templates by enabled subelements."
+    },
+    {
+      "id": "RANGE-SLICE-A-003",
+      "title": "Verification",
+      "purpose": "Run syntax/diff checks and document Guilherme QA boundary."
+    }
+  ],
+  "acceptance_criteria": [
+    "Implementation follows docs/implementation-toolkit/filter-controller-audit-range.md Slice A.",
+    "No plugin source outside range render/style/CSS is changed unless verification proves it necessary.",
+    "Guilherme visual QA remains required for final craft approval."
+  ],
+  "verification": [
+    "validate_subplan passes.",
+    "TASK-FC-018 validate_task passes.",
+    "Plugin PHP lint and diff checks pass."
+  ],
+  "stop_conditions": [
+    "The slice starts adding broad range customization controls.",
+    "Fixing vertical layout requires replacing native range inputs."
+  ],
+  "documentation": [
+    "docs/implementation-toolkit/filter-controller-audit-range.md"
+  ]
+}

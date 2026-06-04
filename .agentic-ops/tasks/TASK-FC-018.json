@@ -1,0 +1,58 @@
+{
+  "id": "TASK-FC-018",
+  "title": "Implement range Slice A contract and vertical layout repair",
+  "description": "Apply the first implementation slice from the range audit: clarify current value labels versus scale ticks, stop disabled vertical rails from reserving layout, and improve long-value handling without adding broad customization.",
+  "objective": "Fix the mechanical range component contract exposed by the vertical screenshot while keeping the implementation small, testable, and derived from TASK-FC-006.",
+  "priority": "critical",
+  "complexity": "moderate",
+  "status": "done",
+  "phase_id": "PHASE-FC-005",
+  "depends_on": [
+    "TASK-FC-006"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-range.md",
+    "includes/Elementor/Widgets/FilterController.php",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "assets/css/eit-frontend.css"
+  ],
+  "expected_outputs": [
+    "Range copy distinguishes current value labels from scale ticks",
+    "Range wrapper exposes explicit value/tick/input state classes",
+    "Vertical CSS stops hidden rails from reserving layout",
+    "Long range values have overflow handling",
+    "Mechanical verification plus Guilherme visual QA scenario"
+  ],
+  "acceptance_criteria": [
+    "The Style tab copy makes current value labels and scale ticks distinct.",
+    "Disabling current values or ticks removes their vertical rail from layout.",
+    "The existing range save/load and runtime behavior remains compatible.",
+    "The slice does not add broad deferred controls from the audit.",
+    "Guilherme remains responsible for nuanced Elementor visual QA."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "PHP lint passes for changed PHP files.",
+    "git diff --check passes in root and plugin.",
+    "Generated range markup exposes the expected state classes.",
+    "Guilherme performs frontend/editor visual QA for vertical mode."
+  ],
+  "budgets": {
+    "time_budget": "one implementation slice",
+    "complexity_budget": "moderate",
+    "context_budget": "range render, range style controls, range CSS",
+    "research_budget": "local source plus TASK-FC-006 audit",
+    "validation_budget": "lint plus markup/CSS contract review"
+  },
+  "risks": [
+    "Changing vertical grid rules can improve contract but still require Guilherme's visual judgment.",
+    "Native range input browser differences remain outside this slice."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [
+    "SUBPLAN-FC-RANGE-SLICE-A"
+  ]
+}

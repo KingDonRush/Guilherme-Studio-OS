@@ -238,6 +238,12 @@ Execution status:
   audit sheet under `docs/implementation-toolkit/`, separating DOM anatomy,
   behavior semantics, mechanical bugs, product controls, deferred ideas, and
   Guilherme QA scenarios.
+- `TASK-FC-018`: done. First implementation slice from the range audit is
+  recorded in
+  `docs/implementation-toolkit/filter-controller-range-slice-a-implementation.md`:
+  current value labels and scale ticks now have distinct copy/control targets,
+  range markup exposes explicit state classes, and vertical CSS no longer uses
+  one fixed four-rail grid when value/tick rails are disabled.
 
 Child subplans:
 
