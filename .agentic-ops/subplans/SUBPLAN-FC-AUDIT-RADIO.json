@@ -2,7 +2,7 @@
   "id": "SUBPLAN-FC-AUDIT-RADIO",
   "parent_task_id": "TASK-FC-010",
   "title": "Radio filter component audit",
-  "status": "pending",
+  "status": "done",
   "purpose": "Audit radio as its own single-choice component.",
   "objective": "Define radio anatomy, single-choice behavior, selected/deselect semantics, layout modes, states, and styling backlog.",
   "scope_boundary": "In scope: group label, radio input, option label, selected state, reset relationship, segmented-control potential, responsive layout, and QA scenario. Out of scope: checkbox, chips, toggle, swatch, and implementation.",

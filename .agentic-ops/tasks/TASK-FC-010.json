@@ -5,7 +5,7 @@
   "objective": "Define how radio behaves and looks as a single-choice filter without collapsing it into checkbox or chip behavior.",
   "priority": "high",
   "complexity": "moderate",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-005",
   "depends_on": [
     "TASK-FC-001"

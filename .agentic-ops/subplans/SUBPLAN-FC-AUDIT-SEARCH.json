@@ -2,7 +2,7 @@
   "id": "SUBPLAN-FC-AUDIT-SEARCH",
   "parent_task_id": "TASK-FC-014",
   "title": "Search filter component audit",
-  "status": "pending",
+  "status": "done",
   "purpose": "Audit search as its own text-input filter component.",
   "objective": "Define search anatomy, placeholder/label behavior, icon/clear affordances, debounce feedback, states, responsive behavior, and customization backlog.",
   "scope_boundary": "In scope: label, input, placeholder, optional icon, clear action, focus ring, debounce/loading feedback, states, responsive behavior, and QA scenario. Out of scope: select, date, rating, and implementation.",

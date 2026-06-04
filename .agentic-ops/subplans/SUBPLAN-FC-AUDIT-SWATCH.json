@@ -2,7 +2,7 @@
   "id": "SUBPLAN-FC-AUDIT-SWATCH",
   "parent_task_id": "TASK-FC-013",
   "title": "Swatch filter component audit",
-  "status": "pending",
+  "status": "done",
   "purpose": "Audit swatch as a visual option component with fallback and selection contracts.",
   "objective": "Define swatch anatomy, visual data behavior, color/image fallback, selected ring, label strategy, states, responsive behavior, and customization backlog.",
   "scope_boundary": "In scope: swatch visual, label, selected ring, color/image support, fallback, size/shape, tooltip/label strategy, states, and QA scenario. Out of scope: checkbox, radio, chips, toggle, and implementation.",

@@ -2,7 +2,7 @@
   "id": "SUBPLAN-FC-AUDIT-TOGGLE",
   "parent_task_id": "TASK-FC-012",
   "title": "Toggle filter component audit",
-  "status": "pending",
+  "status": "done",
   "purpose": "Audit toggle as a binary filter component with explicit on/off semantics.",
   "objective": "Define toggle anatomy, switch track/thumb, label behavior, on/off states, layout, accessibility, and customization backlog.",
   "scope_boundary": "In scope: switch track, thumb, label, checked state, disabled state, inline/row layouts, accessibility, and QA scenario. Out of scope: checkbox, radio, chips, swatch, and implementation.",

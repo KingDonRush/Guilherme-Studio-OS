@@ -5,7 +5,7 @@
   "objective": "Turn checkbox from a generic option renderer into a documented component with explicit anatomy, checked/focus/disabled states, layout contracts, and a Guilherme QA scenario.",
   "priority": "high",
   "complexity": "moderate",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-005",
   "depends_on": [
     "TASK-FC-001"

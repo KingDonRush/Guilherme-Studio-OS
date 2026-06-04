@@ -5,7 +5,7 @@
   "objective": "Define what select can safely customize in Elementor without pretending native dropdowns are fully controllable.",
   "priority": "high",
   "complexity": "moderate",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-005",
   "depends_on": [
     "TASK-FC-001"

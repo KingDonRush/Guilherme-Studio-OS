@@ -5,7 +5,7 @@
   "objective": "Define date filtering anatomy, invalid states, native picker limits, and safe customization before any implementation.",
   "priority": "high",
   "complexity": "moderate",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-005",
   "depends_on": [
     "TASK-FC-001"

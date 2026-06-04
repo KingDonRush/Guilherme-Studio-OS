@@ -233,6 +233,11 @@ Execution status:
   layout, switcher contracts, numeric inputs, labels, ticks, track, handles,
   mechanical bugs, product customization, deferred ideas, and Guilherme QA
   separated before implementation.
+- `TASK-FC-009` through `TASK-FC-017`: done. Checkbox, radio, chips, toggle,
+  swatch, search, select, date, and rating now each have a dedicated component
+  audit sheet under `docs/implementation-toolkit/`, separating DOM anatomy,
+  behavior semantics, mechanical bugs, product controls, deferred ideas, and
+  Guilherme QA scenarios.
 
 Child subplans:
 

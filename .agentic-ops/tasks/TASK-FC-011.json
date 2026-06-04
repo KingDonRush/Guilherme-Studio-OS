@@ -5,7 +5,7 @@
   "objective": "Define chips as a first-class filter type with its own anatomy, visual affordances, states, layout behavior, and Elementor controls backlog.",
   "priority": "high",
   "complexity": "moderate",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-005",
   "depends_on": [
     "TASK-FC-001"

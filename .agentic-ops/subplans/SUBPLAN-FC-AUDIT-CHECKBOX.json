@@ -2,7 +2,7 @@
   "id": "SUBPLAN-FC-AUDIT-CHECKBOX",
   "parent_task_id": "TASK-FC-009",
   "title": "Checkbox filter component audit",
-  "status": "pending",
+  "status": "done",
   "purpose": "Audit checkbox as its own option component, not as a generic option list.",
   "objective": "Define checkbox anatomy, option layout, checked state, accessibility, responsive behavior, and styling backlog.",
   "scope_boundary": "In scope: group label, option label, checkbox input, selected state, option spacing, counts/visuals if supported, hover/focus/disabled, layout modes, and QA scenario. Out of scope: radio, chips, toggle, swatch, and implementation.",

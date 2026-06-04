@@ -5,7 +5,7 @@
   "objective": "Define toggle behavior and styling without treating it as a checkbox clone.",
   "priority": "high",
   "complexity": "moderate",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-005",
   "depends_on": [
     "TASK-FC-001"

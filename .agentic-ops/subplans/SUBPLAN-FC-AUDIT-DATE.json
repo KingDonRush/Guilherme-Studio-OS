@@ -2,7 +2,7 @@
   "id": "SUBPLAN-FC-AUDIT-DATE",
   "parent_task_id": "TASK-FC-016",
   "title": "Date filter component audit",
-  "status": "pending",
+  "status": "done",
   "purpose": "Audit date as a browser-native date/range control with validation and styling limits.",
   "objective": "Define date anatomy, from/to behavior, native picker limitations, validation states, responsive behavior, and customization backlog.",
   "scope_boundary": "In scope: from input, to input, labels/placeholders, native picker behavior, range validation, focus/disabled/invalid states, responsive behavior, and QA scenario. Out of scope: custom calendar picker implementation and other filter types.",

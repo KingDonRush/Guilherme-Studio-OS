@@ -5,7 +5,7 @@
   "objective": "Define how swatch should render, fail gracefully, and expose visual customization without losing filter clarity.",
   "priority": "high",
   "complexity": "moderate",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-005",
   "depends_on": [
     "TASK-FC-001"

@@ -2,7 +2,7 @@
   "id": "SUBPLAN-FC-AUDIT-CHIPS",
   "parent_task_id": "TASK-FC-011",
   "title": "Chips filter component audit",
-  "status": "pending",
+  "status": "done",
   "purpose": "Audit chips as a button-like option component with its own interaction expectations.",
   "objective": "Define chip anatomy, selected state, wrap behavior, optional icons/visuals, density, states, and customization backlog.",
   "scope_boundary": "In scope: chip label, selected state, hover/focus, wrapping, spacing, compact mode, optional visuals, active affordance, and QA scenario. Out of scope: checkbox, radio, toggle, swatch, and implementation.",
