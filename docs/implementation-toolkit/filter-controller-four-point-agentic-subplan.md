@@ -226,6 +226,14 @@ Agentic tasks:
 - `TASK-FC-016`: Produce date component audit sheet.
 - `TASK-FC-017`: Produce rating component audit sheet.
 
+Execution status:
+
+- `TASK-FC-006`: done. Range is now audited as a component system through
+  `docs/implementation-toolkit/filter-controller-audit-range.md`, with vertical
+  layout, switcher contracts, numeric inputs, labels, ticks, track, handles,
+  mechanical bugs, product customization, deferred ideas, and Guilherme QA
+  separated before implementation.
+
 Child subplans:
 
 - `TASK-FC-006` owns `SUBPLAN-FC-AUDIT-RANGE`.

@@ -2,7 +2,7 @@
   "id": "SUBPLAN-FC-AUDIT-RANGE",
   "parent_task_id": "TASK-FC-006",
   "title": "Range filter component audit",
-  "status": "pending",
+  "status": "done",
   "purpose": "Audit range as its own component before adding more controls.",
   "objective": "Define range anatomy, switcher contracts, vertical/horizontal behavior, state matrix, responsive rules, and customization backlog.",
   "scope_boundary": "In scope: label, min/max number inputs, slider handles, selected/base track, orientation, current value markers, scale ticks, units/prefix/suffix, responsive layout, generated HTML contracts, and Guilherme QA scenario. Out of scope: implementing fixes or auditing other types.",

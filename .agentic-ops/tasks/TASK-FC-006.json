@@ -5,7 +5,7 @@
   "objective": "Turn the range slider from a technically working control into a component with explicit anatomy, switcher contracts, subelement controls, state matrix, and Guilherme QA scenarios.",
   "priority": "critical",
   "complexity": "moderate",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-005",
   "depends_on": [
     "TASK-FC-001"
