@@ -5,7 +5,7 @@
   "objective": "Make saved presets reusable across Elementor pages and widget instances while keeping mutation semantics explicit.",
   "priority": "critical",
   "complexity": "complex",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-004",
   "depends_on": [
     "TASK-FC-001",

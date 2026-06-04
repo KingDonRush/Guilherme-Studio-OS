@@ -181,6 +181,11 @@ Agentic task:
 
 - `TASK-FC-005`: Implement widget preset load and reuse states.
 
+Execution status:
+
+- `TASK-FC-005`: done. Widget reuse now exposes linked/unselected/missing/local
+  states, protected detached import, and runtime config state markers.
+
 Tasks:
 
 - expose saved presets in the widget;
