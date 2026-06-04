@@ -5,7 +5,7 @@
   "objective": "Make wp-admin answer what presets exist, where they came from, whether they are healthy, and how they can be reused or recovered.",
   "priority": "high",
   "complexity": "complex",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-003",
   "depends_on": [
     "TASK-FC-001",

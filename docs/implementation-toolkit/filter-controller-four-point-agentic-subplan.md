@@ -144,6 +144,11 @@ Agentic task:
 
 - `TASK-FC-004`: Reframe admin presets as library, preview, and diagnostics.
 
+Execution status:
+
+- `TASK-FC-004`: done. Admin now acts as preset library, normalized structure
+  preview, and diagnostics surface while keeping Elementor as the visual builder.
+
 Tasks:
 
 - reframe existing preset admin page as a saved preset library;
