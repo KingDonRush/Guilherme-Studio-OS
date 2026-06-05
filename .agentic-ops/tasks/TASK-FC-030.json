@@ -1,0 +1,56 @@
+{
+  "id": "TASK-FC-030",
+  "title": "Audit dynamic tag field binding and preset persistence",
+  "description": "Analyze how each Content > Filters row should bind to a field through Elementor dynamic tags and how that binding survives preset save/load.",
+  "objective": "Make the filter key/source contract Elementor-native without losing saved preset integrity.",
+  "priority": "critical",
+  "complexity": "complex",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-028"
+  ],
+  "blocks": [
+    "TASK-FC-031",
+    "TASK-FC-044"
+  ],
+  "inputs_required": [
+    "includes/Elementor/FilterController/ContentControls.php",
+    "includes/Support/FilterPresets.php",
+    "includes/Elementor/FilterController/FilterSettings.php",
+    "includes/Rest/FilterPresetEndpoint.php",
+    "assets/js/eit-editor.js",
+    "local Elementor dynamic tag APIs"
+  ],
+  "expected_outputs": [
+    "Dynamic tag binding audit report",
+    "Current field_binding_dynamic persistence map",
+    "Risk list for sanitization, migration, import, and preset linking",
+    "Recommended implementation approach for per-filter dynamic field binding"
+  ],
+  "acceptance_criteria": [
+    "The audit treats dynamic tag binding as part of each filter row, not as a global widget setting.",
+    "The audit explains how saved presets preserve or resolve dynamic tag references.",
+    "The audit identifies what must be stored, sanitized, migrated, and rendered.",
+    "The audit flags any Elementor API dependency that could break on update."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Findings cite local Elementor source or plugin source.",
+    "No preset schema changes are implemented by this task."
+  ],
+  "budgets": {
+    "time_budget": "one contract analysis pass",
+    "complexity_budget": "complex",
+    "context_budget": "Elementor controls, dynamic tags, preset storage, REST save path",
+    "research_budget": "local Elementor source and plugin code",
+    "validation_budget": "source-backed contract findings"
+  },
+  "risks": [
+    "Dynamic tags are sensitive because a stored preset can outlive the page context that originally resolved the tag."
+  ],
+  "research_required": true,
+  "requires_human_validation": false,
+  "subtasks": [],
+  "subplans": []
+}

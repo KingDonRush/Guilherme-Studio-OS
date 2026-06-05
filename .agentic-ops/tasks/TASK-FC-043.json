@@ -1,0 +1,57 @@
+{
+  "id": "TASK-FC-043",
+  "title": "Audit Date filter visual depth",
+  "description": "Audit Date for single-date, date-range, formatting, min/max, calendar UI limits, timezone concerns, comparison mode, and field binding.",
+  "objective": "Make Date filtering explicit enough for real custom fields instead of a basic text/date input wrapper.",
+  "priority": "high",
+  "complexity": "complex",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-028",
+    "TASK-FC-030"
+  ],
+  "blocks": [
+    "TASK-FC-044"
+  ],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-date.md",
+    "includes/Support/FilterResolver.php",
+    "includes/Elementor/Widgets/FilterController.php",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "assets/css/eit-frontend.css",
+    "assets/js/eit-frontend.js"
+  ],
+  "expected_outputs": [
+    "Date robustness audit report",
+    "Single-date and date-range feasibility findings",
+    "Format and comparison behavior findings",
+    "Input/calendar styling limitation findings",
+    "Timezone and data parsing risk list"
+  ],
+  "acceptance_criteria": [
+    "The audit identifies whether Date currently filters strings, timestamps, ISO dates, or display text.",
+    "The audit covers single date, range, before/after, between, empty state, and reset behavior.",
+    "The audit documents native date input styling limits and whether a custom UI is warranted.",
+    "The audit ties date behavior to field binding, data type, and compare mode."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Source-backed findings cite resolver, render, CSS, JS, and control IDs.",
+    "No Date implementation is made by this task."
+  ],
+  "budgets": {
+    "time_budget": "one component audit pass",
+    "complexity_budget": "complex",
+    "context_budget": "date audit, resolver, render, frontend runtime",
+    "research_budget": "local code only",
+    "validation_budget": "source-backed findings"
+  },
+  "risks": [
+    "Date filtering can silently fail if formatting and comparison mode are not designed before visual styling."
+  ],
+  "research_required": true,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

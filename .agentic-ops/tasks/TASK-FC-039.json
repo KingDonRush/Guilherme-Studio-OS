@@ -1,0 +1,56 @@
+{
+  "id": "TASK-FC-039",
+  "title": "Audit Toggle filter visual depth",
+  "description": "Audit Toggle for switch anatomy, on/off labels, boolean binding, icon support, size, alignment, states, and URL/reset behavior.",
+  "objective": "Make Toggle trustworthy for boolean fields instead of a styled checkbox with unclear semantics.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-028",
+    "TASK-FC-030"
+  ],
+  "blocks": [
+    "TASK-FC-044"
+  ],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-toggle.md",
+    "includes/Elementor/Widgets/FilterController.php",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "assets/css/eit-frontend.css",
+    "assets/js/eit-frontend.js"
+  ],
+  "expected_outputs": [
+    "Toggle robustness audit report",
+    "Boolean value and compare behavior map",
+    "Switch anatomy/style findings",
+    "Label and alignment findings",
+    "State and accessibility findings"
+  ],
+  "acceptance_criteria": [
+    "The audit identifies how Toggle binds to boolean, numeric, text, or taxonomy-like values.",
+    "The audit covers on/off label placement, knob shape, track styling, icons, sizes, and alignment.",
+    "The audit checks whether reset and URL sync restore the correct off state.",
+    "The audit identifies whether toggle controls should be shared with checkbox or own their own section."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Source-backed findings cite render, CSS, JS, and control IDs.",
+    "No Toggle implementation is made by this task."
+  ],
+  "budgets": {
+    "time_budget": "one component audit pass",
+    "complexity_budget": "moderate",
+    "context_budget": "toggle audit, render, CSS, resolver",
+    "research_budget": "local code only",
+    "validation_budget": "source-backed findings"
+  },
+  "risks": [
+    "Toggle can be visually clear but data-fragile if its true/false value contract is not explicit."
+  ],
+  "research_required": true,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

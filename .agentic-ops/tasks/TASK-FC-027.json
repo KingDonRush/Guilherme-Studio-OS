@@ -1,0 +1,69 @@
+{
+  "id": "TASK-FC-027",
+  "title": "Define all-filter robustness audit protocol",
+  "description": "Create the operating rule for Filter Controller work so user examples are treated as signals for a full audit, not as the whole implementation scope.",
+  "objective": "Prevent one-off fixes by requiring source-grounded findings across all affected filter types before implementation tasks are created.",
+  "priority": "critical",
+  "complexity": "moderate",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-026"
+  ],
+  "blocks": [
+    "TASK-FC-028",
+    "TASK-FC-029",
+    "TASK-FC-030",
+    "TASK-FC-031",
+    "TASK-FC-032",
+    "TASK-FC-033",
+    "TASK-FC-034",
+    "TASK-FC-035",
+    "TASK-FC-036",
+    "TASK-FC-037",
+    "TASK-FC-038",
+    "TASK-FC-039",
+    "TASK-FC-040",
+    "TASK-FC-041",
+    "TASK-FC-042",
+    "TASK-FC-043",
+    "TASK-FC-044"
+  ],
+  "inputs_required": [
+    "Guilherme feedback that Range and Rating are examples, not isolated requests",
+    ".ai/memory/decisions.md",
+    ".agentic-ops/tasks/TASK-FC-006.json through TASK-FC-026.json"
+  ],
+  "expected_outputs": [
+    "Robustness audit protocol document",
+    "Rule that each filter request requires per-type and cross-cutting audit classification",
+    "Finding template with source path, control ID, preset field, render selector, failure mode, and recommended next task"
+  ],
+  "acceptance_criteria": [
+    "The protocol explicitly says not to fix only the named example when the user is describing a system-wide problem.",
+    "The protocol separates analysis, implementation planning, and test creation.",
+    "The protocol preserves Guilherme as final QA for complex visual/editor interactions.",
+    "Every later robustness task can cite the protocol as its acceptance source."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Protocol document path is recorded.",
+    "Memory decision is updated with the example-as-signal rule."
+  ],
+  "budgets": {
+    "time_budget": "one planning pass",
+    "complexity_budget": "moderate",
+    "context_budget": "current Filter Controller tasks, user feedback, QA boundary memory",
+    "research_budget": "local code only",
+    "validation_budget": "schema validation and source-path inventory"
+  },
+  "risks": [
+    "Without this protocol, future work may keep repairing only Range or Rating and miss shared contracts."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [
+    "SUBPLAN-FC-ROBUSTNESS-AUDIT"
+  ]
+}

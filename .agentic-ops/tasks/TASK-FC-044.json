@@ -1,0 +1,68 @@
+{
+  "id": "TASK-FC-044",
+  "title": "Synthesize robustness audit into implementation and test plan",
+  "description": "Turn TASK-FC-027 through TASK-FC-043 findings into a sober implementation backlog and a separate test backlog.",
+  "objective": "Create the next plan only after cross-cutting and per-filter audits identify what is fragile, what is missing, and what should be tested.",
+  "priority": "critical",
+  "complexity": "complex",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-027",
+    "TASK-FC-028",
+    "TASK-FC-029",
+    "TASK-FC-030",
+    "TASK-FC-031",
+    "TASK-FC-032",
+    "TASK-FC-033",
+    "TASK-FC-034",
+    "TASK-FC-035",
+    "TASK-FC-036",
+    "TASK-FC-037",
+    "TASK-FC-038",
+    "TASK-FC-039",
+    "TASK-FC-040",
+    "TASK-FC-041",
+    "TASK-FC-042",
+    "TASK-FC-043"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "All PHASE-FC-006 audit reports",
+    "Guilherme QA boundary from .ai/memory/decisions.md",
+    "Agentic Ops task/test schemas"
+  ],
+  "expected_outputs": [
+    "Robustness synthesis report",
+    "Implementation backlog grouped by shared contracts, per-filter depth, and editor resilience",
+    "Test backlog grouped by PHP/schema, JS runtime, Elementor editor, visual containment, and Guilherme QA",
+    "Recommended first implementation slice"
+  ],
+  "acceptance_criteria": [
+    "The synthesis ranks work by product impact, fragility risk, and dependency order.",
+    "The synthesis separates implementation tasks from tests instead of mixing both in one vague task.",
+    "The synthesis names which visual/editor checks belong to Guilherme and which checks Codex can perform mechanically.",
+    "The synthesis explicitly rejects one-off repairs that do not address the shared contract."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "All dependent audit reports exist or are marked blocked with reason.",
+    "No implementation work is included in this synthesis task."
+  ],
+  "budgets": {
+    "time_budget": "one synthesis pass after audits",
+    "complexity_budget": "complex",
+    "context_budget": "all robustness audit reports",
+    "research_budget": "none after audits",
+    "validation_budget": "schema validation and dependency completeness"
+  },
+  "risks": [
+    "If synthesis starts early, it may recreate the same shallow plan before the code has been fully audited."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [
+    "SUBPLAN-FC-ROBUSTNESS-AUDIT"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": "TASK-FC-029",
+  "title": "Audit visual containment and overflow",
+  "description": "Audit whether inputs, labels, icons, sliders, selects, chips, rows, and admin/editor previews respect their containers across orientations and widths.",
+  "objective": "Find component-level and shared-layout overflow risks before adding more controls.",
+  "priority": "critical",
+  "complexity": "complex",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-028"
+  ],
+  "blocks": [
+    "TASK-FC-044"
+  ],
+  "inputs_required": [
+    "Guilherme screenshot showing inputs passing the visual boundary",
+    "assets/css/eit-frontend.css",
+    "assets/css/eit-editor.css",
+    "includes/Elementor/Widgets/FilterController.php",
+    "docs/implementation-toolkit/filter-controller-range-input-handle-customization.md"
+  ],
+  "expected_outputs": [
+    "Visual containment audit report",
+    "List of selectors that can overflow their parent",
+    "List of controls that need width, max-width, box-sizing, flex-wrap, or min-width safeguards",
+    "Recommended mechanical tests for overflow and clipping"
+  ],
+  "acceptance_criteria": [
+    "The report covers every filter type and shared modules, not only Range inputs.",
+    "The report distinguishes obvious mechanical overflow from nuanced visual craft that requires Guilherme QA.",
+    "Each finding references the selector, source file, likely cause, and recommended fix category."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Static CSS/markup findings cite source paths.",
+    "No implementation changes are made by this task."
+  ],
+  "budgets": {
+    "time_budget": "one visual containment analysis pass",
+    "complexity_budget": "complex",
+    "context_budget": "CSS selectors, widget render markup, prior screenshots",
+    "research_budget": "local code and optional punctual screenshot checks",
+    "validation_budget": "source-backed findings"
+  },
+  "risks": [
+    "Adding deeper controls before containment is stable can multiply visual regressions."
+  ],
+  "research_required": true,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

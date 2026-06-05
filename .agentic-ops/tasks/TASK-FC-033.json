@@ -1,0 +1,54 @@
+{
+  "id": "TASK-FC-033",
+  "title": "Audit filter block layout percentages",
+  "description": "Analyze how each filter block can declare width percentages, row placement, responsive behavior, and auto-packing inside the widget.",
+  "objective": "Define a layout engine that lets filters sit beside each other predictably instead of forcing every block into full rows.",
+  "priority": "critical",
+  "complexity": "complex",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-028"
+  ],
+  "blocks": [
+    "TASK-FC-044"
+  ],
+  "inputs_required": [
+    "includes/Elementor/FilterController/ContentControls.php",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "includes/Elementor/Widgets/FilterController.php",
+    "assets/css/eit-frontend.css",
+    "Guilherme request for per-filter percentage widths and automatic row packing"
+  ],
+  "expected_outputs": [
+    "Layout percentage audit report",
+    "Current wrapper/flex/grid behavior map",
+    "Proposed per-filter width contract",
+    "Responsive packing risks and recommended control model"
+  ],
+  "acceptance_criteria": [
+    "The audit covers the block wrapper around every filter type and sort separately.",
+    "The audit defines whether width is a Content property, Style property, or both.",
+    "The audit accounts for desktop/tablet/mobile behavior and wrapping.",
+    "The audit identifies how presets store and restore layout widths."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "CSS and render selectors are cited.",
+    "No layout implementation is made by this task."
+  ],
+  "budgets": {
+    "time_budget": "one layout contract analysis pass",
+    "complexity_budget": "complex",
+    "context_budget": "Elementor responsive controls, filter wrappers, frontend CSS",
+    "research_budget": "local code and Elementor control API",
+    "validation_budget": "source-backed contract findings"
+  },
+  "risks": [
+    "Percent widths can create hidden overflow unless min-width, flex-wrap, gap, and responsive rules are designed together."
+  ],
+  "research_required": true,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

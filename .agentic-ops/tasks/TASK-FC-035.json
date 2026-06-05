@@ -1,0 +1,56 @@
+{
+  "id": "TASK-FC-035",
+  "title": "Audit Rating filter visual depth",
+  "description": "Audit Rating for star/icon rendering, threshold semantics, icon library support, counts, labels, states, and field binding.",
+  "objective": "Make Rating a professional filter type instead of a shallow option list with a rating label.",
+  "priority": "high",
+  "complexity": "complex",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-028",
+    "TASK-FC-030"
+  ],
+  "blocks": [
+    "TASK-FC-044"
+  ],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-rating.md",
+    "includes/Elementor/FilterController/FilterOptions.php",
+    "includes/Elementor/Widgets/FilterController.php",
+    "includes/Support/FilterResolver.php",
+    "assets/css/eit-frontend.css"
+  ],
+  "expected_outputs": [
+    "Rating robustness audit report",
+    "Current anatomy and render mode map",
+    "Star/icon library feasibility findings",
+    "Threshold and exact-match semantics findings",
+    "State and accessibility findings"
+  ],
+  "acceptance_criteria": [
+    "The audit explains whether Rating is its own filter type or an option-family variant in the current code.",
+    "The audit recommends how icons, stars, half states, counts, labels, and selected states should be controlled.",
+    "The audit identifies the data type and compare behavior required for rating fields.",
+    "The audit does not stop at adding a star icon."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Findings cite PHP render, resolver, CSS, and control paths.",
+    "No Rating implementation is made by this task."
+  ],
+  "budgets": {
+    "time_budget": "one component audit pass",
+    "complexity_budget": "complex",
+    "context_budget": "rating audit, resolver, render, CSS, Elementor icons",
+    "research_budget": "local code and Elementor icon controls",
+    "validation_budget": "source-backed findings"
+  },
+  "risks": [
+    "A superficial star-only patch would leave rating semantics, accessibility, and binding weak."
+  ],
+  "research_required": true,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

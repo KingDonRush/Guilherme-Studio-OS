@@ -1,0 +1,47 @@
+{
+  "id": "PHASE-FC-006",
+  "title": "Filter Controller robustness audit",
+  "purpose": "Audit the Filter Controller as a full Elementor product surface before the next implementation plan is written.",
+  "entry_condition": "TASK-FC-026 is complete and Guilherme has reported visual overflow, dynamic tag sensitivity, shop-biased defaults, and the recurring risk of fixing only the named example.",
+  "exit_condition": "The robustness audit tasks produce code-grounded findings, source paths, risk ranking, and a follow-up implementation/test plan without applying one-off fixes first.",
+  "required_outputs": [
+    "cross-cutting audit protocol",
+    "source ownership map",
+    "visual containment report",
+    "dynamic tag and preset binding report",
+    "per-filter audit reports",
+    "sort module audit report",
+    "implementation and test backlog"
+  ],
+  "tasks": [
+    "TASK-FC-027",
+    "TASK-FC-028",
+    "TASK-FC-029",
+    "TASK-FC-030",
+    "TASK-FC-031",
+    "TASK-FC-032",
+    "TASK-FC-033",
+    "TASK-FC-034",
+    "TASK-FC-035",
+    "TASK-FC-036",
+    "TASK-FC-037",
+    "TASK-FC-038",
+    "TASK-FC-039",
+    "TASK-FC-040",
+    "TASK-FC-041",
+    "TASK-FC-042",
+    "TASK-FC-043",
+    "TASK-FC-044"
+  ],
+  "acceptance_criteria": [
+    "Every audit task cites source files, control IDs, render selectors, and preset fields where applicable.",
+    "Examples mentioned by Guilherme are treated as signals, not as the whole scope.",
+    "No new implementation task is created from one filter type until the per-type audit matrix has been reviewed.",
+    "Guilherme remains final QA for interaction-heavy Elementor editor and visual craft decisions."
+  ],
+  "validation_required": [
+    "validate_phase",
+    "validate_task",
+    "validate_subplan"
+  ]
+}

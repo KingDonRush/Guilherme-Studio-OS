@@ -1,0 +1,54 @@
+{
+  "id": "TASK-FC-031",
+  "title": "Audit CPT fields as Elementor dynamic tag sources",
+  "description": "Analyze whether posts and custom fields from the toolkit CPT system can appear as Elementor dynamic tag options in a stable, Elementor-like way.",
+  "objective": "Determine the right adapter boundary for exposing toolkit CPT/meta data to Elementor dynamic tags without copying JetEngine blindly.",
+  "priority": "high",
+  "complexity": "complex",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-030"
+  ],
+  "blocks": [
+    "TASK-FC-044"
+  ],
+  "inputs_required": [
+    "includes/CPT/CptManager.php",
+    "includes/Admin/CptManagerAdmin.php",
+    "includes/Elementor/ElementorIntegration.php",
+    "local Elementor dynamic tag group/source APIs",
+    "Guilherme request for CPT posts/fields to appear in dynamic tags"
+  ],
+  "expected_outputs": [
+    "CPT dynamic source feasibility report",
+    "Adapter options with risk ranking",
+    "List of CPT/meta fields that are safe to expose",
+    "List of context requirements and fallback behavior"
+  ],
+  "acceptance_criteria": [
+    "The audit distinguishes CPT record selection from meta-field binding.",
+    "The audit documents whether Elementor Free APIs are sufficient.",
+    "The audit identifies which values are page-contextual, widget-contextual, or preset-contextual.",
+    "The audit does not implement a dynamic tag provider before the contract is approved."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Elementor source references are cited.",
+    "No plugin source changes are made by this task."
+  ],
+  "budgets": {
+    "time_budget": "one feasibility analysis pass",
+    "complexity_budget": "complex",
+    "context_budget": "CPT manager, Elementor integration, dynamic tag APIs",
+    "research_budget": "local Elementor and WordPress source",
+    "validation_budget": "contract report"
+  },
+  "risks": [
+    "A dynamic tag provider can become fragile if it assumes JetEngine-like data contracts that this plugin does not own."
+  ],
+  "research_required": true,
+  "requires_human_validation": false,
+  "subtasks": [],
+  "subplans": []
+}

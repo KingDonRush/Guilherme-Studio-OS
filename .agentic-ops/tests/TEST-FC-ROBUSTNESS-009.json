@@ -1,0 +1,38 @@
+{
+  "id": "TEST-FC-ROBUSTNESS-009",
+  "type": "integration_test",
+  "target": "Filter Controller Sort module",
+  "objective": "Verify that Sort works as a separate module with its own source, layout, style, and resolver behavior.",
+  "preconditions": [
+    "Sort is enabled independently from filters.",
+    "Structured sort options are available.",
+    "The target listing has title, date, numeric, rating, and custom data keys."
+  ],
+  "steps": [
+    "Enable Sort with default, title, date, numeric, rating, and data-key options.",
+    "Assign Sort a non-100 layout width when supported.",
+    "Style Sort independently from generic fields.",
+    "Select each sort option and verify listing order.",
+    "Disable Sort and verify Sort style controls disappear."
+  ],
+  "expected_result": "Sort behaves as a mature sibling module, not as an afterthought inside Filters.",
+  "pass_criteria": [
+    "sort options produce expected order.",
+    "sort data key selection is explicit.",
+    "sort styling is independent from unrelated filter families.",
+    "sort layout can participate in the controller layout policy when intended.",
+    "disabled sort does not leave stale URL state."
+  ],
+  "evidence_required": [
+    "sort option configuration",
+    "before/after listing order evidence",
+    "Style tab screenshots",
+    "URL state notes"
+  ],
+  "status": "pending",
+  "severity": "high",
+  "depends_on": [
+    "TASK-FC-044"
+  ],
+  "subtests": []
+}

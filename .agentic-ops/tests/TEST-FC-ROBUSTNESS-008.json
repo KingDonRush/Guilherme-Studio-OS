@@ -1,0 +1,39 @@
+{
+  "id": "TEST-FC-ROBUSTNESS-008",
+  "type": "visual_test",
+  "target": "Rating icons and threshold semantics",
+  "objective": "Verify that Rating behaves and looks like a rating filter with clear threshold semantics.",
+  "preconditions": [
+    "Rating supports text, icon, and icon plus text display modes.",
+    "Rating can choose an Elementor icon or default star symbol.",
+    "A fixture listing contains numeric rating values."
+  ],
+  "steps": [
+    "Render Rating in text mode.",
+    "Render Rating in icon mode.",
+    "Render Rating in icon plus text mode.",
+    "Select 4+ and confirm items with rating 4 and 5 remain.",
+    "Clear only the Rating filter.",
+    "Test keyboard and focus behavior."
+  ],
+  "expected_result": "Rating is visually recognizable and its greater-than-or-equal behavior is clear.",
+  "pass_criteria": [
+    "star/icon display is not a generic radio pill.",
+    "selected and unselected colors are controllable.",
+    "threshold behavior is clear in labels or editor copy.",
+    "clear behavior does not require resetting all filters.",
+    "keyboard behavior remains accessible."
+  ],
+  "evidence_required": [
+    "frontend screenshots",
+    "filter result evidence",
+    "keyboard notes",
+    "Guilherme visual QA notes"
+  ],
+  "status": "pending",
+  "severity": "high",
+  "depends_on": [
+    "TASK-FC-044"
+  ],
+  "subtests": []
+}

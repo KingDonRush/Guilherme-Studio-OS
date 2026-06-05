@@ -1,0 +1,39 @@
+{
+  "id": "TEST-FC-ROBUSTNESS-002",
+  "type": "visual_test",
+  "target": "Filter Controller visual containment and width packing",
+  "objective": "Verify that every filter type stays inside its assigned layout width across desktop and mobile states.",
+  "preconditions": [
+    "A test page contains all Filter Controller filter types.",
+    "Each filter can be assigned layout widths of 25, 33, 50, and 100.",
+    "Range can be tested in horizontal and vertical orientations."
+  ],
+  "steps": [
+    "Create a controller with all filter types at 100 width.",
+    "Repeat with mixed widths: 50/50, 33/33/33, 25/25/25/25.",
+    "Test Range vertical with inputs, values, and ticks enabled.",
+    "Test long labels and long option values.",
+    "Capture desktop and mobile screenshots.",
+    "Check for page-level horizontal scroll and incoherent overlap."
+  ],
+  "expected_result": "The controller packs filters predictably and no filter internals overflow their group or the page.",
+  "pass_criteria": [
+    "No page-level horizontal overflow is present.",
+    "Inputs respect container width.",
+    "Range vertical does not push outside its grid span.",
+    "Long labels wrap or truncate by an intentional rule.",
+    "Mobile layout remains readable and full-width."
+  ],
+  "evidence_required": [
+    "desktop screenshots",
+    "mobile screenshots",
+    "overflow check result",
+    "Guilherme QA notes for visual hierarchy"
+  ],
+  "status": "pending",
+  "severity": "critical",
+  "depends_on": [
+    "TASK-FC-044"
+  ],
+  "subtests": []
+}

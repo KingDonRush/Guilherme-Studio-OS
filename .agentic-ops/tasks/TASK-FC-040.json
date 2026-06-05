@@ -1,0 +1,56 @@
+{
+  "id": "TASK-FC-040",
+  "title": "Audit Swatch filter visual depth",
+  "description": "Audit Swatch for color/image/media values, shape, border, selected ring, label visibility, accessibility text, and field binding.",
+  "objective": "Make Swatch useful for visual option sets without locking it to color-only examples.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-028",
+    "TASK-FC-030"
+  ],
+  "blocks": [
+    "TASK-FC-044"
+  ],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-swatch.md",
+    "includes/Elementor/FilterController/FilterOptions.php",
+    "includes/Elementor/Widgets/FilterController.php",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "assets/css/eit-frontend.css"
+  ],
+  "expected_outputs": [
+    "Swatch robustness audit report",
+    "Color/image/value parsing map",
+    "Shape and selected-state findings",
+    "Label/accessibility findings",
+    "Media and fallback risk findings"
+  ],
+  "acceptance_criteria": [
+    "The audit identifies whether Swatch supports color, image, icon, or token-like visuals in the current parser.",
+    "The audit covers shape, size, spacing, border, selected ring, tooltip/label visibility, and disabled state.",
+    "The audit checks accessibility text for visual-only options.",
+    "The audit ties swatch values to option parsing and field binding."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Source-backed findings cite parser, render, CSS, and control IDs.",
+    "No Swatch implementation is made by this task."
+  ],
+  "budgets": {
+    "time_budget": "one component audit pass",
+    "complexity_budget": "moderate",
+    "context_budget": "swatch audit, option parser, render, CSS",
+    "research_budget": "local code only",
+    "validation_budget": "source-backed findings"
+  },
+  "risks": [
+    "A visual-only swatch can be polished but inaccessible if label and fallback behavior are not defined."
+  ],
+  "research_required": true,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

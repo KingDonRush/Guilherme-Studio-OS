@@ -1,0 +1,58 @@
+{
+  "id": "TASK-FC-041",
+  "title": "Audit Search filter visual depth",
+  "description": "Audit Search for input containment, icon/clear button support, placeholder behavior, debounce, target fields, keyboard behavior, and field binding.",
+  "objective": "Make Search a configurable filter module instead of a generic text input.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-028",
+    "TASK-FC-029",
+    "TASK-FC-030"
+  ],
+  "blocks": [
+    "TASK-FC-044"
+  ],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-search.md",
+    "includes/Elementor/Widgets/FilterController.php",
+    "includes/Support/FilterResolver.php",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "assets/css/eit-frontend.css",
+    "assets/js/eit-frontend.js"
+  ],
+  "expected_outputs": [
+    "Search robustness audit report",
+    "Input/icon/clear anatomy map",
+    "Debounce and apply-mode findings",
+    "Target field and compare behavior findings",
+    "Containment and responsive findings"
+  ],
+  "acceptance_criteria": [
+    "The audit covers icons, clear button, placeholder, input typography, padding, border, radius, width, and focus state.",
+    "The audit checks whether search can target specific fields or only visible text.",
+    "The audit identifies debounce/apply-mode implications for auto apply and manual apply.",
+    "The audit ties search behavior to field binding and compare/data type."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Source-backed findings cite render, resolver, CSS, JS, and control IDs.",
+    "No Search implementation is made by this task."
+  ],
+  "budgets": {
+    "time_budget": "one component audit pass",
+    "complexity_budget": "moderate",
+    "context_budget": "search audit, render, resolver, frontend runtime",
+    "research_budget": "local code only",
+    "validation_budget": "source-backed findings"
+  },
+  "risks": [
+    "Search can look correct but filter the wrong surface if target field behavior is not explicit."
+  ],
+  "research_required": true,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

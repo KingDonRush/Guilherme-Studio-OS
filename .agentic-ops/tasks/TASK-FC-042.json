@@ -1,0 +1,56 @@
+{
+  "id": "TASK-FC-042",
+  "title": "Audit Select filter visual depth",
+  "description": "Audit Select for native/custom select variants, dropdown styling limits, placeholder, icons, multi-select feasibility, states, and field binding.",
+  "objective": "Define how professional Select controls should work without pretending native select styling can do everything.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-028",
+    "TASK-FC-030"
+  ],
+  "blocks": [
+    "TASK-FC-044"
+  ],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-select.md",
+    "includes/Elementor/Widgets/FilterController.php",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "assets/css/eit-frontend.css",
+    "assets/js/eit-frontend.js"
+  ],
+  "expected_outputs": [
+    "Select robustness audit report",
+    "Native select styling limitation map",
+    "Custom select feasibility findings",
+    "Placeholder/icon/state findings",
+    "Option parsing and binding findings"
+  ],
+  "acceptance_criteria": [
+    "The audit distinguishes native select capabilities from custom dropdown work.",
+    "The audit covers placeholder, arrow icon, height, typography, padding, border, radius, focus, disabled, and long option behavior.",
+    "The audit identifies whether multi-select is in scope or should remain a separate type.",
+    "The audit ties select options to option parsing and field binding."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Source-backed findings cite render, CSS, JS, and control IDs.",
+    "No Select implementation is made by this task."
+  ],
+  "budgets": {
+    "time_budget": "one component audit pass",
+    "complexity_budget": "moderate",
+    "context_budget": "select audit, render, CSS, option parsing",
+    "research_budget": "local code only",
+    "validation_budget": "source-backed findings"
+  },
+  "risks": [
+    "Native select controls can become the visual weak point if their browser limits are ignored."
+  ],
+  "research_required": true,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

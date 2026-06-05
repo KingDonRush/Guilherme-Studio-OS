@@ -1,0 +1,57 @@
+{
+  "id": "TASK-FC-034",
+  "title": "Audit Range filter visual depth",
+  "description": "Re-audit Range after the recent fixes, covering single-bar dual-handle variants, vertical labels, inputs, handles, icon overlays, alignment, and field binding.",
+  "objective": "Turn Range into one audited component among many, with implementation depth based on code findings rather than the latest screenshot only.",
+  "priority": "high",
+  "complexity": "complex",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-028",
+    "TASK-FC-029",
+    "TASK-FC-030"
+  ],
+  "blocks": [
+    "TASK-FC-044"
+  ],
+  "inputs_required": [
+    "TASK-FC-018 through TASK-FC-026",
+    "docs/implementation-toolkit/filter-controller-audit-range.md",
+    "assets/css/eit-frontend.css",
+    "assets/js/eit-frontend.js",
+    "includes/Elementor/FilterController/StyleControls.php"
+  ],
+  "expected_outputs": [
+    "Range robustness audit report",
+    "Variant list including two-input, single-bar dual handle, vertical, compact, and numeric-only modes",
+    "Label and input containment findings",
+    "Handle icon/shape limitation findings",
+    "Recommended next implementation slices"
+  ],
+  "acceptance_criteria": [
+    "The audit confirms whether the label on/off switch is respected in vertical and horizontal states.",
+    "The audit evaluates alignment controls for vertical Range, not only color/shape.",
+    "The audit identifies which Range variants are feasible with native inputs and which require custom UI.",
+    "The audit ties Range field binding to generic numeric fields, not only price."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Findings cite current CSS, JS, PHP render, and Style control IDs.",
+    "No Range fixes are implemented by this task."
+  ],
+  "budgets": {
+    "time_budget": "one component audit pass",
+    "complexity_budget": "complex",
+    "context_budget": "recent Range tasks, source map, containment and binding reports",
+    "research_budget": "local code and punctual browser checks if needed",
+    "validation_budget": "source-backed findings"
+  },
+  "risks": [
+    "Range can keep absorbing all visual work unless this report explicitly demotes it back to one component in the matrix."
+  ],
+  "research_required": true,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

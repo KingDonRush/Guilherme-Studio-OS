@@ -1,0 +1,39 @@
+{
+  "id": "TEST-FC-ROBUSTNESS-010",
+  "type": "integration_test",
+  "target": "Elementor editor fallback warning and version-drift guard",
+  "objective": "Verify that the widget handles Elementor editor API drift without silently losing state.",
+  "preconditions": [
+    "Filter Controller editor integration can update widget settings.",
+    "A compatibility fallback warning exists.",
+    "The test can simulate or observe failed native Elementor panel refresh."
+  ],
+  "steps": [
+    "Trigger a normal save/import path that refreshes settings natively.",
+    "Confirm no fallback warning is shown.",
+    "Trigger or simulate a failed native panel refresh path.",
+    "Confirm the fallback warning appears.",
+    "Verify frontend render still follows saved widget settings.",
+    "Check console for relevant errors."
+  ],
+  "expected_result": "Editor fallback is explicit and does not hide fragility from the user.",
+  "pass_criteria": [
+    "fallback warning appears only when fallback is actually used.",
+    "warning explains that frontend output remains controlled by widget settings.",
+    "settings are not silently lost.",
+    "console errors are absent or documented.",
+    "the behavior is safe if Elementor updates internal editor commands."
+  ],
+  "evidence_required": [
+    "normal-path screenshot",
+    "fallback-path screenshot",
+    "console output",
+    "saved settings evidence"
+  ],
+  "status": "pending",
+  "severity": "high",
+  "depends_on": [
+    "TASK-FC-044"
+  ],
+  "subtests": []
+}

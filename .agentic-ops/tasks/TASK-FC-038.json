@@ -1,0 +1,56 @@
+{
+  "id": "TASK-FC-038",
+  "title": "Audit Chips filter visual depth",
+  "description": "Audit Chips for pill anatomy, icons, removable/active states, counts, overflow, wrapping, multi-select behavior, and field binding.",
+  "objective": "Make Chips a polished visual option pattern rather than a renamed checkbox group.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "done",
+  "phase_id": "PHASE-FC-006",
+  "depends_on": [
+    "TASK-FC-028",
+    "TASK-FC-030"
+  ],
+  "blocks": [
+    "TASK-FC-044"
+  ],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-chips.md",
+    "includes/Elementor/Widgets/FilterController.php",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "assets/css/eit-frontend.css",
+    "assets/js/eit-frontend.js"
+  ],
+  "expected_outputs": [
+    "Chips robustness audit report",
+    "Pill anatomy and selector map",
+    "Icon/count/active-state findings",
+    "Overflow and wrapping findings",
+    "Multi-select behavior findings"
+  ],
+  "acceptance_criteria": [
+    "The audit identifies how Chips differ from Checkbox in markup, semantics, and controls.",
+    "The audit covers icons, counts, gap, radius, padding, active/hover/focus states, and long label behavior.",
+    "The audit checks whether chips can be configured as single-select or multi-select if needed.",
+    "The audit ties chip values to option parsing and field binding."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Source-backed findings cite render, CSS, JS, and control IDs.",
+    "No Chips implementation is made by this task."
+  ],
+  "budgets": {
+    "time_budget": "one component audit pass",
+    "complexity_budget": "moderate",
+    "context_budget": "chips audit, render, CSS, option parsing",
+    "research_budget": "local code only",
+    "validation_budget": "source-backed findings"
+  },
+  "risks": [
+    "Chips can become attractive but inaccessible if native input semantics are hidden without a clear interaction model."
+  ],
+  "research_required": true,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}
