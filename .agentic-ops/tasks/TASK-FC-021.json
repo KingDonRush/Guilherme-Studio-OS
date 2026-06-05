@@ -1,0 +1,60 @@
+{
+  "id": "TASK-FC-021",
+  "title": "Finalize content-driven Style control cadence",
+  "description": "Make Elementor Style controls appear only when the current widget filter composition includes the corresponding filter type or feature.",
+  "objective": "Close the remaining editor UX gap by ensuring Content controls drive Style sections consistently, even after switching tabs or importing presets.",
+  "priority": "critical",
+  "complexity": "moderate",
+  "status": "done",
+  "phase_id": "PHASE-FC-005",
+  "depends_on": [
+    "TASK-FC-020"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-widget-first-agentic-plan.md",
+    "docs/implementation-toolkit/filter-controller-task-060-inventory.md",
+    "assets/js/eit-editor.js",
+    "includes/Elementor/FilterController/ContentControls.php",
+    "includes/Elementor/FilterController/StyleControls.php"
+  ],
+  "expected_outputs": [
+    "Editor-side filter type flags recalculate from widget settings in any panel tab",
+    "Range Style section appears only when a range filter exists",
+    "Rating Style section appears only when a rating filter exists",
+    "Existing widget settings remain compatible",
+    "Mechanical verification plus Guilherme editor QA boundary"
+  ],
+  "acceptance_criteria": [
+    "Removing a filter type from Content eventually removes its type-specific Style section.",
+    "Adding a filter type in Content eventually exposes its matching Style section.",
+    "The cadence works when the user switches to Style without the Content repeater being visible.",
+    "Rating-only widgets do not show a Range-labeled Style section.",
+    "No frontend filtering behavior changes."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "PHP lint passes for changed PHP files.",
+    "JS syntax check passes for assets/js/eit-editor.js.",
+    "Composer validation passes.",
+    "git diff --check passes in root and plugin.",
+    "Static checks confirm the Content-to-Style sync no longer depends on the filters control DOM."
+  ],
+  "budgets": {
+    "time_budget": "one focused editor UX slice",
+    "complexity_budget": "moderate",
+    "context_budget": "ContentControls, StyleControls, editor JS cadence helpers",
+    "research_budget": "local Elementor docs/source plus prior widget-first planning docs",
+    "validation_budget": "lint, syntax, composer, static contract checks"
+  },
+  "risks": [
+    "Elementor editor UI refresh behavior can still require Guilherme visual QA because it depends on panel interactions.",
+    "Hidden helper settings are editor cadence state and should not become preset-owned data."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [
+    "SUBPLAN-FC-CONTENT-STYLE-CADENCE"
+  ]
+}

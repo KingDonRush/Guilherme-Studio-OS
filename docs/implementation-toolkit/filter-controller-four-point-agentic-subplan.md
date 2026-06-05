@@ -255,6 +255,12 @@ Execution status:
   the range color control now describes native range accent behavior instead of
   promising a full min-max selected interval fill, and rating color is isolated
   from the range accent control.
+- `TASK-FC-021`: done. The remaining Content-to-Style cadence gap is recorded
+  in
+  `docs/implementation-toolkit/filter-controller-content-style-cadence-implementation.md`:
+  editor helper flags now recalculate from widget settings even when the Content
+  repeater is not visible, and Range/Rating Style sections are split so each
+  appears only for its own filter type.
 
 Child subplans:
 

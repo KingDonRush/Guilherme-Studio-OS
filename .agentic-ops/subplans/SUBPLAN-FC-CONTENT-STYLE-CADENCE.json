@@ -1,0 +1,52 @@
+{
+  "id": "SUBPLAN-FC-CONTENT-STYLE-CADENCE",
+  "parent_task_id": "TASK-FC-021",
+  "title": "Content-driven Style control cadence",
+  "status": "done",
+  "purpose": "Finish the Elementor editor behavior where Content filter composition drives Style controls.",
+  "objective": "Make type-specific Style sections appear only for active filter types without adding a separate builder UI.",
+  "scope_boundary": "In scope: editor hidden type flags, Style section conditions, Range/Rating section separation, documentation, and mechanical verification. Out of scope: deep per-type style expansion, browser-heavy Elementor QA, preset-owned Style settings, or frontend filtering runtime changes.",
+  "entry_condition": "TASK-FC-020 is done and the plugin worktree is clean.",
+  "exit_condition": "Content filter types drive the visible Style sections consistently enough for Guilherme to QA in Elementor.",
+  "completion_criteria": [
+    "Filter type flags recalculate from widget settings even when Content controls are not visible.",
+    "Range controls are isolated to a Range section.",
+    "Rating controls are isolated to a Rating section.",
+    "The existing option/field/global Style sections continue using native Elementor conditions.",
+    "No new custom editor UI framework is introduced."
+  ],
+  "phases": [
+    {
+      "id": "CADENCE-001",
+      "title": "State sync",
+      "purpose": "Make editor helper flags follow the actual repeater settings."
+    },
+    {
+      "id": "CADENCE-002",
+      "title": "Style sections",
+      "purpose": "Split type-specific sections so labels match the active type."
+    },
+    {
+      "id": "CADENCE-003",
+      "title": "Verification",
+      "purpose": "Run syntax checks and record the visual QA boundary."
+    }
+  ],
+  "acceptance_criteria": [
+    "Implementation follows the Content decides Style rule from docs/implementation-toolkit/filter-controller-widget-first-agentic-plan.md.",
+    "No plugin source outside editor JS and Elementor Style controls is changed unless verification proves it necessary.",
+    "Guilherme remains responsible for multi-click Elementor visual QA."
+  ],
+  "verification": [
+    "validate_subplan passes.",
+    "TASK-FC-021 validate_task passes.",
+    "Plugin PHP lint, Composer validation, JS syntax check, and diff checks pass."
+  ],
+  "stop_conditions": [
+    "The fix requires unsupported Elementor internals beyond the existing editor settings command fallback.",
+    "The change starts adding deep type styling unrelated to section cadence."
+  ],
+  "documentation": [
+    "docs/implementation-toolkit/filter-controller-content-style-cadence-implementation.md"
+  ]
+}
