@@ -1,0 +1,63 @@
+{
+  "id": "SUBPLAN-FC-CPT-DYNAMIC-TAGS",
+  "parent_task_id": "TASK-FC-046",
+  "title": "Toolkit CPT dynamic tags and runtime field lookup",
+  "status": "done",
+  "purpose": "Turn Toolkit-managed CPT definitions into usable Elementor field bindings for the Filter Controller.",
+  "objective": "Expose managed meta/taxonomy fields in Elementor dynamic tags and let the runtime read public Toolkit meta values without requiring every field to be printed in the DOM.",
+  "scope_boundary": "In scope: field catalog, Elementor dynamic tag registration, serialized key compatibility, public Toolkit meta enrichment, and implementation documentation. Out of scope: per-filter visual redesign, sort-field builder, arbitrary third-party meta discovery, and Elementor UI deep QA.",
+  "entry_condition": "TASK-FC-045 has established the field binding resolver and normalized source contract.",
+  "exit_condition": "TASK-FC-046 is implemented, validated, documented, committed, and pushed in the plugin repository.",
+  "completion_criteria": [
+    "Toolkit field options are sourced from CptManager definitions.",
+    "The Elementor tag registers under a Toolkit group and returns a sanitized field key.",
+    "FieldBindingResolver can resolve a serialized Toolkit dynamic tag payload.",
+    "FilterResolver can enrich public post items with Toolkit meta values for show_in_rest fields.",
+    "Verification commands pass."
+  ],
+  "phases": [
+    {
+      "id": "FC-CPT-DYNAMIC-001",
+      "title": "Catalog",
+      "purpose": "Create a reusable catalog of public Toolkit field options and runtime-readable meta keys."
+    },
+    {
+      "id": "FC-CPT-DYNAMIC-002",
+      "title": "Elementor tag",
+      "purpose": "Register the Toolkit dynamic tag group and field-key tag through the Elementor manager."
+    },
+    {
+      "id": "FC-CPT-DYNAMIC-003",
+      "title": "Runtime lookup",
+      "purpose": "Allow the filter resolver to read public Toolkit meta values for public posts."
+    },
+    {
+      "id": "FC-CPT-DYNAMIC-004",
+      "title": "Verification",
+      "purpose": "Validate schemas, syntax, Elementor registration, resolver compatibility, and git hygiene."
+    }
+  ],
+  "acceptance_criteria": [
+    "No Elementor Pro-only class is required.",
+    "No arbitrary meta key lookup is introduced.",
+    "No existing manual field-binding behavior is removed.",
+    "The implementation remains PSR-4 and module-scoped."
+  ],
+  "verification": [
+    "validate_subplan passes.",
+    "validate_task passes.",
+    "validate_phase passes.",
+    "PHP lint passes for changed PHP files.",
+    "Composer validation passes.",
+    "WP-CLI smoke checks pass.",
+    "git diff --check passes."
+  ],
+  "stop_conditions": [
+    "The implementation starts redesigning filter visuals.",
+    "The runtime requires exposing private or arbitrary post meta.",
+    "The tag cannot register through Elementor's local dynamic tag manager API."
+  ],
+  "documentation": [
+    "docs/implementation-toolkit/filter-controller-cpt-dynamic-tags-implementation.md"
+  ]
+}
