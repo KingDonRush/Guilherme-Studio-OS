@@ -265,6 +265,10 @@ Execution status:
   `docs/implementation-toolkit/filter-controller-style-cadence-bugfix.md`:
   the editor now normalizes Elementor repeater filter settings beyond plain
   arrays and avoids clearing type flags when filters cannot be read.
+- `TASK-FC-023`: done. A reactive panel hotfix is recorded in
+  `docs/implementation-toolkit/filter-controller-style-cadence-reactive-hotfix.md`:
+  the editor now prefers visible repeater rows while the user is editing and
+  directly toggles type-specific Style controls in the open panel.
 
 Child subplans:
 
