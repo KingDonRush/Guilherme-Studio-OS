@@ -261,6 +261,10 @@ Execution status:
   editor helper flags now recalculate from widget settings even when the Content
   repeater is not visible, and Range/Rating Style sections are split so each
   appears only for its own filter type.
+- `TASK-FC-022`: done. A follow-up cadence bugfix is recorded in
+  `docs/implementation-toolkit/filter-controller-style-cadence-bugfix.md`:
+  the editor now normalizes Elementor repeater filter settings beyond plain
+  arrays and avoids clearing type flags when filters cannot be read.
 
 Child subplans:
 
