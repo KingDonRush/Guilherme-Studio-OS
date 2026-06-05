@@ -238,6 +238,11 @@ Execution status:
   audit sheet under `docs/implementation-toolkit/`, separating DOM anatomy,
   behavior semantics, mechanical bugs, product controls, deferred ideas, and
   Guilherme QA scenarios.
+- `TASK-FC-026`: done. A Range input and handle customization slice is recorded
+  in
+  `docs/implementation-toolkit/filter-controller-range-input-handle-customization.md`:
+  Range now has deeper number input controls, more handle shape presets, and
+  native Elementor icon/SVG handle support without raw SVG text fields.
 - `TASK-FC-018`: done. First implementation slice from the range audit is
   recorded in
   `docs/implementation-toolkit/filter-controller-range-slice-a-implementation.md`:
