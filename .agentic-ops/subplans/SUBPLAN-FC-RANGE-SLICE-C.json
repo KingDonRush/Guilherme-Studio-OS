@@ -1,0 +1,52 @@
+{
+  "id": "SUBPLAN-FC-RANGE-SLICE-C",
+  "parent_task_id": "TASK-FC-020",
+  "title": "Range Slice C honest native track accent",
+  "status": "done",
+  "purpose": "Resolve the range audit's selected-track honesty issue without overextending into a custom range engine.",
+  "objective": "Make the Elementor control language, selectors, and CSS variables match the native range implementation's actual behavior.",
+  "scope_boundary": "In scope: control label/description, selector cleanup, CSS variable naming compatibility, documentation, and verification. Out of scope: custom selected interval overlay, dual-range engine rewrite, browser screenshot QA, and broader range craft controls.",
+  "entry_condition": "TASK-FC-019 is done and the plugin worktree is clean.",
+  "exit_condition": "The range color control no longer claims a true selected interval track and no longer leaks into rating color.",
+  "completion_criteria": [
+    "The user-facing label is honest about native range accent behavior.",
+    "The existing range color setting remains backward compatible.",
+    "Rating color remains owned by its dedicated rating control.",
+    "The real selected interval fill remains documented as a future custom-track slice."
+  ],
+  "phases": [
+    {
+      "id": "RANGE-SLICE-C-001",
+      "title": "Control contract",
+      "purpose": "Rename and describe the range track color control accurately."
+    },
+    {
+      "id": "RANGE-SLICE-C-002",
+      "title": "Selector isolation",
+      "purpose": "Remove unrelated rating selectors from range-owned controls."
+    },
+    {
+      "id": "RANGE-SLICE-C-003",
+      "title": "Verification",
+      "purpose": "Run syntax/diff checks and record the deferred true-fill boundary."
+    }
+  ],
+  "acceptance_criteria": [
+    "Implementation follows docs/implementation-toolkit/filter-controller-audit-range.md Slice C.",
+    "No plugin source outside range style controls and range CSS is changed unless verification proves it necessary.",
+    "Guilherme visual QA remains required for final craft approval."
+  ],
+  "verification": [
+    "validate_subplan passes.",
+    "TASK-FC-020 validate_task passes.",
+    "Plugin PHP lint, Composer validation, JS syntax check, and diff checks pass."
+  ],
+  "stop_conditions": [
+    "The slice starts implementing a custom dual-range engine.",
+    "The change silently breaks existing saved range color settings."
+  ],
+  "documentation": [
+    "docs/implementation-toolkit/filter-controller-audit-range.md",
+    "docs/implementation-toolkit/filter-controller-range-slice-c-implementation.md"
+  ]
+}

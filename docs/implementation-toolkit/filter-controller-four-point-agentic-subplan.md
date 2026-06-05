@@ -249,6 +249,12 @@ Execution status:
   `docs/implementation-toolkit/filter-controller-range-slice-b-implementation.md`:
   number inputs now have show/hide, vertical side placement, and width
   contracts while preserving the existing range sync behavior.
+- `TASK-FC-020`: done. Third implementation slice from the range audit is
+  recorded in
+  `docs/implementation-toolkit/filter-controller-range-slice-c-implementation.md`:
+  the range color control now describes native range accent behavior instead of
+  promising a full min-max selected interval fill, and rating color is isolated
+  from the range accent control.
 
 Child subplans:
 
@@ -262,6 +268,7 @@ Child subplans:
 - `TASK-FC-015` owns `SUBPLAN-FC-AUDIT-SELECT`.
 - `TASK-FC-016` owns `SUBPLAN-FC-AUDIT-DATE`.
 - `TASK-FC-017` owns `SUBPLAN-FC-AUDIT-RATING`.
+- `TASK-FC-020` owns `SUBPLAN-FC-RANGE-SLICE-C`.
 
 Tasks:
 

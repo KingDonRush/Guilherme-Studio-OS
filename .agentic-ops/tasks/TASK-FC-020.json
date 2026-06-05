@@ -1,0 +1,58 @@
+{
+  "id": "TASK-FC-020",
+  "title": "Make range track color contract honest",
+  "description": "Apply the third range implementation slice by correcting the misleading selected-track control contract without introducing a custom dual-range engine.",
+  "objective": "Ensure the Elementor style controls describe what the current native range implementation can actually render, while isolating rating color from range color.",
+  "priority": "critical",
+  "complexity": "simple",
+  "status": "done",
+  "phase_id": "PHASE-FC-005",
+  "depends_on": [
+    "TASK-FC-019"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-range.md",
+    "docs/implementation-toolkit/filter-controller-range-slice-b-implementation.md",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "assets/css/eit-frontend.css"
+  ],
+  "expected_outputs": [
+    "Honest Elementor label and description for the range accent control",
+    "Range accent CSS variable with backward-compatible fill variable",
+    "Rating color isolated from range track color",
+    "Documentation explaining why true selected interval fill remains deferred"
+  ],
+  "acceptance_criteria": [
+    "The style panel no longer promises a true selected interval track.",
+    "Existing saved range color settings continue to affect the native range accent.",
+    "Range track color does not mutate rating text when both range and rating filters exist.",
+    "No custom slider engine or selected interval overlay is introduced in this slice.",
+    "Guilherme remains responsible for final visual judgment if the editor copy still feels awkward."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "PHP lint passes for changed PHP files.",
+    "Composer validation passes.",
+    "JS syntax check passes if frontend assets are included in validation.",
+    "git diff --check passes in root and plugin.",
+    "Static checks confirm Selected Track copy is removed and Range Accent copy exists."
+  ],
+  "budgets": {
+    "time_budget": "one small implementation slice",
+    "complexity_budget": "low",
+    "context_budget": "range audit, range style controls, range CSS variables",
+    "research_budget": "local source and prior audit docs",
+    "validation_budget": "lint, composer, syntax, static contract checks"
+  },
+  "risks": [
+    "This intentionally does not create a true visual interval fill.",
+    "Users may still expect more track styling controls until Slice D expands range craft."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [
+    "SUBPLAN-FC-RANGE-SLICE-C"
+  ]
+}
