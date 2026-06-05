@@ -273,6 +273,10 @@ Execution status:
   `docs/implementation-toolkit/filter-controller-sort-separation-implementation.md`:
   Filters can now be fully emptied, Sort has its own Content section, and
   structured Sort rows compile to the runtime sorting contract.
+- `TASK-FC-025`: done. An Elementor editor compatibility warning is recorded in
+  `docs/implementation-toolkit/filter-controller-editor-compat-warning.md`:
+  the editor now shows and logs when toolkit fallback behavior is applied, so
+  Elementor panel fragility is visible instead of silent.
 
 Child subplans:
 
