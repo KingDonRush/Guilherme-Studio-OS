@@ -269,6 +269,10 @@ Execution status:
   `docs/implementation-toolkit/filter-controller-style-cadence-reactive-hotfix.md`:
   the editor now prefers visible repeater rows while the user is editing and
   directly toggles type-specific Style controls in the open panel.
+- `TASK-FC-024`: done. A Sort separation implementation is recorded in
+  `docs/implementation-toolkit/filter-controller-sort-separation-implementation.md`:
+  Filters can now be fully emptied, Sort has its own Content section, and
+  structured Sort rows compile to the runtime sorting contract.
 
 Child subplans:
 

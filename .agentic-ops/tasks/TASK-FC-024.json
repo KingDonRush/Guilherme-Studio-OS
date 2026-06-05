@@ -1,0 +1,59 @@
+{
+  "id": "TASK-FC-024",
+  "title": "Separate Sort from Filters and allow empty filter sets",
+  "description": "Make the Elementor Filter Controller accept zero filter rows and move Sort into its own deeper Content section.",
+  "objective": "Let Filters be completely removable, make Sort a first-class widget section, and support structured custom sort options without breaking legacy sort values.",
+  "priority": "critical",
+  "complexity": "complex",
+  "status": "done",
+  "phase_id": "PHASE-FC-005",
+  "depends_on": [
+    "TASK-FC-023"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "Guilherme report that Filters cannot be fully removed",
+    "Guilherme request that Sort become separate and deeper like Filters",
+    "Elementor local Control_Repeater default prevent_empty=true evidence"
+  ],
+  "expected_outputs": [
+    "Filters repeater can be empty in the Elementor widget.",
+    "Admin preset filter rows also preserve an empty filter set.",
+    "Editor Style cadence treats zero visible filter rows as a valid state.",
+    "Sort controls live in a standalone Content section.",
+    "Sort options can be configured through structured repeater rows.",
+    "Runtime accepts custom data-key sort values while preserving legacy values."
+  ],
+  "acceptance_criteria": [
+    "The user can remove all rows from the Filters repeater.",
+    "An empty preset no longer recreates a default Search row in the admin form.",
+    "Removing all filters clears type-specific Style sections without requiring a reload.",
+    "Sort no longer appears inside State & Pagination.",
+    "A sort option can target a custom data key such as price with number ascending or descending behavior.",
+    "Existing sort values like title_asc, date_desc, numeric_desc, and rating_desc remain valid."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "JS syntax check passes for editor, frontend, and admin assets.",
+    "PHP lint passes for plugin PHP files.",
+    "Composer validation passes.",
+    "SortOptions isolated PHP smoke test passes with WP function stubs.",
+    "git diff --check passes in root and plugin."
+  ],
+  "budgets": {
+    "time_budget": "one structured widget slice",
+    "complexity_budget": "high but bounded",
+    "context_budget": "Filter Controller content controls, runtime sort resolver, editor save bridge, and docs",
+    "research_budget": "local Elementor repeater control source plus plugin code",
+    "validation_budget": "syntax, lint, composer, isolated helper smoke, static diff checks"
+  },
+  "risks": [
+    "Elementor visual behavior for empty repeaters still requires Guilherme QA in the live editor.",
+    "Admin preset Sort UI still uses legacy sort textarea and can be improved in a later dedicated admin slice.",
+    "Custom data-key sort depends on listing items exposing usable data-eit-* or data-* attributes."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}
