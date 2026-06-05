@@ -1,0 +1,72 @@
+{
+  "id": "TASK-FC-047",
+  "title": "Run Filter Controller mechanical robustness QA",
+  "description": "Create and run a reproducible WP-CLI harness for the non-visual portions of the Filter Controller robustness tests, then patch objective failures.",
+  "objective": "Move robustness QA forward without pretending to complete Elementor visual/editor checks that belong to Guilherme.",
+  "priority": "critical",
+  "complexity": "complex",
+  "status": "done",
+  "phase_id": "PHASE-FC-008",
+  "depends_on": [
+    "TASK-FC-046"
+  ],
+  "blocks": [
+    "TEST-FC-ROBUSTNESS-001",
+    "TEST-FC-ROBUSTNESS-002",
+    "TEST-FC-ROBUSTNESS-003",
+    "TEST-FC-ROBUSTNESS-004",
+    "TEST-FC-ROBUSTNESS-005",
+    "TEST-FC-ROBUSTNESS-006",
+    "TEST-FC-ROBUSTNESS-009"
+  ],
+  "inputs_required": [
+    ".agentic-ops/tests/TEST-FC-ROBUSTNESS-001.json",
+    ".agentic-ops/tests/TEST-FC-ROBUSTNESS-010.json",
+    "includes/Elementor/FilterController/StyleControls.php",
+    "includes/Elementor/FilterController/FilterSettings.php",
+    "includes/Support/FilterResolver.php",
+    "assets/js/eit-frontend.js"
+  ],
+  "expected_outputs": [
+    "Reproducible WP-CLI harness script.",
+    "Sort-specific Style section gated by show_sort.",
+    "Filter runtime payload carries source, compare, and dataType when present.",
+    "FilterResolver supports explicit source/compare/dataType checks while preserving legacy type behavior.",
+    "Mechanical QA evidence note with passed and skipped-human-QA counts."
+  ],
+  "acceptance_criteria": [
+    "Harness reports zero mechanical failures.",
+    "Harness marks human visual/editor checks as skipped for Guilherme instead of passing them mechanically.",
+    "Registered meta date filters use the primary data value instead of mixed visible text.",
+    "Sort has an independent Style section that hides when Sort is disabled.",
+    "Existing manual key, dynamic tag binding, taxonomy, meta, and sort behavior continue to pass."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Agentic Ops validate_phase passes.",
+    "Agentic Ops validate_subplan passes.",
+    "PHP lint passes for changed PHP files.",
+    "node --check assets/js/eit-frontend.js passes.",
+    "composer validate --strict passes.",
+    "WP-CLI robustness harness reports 49 passed, 0 failed, 6 skipped_human_qa.",
+    "git diff --check passes."
+  ],
+  "budgets": {
+    "time_budget": "one QA hardening slice",
+    "complexity_budget": "complex but limited to mechanical checks and objective failures",
+    "context_budget": "Filter Controller controls, settings, resolver, frontend payload, and Agentic Ops tests",
+    "research_budget": "local code and local Elementor source only",
+    "validation_budget": "lint, node syntax, composer, WP-CLI harness, Agentic Ops schemas"
+  },
+  "risks": [
+    "Mechanical checks can miss visual hierarchy and editor-flow issues.",
+    "Adding compare semantics could alter existing filters if legacy empty compare fallback is not preserved.",
+    "Sort Style polish still needs Guilherme visual QA."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [
+    "SUBPLAN-FC-MECHANICAL-ROBUSTNESS-QA"
+  ]
+}
