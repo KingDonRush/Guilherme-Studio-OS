@@ -13,15 +13,19 @@
     "TASK-FC-051",
     "TASK-FC-052"
   ],
-  "blocks": [],
+  "blocks": [
+    "TEST-FC-ROBUSTNESS-012"
+  ],
   "inputs_required": [
     "docs/implementation-toolkit/filter-controller-audit-select.md",
     "Select style/render/CSS modules"
   ],
   "expected_outputs": [
-    "Select input module",
-    "Placeholder, arrow, state, spacing, and containment controls",
-    "Decision note if custom dropdown is deferred"
+    "Mechanical implementation commit 80bc2ad adds native Select wrapper anatomy with custom closed-field arrow and containment CSS",
+    "Select has its own Elementor Style section for native-limit note, field height, arrow, and focus ring controls",
+    "Editor cadence tracks Select as a distinct style family so Select styles can hide when no Select filter exists",
+    "Placeholder control is documented as the Select empty/all option label",
+    "Custom dropdown is deferred; the opened dropdown remains browser/OS native for reliability, keyboard behavior, and mobile picker support"
   ],
   "acceptance_criteria": [
     "Native select limits are documented.",
@@ -30,7 +34,14 @@
   ],
   "verification": [
     "Agentic Ops validate_task passes.",
-    "PHP lint, JS syntax, CSS check, WP-CLI harness, and line-budget guard pass."
+    "php -l passes for SelectRenderer.php, SelectStyleControls.php, StyleControls.php, FilterTypeRegistry.php, ContentControls.php, and scripts/verify-filter-controller-robustness.php.",
+    "node --check passes for assets/js/eit-editor.js.",
+    "composer validate --no-check-publish passes.",
+    "php scripts/verify-line-budget.php --strict passes.",
+    "git diff --check passes.",
+    "docker compose run --rm wpcli eval-file wp-content/plugins/elementor-implementation-toolkit/scripts/verify-filter-controller-robustness.php passes with 69 passed, 0 failed, and 8 Guilherme-owned visual QA skips.",
+    "Plugin commit 80bc2ad pushed to origin/main.",
+    "TEST-FC-ROBUSTNESS-012 remains human-QA-gated for closed-field styling, long labels, browser picker behavior, and mobile picker feel."
   ],
   "budgets": {
     "time_budget": "one Select implementation pass",
@@ -45,5 +56,8 @@
   "research_required": false,
   "requires_human_validation": true,
   "subtasks": [],
-  "subplans": []
+  "subplans": [],
+  "implementation_status": "mechanical_done_pending_guilherme_visual_qa",
+  "mechanical_commit": "80bc2ad",
+  "qa_owner": "Guilherme"
 }
