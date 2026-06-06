@@ -13,7 +13,9 @@
     "TASK-FC-051",
     "TASK-FC-052"
   ],
-  "blocks": [],
+  "blocks": [
+    "TEST-FC-ROBUSTNESS-018"
+  ],
   "inputs_required": [
     "docs/implementation-toolkit/filter-controller-audit-date.md",
     "Date style/render/CSS modules",
@@ -23,7 +25,8 @@
     "Date input/range anatomy modules",
     "Compare and formatting contract",
     "Native picker limitation decision",
-    "Timezone/data-type risk handling"
+    "Timezone/data-type risk handling",
+    "Plugin commit 74fcfb2 pushed to GitHub main"
   ],
   "acceptance_criteria": [
     "Date compare behavior is explicit.",
@@ -33,7 +36,8 @@
   ],
   "verification": [
     "Agentic Ops validate_task passes.",
-    "PHP lint, JS syntax, CSS check, WP-CLI harness, and line-budget guard pass."
+    "PHP lint, JS syntax, CSS check, WP-CLI harness, and line-budget guard pass.",
+    "WP-CLI harness result: 112 passed, 0 failed, 14 skipped_human_qa."
   ],
   "budgets": {
     "time_budget": "one Date implementation pass",
@@ -43,10 +47,37 @@
     "validation_budget": "mechanical checks plus Guilherme visual QA"
   },
   "risks": [
-    "Date filtering can silently fail if stored value format and comparison mode are not explicit."
+    "Date filtering can silently fail if stored value format and comparison mode are not explicit.",
+    "Native browser date picker UI varies by browser and cannot be fully polished by plugin CSS.",
+    "Timezone/date-format edge cases remain a visual and data-contract QA concern when field values are not stored as YYYY-MM-DD."
   ],
   "research_required": false,
   "requires_human_validation": true,
+  "implementation_status": "mechanical_done_pending_guilherme_visual_qa",
+  "mechanical_commit": "74fcfb2",
+  "pushed_to": "https://github.com/KingDonRush/elementor-implementation-toolkit.git",
+  "qa_owner": "Guilherme",
+  "verification_results": [
+    "php -l includes/Elementor/FilterController/StyleControls/Types/Date/DateStyleControls.php: pass",
+    "php -l includes/Elementor/FilterController/Renderers/Types/DateRenderer.php: pass",
+    "php -l includes/Elementor/FilterController/Renderers/FilterRenderer.php: pass",
+    "php -l includes/Elementor/FilterController/FilterTypeRegistry.php: pass",
+    "php -l includes/Support/FilterResolver.php: pass",
+    "php -l scripts/verify-filter-controller-robustness.php: pass",
+    "node --check assets/js/eit-editor.js: pass",
+    "node --check assets/js/eit-frontend.js: pass",
+    "composer validate --no-check-publish: pass",
+    "php scripts/verify-line-budget.php --strict: pass; existing tracked debt remains, no untracked blocking debt",
+    "git diff --check: pass",
+    "docker compose run --rm wpcli eval-file wp-content/plugins/elementor-implementation-toolkit/scripts/verify-filter-controller-robustness.php: 112 passed, 0 failed, 14 skipped_human_qa"
+  ],
+  "notes": [
+    "Date now has its own Style section and editor cadence family.",
+    "Renderer emits labeled native date inputs, separator, local clear action, invalid status text, and a screen-reader contract for YYYY-MM-DD/native picker limitations.",
+    "Frontend sync marks active/invalid date ranges, exposes the clear action, normalizes inverted From/To before applying, and formats active chips as From/To text.",
+    "FilterResolver normalizes inverted date bounds for regular Date filters and explicit date between compares.",
+    "Guilherme owns visual/browser QA for native picker behavior, labels, inverted state, clear action, active chip text, mobile stacking, and browser differences."
+  ],
   "subtasks": [],
   "subplans": []
 }
