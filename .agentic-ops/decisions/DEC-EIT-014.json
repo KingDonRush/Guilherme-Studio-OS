@@ -1,10 +1,11 @@
 {
   "id": "DEC-EIT-014",
   "title": "Modularize Filter Controller controls before adding more visual depth",
-  "summary": "The Elementor Filter Controller must stop receiving deep visual-control patches inside monolithic files. Future filter polish must first split Style controls, renderer branches, and frontend CSS into bounded modules by domain, subdomain, and implementation block.",
+  "summary": "The Elementor Filter Controller must stop receiving deep visual-control patches inside monolithic files. This is the Filter Controller application of DEC-EIT-015, the plugin-wide modularization rule.",
   "rationale": "Recent Rating and Range work proved the product need for deeper Elementor customization, but it also exposed a structural failure: StyleControls.php reached 1568 lines, FilterController.php reached 381 lines, and eit-frontend.css reached 683 lines. A flat split into only RangeStyleControls or RatingStyleControls is not deep enough for this product scope because each filter type contains subdomains such as anatomy, iconography, state, layout, value semantics, accessibility, and responsive behavior. Continuing to add controls in the current shape makes editor cadence bugs, visibility mismatches, CSS leakage, and QA regressions more likely. The issue is no longer only missing features; the implementation surface is too large to reason about safely.",
   "status": "accepted",
   "affects": [
+    "DEC-EIT-015",
     "TASK-FC-006",
     "TASK-FC-035",
     "TEST-FC-ROBUSTNESS-001",

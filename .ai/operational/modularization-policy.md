@@ -4,8 +4,10 @@
 
 The brain must stay small enough to load selectively.
 
-Plugin source code must stay small enough to reason about safely. Large files
-make AI-assisted work brittle because each patch has to re-parse too many
+Plugin source code must stay small enough to reason about safely. This applies
+to the entire plugin: admin pages, CPT managers, REST endpoints, Elementor
+widgets, support classes, assets, scripts, tests, and future modules. Large
+files make AI-assisted work brittle because each patch has to re-parse too many
 unrelated controls, selectors, render branches, and edge cases.
 
 ## Soft Limits For Brain Files

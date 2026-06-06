@@ -8,6 +8,7 @@
   "status": "pending",
   "phase_id": "PHASE-FC-009",
   "depends_on": [
+    "TASK-018",
     "TASK-FC-044",
     "DEC-EIT-014"
   ],

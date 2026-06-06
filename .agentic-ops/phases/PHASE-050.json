@@ -1,0 +1,29 @@
+{
+  "id": "PHASE-050",
+  "title": "Plugin-wide modularity governance",
+  "purpose": "Apply modularization and line-budget rules across the entire Elementor Implementation Toolkit before additional complex feature work expands oversized files.",
+  "entry_condition": "DEC-EIT-015 is accepted and the current plugin file-size risk is visible.",
+  "exit_condition": "The plugin has a global line-budget guard, a domain-level module map, and follow-up split tasks for oversized areas.",
+  "required_outputs": [
+    "plugin-wide line-budget inventory",
+    "domain module map",
+    "line-budget verification command",
+    "oversized-file split backlog",
+    "dependency link into Filter Controller modularization tasks"
+  ],
+  "tasks": [
+    "TASK-018"
+  ],
+  "acceptance_criteria": [
+    "The line-budget rule covers Admin, CPT, REST, Elementor, Support, assets, scripts, and tests.",
+    "Oversized files are classified by domain and split priority.",
+    "Future feature work checks destination file size before editing.",
+    "Filter Controller modularization uses the global policy instead of becoming a special-case process."
+  ],
+  "validation_required": [
+    "validate_phase",
+    "validate_task",
+    "line-budget inventory",
+    "git diff --check"
+  ]
+}
