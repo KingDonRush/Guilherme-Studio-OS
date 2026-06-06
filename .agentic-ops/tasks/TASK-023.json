@@ -5,7 +5,7 @@
   "objective": "Reduce the 683-line frontend CSS surface before adding more filter-type visual controls.",
   "priority": "high",
   "complexity": "complex",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-050",
   "depends_on": [ "TASK-018", "TASK-FC-049", "TASK-FC-050" ],
   "blocks": [
@@ -26,9 +26,9 @@
     "RESEARCH-EIT-004"
   ],
   "expected_outputs": [
-    "Frontend CSS module map",
-    "CSS modules by shared surface and filter type",
-    "Stable selector and variable contracts"
+    "Frontend CSS module map through assets/css/eit-frontend.css ordered imports",
+    "CSS modules by shared surface and filter type under assets/css/filter-controller/",
+    "Stable selector and variable contracts preserved by mechanical extraction"
   ],
   "acceptance_criteria": [
     "Existing selectors and CSS variables remain available.",
@@ -38,10 +38,15 @@
   ],
   "verification": [
     "Agentic Ops validate_task passes.",
-    "CSS brace check passes.",
-    "Filter Controller robustness harness passes.",
-    "php scripts/verify-line-budget.php --strict passes or reports only tracked transition debt.",
-    "Guilherme QA handles broad visual review after focused smoke."
+    "CSS brace check passes through the Filter Controller robustness harness with imported stylesheet resolution.",
+    "php -l scripts/verify-filter-controller-robustness.php passes.",
+    "php -l scripts/verify-line-budget.php passes.",
+    "php scripts/verify-line-budget.php --strict passes and no longer reports assets/css/eit-frontend.css.",
+    "Concatenated CSS modules match the previous eit-frontend.css content except trailing newline in the temp comparison.",
+    "./scripts/wp.sh eval-file wp-content/plugins/elementor-implementation-toolkit/scripts/verify-filter-controller-robustness.php passes with 49 passed, 0 failed, and 6 Guilherme-owned visual QA skips.",
+    "git diff --check passes.",
+    "Plugin commit e3970e0 pushed to origin/main.",
+    "Guilherme QA remains owner for broad visual review after focused smoke."
   ],
   "budgets": {
     "time_budget": "one frontend CSS refactor slice",
@@ -58,5 +63,9 @@
   "research_required": false,
   "requires_human_validation": true,
   "subtasks": [],
-  "subplans": [ "SUBPLAN-EIT-PLUGIN-WIDE-MODULARIZATION" ]
+  "subplans": [
+    "SUBPLAN-EIT-PLUGIN-WIDE-MODULARIZATION",
+    "SUBPLAN-FC-DEEP-MODULARIZATION"
+  ],
+  "completed_commit": "e3970e0"
 }
