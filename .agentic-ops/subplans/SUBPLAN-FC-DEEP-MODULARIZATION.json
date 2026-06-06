@@ -20,7 +20,7 @@
     { "id": "DEEP-MOD-002", "title": "Style controls", "status": "done", "purpose": "Split StyleControls into domain/subdomain/block modules.", "evidence": "plugin commit b5e2641" },
     { "id": "DEEP-MOD-003", "title": "Renderers", "status": "done", "purpose": "Extract complex widget render branches without markup drift.", "tracking_task": "TASK-FC-051", "evidence": "plugin commit cb787d4" },
     { "id": "DEEP-MOD-004", "title": "CSS", "status": "done", "purpose": "Split frontend/editor CSS by shared surface and filter type.", "tracking_task": "TASK-023", "evidence": "plugin commit e3970e0" },
-    { "id": "DEEP-MOD-005", "title": "Execution gates", "status": "pending", "purpose": "Queue one implementation task per audited filter type." }
+    { "id": "DEEP-MOD-005", "title": "Execution gates", "status": "done", "purpose": "Queue one implementation task per audited filter type.", "evidence": "TASK-FC-053 through TASK-FC-062 are queued and gated by completed audits plus TASK-FC-050, TASK-FC-051, and TASK-FC-052." }
   ],
   "acceptance_criteria": [
     "No authored module crosses 400 lines without a written split rationale.",

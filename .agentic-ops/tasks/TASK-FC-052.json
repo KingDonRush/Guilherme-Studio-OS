@@ -5,7 +5,7 @@
   "objective": "Make future visual polish land in the right CSS module instead of expanding one large stylesheet.",
   "priority": "high",
   "complexity": "complex",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-009",
   "depends_on": [
     "TASK-FC-049"
@@ -28,10 +28,10 @@
     "includes/Support/Assets.php"
   ],
   "expected_outputs": [
-    "CSS module folder for Filter Controller",
-    "Base/shared/type CSS files",
-    "Stable WordPress enqueue order",
-    "No bundler introduced without a separate decision"
+    "CSS module folder for Filter Controller under assets/css/filter-controller/",
+    "Base, shared, and type CSS files imported from assets/css/eit-frontend.css",
+    "Stable WordPress enqueue order through the existing eit-frontend handle",
+    "No bundler introduced; editor cadence CSS remains fail-open and separately bounded"
   ],
   "acceptance_criteria": [
     "Existing widget output keeps the same visual baseline after extraction.",
@@ -41,10 +41,14 @@
   ],
   "verification": [
     "Agentic Ops validate_task passes.",
-    "CSS brace check passes.",
-    "WP-CLI robustness harness passes.",
-    "line-budget guard passes.",
-    "git diff --check passes."
+    "CSS brace check passes through the Filter Controller robustness harness with imported stylesheet resolution.",
+    "php -l scripts/verify-filter-controller-robustness.php passes.",
+    "php -l scripts/verify-line-budget.php passes.",
+    "php scripts/verify-line-budget.php --strict passes and no longer reports assets/css/eit-frontend.css.",
+    "CSS modules under assets/css/filter-controller/ stay below the DEC-EIT-014 line budget; largest module is range.css at 308 lines.",
+    "./scripts/wp.sh eval-file wp-content/plugins/elementor-implementation-toolkit/scripts/verify-filter-controller-robustness.php passes with 49 passed, 0 failed, and 6 Guilherme-owned visual QA skips.",
+    "git diff --check passes.",
+    "Plugin commit e3970e0 pushed to origin/main."
   ],
   "budgets": {
     "time_budget": "one CSS extraction slice",
@@ -60,5 +64,9 @@
   "research_required": false,
   "requires_human_validation": true,
   "subtasks": [],
-  "subplans": []
+  "subplans": [
+    "SUBPLAN-FC-DEEP-MODULARIZATION"
+  ],
+  "completed_commit": "e3970e0",
+  "reconciled_from_task": "TASK-023"
 }
