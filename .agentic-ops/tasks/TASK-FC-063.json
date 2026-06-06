@@ -1,0 +1,57 @@
+{
+  "id": "TASK-FC-063",
+  "title": "Classify future Filter Controller type taxonomy",
+  "description": "Create a taxonomy for current, variant, future, shared-module, configuration-only, and out-of-scope filter type ideas before any new filter type is implemented.",
+  "objective": "Prevent new filter ideas from being coded directly into the widget without deciding whether they are real types, variants, subdomains, or configuration.",
+  "priority": "critical",
+  "complexity": "complex",
+  "status": "pending",
+  "phase_id": "PHASE-FC-009",
+  "depends_on": [
+    "TASK-FC-045",
+    "TASK-FC-050"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "includes/Elementor/FilterController/FilterTypeRegistry.php",
+    "docs/implementation-toolkit/filter-controller-robustness-synthesis.md",
+    "TASK-FC-034 through TASK-FC-043",
+    "DEC-EIT-014"
+  ],
+  "expected_outputs": [
+    "Current supported type list",
+    "Variant map for existing types",
+    "Future type candidate backlog",
+    "Shared module versus real type decision criteria",
+    "Out-of-scope or deferred type list",
+    "Rule for creating future TASK-FC implementation tasks"
+  ],
+  "acceptance_criteria": [
+    "Search, checkbox, radio, select, chips, toggle, range, date, swatch, and rating are identified as current supported types.",
+    "Candidates such as number, text, multi-select, taxonomy tree, autocomplete, date preset, availability/status, geo/distance, boolean group, and media swatch are classified before implementation.",
+    "The task distinguishes variants from real types, for example dual-handle range as a Range variant unless the architecture proves otherwise.",
+    "The task distinguishes shared modules from types, for example layout packing, dynamic tags, sort, pagination, active chips, and loading states.",
+    "No future type implementation task is opened without a classification entry and dependency plan."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Classification cites FilterTypeRegistry and existing audit tasks.",
+    "No plugin source implementation is made by this task."
+  ],
+  "budgets": {
+    "time_budget": "one taxonomy planning pass",
+    "complexity_budget": "complex",
+    "context_budget": "FilterTypeRegistry, audit synthesis, current and proposed filter surfaces",
+    "research_budget": "local source and existing audit docs",
+    "validation_budget": "schema validation and source-backed classification"
+  },
+  "risks": [
+    "Treating variants as new types can explode code and UI complexity.",
+    "Treating real types as simple variants can make the widget fragile and confusing.",
+    "Future type work can bypass modularization if this taxonomy is not used as a gate."
+  ],
+  "research_required": true,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

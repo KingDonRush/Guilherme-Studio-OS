@@ -30,12 +30,14 @@
       "Create includes/Elementor/FilterController/StyleControls/ as the style-control domain root.",
       "Split shared style surfaces into subdomains: Shared/Layout, Shared/Field, Shared/Option, Shared/Buttons, Shared/State, Shared/Sort, Shared/Pagination.",
       "Split type-specific style surfaces into subdomains: Types/Range, Types/Rating, Types/Search, Types/Select, Types/Checkbox, Types/Radio, Types/Chips, Types/Toggle, Types/Swatch, Types/Date.",
+      "Do not treat the current type list as final. Future filter candidates must go through a type taxonomy task before implementation.",
       "Within complex types, split by implementation block. Range should split into Input, Track, Handle, Scale, VerticalLayout, and ValueLabel blocks. Rating should split into Icon, Chip, State, Typography, ThresholdSemantics, and Accessibility blocks.",
       "Move complex render branches out of FilterController.php into type renderers or a renderer registry once the StyleControls split is stable.",
       "Create CSS modules by surface and type, such as assets/css/filter-controller/base.css, shared/options.css, types/range.css, and types/rating.css, without introducing a bundler unless there is a separate build decision.",
       "Add a line-budget guard to the plugin verification path so oversized authored files are caught before more feature work lands."
     ],
-    "workflow_rule": "Every future filter-type polish request must map to an Agentic Ops execution task under a successor implementation phase before code changes start. Audit tasks stay separate from implementation tasks."
+    "workflow_rule": "Every future filter-type polish request must map to an Agentic Ops execution task under a successor implementation phase before code changes start. Audit tasks stay separate from implementation tasks.",
+    "future_type_rule": "A proposed new filter type must be classified before implementation as one of: current supported type, variant of a current type, type-specific subdomain, shared module/configuration, genuinely new type, or out of scope."
   },
   "alternatives_considered": [
     "Keep adding controls in StyleControls.php and rely on WP-CLI checks",

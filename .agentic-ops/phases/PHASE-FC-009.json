@@ -9,7 +9,8 @@
     "deep StyleControls module hierarchy",
     "renderer module plan or extraction",
     "CSS module plan or extraction",
-    "per-filter execution tasks"
+    "per-filter execution tasks",
+    "future filter type taxonomy"
   ],
   "tasks": [
     "TASK-FC-048",
@@ -26,13 +27,15 @@
     "TASK-FC-059",
     "TASK-FC-060",
     "TASK-FC-061",
-    "TASK-FC-062"
+    "TASK-FC-062",
+    "TASK-FC-063"
   ],
   "acceptance_criteria": [
     "No new filter polish task starts before the line-budget guard and StyleControls split are complete.",
     "Style control modules preserve existing Elementor control IDs and saved-widget compatibility.",
     "Renderer and CSS extraction are behavior-preserving before new visual behavior is added.",
     "Each audited filter type has a separate implementation task with source inputs and QA boundary.",
+    "No new filter type is implemented until TASK-FC-063 classifies it as a real type, variant, module concern, configuration, or out-of-scope idea.",
     "Guilherme remains final QA for nuanced visual/editor interaction checks."
   ],
   "validation_required": [
