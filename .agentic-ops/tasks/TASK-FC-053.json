@@ -25,10 +25,11 @@
     "Rating CSS module"
   ],
   "expected_outputs": [
-    "Rating text, icon, and icon plus text display modes",
-    "Clear threshold copy or labels",
-    "Keyboard/focus behavior preserved",
-    "Rating controls stay inside DEC-EIT-014 line budgets"
+    "Mechanical implementation commit b72af3a adds Rating text, icon, and icon plus text display modes",
+    "Threshold guidance added in the Rating Elementor controls",
+    "Keyboard/focus behavior preserved with focus-within styling and native radio inputs",
+    "Rating controls stay inside DEC-EIT-014 line budgets",
+    "Clear-only behavior remains available through active chips and needs Guilherme visual QA"
   ],
   "acceptance_criteria": [
     "Rating display is visually recognizable without becoming a generic pill.",
@@ -38,7 +39,12 @@
   ],
   "verification": [
     "Agentic Ops validate_task passes.",
-    "PHP lint, CSS check, WP-CLI harness, and line-budget guard pass.",
+    "php -l passes for RatingDisplayStyleControls.php, RatingStyleControls.php, RatingIconStyleControls.php, RatingRenderer.php, and scripts/verify-filter-controller-robustness.php.",
+    "composer validate --no-check-publish passes.",
+    "php scripts/verify-line-budget.php --strict passes.",
+    "./scripts/wp.sh eval-file wp-content/plugins/elementor-implementation-toolkit/scripts/verify-filter-controller-robustness.php passes with 49 passed, 0 failed, and 6 Guilherme-owned visual QA skips.",
+    "WP-CLI RatingRenderer characterization passes for icon_text, icon, and text modes.",
+    "Plugin commit b72af3a pushed to origin/main.",
     "TEST-FC-ROBUSTNESS-008 remains pending until Guilherme QA evidence is attached."
   ],
   "budgets": {
@@ -54,5 +60,8 @@
   "research_required": false,
   "requires_human_validation": true,
   "subtasks": [],
-  "subplans": []
+  "subplans": [],
+  "implementation_status": "mechanical_done_pending_guilherme_visual_qa",
+  "mechanical_commit": "b72af3a",
+  "qa_owner": "Guilherme"
 }
