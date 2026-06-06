@@ -13,16 +13,20 @@
     "TASK-FC-051",
     "TASK-FC-052"
   ],
-  "blocks": [],
+  "blocks": [
+    "TEST-FC-ROBUSTNESS-011"
+  ],
   "inputs_required": [
     "docs/implementation-toolkit/filter-controller-audit-search.md",
     "Search style/render/CSS modules",
     "FilterResolver field binding contract"
   ],
   "expected_outputs": [
-    "Search icon and optional clear affordance plan or implementation",
-    "Containment-safe input anatomy",
-    "Debounce/apply behavior documented or implemented"
+    "Mechanical implementation commit 05456ca adds a wrapped Search field with icon, accessible clear button, and containment-safe CSS anatomy",
+    "Search auto-apply now supports a clamped debounce setting that is preserved in widget runtime config and filter presets",
+    "Search has its own Elementor Style section for icon, clear button, and focus ring variables",
+    "Editor cadence tracks Search as a distinct style family so Search styles can hide when no Search filter exists",
+    "Search remains keyless by default and keeps the visible-text/title fallback source contract"
   ],
   "acceptance_criteria": [
     "Search does not overflow its assigned layout width.",
@@ -31,7 +35,14 @@
   ],
   "verification": [
     "Agentic Ops validate_task passes.",
-    "PHP lint, JS syntax, CSS check, WP-CLI harness, and line-budget guard pass."
+    "php -l passes for touched PHP files.",
+    "node --check passes for assets/js/eit-frontend.js and assets/js/eit-editor.js.",
+    "composer validate --no-check-publish passes.",
+    "php scripts/verify-line-budget.php --strict passes.",
+    "git diff --check passes.",
+    "docker compose run --rm wpcli eval-file wp-content/plugins/elementor-implementation-toolkit/scripts/verify-filter-controller-robustness.php passes with 63 passed, 0 failed, and 7 Guilherme-owned visual QA skips.",
+    "Plugin commit 05456ca pushed to origin/main.",
+    "TEST-FC-ROBUSTNESS-011 remains human-QA-gated for icon, clear button, focus state, and typing feel."
   ],
   "budgets": {
     "time_budget": "one Search implementation pass",
@@ -46,5 +57,8 @@
   "research_required": false,
   "requires_human_validation": true,
   "subtasks": [],
-  "subplans": []
+  "subplans": [],
+  "implementation_status": "mechanical_done_pending_guilherme_visual_qa",
+  "mechanical_commit": "05456ca",
+  "qa_owner": "Guilherme"
 }
