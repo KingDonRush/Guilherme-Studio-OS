@@ -5,7 +5,7 @@
   "objective": "Make file-size drift visible during verification instead of discovering 1200+ line files after bugs appear.",
   "priority": "critical",
   "complexity": "moderate",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-009",
   "depends_on": [
     "TASK-018",
@@ -27,13 +27,15 @@
   ],
   "inputs_required": [
     "DEC-EIT-014",
+    "DEC-EIT-015",
     "wordpress/wp-content/plugins/elementor-implementation-toolkit",
+    "scripts/verify-line-budget.php",
     "scripts/verify-filter-controller-robustness.php"
   ],
   "expected_outputs": [
-    "Line-budget check script or WP-CLI check",
-    "Budget exceptions list for generated/vendor/temporary files",
-    "Verification command added to the Filter Controller QA routine"
+    "Line-budget check script at scripts/verify-line-budget.php",
+    "Budget exceptions list for generated/vendor/temporary files and tracked transition debt",
+    "Verification command added to the Filter Controller QA routine: php scripts/verify-line-budget.php --strict"
   ],
   "acceptance_criteria": [
     "Authored plugin PHP/CSS/JS files above 400 lines are reported.",
@@ -43,8 +45,9 @@
   ],
   "verification": [
     "Agentic Ops validate_task passes.",
-    "Line-budget guard runs locally.",
-    "PHP lint passes if PHP script is added.",
+    "php -l scripts/verify-line-budget.php passes.",
+    "php scripts/verify-line-budget.php passes.",
+    "php scripts/verify-line-budget.php --strict passes.",
     "git diff --check passes."
   ],
   "budgets": {
@@ -61,5 +64,8 @@
   "research_required": false,
   "requires_human_validation": false,
   "subtasks": [],
-  "subplans": []
+  "subplans": [
+    "SUBPLAN-EIT-PLUGIN-WIDE-MODULARIZATION",
+    "SUBPLAN-FC-DEEP-MODULARIZATION"
+  ]
 }

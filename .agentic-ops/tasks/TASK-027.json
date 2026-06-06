@@ -1,0 +1,52 @@
+{
+  "id": "TASK-027",
+  "title": "Split Filter Controller robustness harness",
+  "description": "Refactor scripts/verify-filter-controller-robustness.php into smaller assertion groups or helpers without weakening coverage.",
+  "objective": "Keep the robustness harness maintainable as Filter Controller verification grows.",
+  "priority": "medium",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-050",
+  "depends_on": [ "TASK-018", "TASK-FC-049" ],
+  "blocks": [],
+  "inputs_required": [
+    "scripts/verify-filter-controller-robustness.php",
+    "TEST-FC-ROBUSTNESS-001",
+    "TEST-FC-ROBUSTNESS-008",
+    "RESEARCH-EIT-004"
+  ],
+  "expected_outputs": [
+    "Harness helpers or grouped assertion modules",
+    "Same smoke coverage",
+    "Clear place for future Filter Controller checks"
+  ],
+  "acceptance_criteria": [
+    "No existing robustness assertion is removed.",
+    "The WP-CLI eval-file entrypoint remains usable.",
+    "Each helper/module stays below the plugin line budget.",
+    "Failure output remains readable."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "PHP lint passes.",
+    "WP-CLI robustness harness passes.",
+    "php scripts/verify-line-budget.php --strict passes or reports only tracked transition debt.",
+    "git diff --check passes."
+  ],
+  "budgets": {
+    "time_budget": "one verification refactor slice",
+    "complexity_budget": "moderate",
+    "context_budget": "robustness harness and related test specs",
+    "research_budget": "local source only",
+    "validation_budget": "lint, WP-CLI harness, line budget"
+  },
+  "risks": [
+    "Splitting the harness can hide failures if result aggregation changes.",
+    "WordPress eval-file compatibility can break if helper loading assumes CLI paths incorrectly.",
+    "Removing assertions by accident would make later refactors less safe."
+  ],
+  "research_required": false,
+  "requires_human_validation": false,
+  "subtasks": [],
+  "subplans": [ "SUBPLAN-EIT-PLUGIN-WIDE-MODULARIZATION" ]
+}

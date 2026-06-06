@@ -1,0 +1,51 @@
+{
+  "id": "TASK-028",
+  "title": "Protect near-threshold REST and widget entrypoints",
+  "description": "Audit near-threshold REST and widget entrypoint files before adding new save/load or render behavior.",
+  "objective": "Prevent files just under 400 lines from becoming the next oversized surfaces during future feature work.",
+  "priority": "medium",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-050",
+  "depends_on": [ "TASK-018", "TASK-FC-049" ],
+  "blocks": [],
+  "inputs_required": [
+    "includes/Rest/FilterPresetEndpoint.php",
+    "includes/Elementor/Widgets/FilterController.php",
+    "RESEARCH-EIT-004"
+  ],
+  "expected_outputs": [
+    "Near-threshold REST/widget responsibility map",
+    "Decision whether to split before new behavior",
+    "Follow-up task if either file crosses review budget"
+  ],
+  "acceptance_criteria": [
+    "REST route names and response shapes remain unchanged.",
+    "Widget render entrypoint remains unchanged.",
+    "No new behavior is added during the audit.",
+    "Any future expansion above 400 lines opens a split task first."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "PHP lint passes if code is touched.",
+    "REST smoke check is queued if endpoint behavior is touched.",
+    "php scripts/verify-line-budget.php --strict passes.",
+    "git diff --check passes."
+  ],
+  "budgets": {
+    "time_budget": "one near-threshold audit slice",
+    "complexity_budget": "moderate",
+    "context_budget": "REST endpoint and widget render entrypoint",
+    "research_budget": "local source only",
+    "validation_budget": "lint if touched, line budget"
+  },
+  "risks": [
+    "REST and render entrypoints can look small while hiding too many responsibilities.",
+    "Splitting too early can add ceremony if no new behavior is planned.",
+    "Waiting too long can recreate the current monolith problem."
+  ],
+  "research_required": false,
+  "requires_human_validation": false,
+  "subtasks": [],
+  "subplans": [ "SUBPLAN-EIT-PLUGIN-WIDE-MODULARIZATION" ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "TASK-020",
+  "title": "Split admin CSS into product-surface modules",
+  "description": "Refactor assets/css/eit-admin.css into bounded CSS modules by admin surface without changing selectors or visual behavior.",
+  "objective": "Remove the 1290-line admin CSS monolith so future admin polish does not create cross-page regressions.",
+  "priority": "critical",
+  "complexity": "complex",
+  "status": "pending",
+  "phase_id": "PHASE-050",
+  "depends_on": [ "TASK-018", "TASK-FC-049" ],
+  "blocks": [],
+  "inputs_required": [
+    "assets/css/eit-admin.css",
+    "includes/Support/Assets.php",
+    "RESEARCH-EIT-004"
+  ],
+  "expected_outputs": [
+    "Admin CSS modules for shell, cards/forms, preset screens, CPT screens, diagnostics, and utilities",
+    "Stable enqueue order",
+    "No selector rename unless separately approved"
+  ],
+  "acceptance_criteria": [
+    "Existing admin pages render with equivalent selectors.",
+    "CSS load order is explicit.",
+    "Each CSS module stays below the plugin line budget.",
+    "No visual feature is added during extraction."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "CSS brace check passes if available.",
+    "Browser or screenshot smoke is queued for Guilherme when visual nuance matters.",
+    "php scripts/verify-line-budget.php --strict passes or reports only tracked transition debt.",
+    "git diff --check passes."
+  ],
+  "budgets": {
+    "time_budget": "one admin CSS refactor slice",
+    "complexity_budget": "complex",
+    "context_budget": "admin CSS and asset enqueue",
+    "research_budget": "local source only",
+    "validation_budget": "CSS syntax/brace, line budget, visual smoke"
+  },
+  "risks": [
+    "CSS module extraction can silently alter cascade order.",
+    "Shared utility selectors can leak between admin pages.",
+    "Visual equivalence needs Guilherme QA if many screens must be compared."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": [ "SUBPLAN-EIT-PLUGIN-WIDE-MODULARIZATION" ]
+}

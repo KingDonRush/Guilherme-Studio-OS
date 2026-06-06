@@ -5,12 +5,22 @@
   "objective": "Make the 200 to 400 line policy enforceable across the entire plugin, not only Filter Controller work.",
   "priority": "critical",
   "complexity": "complex",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-050",
   "depends_on": [
     "DEC-EIT-015"
   ],
   "blocks": [
+    "TASK-019",
+    "TASK-020",
+    "TASK-021",
+    "TASK-022",
+    "TASK-023",
+    "TASK-024",
+    "TASK-025",
+    "TASK-026",
+    "TASK-027",
+    "TASK-028",
     "TASK-FC-049",
     "TASK-FC-050"
   ],
@@ -22,10 +32,10 @@
     "wordpress/wp-content/plugins/elementor-implementation-toolkit/scripts"
   ],
   "expected_outputs": [
-    "Plugin-wide authored file line-count inventory",
-    "Oversized file risk ranking",
-    "Domain-level split backlog for Admin, CPT, REST, Elementor, Support, assets, and scripts",
-    "Reusable line-budget verification command or script",
+    "Plugin-wide authored file line-count inventory in RESEARCH-EIT-004",
+    "Oversized file risk ranking in RESEARCH-EIT-004",
+    "Domain-level split backlog for Admin, CPT, REST, Elementor, Support, assets, and scripts in SUBPLAN-EIT-PLUGIN-WIDE-MODULARIZATION",
+    "Reusable line-budget verification script at scripts/verify-line-budget.php",
     "Rules for when a future feature must first execute a split task"
   ],
   "acceptance_criteria": [
@@ -37,8 +47,12 @@
   ],
   "verification": [
     "Agentic Ops validate_task passes.",
-    "Line-count inventory command is reproducible.",
-    "JSON and markdown changes pass syntax/format checks.",
+    "Agentic Ops validate_research_packet passes for RESEARCH-EIT-004.",
+    "Agentic Ops validate_subplan passes for SUBPLAN-EIT-PLUGIN-WIDE-MODULARIZATION.",
+    "Line-count inventory command is reproducible through git ls-files and php scripts/verify-line-budget.php --strict.",
+    "php -l scripts/verify-line-budget.php passes.",
+    "php scripts/verify-line-budget.php --strict passes.",
+    "JSON changes pass syntax checks.",
     "git diff --check passes."
   ],
   "budgets": {
@@ -53,8 +67,10 @@
     "A global split backlog can get too broad unless priorities separate blocking debt from later cleanup.",
     "Feature work can still bypass the policy if the guard is not added to verification."
   ],
-  "research_required": true,
+  "research_required": false,
   "requires_human_validation": false,
   "subtasks": [],
-  "subplans": []
+  "subplans": [
+    "SUBPLAN-EIT-PLUGIN-WIDE-MODULARIZATION"
+  ]
 }

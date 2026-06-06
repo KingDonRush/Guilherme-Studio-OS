@@ -12,7 +12,17 @@
     "dependency link into Filter Controller modularization tasks"
   ],
   "tasks": [
-    "TASK-018"
+    "TASK-018",
+    "TASK-019",
+    "TASK-020",
+    "TASK-021",
+    "TASK-022",
+    "TASK-023",
+    "TASK-024",
+    "TASK-025",
+    "TASK-026",
+    "TASK-027",
+    "TASK-028"
   ],
   "acceptance_criteria": [
     "The line-budget rule covers Admin, CPT, REST, Elementor, Support, assets, scripts, and tests.",
