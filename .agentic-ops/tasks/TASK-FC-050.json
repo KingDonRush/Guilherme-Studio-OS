@@ -5,7 +5,7 @@
   "objective": "Turn StyleControls.php into a small orchestrator and move shared/type-specific controls into bounded files that can safely receive future polish.",
   "priority": "critical",
   "complexity": "complex",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-009",
   "depends_on": [
     "TASK-FC-049"
@@ -29,11 +29,12 @@
     "includes/Elementor/FilterController/FilterTypeRegistry.php"
   ],
   "expected_outputs": [
-    "StyleControls.php facade under the orchestrator line budget",
-    "StyleControls/Shared modules",
-    "StyleControls/Types modules",
-    "Range and Rating split below subdomain level where needed",
-    "Existing control IDs preserved"
+    "StyleControls.php facade under the orchestrator line budget: 38 lines",
+    "StyleControls/Shared modules for Layout, Fields, Options, Sort, Buttons, Chips, Pagination, State, and conditions",
+    "StyleControls/Types modules for Range and Rating",
+    "Range split into Layout, Input, Track, Handle, and Label modules",
+    "Rating split into Base and Icon modules",
+    "Existing control IDs preserved in the same sequence"
   ],
   "acceptance_criteria": [
     "No Elementor control ID is renamed.",
@@ -44,11 +45,13 @@
   ],
   "verification": [
     "Agentic Ops validate_task and validate_subplan pass.",
-    "PHP lint passes for plugin PHP files.",
-    "Composer validation passes.",
-    "WP-CLI robustness harness passes.",
-    "line-budget guard passes or reports only approved transition exceptions.",
-    "git diff --check passes."
+    "PHP lint passes for all authored plugin PHP files.",
+    "composer validate --no-check-publish passes.",
+    "php scripts/verify-line-budget.php --strict passes and no longer reports StyleControls.php.",
+    "Static control ID sequence comparison preserves 111 IDs/names.",
+    "./scripts/wp.sh eval-file wp-content/plugins/elementor-implementation-toolkit/scripts/verify-filter-controller-robustness.php passes with 49 passed, 0 failed, and 6 Guilherme-owned visual QA skips.",
+    "git diff --check passes.",
+    "Plugin commit b5e2641 pushed to origin/main."
   ],
   "budgets": {
     "time_budget": "one behavior-preserving refactor slice",
@@ -67,5 +70,6 @@
   "subtasks": [],
   "subplans": [
     "SUBPLAN-FC-DEEP-MODULARIZATION"
-  ]
+  ],
+  "completed_commit": "b5e2641"
 }
