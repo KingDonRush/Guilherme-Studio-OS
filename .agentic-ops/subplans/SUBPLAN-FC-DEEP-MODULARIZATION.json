@@ -18,7 +18,7 @@
   "phases": [
     { "id": "DEEP-MOD-001", "title": "Guard", "status": "done", "purpose": "Add file-size budget validation before refactoring.", "evidence": "scripts/verify-line-budget.php" },
     { "id": "DEEP-MOD-002", "title": "Style controls", "status": "done", "purpose": "Split StyleControls into domain/subdomain/block modules.", "evidence": "plugin commit b5e2641" },
-    { "id": "DEEP-MOD-003", "title": "Renderers", "status": "pending", "purpose": "Extract complex widget render branches without markup drift." },
+    { "id": "DEEP-MOD-003", "title": "Renderers", "status": "done", "purpose": "Extract complex widget render branches without markup drift.", "tracking_task": "TASK-FC-051", "evidence": "plugin commit cb787d4" },
     { "id": "DEEP-MOD-004", "title": "CSS", "status": "done", "purpose": "Split frontend/editor CSS by shared surface and filter type.", "tracking_task": "TASK-023", "evidence": "plugin commit e3970e0" },
     { "id": "DEEP-MOD-005", "title": "Execution gates", "status": "pending", "purpose": "Queue one implementation task per audited filter type." }
   ],
