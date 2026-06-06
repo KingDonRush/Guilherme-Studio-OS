@@ -23,9 +23,10 @@
     "Range CSS module"
   ],
   "expected_outputs": [
-    "Range submodules for inputs, track, handle, value labels, ticks, and vertical layout",
-    "Generic numeric-field labels and defaults",
-    "Containment-safe horizontal and vertical variants"
+    "Mechanical implementation commit b5acb82 adds configurable vertical sides for current value labels and scale ticks",
+    "Range submodules remain split for inputs, track, handle, value labels, ticks, and vertical layout",
+    "Generic numeric-field labels and defaults remain in place through Show Number Inputs and side/placement controls",
+    "Containment-safe horizontal and vertical variants are mechanically guarded; visual acceptance remains Guilherme-owned"
   ],
   "acceptance_criteria": [
     "Range labels respect their on/off switch.",
@@ -35,8 +36,12 @@
   ],
   "verification": [
     "Agentic Ops validate_task passes.",
-    "WP-CLI robustness harness passes.",
-    "line-budget guard passes.",
+    "php -l passes for RangeLayoutStyleControls.php, RangeRenderer.php, and scripts/verify-filter-controller-robustness.php.",
+    "composer validate --no-check-publish passes.",
+    "php scripts/verify-line-budget.php --strict passes.",
+    "./scripts/wp.sh eval-file wp-content/plugins/elementor-implementation-toolkit/scripts/verify-filter-controller-robustness.php passes with 51 passed, 0 failed, and 6 Guilherme-owned visual QA skips.",
+    "WP-CLI RangeRenderer characterization passes for vertical value-label and scale-tick side classes.",
+    "Plugin commit b5acb82 pushed to origin/main.",
     "TEST-FC-ROBUSTNESS-006 remains human-QA-gated for visual craft."
   ],
   "budgets": {
@@ -52,5 +57,8 @@
   "research_required": false,
   "requires_human_validation": true,
   "subtasks": [],
-  "subplans": []
+  "subplans": [],
+  "implementation_status": "mechanical_done_pending_guilherme_visual_qa",
+  "mechanical_commit": "b5acb82",
+  "qa_owner": "Guilherme"
 }
