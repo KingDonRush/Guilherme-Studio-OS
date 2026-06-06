@@ -1,0 +1,49 @@
+{
+  "id": "TASK-FC-056",
+  "title": "Execute audited Select component polish",
+  "description": "Implement Select audit findings after modularization, respecting native select limits and deciding whether custom dropdown work is needed.",
+  "objective": "Make Select professionally controllable without pretending browser-native dropdowns can be fully styled.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-FC-009",
+  "depends_on": [
+    "TASK-FC-042",
+    "TASK-FC-050",
+    "TASK-FC-051",
+    "TASK-FC-052"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-select.md",
+    "Select style/render/CSS modules"
+  ],
+  "expected_outputs": [
+    "Select input module",
+    "Placeholder, arrow, state, spacing, and containment controls",
+    "Decision note if custom dropdown is deferred"
+  ],
+  "acceptance_criteria": [
+    "Native select limits are documented.",
+    "Select styling does not overpromise option-list control.",
+    "Long labels and narrow widths remain contained."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "PHP lint, JS syntax, CSS check, WP-CLI harness, and line-budget guard pass."
+  ],
+  "budgets": {
+    "time_budget": "one Select implementation pass",
+    "complexity_budget": "moderate",
+    "context_budget": "Select audit and modules",
+    "research_budget": "local browser/native select constraints when needed",
+    "validation_budget": "mechanical checks plus Guilherme visual QA"
+  },
+  "risks": [
+    "Native select can remain the visual weak point if expectations are not bounded."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

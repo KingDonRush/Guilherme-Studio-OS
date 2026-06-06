@@ -1,0 +1,49 @@
+{
+  "id": "PHASE-FC-009",
+  "title": "Filter Controller modular execution",
+  "purpose": "Execute the completed Filter Controller audits without returning to monolithic control, renderer, or CSS files.",
+  "entry_condition": "PHASE-FC-006 audits are complete and DEC-EIT-014 is accepted.",
+  "exit_condition": "The Filter Controller has a modular style/control/render/CSS architecture and each audited filter type has its own implementation task queued behind that architecture.",
+  "required_outputs": [
+    "line-budget guard",
+    "deep StyleControls module hierarchy",
+    "renderer module plan or extraction",
+    "CSS module plan or extraction",
+    "per-filter execution tasks"
+  ],
+  "tasks": [
+    "TASK-FC-048",
+    "TASK-FC-049",
+    "TASK-FC-050",
+    "TASK-FC-051",
+    "TASK-FC-052",
+    "TASK-FC-053",
+    "TASK-FC-054",
+    "TASK-FC-055",
+    "TASK-FC-056",
+    "TASK-FC-057",
+    "TASK-FC-058",
+    "TASK-FC-059",
+    "TASK-FC-060",
+    "TASK-FC-061",
+    "TASK-FC-062"
+  ],
+  "acceptance_criteria": [
+    "No new filter polish task starts before the line-budget guard and StyleControls split are complete.",
+    "Style control modules preserve existing Elementor control IDs and saved-widget compatibility.",
+    "Renderer and CSS extraction are behavior-preserving before new visual behavior is added.",
+    "Each audited filter type has a separate implementation task with source inputs and QA boundary.",
+    "Guilherme remains final QA for nuanced visual/editor interaction checks."
+  ],
+  "validation_required": [
+    "validate_phase",
+    "validate_task",
+    "validate_subplan",
+    "PHP lint",
+    "JS syntax check",
+    "Composer validation",
+    "WP-CLI robustness harness",
+    "line-budget guard",
+    "git diff --check"
+  ]
+}

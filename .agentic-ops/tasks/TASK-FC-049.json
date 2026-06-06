@@ -1,0 +1,64 @@
+{
+  "id": "TASK-FC-049",
+  "title": "Add plugin source line-budget guard",
+  "description": "Create a reproducible guard that reports authored plugin files outside the accepted 200 to 400 line range before more Filter Controller work lands.",
+  "objective": "Make file-size drift visible during verification instead of discovering 1200+ line files after bugs appear.",
+  "priority": "critical",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-FC-009",
+  "depends_on": [
+    "TASK-FC-044",
+    "DEC-EIT-014"
+  ],
+  "blocks": [
+    "TASK-FC-050",
+    "TASK-FC-053",
+    "TASK-FC-054",
+    "TASK-FC-055",
+    "TASK-FC-056",
+    "TASK-FC-057",
+    "TASK-FC-058",
+    "TASK-FC-059",
+    "TASK-FC-060",
+    "TASK-FC-061",
+    "TASK-FC-062"
+  ],
+  "inputs_required": [
+    "DEC-EIT-014",
+    "wordpress/wp-content/plugins/elementor-implementation-toolkit",
+    "scripts/verify-filter-controller-robustness.php"
+  ],
+  "expected_outputs": [
+    "Line-budget check script or WP-CLI check",
+    "Budget exceptions list for generated/vendor/temporary files",
+    "Verification command added to the Filter Controller QA routine"
+  ],
+  "acceptance_criteria": [
+    "Authored plugin PHP/CSS/JS files above 400 lines are reported.",
+    "Files above 450 lines block new feature work unless a split task is active.",
+    "Generated/vendor files are not falsely treated as authored source.",
+    "The guard is documented in task verification output."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "Line-budget guard runs locally.",
+    "PHP lint passes if PHP script is added.",
+    "git diff --check passes."
+  ],
+  "budgets": {
+    "time_budget": "one guard implementation slice",
+    "complexity_budget": "moderate",
+    "context_budget": "plugin scripts and source tree",
+    "research_budget": "local repo only",
+    "validation_budget": "line-budget command plus lint"
+  },
+  "risks": [
+    "A blunt line-count guard can block legitimate generated files if exceptions are not explicit.",
+    "A warning-only guard will not change behavior unless future tasks treat it as a gate."
+  ],
+  "research_required": false,
+  "requires_human_validation": false,
+  "subtasks": [],
+  "subplans": []
+}

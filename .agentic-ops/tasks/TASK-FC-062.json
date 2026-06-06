@@ -1,0 +1,52 @@
+{
+  "id": "TASK-FC-062",
+  "title": "Execute audited Date component polish",
+  "description": "Implement Date audit findings after modularization, covering date-range semantics, formatting limits, comparison mode, native picker constraints, and field binding.",
+  "objective": "Make Date filtering explicit enough for real custom fields instead of a basic date input wrapper.",
+  "priority": "high",
+  "complexity": "complex",
+  "status": "pending",
+  "phase_id": "PHASE-FC-009",
+  "depends_on": [
+    "TASK-FC-043",
+    "TASK-FC-050",
+    "TASK-FC-051",
+    "TASK-FC-052"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-date.md",
+    "Date style/render/CSS modules",
+    "FilterResolver date compare contract"
+  ],
+  "expected_outputs": [
+    "Date input/range anatomy modules",
+    "Compare and formatting contract",
+    "Native picker limitation decision",
+    "Timezone/data-type risk handling"
+  ],
+  "acceptance_criteria": [
+    "Date compare behavior is explicit.",
+    "Native date input limits are documented.",
+    "Date fields remain contained across responsive widths.",
+    "Timezone/format risks are not hidden behind visual polish."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "PHP lint, JS syntax, CSS check, WP-CLI harness, and line-budget guard pass."
+  ],
+  "budgets": {
+    "time_budget": "one Date implementation pass",
+    "complexity_budget": "complex",
+    "context_budget": "Date audit, resolver, renderer, CSS",
+    "research_budget": "local source and browser-native date constraints",
+    "validation_budget": "mechanical checks plus Guilherme visual QA"
+  },
+  "risks": [
+    "Date filtering can silently fail if stored value format and comparison mode are not explicit."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

@@ -1,0 +1,60 @@
+{
+  "id": "DEC-EIT-014",
+  "title": "Modularize Filter Controller controls before adding more visual depth",
+  "summary": "The Elementor Filter Controller must stop receiving deep visual-control patches inside monolithic files. Future filter polish must first split Style controls, renderer branches, and frontend CSS into bounded modules by domain, subdomain, and implementation block.",
+  "rationale": "Recent Rating and Range work proved the product need for deeper Elementor customization, but it also exposed a structural failure: StyleControls.php reached 1568 lines, FilterController.php reached 381 lines, and eit-frontend.css reached 683 lines. A flat split into only RangeStyleControls or RatingStyleControls is not deep enough for this product scope because each filter type contains subdomains such as anatomy, iconography, state, layout, value semantics, accessibility, and responsive behavior. Continuing to add controls in the current shape makes editor cadence bugs, visibility mismatches, CSS leakage, and QA regressions more likely. The issue is no longer only missing features; the implementation surface is too large to reason about safely.",
+  "status": "accepted",
+  "affects": [
+    "TASK-FC-006",
+    "TASK-FC-035",
+    "TEST-FC-ROBUSTNESS-001",
+    "TEST-FC-ROBUSTNESS-008",
+    "wordpress/wp-content/plugins/elementor-implementation-toolkit/includes/Elementor/FilterController/StyleControls.php",
+    "wordpress/wp-content/plugins/elementor-implementation-toolkit/includes/Elementor/Widgets/FilterController.php",
+    "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/css/eit-frontend.css",
+    "wordpress/wp-content/plugins/elementor-implementation-toolkit/assets/css/eit-editor.css"
+  ],
+  "decision": {
+    "hard_rule": "No new deep Style controls may be added to monolithic files. StyleControls.php must become an orchestrator, and any future filter polish must land inside a bounded domain/subdomain module.",
+    "line_budget": {
+      "target_range": "200 to 400 lines is acceptable for normal authored plugin files.",
+      "preferred_module_size": "200 to 320 lines.",
+      "orchestrator_files": "Prefer under 200 lines; hard review at 250 lines.",
+      "module_files": "Prefer under 320 lines; split or justify before 400 lines; block new feature work above 450 lines.",
+      "css_modules": "Prefer under 300 lines per concern; split or justify before 400 lines; block new visual expansion above 450 lines.",
+      "exceptions": "Generated files, third-party vendor files, and temporary migration fixtures are exempt only when explicitly marked as generated or temporary."
+    },
+    "hierarchy_rule": "Use a three-level decomposition for complex surfaces: domain, subdomain, and implementation block. Example: StyleControls/Types/Range/HandleStyleControls.php instead of one large RangeStyleControls.php.",
+    "target_architecture": [
+      "Keep StyleControls.php as a small orchestrator that delegates registration.",
+      "Create includes/Elementor/FilterController/StyleControls/ as the style-control domain root.",
+      "Split shared style surfaces into subdomains: Shared/Layout, Shared/Field, Shared/Option, Shared/Buttons, Shared/State, Shared/Sort, Shared/Pagination.",
+      "Split type-specific style surfaces into subdomains: Types/Range, Types/Rating, Types/Search, Types/Select, Types/Checkbox, Types/Radio, Types/Chips, Types/Toggle, Types/Swatch, Types/Date.",
+      "Within complex types, split by implementation block. Range should split into Input, Track, Handle, Scale, VerticalLayout, and ValueLabel blocks. Rating should split into Icon, Chip, State, Typography, ThresholdSemantics, and Accessibility blocks.",
+      "Move complex render branches out of FilterController.php into type renderers or a renderer registry once the StyleControls split is stable.",
+      "Create CSS modules by surface and type, such as assets/css/filter-controller/base.css, shared/options.css, types/range.css, and types/rating.css, without introducing a bundler unless there is a separate build decision.",
+      "Add a line-budget guard to the plugin verification path so oversized authored files are caught before more feature work lands."
+    ],
+    "workflow_rule": "Every future filter-type polish request must map to an Agentic Ops execution task under a successor implementation phase before code changes start. Audit tasks stay separate from implementation tasks."
+  },
+  "alternatives_considered": [
+    "Keep adding controls in StyleControls.php and rely on WP-CLI checks",
+    "Pause all visual polish until the entire widget is rewritten",
+    "Move all styling into the Elementor repeater instead of Style tab modules",
+    "Introduce a build pipeline immediately for PHP and CSS code generation"
+  ],
+  "evidence": [
+    "wc -l reported StyleControls.php at 1568 lines after the Rating Style controls patch, well outside the accepted 200 to 400 line range.",
+    "wc -l reported FilterController.php at 381 lines and eit-frontend.css at 683 lines.",
+    "Guilherme QA identified repeated bugs where narrow examples were patched without addressing all filter-type complexity.",
+    "TEST-FC-ROBUSTNESS-001 and TEST-FC-ROBUSTNESS-008 now depend on editor cadence and Rating icon behavior that are hard to maintain in a monolithic controls file."
+  ],
+  "risks": [
+    "Refactoring controls can break Elementor saved setting IDs if module extraction renames controls instead of moving registration code.",
+    "Splitting CSS can change load order if handles are registered incorrectly.",
+    "A renderer split can accidentally alter output markup if not done as behavior-preserving extraction first.",
+    "Delaying new feature controls may feel slower, but continuing without modularization is already producing QA churn."
+  ],
+  "created_at": "2026-06-05T00:00:00Z",
+  "updated_at": "2026-06-06T00:00:00Z"
+}

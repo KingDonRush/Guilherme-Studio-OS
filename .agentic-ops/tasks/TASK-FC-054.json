@@ -1,0 +1,56 @@
+{
+  "id": "TASK-FC-054",
+  "title": "Execute audited Range component polish",
+  "description": "Complete Range implementation from the audit after modularization, covering input containment, vertical layout, handle variants, track variants, labels, ticks, and generic numeric-field semantics.",
+  "objective": "Make Range a polished numeric filter that is not price-biased and does not overflow.",
+  "priority": "high",
+  "complexity": "complex",
+  "status": "pending",
+  "phase_id": "PHASE-FC-009",
+  "depends_on": [
+    "TASK-FC-034",
+    "TASK-FC-050",
+    "TASK-FC-051",
+    "TASK-FC-052"
+  ],
+  "blocks": [
+    "TEST-FC-ROBUSTNESS-006"
+  ],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-range.md",
+    "StyleControls/Types/Range modules",
+    "Range renderer module",
+    "Range CSS module"
+  ],
+  "expected_outputs": [
+    "Range submodules for inputs, track, handle, value labels, ticks, and vertical layout",
+    "Generic numeric-field labels and defaults",
+    "Containment-safe horizontal and vertical variants"
+  ],
+  "acceptance_criteria": [
+    "Range labels respect their on/off switch.",
+    "Vertical mode supports alignment without forced centering.",
+    "Inputs and handles stay inside assigned layout width.",
+    "Guilherme visual QA is required for range variants."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "WP-CLI robustness harness passes.",
+    "line-budget guard passes.",
+    "TEST-FC-ROBUSTNESS-006 remains human-QA-gated for visual craft."
+  ],
+  "budgets": {
+    "time_budget": "one Range implementation pass",
+    "complexity_budget": "complex",
+    "context_budget": "Range audit and Range modules",
+    "research_budget": "local code only unless browser geometry evidence is needed",
+    "validation_budget": "mechanical checks plus Guilherme QA"
+  },
+  "risks": [
+    "Native range limitations can make some variants impossible without a separate custom UI decision."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

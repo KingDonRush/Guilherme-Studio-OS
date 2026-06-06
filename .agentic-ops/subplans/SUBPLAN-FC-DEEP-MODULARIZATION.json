@@ -1,0 +1,47 @@
+{
+  "id": "SUBPLAN-FC-DEEP-MODULARIZATION",
+  "parent_task_id": "TASK-FC-050",
+  "title": "Deep Filter Controller module hierarchy",
+  "status": "pending",
+  "purpose": "Prevent another 1200+ line implementation surface by splitting controls, renderers, and CSS into domain, subdomain, and block modules.",
+  "objective": "Make future per-filter polish safe to execute by keeping each authored plugin file in the 200 to 400 line range.",
+  "scope_boundary": "In scope: StyleControls module extraction, line-budget guard, behavior-preserving renderer extraction, CSS module extraction, and per-filter execution gates. Out of scope: adding new visual features while the monolith still owns the surface.",
+  "entry_condition": "DEC-EIT-014 is accepted and current plugin source is clean.",
+  "exit_condition": "StyleControls.php is an orchestrator and future filter work has a bounded module destination.",
+  "completion_criteria": [
+    "A line-budget guard exists and fails oversized authored plugin files.",
+    "StyleControls modules are split by shared surface and filter type.",
+    "Complex types use subdomain files instead of one large type module.",
+    "Existing Elementor control IDs are preserved.",
+    "WP-CLI robustness checks still pass after extraction."
+  ],
+  "phases": [
+    { "id": "DEEP-MOD-001", "title": "Guard", "purpose": "Add file-size budget validation before refactoring." },
+    { "id": "DEEP-MOD-002", "title": "Style controls", "purpose": "Split StyleControls into domain/subdomain/block modules." },
+    { "id": "DEEP-MOD-003", "title": "Renderers", "purpose": "Extract complex widget render branches without markup drift." },
+    { "id": "DEEP-MOD-004", "title": "CSS", "purpose": "Split frontend/editor CSS by shared surface and filter type." },
+    { "id": "DEEP-MOD-005", "title": "Execution gates", "purpose": "Queue one implementation task per audited filter type." }
+  ],
+  "acceptance_criteria": [
+    "No authored module crosses 400 lines without a written split rationale.",
+    "No new control ID is renamed during behavior-preserving extraction.",
+    "No CSS load-order change breaks existing widget output."
+  ],
+  "verification": [
+    "validate_subplan passes.",
+    "line-budget guard passes.",
+    "PHP lint passes.",
+    "Composer validation passes.",
+    "WP-CLI robustness harness passes.",
+    "git diff --check passes."
+  ],
+  "stop_conditions": [
+    "A feature request starts before modularization guardrails exist.",
+    "A module exceeds 450 lines during extraction.",
+    "Saved Elementor control IDs or rendered selectors are renamed without a migration decision."
+  ],
+  "documentation": [
+    "DEC-EIT-014",
+    "docs/implementation-toolkit/filter-controller-robustness-synthesis.md"
+  ]
+}

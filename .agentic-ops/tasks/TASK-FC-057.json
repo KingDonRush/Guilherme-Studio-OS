@@ -1,0 +1,49 @@
+{
+  "id": "TASK-FC-057",
+  "title": "Execute audited Checkbox component polish",
+  "description": "Implement Checkbox audit findings after modularization, including custom indicator, layout, states, counts, and accessibility.",
+  "objective": "Make Checkbox deliberate instead of leaving it as browser residue inside a styled pill system.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-FC-009",
+  "depends_on": [
+    "TASK-FC-036",
+    "TASK-FC-050",
+    "TASK-FC-051",
+    "TASK-FC-052"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-checkbox.md",
+    "Checkbox style/render/CSS modules"
+  ],
+  "expected_outputs": [
+    "Checkbox indicator controls",
+    "List/inline/grid/wrap behavior",
+    "Hover, selected, focus, disabled, and count states"
+  ],
+  "acceptance_criteria": [
+    "Checkbox remains multi-select and keyboard accessible.",
+    "Visual indicator is distinct from Radio and Chips.",
+    "Long labels and counts remain contained."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "PHP lint, JS syntax, CSS check, WP-CLI harness, and line-budget guard pass."
+  ],
+  "budgets": {
+    "time_budget": "one Checkbox implementation pass",
+    "complexity_budget": "moderate",
+    "context_budget": "Checkbox audit and option modules",
+    "research_budget": "local source only",
+    "validation_budget": "mechanical checks plus Guilherme visual QA"
+  },
+  "risks": [
+    "Hiding native inputs without an accessible replacement can degrade keyboard behavior."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

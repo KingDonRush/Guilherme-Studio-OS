@@ -1,0 +1,50 @@
+{
+  "id": "TASK-FC-055",
+  "title": "Execute audited Search component polish",
+  "description": "Implement Search audit findings after modularization, including icon/clear anatomy, containment, debounce/apply behavior, and field-target clarity.",
+  "objective": "Make Search a first-class filter component instead of a plain text input.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-FC-009",
+  "depends_on": [
+    "TASK-FC-041",
+    "TASK-FC-050",
+    "TASK-FC-051",
+    "TASK-FC-052"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-search.md",
+    "Search style/render/CSS modules",
+    "FilterResolver field binding contract"
+  ],
+  "expected_outputs": [
+    "Search icon and optional clear affordance plan or implementation",
+    "Containment-safe input anatomy",
+    "Debounce/apply behavior documented or implemented"
+  ],
+  "acceptance_criteria": [
+    "Search does not overflow its assigned layout width.",
+    "Search can explain what field/source it filters.",
+    "Clear behavior does not reset unrelated filters unless explicitly designed."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "PHP lint, JS syntax, CSS check, WP-CLI harness, and line-budget guard pass."
+  ],
+  "budgets": {
+    "time_budget": "one Search implementation pass",
+    "complexity_budget": "moderate",
+    "context_budget": "Search audit, render, resolver, JS runtime",
+    "research_budget": "local source only",
+    "validation_budget": "mechanical checks plus punctual visual QA"
+  },
+  "risks": [
+    "A good-looking search field can still filter the wrong surface if source binding is vague."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

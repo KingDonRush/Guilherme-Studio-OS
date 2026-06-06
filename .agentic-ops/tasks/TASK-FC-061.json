@@ -1,0 +1,50 @@
+{
+  "id": "TASK-FC-061",
+  "title": "Execute audited Swatch component polish",
+  "description": "Implement Swatch audit findings after modularization, including color/image/icon visuals, selected ring, labels, fallback, and accessibility text.",
+  "objective": "Make Swatch useful for visual option sets without locking it to color-only ecommerce examples.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-FC-009",
+  "depends_on": [
+    "TASK-FC-040",
+    "TASK-FC-050",
+    "TASK-FC-051",
+    "TASK-FC-052"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-swatch.md",
+    "Swatch style/render/CSS modules",
+    "FilterOptions swatch parser"
+  ],
+  "expected_outputs": [
+    "Swatch size, shape, border, ring, and label controls",
+    "Visual fallback contract",
+    "Accessibility text behavior"
+  ],
+  "acceptance_criteria": [
+    "Swatch supports safe visual values without inaccessible color-only behavior.",
+    "Selected ring is controllable and visible.",
+    "Label/fallback behavior is explicit."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "PHP lint, JS syntax, CSS check, WP-CLI harness, and line-budget guard pass."
+  ],
+  "budgets": {
+    "time_budget": "one Swatch implementation pass",
+    "complexity_budget": "moderate",
+    "context_budget": "Swatch audit, parser, option modules",
+    "research_budget": "local source only",
+    "validation_budget": "mechanical checks plus Guilherme visual QA"
+  },
+  "risks": [
+    "Visual-only swatches can be polished but unusable for keyboard or screen-reader users."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

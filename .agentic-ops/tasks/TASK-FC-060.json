@@ -1,0 +1,49 @@
+{
+  "id": "TASK-FC-060",
+  "title": "Execute audited Toggle component polish",
+  "description": "Implement Toggle audit findings after modularization, including track, thumb, labels, icons, boolean value contract, and reset behavior.",
+  "objective": "Make Toggle trustworthy for boolean fields instead of an unclear styled checkbox.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-FC-009",
+  "depends_on": [
+    "TASK-FC-039",
+    "TASK-FC-050",
+    "TASK-FC-051",
+    "TASK-FC-052"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-toggle.md",
+    "Toggle style/render/CSS modules"
+  ],
+  "expected_outputs": [
+    "Toggle track and thumb controls",
+    "On/off labels or icon support",
+    "Explicit value and reset semantics"
+  ],
+  "acceptance_criteria": [
+    "Toggle off state is clear.",
+    "Reset and URL sync restore the correct state.",
+    "Boolean binding is documented and not inferred from visuals alone."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "PHP lint, JS syntax, CSS check, WP-CLI harness, and line-budget guard pass."
+  ],
+  "budgets": {
+    "time_budget": "one Toggle implementation pass",
+    "complexity_budget": "moderate",
+    "context_budget": "Toggle audit, resolver, option modules",
+    "research_budget": "local source only",
+    "validation_budget": "mechanical checks plus Guilherme visual QA"
+  },
+  "risks": [
+    "A clear switch UI can still filter incorrectly if the true/false value contract is vague."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}

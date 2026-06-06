@@ -1,0 +1,49 @@
+{
+  "id": "TASK-FC-059",
+  "title": "Execute audited Chips component polish",
+  "description": "Implement Chips audit findings after modularization, including icons, counts, active/removable states, wrapping, and multi-select clarity.",
+  "objective": "Make Chips a polished option pattern rather than a renamed checkbox group.",
+  "priority": "high",
+  "complexity": "moderate",
+  "status": "pending",
+  "phase_id": "PHASE-FC-009",
+  "depends_on": [
+    "TASK-FC-038",
+    "TASK-FC-050",
+    "TASK-FC-051",
+    "TASK-FC-052"
+  ],
+  "blocks": [],
+  "inputs_required": [
+    "docs/implementation-toolkit/filter-controller-audit-chips.md",
+    "Chips style/render/CSS modules"
+  ],
+  "expected_outputs": [
+    "Chip icon/count controls",
+    "Active, hover, focus, disabled, and long-label states",
+    "Wrap and density controls"
+  ],
+  "acceptance_criteria": [
+    "Chips are visually distinct from Checkbox and Radio.",
+    "Multi-select behavior is obvious.",
+    "Long labels do not break layout."
+  ],
+  "verification": [
+    "Agentic Ops validate_task passes.",
+    "PHP lint, JS syntax, CSS check, WP-CLI harness, and line-budget guard pass."
+  ],
+  "budgets": {
+    "time_budget": "one Chips implementation pass",
+    "complexity_budget": "moderate",
+    "context_budget": "Chips audit and option modules",
+    "research_budget": "local source only",
+    "validation_budget": "mechanical checks plus Guilherme visual QA"
+  },
+  "risks": [
+    "A visually rich chip can become inaccessible if native input semantics are hidden carelessly."
+  ],
+  "research_required": false,
+  "requires_human_validation": true,
+  "subtasks": [],
+  "subplans": []
+}
