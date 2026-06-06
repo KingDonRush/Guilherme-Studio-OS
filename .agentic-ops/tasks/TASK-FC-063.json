@@ -5,7 +5,7 @@
   "objective": "Prevent new filter ideas from being coded directly into the widget without deciding whether they are real types, variants, subdomains, or configuration.",
   "priority": "critical",
   "complexity": "complex",
-  "status": "pending",
+  "status": "done",
   "phase_id": "PHASE-FC-009",
   "depends_on": [
     "TASK-FC-045",
@@ -24,7 +24,8 @@
     "Future type candidate backlog",
     "Shared module versus real type decision criteria",
     "Out-of-scope or deferred type list",
-    "Rule for creating future TASK-FC implementation tasks"
+    "Rule for creating future TASK-FC implementation tasks",
+    "docs/implementation-toolkit/filter-controller-type-taxonomy.md"
   ],
   "acceptance_criteria": [
     "Search, checkbox, radio, select, chips, toggle, range, date, swatch, and rating are identified as current supported types.",
@@ -36,7 +37,8 @@
   "verification": [
     "Agentic Ops validate_task passes.",
     "Classification cites FilterTypeRegistry and existing audit tasks.",
-    "No plugin source implementation is made by this task."
+    "No plugin source implementation is made by this task.",
+    "Taxonomy document exists and classifies current supported types, variants, future candidates, shared modules, configuration-only ideas, and deferred/out-of-scope items."
   ],
   "budgets": {
     "time_budget": "one taxonomy planning pass",
@@ -52,6 +54,24 @@
   ],
   "research_required": true,
   "requires_human_validation": true,
+  "implementation_status": "taxonomy_done_no_plugin_source_changes",
+  "decision_artifact": "docs/implementation-toolkit/filter-controller-type-taxonomy.md",
+  "verification_results": [
+    "Read FilterTypeRegistry current definitions: search, checkbox, radio, select, chips, toggle, range, date, swatch, rating.",
+    "Read docs/implementation-toolkit/filter-controller-robustness-synthesis.md and docs/implementation-toolkit/filter-controller-robustness-cross-cutting.md.",
+    "Read TASK-FC-034 through TASK-FC-043 audit packets.",
+    "Read .agentic-ops/decisions/DEC-EIT-014.json and applied the future_type_rule.",
+    "Created docs/implementation-toolkit/filter-controller-type-taxonomy.md.",
+    "No plugin source implementation was made."
+  ],
+  "notes": [
+    "Number and text exact inputs are deferred candidates, not automatic new types.",
+    "Multi-select dropdown, taxonomy tree, autocomplete, and geo/distance are future real type candidates because they change interaction, value shape, source, or resolver contracts.",
+    "Date preset remains a Date variant unless it becomes a custom calendar engine.",
+    "Availability/status remains configuration across Radio, Checkbox, Toggle, or Select unless a distinct status state model is proven.",
+    "Media swatch remains a Swatch variant unless media selection/source storage changes the data contract.",
+    "Future type work must cite this taxonomy before a new registry key or implementation task is opened."
+  ],
   "subtasks": [],
   "subplans": []
 }
