@@ -1,8 +1,16 @@
-import { mkdtemp } from "node:fs/promises";
+import { mkdtemp, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { LifecycleEngine, PreparedActionService, type StudioContext } from "./index.js";
+import YAML from "yaml";
+import {
+  createStudioContext,
+  DomainCommandService,
+  EntityService,
+  LifecycleEngine,
+  PreparedActionService,
+  type StudioContext,
+} from "./index.js";
 
 describe("core governance", () => {
   it("rejects invalid terminal lifecycle transitions", () => {
@@ -35,5 +43,36 @@ describe("core governance", () => {
     const executed = await service.execute(prepared.id, async () => ({ message_id: "local-test" }));
     expect(executed.status).toBe("executed");
     expect(executed.reconciliation).toEqual({ message_id: "local-test" });
+  });
+
+  it("creates an engagement only from a won opportunity", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "studio-domain-test-"));
+    await writeFile(
+      path.join(root, "studio.config.yaml"),
+      YAML.stringify({
+        api_version: "studio.guilherme.dev/config-v1",
+        root_name: "Domain test",
+        operator_id: "per_20260614_guilherme-silva",
+        canonical_roots: ["sales", "clients"],
+        runtime_path: "runtime",
+        panel: { host: "127.0.0.1", port: 47832 },
+        adapters: {},
+      }),
+    );
+    const context = await createStudioContext(root);
+    const entities = new EntityService(context);
+    const commands = new DomainCommandService(context);
+    const opportunity = await entities.create({
+      kind: "opportunity",
+      title: "Qualified WordPress build",
+    });
+
+    await expect(commands.createEngagementFromOpportunity(opportunity.metadata.id)).rejects.toThrow(
+      /won opportunities/,
+    );
+    await entities.transition(opportunity.metadata.id, "won");
+    const engagement = await commands.createEngagementFromOpportunity(opportunity.metadata.id);
+    expect(engagement.kind).toBe("engagement");
+    expect(engagement.relations[0]?.target_id).toBe(opportunity.metadata.id);
   });
 });

@@ -5,6 +5,7 @@ import fastifyStatic from "@fastify/static";
 import { inspectStudioRepositories } from "@guilherme-studio/adapters";
 import {
   createStudioContext,
+  DomainCommandService,
   EntityService,
   entityMutationResult,
   kindFromAlias,
@@ -146,6 +147,52 @@ export async function createLocalApi(
       request.params.id,
       request.body.payload_checksum,
     );
+  });
+
+  app.post<{
+    Params: { id: string };
+    Body: { rationale: string; score: number; qualified?: boolean };
+  }>("/api/v1/prospects/:id/qualify", async (request, reply) => {
+    if (
+      !request.body ||
+      typeof request.body.rationale !== "string" ||
+      typeof request.body.score !== "number"
+    ) {
+      return reply.code(400).send({ ok: false, errors: ["rationale and score are required"] });
+    }
+    const entity = await new DomainCommandService(context).qualifyProspect(request.params.id, {
+      rationale: request.body.rationale,
+      score: request.body.score,
+      qualified: request.body.qualified ?? true,
+    });
+    return entityMutationResult("prospect.qualify", entity);
+  });
+
+  app.post<{
+    Body: {
+      title: string;
+      evidence_type: "file" | "url" | "command" | "screenshot" | "backup" | "decision" | "manual";
+      subject_id?: string;
+      path?: string;
+      url?: string;
+      command?: string;
+      checksum?: string;
+    };
+  }>("/api/v1/evidence", async (request, reply) => {
+    if (!request.body || typeof request.body.title !== "string") {
+      return reply.code(400).send({ ok: false, errors: ["title is required"] });
+    }
+    const body = request.body;
+    const entity = await new DomainCommandService(context).registerEvidence({
+      title: body.title,
+      evidenceType: body.evidence_type,
+      ...(body.subject_id ? { subjectId: body.subject_id } : {}),
+      ...(body.path ? { path: body.path } : {}),
+      ...(body.url ? { url: body.url } : {}),
+      ...(body.command ? { command: body.command } : {}),
+      ...(body.checksum ? { checksum: body.checksum } : {}),
+    });
+    return entityMutationResult("evidence.register", entity);
   });
 
   if (options.panelDist) {

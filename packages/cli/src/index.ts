@@ -12,6 +12,7 @@ import {
 import { optimizeAssets } from "@guilherme-studio/assets";
 import {
   createStudioContext,
+  DomainCommandService,
   EntityService,
   entityMutationResult,
   kindFromAlias,
@@ -399,6 +400,7 @@ export function createProgram(): Command {
       print(await new PreparedActionService(context).confirm(id, local.checksum), options.json);
     });
 
+  const domainCommands = new Map<string, Command>();
   for (const alias of [
     "person",
     "organization",
@@ -412,14 +414,173 @@ export function createProgram(): Command {
     "case",
     "evidence",
     "campaign",
+    "proposal",
+    "release",
+    "payment",
+    "invoice",
+    "contract",
     "application",
     "task",
     "decision",
     "communication",
     "agentRun",
   ]) {
-    addDomainCommand(program, alias);
+    domainCommands.set(alias, addDomainCommand(program, alias));
   }
+
+  domainCommands
+    .get("prospect")
+    ?.command("qualify")
+    .argument("<id>")
+    .requiredOption("--rationale <text>")
+    .requiredOption("--score <number>")
+    .option("--disqualify", "Mark as disqualified")
+    .action(async function action(this: Command, id: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as { rationale: string; score: string; disqualify?: boolean };
+      const context = await createStudioContext(options.root);
+      const result = await new DomainCommandService(context).qualifyProspect(id, {
+        rationale: local.rationale,
+        score: Number.parseInt(local.score, 10),
+        qualified: !local.disqualify,
+      });
+      print(entityMutationResult("prospect.qualify", result), options.json);
+    });
+
+  domainCommands
+    .get("communication")
+    ?.command("prepare")
+    .requiredOption("--subject <id>")
+    .requiredOption("--channel <channel>")
+    .requiredOption("--message <text>")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as { subject: string; channel: string; message: string };
+      const context = await createStudioContext(options.root);
+      print(
+        await new DomainCommandService(context).prepareCommunication({
+          subjectId: local.subject,
+          channel: local.channel,
+          message: local.message,
+        }),
+        options.json,
+      );
+    });
+
+  domainCommands
+    .get("evidence")
+    ?.command("register")
+    .requiredOption("--title <title>")
+    .requiredOption("--type <type>")
+    .option("--subject <id>")
+    .option("--path <path>")
+    .option("--url <url>")
+    .option("--command <command>")
+    .option("--checksum <sha256>")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        title: string;
+        type: Parameters<DomainCommandService["registerEvidence"]>[0]["evidenceType"];
+        subject?: string;
+        path?: string;
+        url?: string;
+        command?: string;
+        checksum?: string;
+      };
+      const context = await createStudioContext(options.root);
+      const result = await new DomainCommandService(context).registerEvidence({
+        title: local.title,
+        evidenceType: local.type,
+        ...(local.subject ? { subjectId: local.subject } : {}),
+        ...(local.path ? { path: local.path } : {}),
+        ...(local.url ? { url: local.url } : {}),
+        ...(local.command ? { command: local.command } : {}),
+        ...(local.checksum ? { checksum: local.checksum } : {}),
+      });
+      print(entityMutationResult("evidence.register", result), options.json);
+    });
+
+  domainCommands
+    .get("engagement")
+    ?.command("create-from-opportunity")
+    .argument("<opportunity-id>")
+    .option("--title <title>")
+    .action(async function action(this: Command, opportunityId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as { title?: string };
+      const context = await createStudioContext(options.root);
+      const result = await new DomainCommandService(context).createEngagementFromOpportunity(
+        opportunityId,
+        local.title,
+      );
+      print(entityMutationResult("engagement.create-from-opportunity", result), options.json);
+    });
+
+  domainCommands
+    .get("proposal")
+    ?.command("prepare")
+    .argument("<opportunity-id>")
+    .option("--title <title>")
+    .action(async function action(this: Command, opportunityId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as { title?: string };
+      const context = await createStudioContext(options.root);
+      const result = await new DomainCommandService(context).prepareProposal(
+        opportunityId,
+        local.title,
+      );
+      print(entityMutationResult("proposal.prepare", result), options.json);
+    });
+
+  domainCommands
+    .get("application")
+    ?.command("prepare")
+    .requiredOption("--title <title>")
+    .requiredOption("--source <url>")
+    .option("--organization <id>")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as { title: string; source: string; organization?: string };
+      const context = await createStudioContext(options.root);
+      const result = await new DomainCommandService(context).prepareApplication({
+        title: local.title,
+        sourceUrl: local.source,
+        ...(local.organization ? { organizationId: local.organization } : {}),
+      });
+      print(entityMutationResult("application.prepare", result), options.json);
+    });
+
+  domainCommands
+    .get("product")
+    ?.command("prepare-release")
+    .argument("<product-id>")
+    .requiredOption("--version <version>")
+    .action(async function action(this: Command, productId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as { version: string };
+      const context = await createStudioContext(options.root);
+      const result = await new DomainCommandService(context).prepareRelease(
+        productId,
+        local.version,
+      );
+      print(entityMutationResult("release.prepare", result), options.json);
+    });
+
+  domainCommands
+    .get("payment")
+    ?.command("reconcile")
+    .argument("<payment-id>")
+    .requiredOption("--reference <reference>")
+    .action(async function action(this: Command, paymentId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as { reference: string };
+      const context = await createStudioContext(options.root);
+      const result = await new DomainCommandService(context).reconcilePayment(paymentId, {
+        reference: local.reference,
+      });
+      print(entityMutationResult("payment.reconcile", result), options.json);
+    });
 
   const repo = program
     .command("repo")
@@ -631,7 +792,7 @@ function pathJoin(root: string, relativeOrAbsolute: string): string {
   return `${root.replace(/\/$/, "")}/${relativeOrAbsolute}`;
 }
 
-function addDomainCommand(program: Command, alias: string): void {
+function addDomainCommand(program: Command, alias: string): Command {
   const domain = program.command(alias).description(`Shortcut commands for ${alias} entities`);
   domain.command("list").action(async function action(this: Command) {
     const options = globalOptions(this);
@@ -673,4 +834,5 @@ function addDomainCommand(program: Command, alias: string): void {
       const created = await service.create(input);
       print(entityMutationResult("entity.create", created), options.json);
     });
+  return domain;
 }

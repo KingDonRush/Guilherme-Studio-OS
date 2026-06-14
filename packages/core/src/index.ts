@@ -319,6 +319,184 @@ export class PreparedActionService {
   }
 }
 
+export class DomainCommandService {
+  readonly entities: EntityService;
+  readonly actions: PreparedActionService;
+
+  constructor(readonly context: StudioContext) {
+    this.entities = new EntityService(context);
+    this.actions = new PreparedActionService(context);
+  }
+
+  async qualifyProspect(
+    id: string,
+    input: { rationale: string; score: number; qualified: boolean },
+  ): Promise<StudioEntity> {
+    return this.entities.update(id, (entity) => {
+      if (entity.kind !== "prospect") {
+        throw new Error(`Expected prospect entity, got ${entity.kind}`);
+      }
+      return {
+        ...entity,
+        spec: {
+          ...entity.spec,
+          stage: input.qualified ? "qualified" : "disqualified",
+          qualification: {
+            score: input.score,
+            rationale: input.rationale,
+            assessed_at: nowIso(),
+          },
+          status: input.qualified ? "active" : "archived",
+        },
+      };
+    });
+  }
+
+  async prepareCommunication(input: {
+    subjectId: string;
+    channel: string;
+    message: string;
+  }): Promise<PreparedAction> {
+    const subject = await this.context.entities.get(input.subjectId);
+    if (!subject) {
+      throw new Error(`Communication subject not found: ${input.subjectId}`);
+    }
+    return this.actions.prepare({
+      actionType: "communication.send",
+      payload: {
+        subject_id: input.subjectId,
+        channel: input.channel,
+        message: input.message,
+      },
+    });
+  }
+
+  async prepareProposal(opportunityId: string, title?: string): Promise<StudioEntity> {
+    const opportunity = await this.requireKind(opportunityId, "opportunity");
+    return this.entities.create({
+      kind: "proposal",
+      title: title ?? `Proposal for ${entityTitle(opportunity)}`,
+      status: "draft",
+      relations: [{ type: "proposes_for", target_id: opportunityId }],
+      data: {
+        stage: "prepared",
+        prepared_at: nowIso(),
+      },
+    });
+  }
+
+  async createEngagementFromOpportunity(
+    opportunityId: string,
+    title?: string,
+  ): Promise<StudioEntity> {
+    const opportunity = await this.requireKind(opportunityId, "opportunity");
+    if (entityStatus(opportunity) !== "won") {
+      throw new Error("Engagements can only be created from won opportunities.");
+    }
+    return this.entities.create({
+      kind: "engagement",
+      title: title ?? `Engagement for ${entityTitle(opportunity)}`,
+      status: "draft",
+      relations: [{ type: "originates_from", target_id: opportunityId }],
+      data: { created_from_opportunity_at: nowIso() },
+    });
+  }
+
+  async registerEvidence(input: {
+    title: string;
+    evidenceType: "file" | "url" | "command" | "screenshot" | "backup" | "decision" | "manual";
+    subjectId?: string;
+    path?: string;
+    url?: string;
+    command?: string;
+    checksum?: string;
+  }): Promise<StudioEntity> {
+    if (input.subjectId) {
+      await this.requireEntity(input.subjectId);
+    }
+    return this.entities.create({
+      kind: "evidence",
+      title: input.title,
+      relations: input.subjectId ? [{ type: "supports", target_id: input.subjectId }] : [],
+      data: {
+        evidence_type: input.evidenceType,
+        ...(input.path ? { path: input.path } : {}),
+        ...(input.url ? { url: input.url } : {}),
+        ...(input.command ? { command: input.command } : {}),
+        ...(input.checksum ? { checksum: input.checksum } : {}),
+        observed_at: nowIso(),
+      },
+    });
+  }
+
+  async prepareRelease(productId: string, version: string): Promise<StudioEntity> {
+    const product = await this.requireKind(productId, "product");
+    return this.entities.create({
+      kind: "release",
+      title: `${entityTitle(product)} ${version}`,
+      status: "draft",
+      relations: [{ type: "releases", target_id: productId }],
+      data: { version, stage: "prepared", prepared_at: nowIso() },
+    });
+  }
+
+  async prepareApplication(input: {
+    title: string;
+    organizationId?: string;
+    sourceUrl: string;
+  }): Promise<StudioEntity> {
+    if (input.organizationId) {
+      await this.requireKind(input.organizationId, "organization");
+    }
+    return this.entities.create({
+      kind: "jobApplication",
+      title: input.title,
+      status: "draft",
+      relations: input.organizationId
+        ? [{ type: "applies_to", target_id: input.organizationId }]
+        : [],
+      data: {
+        source_url: input.sourceUrl,
+        stage: "prepared",
+        prepared_at: nowIso(),
+      },
+    });
+  }
+
+  async reconcilePayment(id: string, input: { reference: string }): Promise<StudioEntity> {
+    return this.entities.update(id, (entity) => {
+      if (entity.kind !== "payment") {
+        throw new Error(`Expected payment entity, got ${entity.kind}`);
+      }
+      return {
+        ...entity,
+        spec: {
+          ...entity.spec,
+          status: "paid",
+          reconciled_at: nowIso(),
+          reconciliation_reference: input.reference,
+        },
+      };
+    });
+  }
+
+  private async requireEntity(id: string): Promise<StudioEntity> {
+    const file = await this.context.entities.get(id);
+    if (!file) {
+      throw new Error(`Entity not found: ${id}`);
+    }
+    return file.entity;
+  }
+
+  private async requireKind(id: string, kind: EntityKind): Promise<StudioEntity> {
+    const entity = await this.requireEntity(id);
+    if (entity.kind !== kind) {
+      throw new Error(`Expected ${kind} entity, got ${entity.kind}`);
+    }
+    return entity;
+  }
+}
+
 export class GateEngine {
   evaluate(input: {
     action: string;
@@ -505,6 +683,11 @@ export function kindFromAlias(alias: string): EntityKind {
     portfolioCase: "portfolioCase",
     evidence: "evidence",
     campaign: "campaign",
+    proposal: "proposal",
+    release: "release",
+    payment: "payment",
+    invoice: "invoice",
+    contract: "contract",
     application: "jobApplication",
     jobApplication: "jobApplication",
     task: "task",

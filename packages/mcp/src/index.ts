@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import {
   createStudioContext,
+  DomainCommandService,
   EntityService,
   entityMutationResult,
   kindFromAlias,
@@ -193,6 +194,114 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
       const context = await createStudioContext(root);
       const action = await new PreparedActionService(context).confirm(action_id, payload_checksum);
       return { content: [{ type: "text", text: JSON.stringify(action, null, 2) }] };
+    },
+  );
+
+  server.tool(
+    "studio_qualify_prospect",
+    {
+      prospect_id: z.string(),
+      rationale: z.string().min(1),
+      score: z.number().int().min(0).max(100),
+      qualified: z.boolean().default(true),
+    },
+    async ({ prospect_id, rationale, score, qualified }) => {
+      const context = await createStudioContext(root);
+      const entity = await new DomainCommandService(context).qualifyProspect(prospect_id, {
+        rationale,
+        score,
+        qualified,
+      });
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(entityMutationResult("prospect.qualify", entity), null, 2),
+          },
+        ],
+      };
+    },
+  );
+
+  server.tool(
+    "studio_register_evidence",
+    {
+      title: z.string(),
+      evidence_type: z.enum([
+        "file",
+        "url",
+        "command",
+        "screenshot",
+        "backup",
+        "decision",
+        "manual",
+      ]),
+      subject_id: z.string().optional(),
+      path: z.string().optional(),
+      url: z.string().optional(),
+      command: z.string().optional(),
+      checksum: z.string().optional(),
+    },
+    async ({ title, evidence_type, subject_id, path, url, command, checksum }) => {
+      const context = await createStudioContext(root);
+      const entity = await new DomainCommandService(context).registerEvidence({
+        title,
+        evidenceType: evidence_type,
+        ...(subject_id ? { subjectId: subject_id } : {}),
+        ...(path ? { path } : {}),
+        ...(url ? { url } : {}),
+        ...(command ? { command } : {}),
+        ...(checksum ? { checksum } : {}),
+      });
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(entityMutationResult("evidence.register", entity), null, 2),
+          },
+        ],
+      };
+    },
+  );
+
+  server.tool(
+    "studio_prepare_proposal",
+    { opportunity_id: z.string(), title: z.string().optional() },
+    async ({ opportunity_id, title }) => {
+      const context = await createStudioContext(root);
+      const entity = await new DomainCommandService(context).prepareProposal(opportunity_id, title);
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(entityMutationResult("proposal.prepare", entity), null, 2),
+          },
+        ],
+      };
+    },
+  );
+
+  server.tool(
+    "studio_create_engagement_from_opportunity",
+    { opportunity_id: z.string(), title: z.string().optional() },
+    async ({ opportunity_id, title }) => {
+      const context = await createStudioContext(root);
+      const entity = await new DomainCommandService(context).createEngagementFromOpportunity(
+        opportunity_id,
+        title,
+      );
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              entityMutationResult("engagement.create-from-opportunity", entity),
+              null,
+              2,
+            ),
+          },
+        ],
+      };
     },
   );
 

@@ -40,6 +40,24 @@ describe("local API", () => {
       data: { kind: "task" },
       errors: [],
     });
+    const prospect = await app.inject({
+      method: "POST",
+      url: "/api/v1/entities",
+      headers,
+      payload: { kind: "prospect", title: "Qualified agency" },
+    });
+    const prospectId = prospect.json().entity_id as string;
+    const qualification = await app.inject({
+      method: "POST",
+      url: `/api/v1/prospects/${prospectId}/qualify`,
+      headers,
+      payload: { rationale: "Needs Elementor implementation capacity", score: 88 },
+    });
+    expect(qualification.json()).toMatchObject({
+      ok: true,
+      action: "prospect.qualify",
+      entity_id: prospectId,
+    });
 
     const prepared = await app.inject({
       method: "POST",
