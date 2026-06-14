@@ -2,7 +2,15 @@ import crypto from "node:crypto";
 import path from "node:path";
 import cookie from "@fastify/cookie";
 import fastifyStatic from "@fastify/static";
-import { createStudioContext, validateStudio } from "@guilherme-studio/core";
+import { inspectStudioRepositories } from "@guilherme-studio/adapters";
+import {
+  createStudioContext,
+  EntityService,
+  entityMutationResult,
+  kindFromAlias,
+  PreparedActionService,
+  validateStudio,
+} from "@guilherme-studio/core";
 import { entityId, entityStatus, entityTitle } from "@guilherme-studio/schemas";
 import { validateCanonicalFiles } from "@guilherme-studio/storage";
 import Fastify, { type FastifyInstance } from "fastify";
@@ -49,12 +57,20 @@ export async function createLocalApi(
     }
   });
 
+  app.get("/favicon.ico", async (_request, reply) => reply.code(204).send());
+
   app.get("/api/v1/summary", async () => {
     const validation = await validateStudio(context.paths.root);
     const { files } = await validateCanonicalFiles(context.paths.root);
+    const byKind = Object.fromEntries(
+      [...new Set(files.map((file) => file.entity.kind))]
+        .sort((a, b) => a.localeCompare(b))
+        .map((kind) => [kind, files.filter((file) => file.entity.kind === kind).length]),
+    );
     return {
       ok: validation.ok,
       entityCount: files.length,
+      byKind,
       operatorId: context.config.operator_id,
       root: context.paths.root,
     };
@@ -69,6 +85,67 @@ export async function createLocalApi(
       status: entityStatus(file.entity),
       path: file.relativePath,
     }));
+  });
+
+  app.post<{
+    Body: {
+      kind: string;
+      title: string;
+      summary?: string;
+      classification?: "public" | "internal" | "confidential";
+    };
+  }>("/api/v1/entities", async (request, reply) => {
+    const body = request.body;
+    if (!body || typeof body.kind !== "string" || typeof body.title !== "string") {
+      return reply.code(400).send({ ok: false, errors: ["kind and title are required"] });
+    }
+    const entity = await new EntityService(context).create({
+      kind: kindFromAlias(body.kind),
+      title: body.title,
+      classification: body.classification ?? "internal",
+      ...(body.summary ? { summary: body.summary } : {}),
+    });
+    return entityMutationResult("entity.create", entity);
+  });
+
+  app.get("/api/v1/prepared-actions", async () => {
+    return new PreparedActionService(context).list();
+  });
+
+  app.get("/api/v1/repositories", async () => {
+    return inspectStudioRepositories(context);
+  });
+
+  app.post<{
+    Body: { action_type: string; payload: Record<string, unknown>; ttl_seconds?: number };
+  }>("/api/v1/prepared-actions", async (request, reply) => {
+    const body = request.body;
+    if (
+      !body ||
+      typeof body.action_type !== "string" ||
+      !body.payload ||
+      typeof body.payload !== "object"
+    ) {
+      return reply.code(400).send({ ok: false, errors: ["action_type and payload are required"] });
+    }
+    return new PreparedActionService(context).prepare({
+      actionType: body.action_type,
+      payload: body.payload,
+      ...(body.ttl_seconds ? { ttlSeconds: body.ttl_seconds } : {}),
+    });
+  });
+
+  app.post<{
+    Params: { id: string };
+    Body: { payload_checksum: string };
+  }>("/api/v1/prepared-actions/:id/confirm", async (request, reply) => {
+    if (!request.body || typeof request.body.payload_checksum !== "string") {
+      return reply.code(400).send({ ok: false, errors: ["payload_checksum is required"] });
+    }
+    return new PreparedActionService(context).confirm(
+      request.params.id,
+      request.body.payload_checksum,
+    );
   });
 
   if (options.panelDist) {

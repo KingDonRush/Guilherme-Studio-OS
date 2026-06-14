@@ -247,12 +247,28 @@ export const PreparedActionSchema = z
     expires_at: z.string().datetime(),
     actor_id: z.string().optional(),
     payload: z.record(z.string(), z.unknown()).default({}),
+    payload_checksum: z.string().regex(/^[a-f0-9]{64}$/),
     status: z
       .enum(["prepared", "confirmed", "executed", "expired", "cancelled"])
       .default("prepared"),
+    confirmed_at: z.string().datetime().optional(),
+    executed_at: z.string().datetime().optional(),
+    reconciliation: z.record(z.string(), z.unknown()).optional(),
   })
   .strict();
 export type PreparedAction = z.infer<typeof PreparedActionSchema>;
+
+export const ResultEnvelopeSchema = z
+  .object({
+    ok: z.boolean(),
+    action: z.string().min(1),
+    entity_id: z.string().optional(),
+    revision: z.number().int().min(1).optional(),
+    data: z.unknown().optional(),
+    errors: z.array(z.string()).default([]),
+  })
+  .strict();
+export type ResultEnvelope = z.infer<typeof ResultEnvelopeSchema>;
 
 export function nowIso(): string {
   return new Date().toISOString();
@@ -269,6 +285,15 @@ export function createEntityId(kind: EntityKind, seed?: string, createdAt?: stri
     return `${prefix}_${stamp}_${randomUUID().replaceAll("-", "").slice(0, 12)}`;
   }
   return `${prefix}_${stamp}_${slugify(seed)}`;
+}
+
+export function createRecordId(prefix: "act" | "cmd" | "evt", seed?: string): string {
+  const stamp = dateStamp();
+  if (!seed) {
+    return `${prefix}_${stamp}_${randomUUID().replaceAll("-", "").slice(0, 12)}`;
+  }
+  const digest = createHash("sha256").update(`${prefix}:${seed}`).digest("hex").slice(0, 12);
+  return `${prefix}_${stamp}_${digest}`;
 }
 
 export function slugify(input: string): string {

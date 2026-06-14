@@ -7,7 +7,9 @@ import { optimizeAssets } from "@guilherme-studio/assets";
 import {
   createStudioContext,
   EntityService,
+  entityMutationResult,
   kindFromAlias,
+  PreparedActionService,
   rebuildProjection,
   validateStudio,
 } from "@guilherme-studio/core";
@@ -18,6 +20,7 @@ import {
   entityId,
   entityStatus,
   entityTitle,
+  type LifecycleState,
   PreparedActionSchema,
   RelationSchema,
   TypedEntitySchema,
@@ -315,7 +318,79 @@ export function createProgram(): Command {
       const context = await createStudioContext(options.root);
       const service = new EntityService(context);
       const created = await service.create(input);
-      print(created, options.json);
+      print(entityMutationResult("entity.create", created), options.json);
+    });
+
+  entity
+    .command("transition")
+    .argument("<id>", "Canonical entity id")
+    .argument("<status>", "Target lifecycle status")
+    .action(async function action(this: Command, id: string, status: string) {
+      const options = globalOptions(this);
+      const context = await createStudioContext(options.root);
+      if (options.dryRun) {
+        const current = await context.entities.get(id);
+        print(
+          { dryRun: true, current: current?.entity ?? null, targetStatus: status },
+          options.json,
+        );
+        return;
+      }
+      const transitioned = await new EntityService(context).transition(
+        id,
+        status as LifecycleState,
+      );
+      print(entityMutationResult("entity.transition", transitioned), options.json);
+    });
+
+  const action = program.command("action").description("Manage governed prepared actions");
+  action
+    .command("prepare")
+    .argument("<type>", "Action type")
+    .requiredOption("--payload <json>", "Exact JSON payload")
+    .option("--ttl <seconds>", "Expiration in seconds", "900")
+    .action(async function actionCommand(
+      this: Command & { opts(): { payload: string; ttl: string } },
+      type: string,
+    ) {
+      const options = globalOptions(this);
+      const local = this.opts() as { payload: string; ttl: string };
+      const payload = JSON.parse(local.payload) as Record<string, unknown>;
+      if (options.dryRun) {
+        print({ dryRun: true, type, payload }, options.json);
+        return;
+      }
+      const context = await createStudioContext(options.root);
+      print(
+        await new PreparedActionService(context).prepare({
+          actionType: type,
+          payload,
+          ttlSeconds: Number.parseInt(local.ttl, 10),
+        }),
+        options.json,
+      );
+    });
+  action.command("list").action(async function actionCommand(this: Command) {
+    const options = globalOptions(this);
+    const context = await createStudioContext(options.root);
+    print(await new PreparedActionService(context).list(), options.json);
+  });
+  action
+    .command("confirm")
+    .argument("<id>", "Prepared action id")
+    .requiredOption("--checksum <sha256>", "Exact payload checksum returned by prepare")
+    .action(async function actionCommand(
+      this: Command & { opts(): { checksum: string } },
+      id: string,
+    ) {
+      const options = globalOptions(this);
+      const local = this.opts() as { checksum: string };
+      if (options.dryRun) {
+        print({ dryRun: true, id, checksum: local.checksum }, options.json);
+        return;
+      }
+      const context = await createStudioContext(options.root);
+      print(await new PreparedActionService(context).confirm(id, local.checksum), options.json);
     });
 
   for (const alias of [
@@ -534,6 +609,7 @@ function addDomainCommand(program: Command, alias: string): void {
       }
       const context = await createStudioContext(options.root);
       const service = new EntityService(context);
-      print(await service.create(input), options.json);
+      const created = await service.create(input);
+      print(entityMutationResult("entity.create", created), options.json);
     });
 }

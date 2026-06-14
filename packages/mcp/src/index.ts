@@ -1,7 +1,11 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import {
   createStudioContext,
   EntityService,
+  entityMutationResult,
   kindFromAlias,
+  PreparedActionService,
   validateStudio,
 } from "@guilherme-studio/core";
 import { createEntity, entityId, entityStatus, entityTitle } from "@guilherme-studio/schemas";
@@ -21,7 +25,33 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
       {
         uri: "studio://constitution",
         mimeType: "text/markdown",
-        text: "Guilherme Studio OS: local-first operating system. External actions require prepare -> confirm -> execute -> reconcile.",
+        text: await readFile(path.join(root, "docs/studio-os/01-constitution.md"), "utf8"),
+      },
+    ],
+  }));
+
+  server.resource("schemas", "studio://schemas", async () => ({
+    contents: [
+      {
+        uri: "studio://schemas",
+        mimeType: "application/json",
+        text: await readFile(
+          path.join(root, "docs/studio-os/schemas/generated/catalog.json"),
+          "utf8",
+        ),
+      },
+    ],
+  }));
+
+  server.resource("workflows", "studio://workflows", async () => ({
+    contents: [
+      {
+        uri: "studio://workflows",
+        mimeType: "text/markdown",
+        text: await readFile(
+          path.join(root, "docs/studio-os/workflows/01-cross-domain-journeys.md"),
+          "utf8",
+        ),
       },
     ],
   }));
@@ -121,7 +151,48 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
         classification,
         ...(summary ? { summary } : {}),
       });
-      return { content: [{ type: "text", text: JSON.stringify(entity, null, 2) }] };
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(entityMutationResult("entity.create", entity), null, 2),
+          },
+        ],
+      };
+    },
+  );
+
+  server.tool(
+    "studio_prepare_external_action",
+    {
+      action_type: z.string(),
+      payload: z.record(z.string(), z.unknown()),
+      ttl_seconds: z.number().int().positive().max(86400).default(900),
+    },
+    async ({ action_type, payload, ttl_seconds }) => {
+      const context = await createStudioContext(root);
+      const action = await new PreparedActionService(context).prepare({
+        actionType: action_type,
+        payload,
+        ttlSeconds: ttl_seconds,
+      });
+      return { content: [{ type: "text", text: JSON.stringify(action, null, 2) }] };
+    },
+  );
+
+  server.tool("studio_check_confirmation", { action_id: z.string() }, async ({ action_id }) => {
+    const context = await createStudioContext(root);
+    const action = await new PreparedActionService(context).get(action_id);
+    return { content: [{ type: "text", text: JSON.stringify(action, null, 2) }] };
+  });
+
+  server.tool(
+    "studio_confirm_prepared_action",
+    { action_id: z.string(), payload_checksum: z.string().length(64) },
+    async ({ action_id, payload_checksum }) => {
+      const context = await createStudioContext(root);
+      const action = await new PreparedActionService(context).confirm(action_id, payload_checksum);
+      return { content: [{ type: "text", text: JSON.stringify(action, null, 2) }] };
     },
   );
 

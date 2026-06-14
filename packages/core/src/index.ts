@@ -1,16 +1,26 @@
+import { mkdir, readdir, readFile, rename, writeFile } from "node:fs/promises";
+import path from "node:path";
 import {
+  assertNoSecrets,
   createEntity,
   createEntityId,
+  createRecordId,
   type EntityKind,
   EventSchema,
   entityId,
   entityRevision,
+  entityStatus,
   entityTitle,
   type GateDecision,
   type LifecycleState,
   nowIso,
+  type PreparedAction,
+  PreparedActionSchema,
+  type ResultEnvelope,
+  ResultEnvelopeSchema,
   type StudioEntity,
   type StudioEvent,
+  stableChecksum,
   TypedEntitySchema,
   updateEntityMetadata,
 } from "@guilherme-studio/schemas";
@@ -87,6 +97,15 @@ export class EntityService {
   }
 
   async transition(id: string, status: LifecycleState): Promise<StudioEntity> {
+    const current = await this.context.entities.get(id);
+    if (!current) {
+      throw new Error(`Entity not found: ${id}`);
+    }
+    new LifecycleEngine().assertTransition(
+      current.entity.kind,
+      entityStatus(current.entity),
+      status,
+    );
     return this.update(id, (entity) => ({ ...entity, spec: { ...entity.spec, status } }));
   }
 
@@ -118,18 +137,235 @@ export class EntityService {
   }
 }
 
+export function entityMutationResult(action: string, entity: StudioEntity): ResultEnvelope {
+  return ResultEnvelopeSchema.parse({
+    ok: true,
+    action,
+    entity_id: entityId(entity),
+    revision: entityRevision(entity),
+    data: entity,
+    errors: [],
+  });
+}
+
+const TERMINAL_STATES = new Set<LifecycleState>([
+  "archived",
+  "cancelled",
+  "done",
+  "lost",
+  "paid",
+  "published",
+  "won",
+]);
+
+const DEFAULT_TRANSITIONS: Partial<Record<LifecycleState, LifecycleState[]>> = {
+  draft: ["active", "cancelled", "archived"],
+  active: [
+    "waiting",
+    "blocked",
+    "done",
+    "won",
+    "lost",
+    "published",
+    "paid",
+    "cancelled",
+    "archived",
+  ],
+  waiting: ["active", "blocked", "done", "won", "lost", "cancelled", "archived"],
+  blocked: ["active", "waiting", "cancelled", "archived"],
+};
+
+const KIND_TRANSITIONS: Partial<
+  Record<EntityKind, Partial<Record<LifecycleState, LifecycleState[]>>>
+> = {
+  opportunity: {
+    active: ["waiting", "won", "lost", "archived"],
+    waiting: ["active", "won", "lost", "archived"],
+  },
+  jobApplication: {
+    draft: ["active", "cancelled", "archived"],
+    active: ["waiting", "won", "lost", "cancelled", "archived"],
+    waiting: ["active", "won", "lost", "cancelled", "archived"],
+  },
+  invoice: {
+    draft: ["active", "cancelled", "archived"],
+    active: ["waiting", "paid", "cancelled", "archived"],
+    waiting: ["active", "paid", "cancelled", "archived"],
+  },
+  portfolioCase: {
+    draft: ["active", "archived"],
+    active: ["published", "archived"],
+  },
+  release: {
+    draft: ["active", "cancelled", "archived"],
+    active: ["published", "cancelled", "archived"],
+  },
+};
+
+export class LifecycleEngine {
+  canTransition(kind: EntityKind, current: LifecycleState, next: LifecycleState): boolean {
+    if (current === next) {
+      return true;
+    }
+    if (TERMINAL_STATES.has(current)) {
+      return next === "archived";
+    }
+    const allowed = KIND_TRANSITIONS[kind]?.[current] ?? DEFAULT_TRANSITIONS[current] ?? [];
+    return allowed.includes(next);
+  }
+
+  assertTransition(kind: EntityKind, current: LifecycleState, next: LifecycleState): void {
+    if (!this.canTransition(kind, current, next)) {
+      throw new Error(`Invalid ${kind} lifecycle transition: ${current} -> ${next}`);
+    }
+  }
+}
+
+export class PreparedActionService {
+  readonly directory: string;
+
+  constructor(readonly context: StudioContext) {
+    this.directory = path.join(context.paths.runtime, "prepared-actions");
+  }
+
+  async prepare(input: {
+    actionType: string;
+    payload: Record<string, unknown>;
+    actorId?: string;
+    ttlSeconds?: number;
+  }): Promise<PreparedAction> {
+    assertNoSecrets(input.payload);
+    const createdAt = nowIso();
+    const action = PreparedActionSchema.parse({
+      api_version: "studio.guilherme.dev/prepared-action-v1",
+      id: createRecordId(
+        "act",
+        `${input.actionType}:${createdAt}:${JSON.stringify(input.payload)}`,
+      ),
+      action_type: input.actionType,
+      created_at: createdAt,
+      expires_at: new Date(Date.parse(createdAt) + (input.ttlSeconds ?? 900) * 1000).toISOString(),
+      actor_id: input.actorId ?? this.context.config.operator_id,
+      payload: input.payload,
+      payload_checksum: stableChecksum(input.payload),
+      status: "prepared",
+    });
+    await this.write(action);
+    return action;
+  }
+
+  async get(id: string): Promise<PreparedAction> {
+    const action = PreparedActionSchema.parse(
+      JSON.parse(await readFile(path.join(this.directory, `${id}.json`), "utf8")),
+    );
+    if (action.status === "prepared" && Date.parse(action.expires_at) <= Date.now()) {
+      const expired = PreparedActionSchema.parse({ ...action, status: "expired" });
+      await this.write(expired);
+      return expired;
+    }
+    return action;
+  }
+
+  async list(): Promise<PreparedAction[]> {
+    await mkdir(this.directory, { recursive: true });
+    const files = (await readdir(this.directory))
+      .filter((entry) => entry.endsWith(".json"))
+      .sort((a, b) => a.localeCompare(b));
+    return Promise.all(files.map((file) => this.get(file.slice(0, -5))));
+  }
+
+  async confirm(id: string, payloadChecksum: string): Promise<PreparedAction> {
+    const action = await this.get(id);
+    if (action.status !== "prepared") {
+      throw new Error(`Prepared action cannot be confirmed from status ${action.status}`);
+    }
+    if (action.payload_checksum !== payloadChecksum) {
+      throw new Error(`Prepared action payload checksum mismatch: ${id}`);
+    }
+    const confirmed = PreparedActionSchema.parse({
+      ...action,
+      status: "confirmed",
+      confirmed_at: nowIso(),
+    });
+    await this.write(confirmed);
+    return confirmed;
+  }
+
+  async execute(
+    id: string,
+    executor: (action: PreparedAction) => Promise<Record<string, unknown>>,
+  ): Promise<PreparedAction> {
+    const action = await this.get(id);
+    if (action.status !== "confirmed") {
+      throw new Error(`Prepared action must be confirmed before execution: ${id}`);
+    }
+    const reconciliation = await executor(action);
+    const executed = PreparedActionSchema.parse({
+      ...action,
+      status: "executed",
+      executed_at: nowIso(),
+      reconciliation,
+    });
+    await this.write(executed);
+    return executed;
+  }
+
+  private async write(action: PreparedAction): Promise<void> {
+    await mkdir(this.directory, { recursive: true });
+    const target = path.join(this.directory, `${action.id}.json`);
+    const temporary = path.join(this.directory, `.action-${process.pid}-${Date.now()}.tmp`);
+    await writeFile(temporary, `${JSON.stringify(action, null, 2)}\n`, { mode: 0o600 });
+    await rename(temporary, target);
+  }
+}
+
 export class GateEngine {
   evaluate(input: {
     action: string;
     classification?: string;
     external?: boolean;
     destructive?: boolean;
+    publicClaim?: boolean;
+    expectedRevision?: number;
+    actualRevision?: number;
+    evidenceIds?: string[];
+    requiredEvidence?: string[];
+    paymentStatus?: string;
+    deliveryStatus?: string;
   }): GateDecision {
     if (input.classification === "secret") {
       return {
         result: "block",
         reason: "Secret material cannot be written to canonical Studio files.",
         evidence_required: [],
+      };
+    }
+    if (
+      input.expectedRevision !== undefined &&
+      input.actualRevision !== undefined &&
+      input.expectedRevision !== input.actualRevision
+    ) {
+      return {
+        result: "block",
+        reason: "The entity changed after the command was prepared.",
+        evidence_required: ["fresh entity revision"],
+      };
+    }
+    const missingEvidence = (input.requiredEvidence ?? []).filter(
+      (required) => !(input.evidenceIds ?? []).includes(required),
+    );
+    if (missingEvidence.length > 0) {
+      return {
+        result: "block",
+        reason: `Required evidence is missing: ${missingEvidence.join(", ")}`,
+        evidence_required: missingEvidence,
+      };
+    }
+    if (input.deliveryStatus === "done" && input.paymentStatus && input.paymentStatus !== "paid") {
+      return {
+        result: "warn",
+        reason: "Delivery is complete while payment is still pending.",
+        evidence_required: ["invoice status", "delivery acceptance"],
       };
     }
     if (input.external || input.destructive) {
@@ -139,7 +375,7 @@ export class GateEngine {
         evidence_required: ["prepared action", "human confirmation", "reconciliation result"],
       };
     }
-    if (input.action.includes("publish") || input.action.includes("send")) {
+    if (input.publicClaim || input.action.includes("publish") || input.action.includes("send")) {
       return {
         result: "require_confirmation",
         reason: "Public communication requires explicit confirmation.",

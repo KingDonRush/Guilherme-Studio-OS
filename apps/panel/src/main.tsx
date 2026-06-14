@@ -1,5 +1,12 @@
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
-import { Activity, Archive, BriefcaseBusiness, GitBranch, ShieldCheck } from "lucide-react";
+import {
+  Activity,
+  Archive,
+  BriefcaseBusiness,
+  CircleAlert,
+  GitBranch,
+  ShieldCheck,
+} from "lucide-react";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
@@ -22,11 +29,41 @@ function App(): React.JSX.Element {
   const summary = useQuery({
     queryKey: ["summary"],
     queryFn: () =>
-      getJson<{ ok: boolean; entityCount: number; operatorId: string; root: string }>(
-        "/api/v1/summary",
+      getJson<{
+        ok: boolean;
+        entityCount: number;
+        operatorId: string;
+        root: string;
+        byKind: Record<string, number>;
+      }>("/api/v1/summary"),
+    retry: false,
+  });
+  const repositories = useQuery({
+    queryKey: ["repositories"],
+    queryFn: () =>
+      getJson<
+        Array<{
+          id: string;
+          title: string;
+          branch: string;
+          isDirty: boolean;
+          remotePolicyViolation: boolean;
+        }>
+      >("/api/v1/repositories"),
+    retry: false,
+  });
+  const preparedActions = useQuery({
+    queryKey: ["prepared-actions"],
+    queryFn: () =>
+      getJson<Array<{ id: string; action_type: string; status: string; expires_at: string }>>(
+        "/api/v1/prepared-actions",
       ),
     retry: false,
   });
+  const kindCount = (kind: string): number => {
+    const value = Reflect.get(summary.data?.byKind ?? {}, kind);
+    return typeof value === "number" ? value : 0;
+  };
   const entities = useQuery({
     queryKey: ["entities"],
     queryFn: () =>
@@ -100,6 +137,45 @@ function App(): React.JSX.Element {
               reconcile.
             </p>
           </article>
+          <article className="panel">
+            <Activity size={24} />
+            <h3>Pipeline registrado</h3>
+            <p>
+              {kindCount("opportunity")} oportunidades, {kindCount("engagement")} engagements e{" "}
+              {kindCount("jobApplication")} candidaturas.
+            </p>
+          </article>
+        </section>
+
+        <section className="panel" id="repos">
+          <h3>Saúde dos repositórios</h3>
+          <div className="table">
+            {(repositories.data ?? []).map((repository) => (
+              <div className="row" key={repository.id}>
+                <span>{repository.branch || "sem branch"}</span>
+                <strong>{repository.title}</strong>
+                <em>
+                  {repository.isDirty || repository.remotePolicyViolation ? "Atenção" : "Limpo"}
+                </em>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="panel" id="gates">
+          <h3>Ações preparadas</h3>
+          <div className="table">
+            {(preparedActions.data ?? []).map((action) => (
+              <div className="row" key={action.id}>
+                <span>{action.status}</span>
+                <strong>{action.action_type}</strong>
+                <em>{new Date(action.expires_at).toLocaleString("pt-BR")}</em>
+              </div>
+            ))}
+            {(preparedActions.data ?? []).length === 0 ? (
+              <p>Nenhuma ação externa aguardando confirmação.</p>
+            ) : null}
+          </div>
         </section>
 
         <section className="panel">
@@ -113,7 +189,9 @@ function App(): React.JSX.Element {
               </div>
             ))}
             {entities.isError ? (
-              <p>Informe o token de sessão em localStorage.studio_token.</p>
+              <p>
+                <CircleAlert size={16} /> A sessão local não pôde carregar as entidades.
+              </p>
             ) : null}
           </div>
         </section>
