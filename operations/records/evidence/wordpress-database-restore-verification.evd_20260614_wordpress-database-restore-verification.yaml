@@ -1,0 +1,23 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-14T23:31:56.757Z
+  id: evd_20260614_wordpress-database-restore-verification
+  labels: []
+  revision: 1
+  schema_version: 1
+  slug: wordpress-database-restore-verification
+  updated_at: 2026-06-14T23:31:56.757Z
+relations:
+  - target_id: env_20260614_wordpress-portfolio-local
+    type: supports
+spec:
+  checksum: 2d0ef5a54add10c596b7aa165a88566fa1d8f82501aecb0372231b41ee4bdd72
+  evidence_type: backup
+  observed_at: 2026-06-14T23:31:56.757Z
+  path: runtime/backups/wordpress/2026-06-14T23-22-07-895Z/manifest.json
+  status: active
+  title: WordPress database restore verification

@@ -1,0 +1,23 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-14T23:31:57.102Z
+  id: evd_20260614_wordpress-uploads-restore-verification
+  labels: []
+  revision: 1
+  schema_version: 1
+  slug: wordpress-uploads-restore-verification
+  updated_at: 2026-06-14T23:31:57.102Z
+relations:
+  - target_id: env_20260614_wordpress-portfolio-local
+    type: supports
+spec:
+  checksum: 395047cdb9561848630146625b0209e6e4a065b64e4efb102a93fe1f9aa37c8c
+  evidence_type: backup
+  observed_at: 2026-06-14T23:31:57.102Z
+  path: runtime/backups/wordpress/2026-06-14T23-24-30-557Z/uploads.manifest.json
+  status: active
+  title: WordPress uploads restore verification
