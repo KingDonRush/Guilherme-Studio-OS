@@ -19,14 +19,19 @@ wp-content/plugins/*
 !wp-content/themes/
 wp-content/themes/*
 !wp-content/themes/.gitkeep
+!wp-content/themes/guilherme-portfolio/
+!wp-content/themes/guilherme-portfolio/**
 !wp-content/pages/
 wp-content/pages/*
 !wp-content/pages/.gitkeep
+!wp-content/pages/simple-budget-case/
+!wp-content/pages/simple-budget-case/**
 !wp-content/mu-plugins/
 wp-content/mu-plugins/*
 !wp-content/mu-plugins/.gitkeep
 !wp-content/mu-plugins/ai-local-elementor-mcp-guard.php
 !wp-content/mu-plugins/ai-local-debug-display.php
+!wp-content/mu-plugins/simple-budget-case-page.php
 
 # Local secrets and dependencies.
 .env

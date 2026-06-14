@@ -1,0 +1,242 @@
+{
+  "version": 1,
+  "package": "portfolio-home-100vh-lovable-handoff-v1",
+  "created": "2026-06-13",
+  "approved_reference": "reference/portfolio-home-100vh-approved-v1.png",
+  "rules": {
+    "desktop": "fit complete composition inside 100svh near 1672x941",
+    "responsive": "recompose and allow vertical flow below large desktop",
+    "reference_panels": "rebuild as semantic HTML/CSS; never ship as flattened cards",
+    "production_media": "use directly where the design requires photography or product media"
+  },
+  "files": [
+    {
+      "path": "PROMPT.md",
+      "bytes": 5158,
+      "sha256": "e7ffde40148f182588d22e3c782732c0113cc4d76af935c369760bb2cd01f166",
+      "usage": "handoff-documentation"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1538,
+      "sha256": "4254496c897e9465eb8fa5e343ef96f2ff2d3d0b700613d5ddfacfe798231510",
+      "usage": "handoff-documentation"
+    },
+    {
+      "path": "assets/architecture/institutional-office-daylight-source.png",
+      "bytes": 2201682,
+      "sha256": "301c15273e4ab55e048c2840d75c1e552383c7149a30a2c7f091cbdcb9d034e6",
+      "image": {
+        "width": 1586,
+        "height": 992,
+        "format": "png",
+        "alpha": false
+      },
+      "usage": "archive-source"
+    },
+    {
+      "path": "assets/architecture/institutional-office-daylight.webp",
+      "bytes": 212376,
+      "sha256": "cc7d4a39a7c4250528505eb7c15fdf46cba3a9eae53d460c28a999e703843606",
+      "image": {
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "alpha": false
+      },
+      "usage": "production-media"
+    },
+    {
+      "path": "assets/architecture/landing-page-office-blue-hour-source.png",
+      "bytes": 1733022,
+      "sha256": "0ecbd982453366019f19d9e7317a193d7612475c4630e4cb6120052dbe359c8b",
+      "image": {
+        "width": 1586,
+        "height": 992,
+        "format": "png",
+        "alpha": false
+      },
+      "usage": "archive-source"
+    },
+    {
+      "path": "assets/architecture/landing-page-office-blue-hour.webp",
+      "bytes": 86668,
+      "sha256": "dede0a9d45e60b8489903a71e85bc5fedbe74e229dbbc007b24c729260479902",
+      "image": {
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "alpha": false
+      },
+      "usage": "production-media"
+    },
+    {
+      "path": "assets/identity/guilherme-silva-profile-cutout.webp",
+      "bytes": 67934,
+      "sha256": "861a7b33c619c0f9faf9e8917b8843bd4ae937086d652b8e0c5fb8a955c87b2e",
+      "image": {
+        "width": 1041,
+        "height": 923,
+        "format": "webp",
+        "alpha": true
+      },
+      "usage": "production-media"
+    },
+    {
+      "path": "assets/products/aster-workspaces-acoustic-meeting-pod-v1.webp",
+      "bytes": 478386,
+      "sha256": "24a7933ab3e8364411025fddb89418afa1da2e4b58eecbb30a006b97526df440",
+      "image": {
+        "width": 857,
+        "height": 1155,
+        "format": "webp",
+        "alpha": true
+      },
+      "usage": "production-media"
+    },
+    {
+      "path": "assets/products/aster-workspaces-ergo-lounge-chair-v1.webp",
+      "bytes": 330504,
+      "sha256": "0b285c034a9aa85b2a225afa09785bde152f79b616095efa029d3c60318e01a2",
+      "image": {
+        "width": 837,
+        "height": 1093,
+        "format": "webp",
+        "alpha": true
+      },
+      "usage": "production-media"
+    },
+    {
+      "path": "assets/products/aster-workspaces-linear-acoustic-light-v1.webp",
+      "bytes": 183252,
+      "sha256": "88ce32410c7fdabb9005c2727d732148493d6db57440f392ab966a1cb5ab0141",
+      "image": {
+        "width": 1164,
+        "height": 731,
+        "format": "webp",
+        "alpha": true
+      },
+      "usage": "production-media"
+    },
+    {
+      "path": "assets/stack-icons/portfolio-acf-badge-v2.webp",
+      "bytes": 12042,
+      "sha256": "f77c99f2f18ca285d9dff5af4bde246656628cb701eb5e71383ecd0214c9dd8b",
+      "image": {
+        "width": 380,
+        "height": 177,
+        "format": "webp",
+        "alpha": true
+      },
+      "usage": "production-media"
+    },
+    {
+      "path": "assets/stack-icons/portfolio-threejs-badge-v2.webp",
+      "bytes": 18646,
+      "sha256": "5cea64994110e80002ec4fa2f899d7caee60483704e73aa866d2e348addbd8ae",
+      "image": {
+        "width": 358,
+        "height": 361,
+        "format": "webp",
+        "alpha": true
+      },
+      "usage": "production-media"
+    },
+    {
+      "path": "reference-panels/3d-viewer-reference-only.webp",
+      "bytes": 20750,
+      "sha256": "e3234452e2dce27bb2d4675c4aebcababe878a0bddd2895f139ac236aed93990",
+      "image": {
+        "width": 493,
+        "height": 273,
+        "format": "webp",
+        "alpha": false
+      },
+      "usage": "reference-only"
+    },
+    {
+      "path": "reference-panels/institutional-website-reference-only.webp",
+      "bytes": 21466,
+      "sha256": "631a66d559c076960c6a6e4be78929a9ea656c6cc1414c9998e39a7ebb4f0d0a",
+      "image": {
+        "width": 378,
+        "height": 261,
+        "format": "webp",
+        "alpha": false
+      },
+      "usage": "reference-only"
+    },
+    {
+      "path": "reference-panels/landing-page-reference-only.webp",
+      "bytes": 26770,
+      "sha256": "0be6c5b8044e6416eb065ed935388f7f6194908aa0ad891211f8c5eb529d6a9a",
+      "image": {
+        "width": 389,
+        "height": 261,
+        "format": "webp",
+        "alpha": false
+      },
+      "usage": "reference-only"
+    },
+    {
+      "path": "reference-panels/simple-budget-reference-only.webp",
+      "bytes": 38922,
+      "sha256": "6c3cb3c5dc299efc9bcc91aec76ae8f7a71ac64beef2f38c1c93434154b1341e",
+      "image": {
+        "width": 699,
+        "height": 489,
+        "format": "webp",
+        "alpha": false
+      },
+      "usage": "reference-only"
+    },
+    {
+      "path": "reference-panels/woocommerce-store-reference-only.webp",
+      "bytes": 19652,
+      "sha256": "f4093f2ce1ba7218b26d7ae1b182b5111daf980b27fa40e507e2f796117b3c14",
+      "image": {
+        "width": 426,
+        "height": 261,
+        "format": "webp",
+        "alpha": false
+      },
+      "usage": "reference-only"
+    },
+    {
+      "path": "reference-panels/woocommerce-toolkit-reference-only.webp",
+      "bytes": 18852,
+      "sha256": "9052bfd638388069ae5f631b9b3c7232a92dd70020c2f8c7b676733df3a030c9",
+      "image": {
+        "width": 493,
+        "height": 218,
+        "format": "webp",
+        "alpha": false
+      },
+      "usage": "reference-only"
+    },
+    {
+      "path": "reference/portfolio-home-100vh-approved-v1.png",
+      "bytes": 1705031,
+      "sha256": "f16619d7f21139c616b4f813e4845315403863e0c5edd9c2e57f2ec133d4e8dd",
+      "image": {
+        "width": 1672,
+        "height": 941,
+        "format": "png",
+        "alpha": false
+      },
+      "usage": "composition-reference"
+    },
+    {
+      "path": "reference/portfolio-home-100vh-approved-v1.webp",
+      "bytes": 165876,
+      "sha256": "6e47f3f0791547089d1f6e8311bcfa53f419dd454c069a50b2825f8decd42e3c",
+      "image": {
+        "width": 1672,
+        "height": 941,
+        "format": "webp",
+        "alpha": false
+      },
+      "usage": "composition-reference"
+    }
+  ]
+}

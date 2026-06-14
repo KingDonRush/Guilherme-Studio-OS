@@ -1,0 +1,550 @@
+{
+  "version": 1,
+  "updated": "2026-06-13",
+  "purpose": "Central registry for portfolio, WordPress, GitHub, and distribution assets.",
+  "taxonomy": {
+    "functions": [
+      "identity",
+      "product",
+      "context",
+      "proof",
+      "iconography",
+      "texture-depth",
+      "composition",
+      "interaction-state",
+      "roleplay",
+      "implementation"
+    ],
+    "channels": [
+      "portfolio-site",
+      "wordpress-runtime",
+      "wordpress-media",
+      "elementor-reference",
+      "github-readme",
+      "github-social-preview",
+      "release-notes",
+      "social-post",
+      "case-study",
+      "demo-site",
+      "archive-source"
+    ],
+    "statuses": [
+      "idea",
+      "candidate",
+      "approved",
+      "production",
+      "imported",
+      "superseded",
+      "rejected",
+      "source"
+    ]
+  },
+  "assets": [
+    {
+      "id": "portfolio-main-background-elementor-1920x960-v2",
+      "title": "Portfolio Main Background For Elementor",
+      "project": "portfolio",
+      "status": "production",
+      "approved": true,
+      "functions": [
+        "context",
+        "texture-depth",
+        "composition",
+        "implementation"
+      ],
+      "channels": [
+        "portfolio-site",
+        "wordpress-runtime"
+      ],
+      "source_type": [
+        "imagegen",
+        "manual-composite"
+      ],
+      "implementation_role": [
+        "background",
+        "hero"
+      ],
+      "tags": [
+        "guilherme-silva",
+        "portfolio-home",
+        "elementor",
+        "dark-profile",
+        "warm-project-grid"
+      ],
+      "files": {
+        "production": "docs/assets/portfolio/final/portfolio-main-background-elementor-1920x960-v2.webp",
+        "source": "docs/assets/portfolio/final/portfolio-main-background-v1.png"
+      }
+    },
+    {
+      "id": "profile-guilherme-light-match-cutout-v2",
+      "title": "Guilherme Silva Light-Matched Profile Cutout",
+      "project": "portfolio",
+      "status": "production",
+      "approved": true,
+      "functions": [
+        "identity",
+        "composition",
+        "implementation"
+      ],
+      "channels": [
+        "portfolio-site",
+        "wordpress-runtime"
+      ],
+      "source_type": [
+        "imagegen",
+        "chroma",
+        "transparent-cutout"
+      ],
+      "implementation_role": [
+        "profile"
+      ],
+      "tags": [
+        "guilherme-silva",
+        "portrait",
+        "cutout",
+        "cyan-violet-rim-light"
+      ],
+      "files": {
+        "production": "docs/assets/portfolio/final/profile-guilherme-light-match-cutout-v2.webp",
+        "transparent_png": "docs/assets/portfolio/final/profile-guilherme-cutout-v2.png",
+        "chroma": "docs/assets/portfolio/final/profile-guilherme-chroma-v1.png"
+      }
+    },
+    {
+      "id": "portfolio-custom-stack-badges-v2",
+      "title": "Portfolio Custom Stack Badges",
+      "project": "portfolio",
+      "status": "production",
+      "approved": true,
+      "functions": [
+        "iconography",
+        "implementation"
+      ],
+      "channels": [
+        "portfolio-site",
+        "wordpress-runtime",
+        "github-readme"
+      ],
+      "source_type": [
+        "imagegen",
+        "chroma",
+        "transparent-cutout"
+      ],
+      "implementation_role": [
+        "icon",
+        "badge"
+      ],
+      "tags": [
+        "acf",
+        "crocoblock",
+        "threejs",
+        "rank-math",
+        "stack-icons"
+      ],
+      "files": {
+        "production": [
+          "docs/assets/portfolio/final/icons-custom/individual-webp/portfolio-acf-badge-v2.webp",
+          "docs/assets/portfolio/final/icons-custom/individual-webp/portfolio-crocoblock-badge-v2.webp",
+          "docs/assets/portfolio/final/icons-custom/individual-webp/portfolio-threejs-badge-v2.webp",
+          "docs/assets/portfolio/final/icons-custom/individual-webp/portfolio-rank-math-badge-v2.webp"
+        ],
+        "source_sheet": "docs/assets/portfolio/final/icons-custom/custom-icon-sheet-chroma-v2.png"
+      }
+    },
+    {
+      "id": "simple-budget-rigid-page-locked-layout-v3",
+      "title": "Simple Budget Rigid Page Locked Layout",
+      "project": "simple-budget-plugin",
+      "status": "imported",
+      "approved": true,
+      "functions": [
+        "proof",
+        "iconography",
+        "composition",
+        "implementation"
+      ],
+      "channels": [
+        "portfolio-site",
+        "wordpress-media",
+        "case-study",
+        "github-readme"
+      ],
+      "source_type": [
+        "imagegen",
+        "chroma",
+        "transparent-cutout"
+      ],
+      "implementation_role": [
+        "icon",
+        "card-art"
+      ],
+      "tags": [
+        "simple-budget-plugin",
+        "rigid-plugin-pages",
+        "locked-layout",
+        "elementor"
+      ],
+      "files": {
+        "production": "docs/assets/simple-budget-demo/icons/wordpress/simple-budget-plugin-rigid-page-locked-layout-v3.webp",
+        "transparent_png": "docs/assets/simple-budget-demo/icons/png-transparent/rigid-plugin-page-imagegen-v3.png",
+        "chroma": "docs/assets/simple-budget-demo/icons/chroma/rigid-plugin-page-imagegen-chroma-v3.png"
+      },
+      "wordpress": {
+        "attachment_id": 460,
+        "mime": "image/webp",
+        "alt": "Locked rigid plugin page layout"
+      }
+    },
+    {
+      "id": "simple-budget-dark-technical-hero-background-v1",
+      "title": "Simple Budget Dark Technical Hero Background",
+      "project": "simple-budget-plugin",
+      "status": "imported",
+      "approved": true,
+      "functions": [
+        "context",
+        "texture-depth",
+        "implementation"
+      ],
+      "channels": [
+        "portfolio-site",
+        "wordpress-media",
+        "case-study"
+      ],
+      "source_type": [
+        "imagegen"
+      ],
+      "implementation_role": [
+        "background",
+        "hero"
+      ],
+      "tags": [
+        "simple-budget-plugin",
+        "portfolio-case",
+        "dark-technical-background"
+      ],
+      "files": {
+        "production": "docs/assets/simple-budget-demo/backgrounds/wordpress/simple-budget-plugin-dark-technical-hero-background-1920x960-v1.webp",
+        "source": "docs/assets/simple-budget-demo/backgrounds/source/case-hero-dark-technical-background-v1.png"
+      },
+      "wordpress": {
+        "attachment_id": 434,
+        "mime": "image/webp",
+        "alt": ""
+      }
+    },
+    {
+      "id": "simple-budget-aster-product-cutouts-v1",
+      "title": "Aster Workspaces Product Cutouts",
+      "project": "simple-budget-plugin",
+      "status": "imported",
+      "approved": true,
+      "functions": [
+        "product",
+        "roleplay",
+        "implementation"
+      ],
+      "channels": [
+        "demo-site",
+        "wordpress-media",
+        "portfolio-site"
+      ],
+      "source_type": [
+        "imagegen",
+        "chroma",
+        "transparent-cutout"
+      ],
+      "implementation_role": [
+        "product-image",
+        "card-art"
+      ],
+      "tags": [
+        "aster-workspaces",
+        "fictional-demo",
+        "catalog-products",
+        "simple-budget-plugin"
+      ],
+      "files": {
+        "production": [
+          "docs/assets/simple-budget-demo/products/wordpress/aster-workspaces-ergo-lounge-chair-v1.webp",
+          "docs/assets/simple-budget-demo/products/wordpress/aster-workspaces-acoustic-meeting-pod-v1.webp",
+          "docs/assets/simple-budget-demo/products/wordpress/aster-workspaces-linear-acoustic-light-v1.webp"
+        ],
+        "transparent_png_dir": "docs/assets/simple-budget-demo/products/png-transparent/",
+        "chroma_dir": "docs/assets/simple-budget-demo/products/chroma/"
+      },
+      "wordpress": {
+        "attachment_ids": [
+          430,
+          431,
+          432
+        ],
+        "mime": "image/webp"
+      }
+    },
+    {
+      "id": "portfolio-project-preview-pack-v1",
+      "title": "Portfolio Project Card Preview Pack",
+      "project": "portfolio",
+      "status": "production",
+      "approved": true,
+      "functions": [
+        "proof",
+        "composition",
+        "implementation"
+      ],
+      "channels": [
+        "portfolio-site",
+        "wordpress-runtime",
+        "archive-source"
+      ],
+      "source_type": [
+        "approved-mockup-extraction"
+      ],
+      "implementation_role": [
+        "card-art",
+        "project-preview"
+      ],
+      "tags": [
+        "portfolio-home",
+        "approved-mockup",
+        "project-grid",
+        "runtime-asset-loop"
+      ],
+      "files": {
+        "approved_reference": "docs/assets/portfolio/final/portfolio-hero-final-v9-1672.png",
+        "source": [
+          "docs/assets/portfolio/extracted/project-previews/simple-budget-preview-source-v1.png",
+          "docs/assets/portfolio/extracted/project-previews/3d-viewer-preview-source-v1.png",
+          "docs/assets/portfolio/extracted/project-previews/woocommerce-toolkit-preview-source-v1.png",
+          "docs/assets/portfolio/extracted/project-previews/landing-page-preview-source-v1.png",
+          "docs/assets/portfolio/extracted/project-previews/institutional-website-preview-source-v1.png",
+          "docs/assets/portfolio/extracted/project-previews/woocommerce-store-preview-source-v1.png"
+        ],
+        "production": [
+          "wordpress/wp-content/themes/guilherme-portfolio/assets/images/project-previews/simple-budget-preview-v1.webp",
+          "wordpress/wp-content/themes/guilherme-portfolio/assets/images/project-previews/3d-viewer-preview-v1.webp",
+          "wordpress/wp-content/themes/guilherme-portfolio/assets/images/project-previews/woocommerce-toolkit-preview-v1.webp",
+          "wordpress/wp-content/themes/guilherme-portfolio/assets/images/project-previews/landing-page-preview-v1.webp",
+          "wordpress/wp-content/themes/guilherme-portfolio/assets/images/project-previews/institutional-website-preview-v1.webp",
+          "wordpress/wp-content/themes/guilherme-portfolio/assets/images/project-previews/woocommerce-store-preview-v1.webp"
+        ]
+      }
+    },
+    {
+      "id": "simple-budget-elementor-evidence-pack-v1",
+      "title": "Simple Budget Real Elementor Evidence Pack",
+      "project": "simple-budget-plugin",
+      "status": "candidate",
+      "approved": false,
+      "functions": [
+        "proof",
+        "implementation"
+      ],
+      "channels": [
+        "portfolio-site",
+        "case-study",
+        "wordpress-runtime",
+        "archive-source"
+      ],
+      "source_type": [
+        "screenshot",
+        "real-editor-capture"
+      ],
+      "implementation_role": [
+        "hero-evidence",
+        "editor-proof"
+      ],
+      "tags": [
+        "simple-budget-plugin",
+        "elementor",
+        "budget-button",
+        "budget-listing",
+        "cart-template",
+        "candidate"
+      ],
+      "files": {
+        "source": [
+          "docs/assets/simple-budget-demo/evidence/source/simple-budget-open-cart-button-editor-source-v1.png",
+          "docs/assets/simple-budget-demo/evidence/source/simple-budget-listing-editor-source-v1.png",
+          "docs/assets/simple-budget-demo/evidence/source/simple-budget-cart-template-editor-source-v1.png"
+        ],
+        "optimized": [
+          "docs/assets/simple-budget-demo/evidence/wordpress/simple-budget-open-cart-button-editor-v1.webp",
+          "docs/assets/simple-budget-demo/evidence/wordpress/simple-budget-listing-editor-v1.webp",
+          "docs/assets/simple-budget-demo/evidence/wordpress/simple-budget-cart-template-editor-v1.webp"
+        ],
+        "runtime": [
+          "wordpress/wp-content/themes/guilherme-portfolio/assets/images/simple-budget-evidence/simple-budget-open-cart-button-editor-v1.webp",
+          "wordpress/wp-content/themes/guilherme-portfolio/assets/images/simple-budget-evidence/simple-budget-listing-editor-v1.webp",
+          "wordpress/wp-content/themes/guilherme-portfolio/assets/images/simple-budget-evidence/simple-budget-cart-template-editor-v1.webp"
+        ]
+      }
+    },
+    {
+      "id": "simple-budget-hero-panel-v1",
+      "title": "Simple Budget Hero Panel",
+      "project": "simple-budget-plugin",
+      "status": "candidate",
+      "approved": false,
+      "functions": [
+        "context",
+        "proof",
+        "texture-depth",
+        "composition"
+      ],
+      "channels": [
+        "portfolio-site",
+        "case-study",
+        "wordpress-runtime"
+      ],
+      "source_type": [
+        "imagegen"
+      ],
+      "implementation_role": [
+        "hero",
+        "card-art"
+      ],
+      "tags": [
+        "simple-budget-plugin",
+        "behavior-layer",
+        "portfolio-case",
+        "candidate"
+      ],
+      "files": {
+        "source": "docs/assets/simple-budget-demo/coded-case/simple-budget-hero-panel-source-v1.png",
+        "runtime": "wordpress/wp-content/pages/simple-budget-case/assets/simple-budget-hero-panel-v1.webp"
+      }
+    },
+    {
+      "id": "portfolio-home-lovable-handoff-v1",
+      "title": "Portfolio Home 100vh Lovable Handoff",
+      "project": "portfolio",
+      "status": "production",
+      "approved": true,
+      "functions": [
+        "identity",
+        "product",
+        "proof",
+        "composition",
+        "implementation"
+      ],
+      "channels": [
+        "portfolio-site",
+        "elementor-reference",
+        "archive-source"
+      ],
+      "source_type": [
+        "imagegen",
+        "extracted",
+        "transparent-cutout",
+        "manual-composite"
+      ],
+      "implementation_role": [
+        "profile",
+        "product-image",
+        "card-art",
+        "screenshot"
+      ],
+      "tags": [
+        "portfolio-home",
+        "100vh",
+        "lovable",
+        "image-to-code",
+        "handoff",
+        "guilherme-silva"
+      ],
+      "files": {
+        "package": "docs/assets/distribution/lovable/portfolio-home-100vh-v1.zip",
+        "directory": "docs/assets/distribution/lovable/portfolio-home-100vh-v1/",
+        "approved_reference": "docs/assets/distribution/lovable/portfolio-home-100vh-v1/reference/portfolio-home-100vh-approved-v1.png",
+        "prompt": "docs/assets/distribution/lovable/portfolio-home-100vh-v1/PROMPT.md",
+        "manifest": "docs/assets/distribution/lovable/portfolio-home-100vh-v1/asset-manifest.json"
+      }
+    },
+    {
+      "id": "portfolio-home-icon-library-v1",
+      "title": "Portfolio Home Icon Library",
+      "project": "portfolio",
+      "status": "production",
+      "approved": true,
+      "functions": [
+        "iconography",
+        "implementation"
+      ],
+      "channels": [
+        "portfolio-site",
+        "wordpress-runtime",
+        "elementor-reference",
+        "github-readme",
+        "archive-source"
+      ],
+      "source_type": [
+        "theme-asset",
+        "elementor-bundled-font-awesome",
+        "imagegen",
+        "transparent-cutout"
+      ],
+      "implementation_role": [
+        "icon",
+        "badge",
+        "interface-control"
+      ],
+      "tags": [
+        "portfolio-home",
+        "icons",
+        "svg",
+        "font-awesome",
+        "elementor",
+        "lovable",
+        "handoff"
+      ],
+      "files": {
+        "package": "docs/assets/distribution/lovable/portfolio-home-icons-v1.zip",
+        "directory": "docs/assets/distribution/lovable/portfolio-home-icons-v1/",
+        "manifest": "docs/assets/distribution/lovable/portfolio-home-icons-v1/icon-manifest.json",
+        "preview": "docs/assets/distribution/lovable/portfolio-home-icons-v1/preview.html"
+      }
+    },
+    {
+      "id": "simple-budget-case-runtime-icons-v1",
+      "title": "Simple Budget Case Runtime Icons",
+      "project": "simple-budget-plugin",
+      "status": "production",
+      "approved": true,
+      "functions": [
+        "iconography",
+        "implementation"
+      ],
+      "channels": [
+        "portfolio-site",
+        "wordpress-runtime",
+        "case-study"
+      ],
+      "source_type": [
+        "extracted"
+      ],
+      "implementation_role": [
+        "icon"
+      ],
+      "tags": [
+        "simple-budget-plugin",
+        "case-page",
+        "external-link",
+        "cart",
+        "approved-local-icon-package"
+      ],
+      "files": {
+        "source": [
+          "docs/assets/distribution/lovable/portfolio-home-icons-v1/interface/cart.svg",
+          "docs/assets/distribution/lovable/portfolio-home-icons-v1/interface/external-link.svg"
+        ],
+        "runtime": [
+          "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/cart.svg",
+          "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/external-link.svg"
+        ]
+      }
+    }
+  ]
+}

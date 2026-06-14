@@ -1,0 +1,599 @@
+{
+  "version": 1,
+  "package": "portfolio-home-icons-v1",
+  "created": "2026-06-13",
+  "counts": {
+    "total_files": 84,
+    "icon_assets": 79,
+    "svg": 75,
+    "webp": 4
+  },
+  "conventions": {
+    "interface_color": "currentColor",
+    "portfolio_icons": "preserve supplied colors and geometry",
+    "custom_badges": "use when exact approved raster badge is required"
+  },
+  "files": [
+    {
+      "path": "custom-badges/portfolio-acf-badge-v2.webp",
+      "bytes": 12042,
+      "sha256": "f77c99f2f18ca285d9dff5af4bde246656628cb701eb5e71383ecd0214c9dd8b",
+      "source": "docs/assets/portfolio/final/icons-custom/individual-webp/portfolio-acf-badge-v2.webp",
+      "role": "approved-raster-badge"
+    },
+    {
+      "path": "custom-badges/portfolio-crocoblock-badge-v2.webp",
+      "bytes": 9358,
+      "sha256": "26310678f926449ff6a53a67d2ea1f06cc3e4add6ffd0de5d9dc00797d2700b8",
+      "source": "docs/assets/portfolio/final/icons-custom/individual-webp/portfolio-crocoblock-badge-v2.webp",
+      "role": "approved-raster-badge"
+    },
+    {
+      "path": "custom-badges/portfolio-rank-math-badge-v2.webp",
+      "bytes": 11678,
+      "sha256": "12c06fed297a9a93d4ab0e79e0f6465098aa7983576d32a2c3af225e9bf1ff69",
+      "source": "docs/assets/portfolio/final/icons-custom/individual-webp/portfolio-rank-math-badge-v2.webp",
+      "role": "approved-raster-badge"
+    },
+    {
+      "path": "custom-badges/portfolio-threejs-badge-v2.webp",
+      "bytes": 18646,
+      "sha256": "5cea64994110e80002ec4fa2f899d7caee60483704e73aa866d2e348addbd8ae",
+      "source": "docs/assets/portfolio/final/icons-custom/individual-webp/portfolio-threejs-badge-v2.webp",
+      "role": "approved-raster-badge"
+    },
+    {
+      "path": "interface/add-to-cart.svg",
+      "bytes": 1019,
+      "sha256": "1f968d1411551b44da334168827464ba0f9258c6dd9cd8d03d1fa8e61798f09a",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/advanced-tab.svg",
+      "bytes": 980,
+      "sha256": "440d55fd4ebb8bd506a765ca4ca5f817f82651dc81644598260753b25192b6c0",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/arrow-left.svg",
+      "bytes": 416,
+      "sha256": "f99651b8ba14954b33bfa52d31cf3c0e73485d261d5dbbfef44a326de55235b7",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/arrow-right.svg",
+      "bytes": 422,
+      "sha256": "6f0d6bdcd087ffa0fd649223dd7c3963bcbf07845d9c4d2d7cee8e36b7609058",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/cart.svg",
+      "bytes": 698,
+      "sha256": "6f7da41c7d67b25b1e1d118d9deec1b86f45638c3f4202522dfab3367e22d57e",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/check.svg",
+      "bytes": 437,
+      "sha256": "382f8d8d966b03fc04f187d93baef7aee16ed6692c536306c706f6a958cbb2c0",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/checkout.svg",
+      "bytes": 489,
+      "sha256": "26167473815a2e75880bede6a745d142a3e0b13a5c81db717d2271d875a8e3ce",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/chevron-down.svg",
+      "bytes": 449,
+      "sha256": "ac54edbfe3b27e9e2a4ad1f2c5f15cdc2db7438dc7023358fce5d81fdd824b03",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/chevron-left.svg",
+      "bytes": 408,
+      "sha256": "6957c177606fcb76fd9991dab73544e2142192bec417638dd2586d633e9f335a",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/chevron-right.svg",
+      "bytes": 452,
+      "sha256": "4fa75604af8afaa6853bb245b726cfd9aec8603f50cc63096509f27ff78893dc",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/chevron-up.svg",
+      "bytes": 452,
+      "sha256": "ac04ee9a538b4b86315cc21b4a1e49d562981442614d2d4cf7b09f86ab8198c5",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/close.svg",
+      "bytes": 578,
+      "sha256": "030f77a4aea8a69cf4542d93e96f097968092ef1a7a4d17396ce4ef780d34986",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/code.svg",
+      "bytes": 702,
+      "sha256": "c12aeabd196562e7b5f5435751e4e55339f773c3036c63bb1ddc88ab793378ca",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/content-tab.svg",
+      "bytes": 1416,
+      "sha256": "312f190fd206cc228248fa3893b277fb029c470688083a882ab6830bf25c9de1",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/custom-plugins.svg",
+      "bytes": 816,
+      "sha256": "c0cddb6c0be429e6fc8014c26daed638d7eaed6cd3645a280cf30f7668a42577",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/database.svg",
+      "bytes": 563,
+      "sha256": "28e97acac2ed476665e1ebd795a3b42dddffafbc681e03b198faf726ab714a67",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/design-implementation.svg",
+      "bytes": 407,
+      "sha256": "d652d0a468f6d3eeb50060cf5394c209efd4fa3c4c96bc78b401b66f02d7e973",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/desktop.svg",
+      "bytes": 393,
+      "sha256": "8f545f17be9a907bb9e404151bfcc9bc9dbb8f93a6e26e2d7d7661731ba0c41d",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/discuss-project.svg",
+      "bytes": 455,
+      "sha256": "1b462e694308a900d9b5488fe67feb1dd506cb8502c325334bbd8ec1ef728ca6",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/download.svg",
+      "bytes": 608,
+      "sha256": "baed62a1b750c63d69f7b33fdd11913b7ee5aeb47b725340e053b5968775b778",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/email.svg",
+      "bytes": 627,
+      "sha256": "6f44d46d1d38bb550945b7c88ed395f0ca1902b1cba391da73b498c6210c8de3",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/external-link.svg",
+      "bytes": 514,
+      "sha256": "0a93da11ab63a1cb10c221b69fdfd53c348d32e376aa404522b4f1263ede9a76",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/file-code.svg",
+      "bytes": 1027,
+      "sha256": "ab0f7bf603f6b2c78303b168126ab85d35e265dc812d759c387098db75b0bc97",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/filters.svg",
+      "bytes": 370,
+      "sha256": "b12eb2760cc343fefc55116f9f5fa63288c608537a62dd352dedc6925170564e",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/fit-view.svg",
+      "bytes": 674,
+      "sha256": "5306f9c0664a5b3637c74defd0dac83c1d5809c775a1a88c3d73f75dbf0d1a95",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/folder.svg",
+      "bytes": 291,
+      "sha256": "d986bec7055dcaaf36adb44cca03ce7c7a9510b565b409199922feaf2feaae56",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/jobs-freelance.svg",
+      "bytes": 440,
+      "sha256": "fe89f0bbc57cd62606c52f7c4b8d19c305c0b672d93258eddacbce0c76ac6530",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/layers.svg",
+      "bytes": 803,
+      "sha256": "b1c058c8ee4e8e606c7dbacdeb259fe012e41075c48740233acb43ce55d98161",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/lock.svg",
+      "bytes": 374,
+      "sha256": "571c6d9da2f9edc1218a915e541d5e2916290a0cffe5de1dc6584dca119a594f",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/menu.svg",
+      "bytes": 503,
+      "sha256": "ed82312b458fbbfc4824f4dbbe098cd58f847d8f1efc0cd28092dc2417efb407",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/mini-cart.svg",
+      "bytes": 929,
+      "sha256": "24165fcf9d0930862924518915ac7ab6d751b36932f3c72039469029dfbd3c51",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/minus.svg",
+      "bytes": 279,
+      "sha256": "c23e7ac1d0a4346ca59bc7e8047259001fcb6f5fae9ca8b68d6f82e9b3c0354d",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/mobile.svg",
+      "bytes": 440,
+      "sha256": "5e641feb84e56e537736c029e4d50c9745810fd9ffcc807acc1697cc0c0ff720",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/orbit.svg",
+      "bytes": 925,
+      "sha256": "0cf9459ebbb6e66ab337d7823a759db70d30f2db41854621b0597319ef8c3c7a",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/palette.svg",
+      "bytes": 646,
+      "sha256": "5e39f9b2e1da3efb66f9e4516b017e76281bc732c30258180bb170cf16a96f93",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/pan.svg",
+      "bytes": 740,
+      "sha256": "b857250d34a54b0a7ee3941ff54d85e234604a8bbc4fa425840d3fb1a11525d4",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/plus.svg",
+      "bytes": 401,
+      "sha256": "16bb82be84403c12f475a501eda649132b96838c56ca3d90d14b9e4c8bb81afb",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/product-carousel.svg",
+      "bytes": 627,
+      "sha256": "3563bc3c021d79f73a9892ff3969b3794084618adbf07699ca4ad1324b250094",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/product-grid.svg",
+      "bytes": 663,
+      "sha256": "cadd779a92f43a5c7158431e5bcc1dd171bb44befb0f7fecb6884cc2c4fb26ce",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/product-tabs.svg",
+      "bytes": 330,
+      "sha256": "89fc5dfbc0ca340c3aa090ee2c79ba1617620ca7b95355f6d6c2781bcda8e252",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/remove-item.svg",
+      "bytes": 528,
+      "sha256": "5ed97d6d330728d498ebf096eba8694c13095020d998a12691b2d51bf9c79181",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/reset-view.svg",
+      "bytes": 712,
+      "sha256": "4b6fa375afb8308a9da8bbd72cce67adf7024468deb1b913501bd5e9002dc07b",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/search.svg",
+      "bytes": 509,
+      "sha256": "9b7b3aaf340fc6d54e9eddf6fb967bec94ff59318b7f504ff02b2cee76c19038",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/select.svg",
+      "bytes": 450,
+      "sha256": "7f7cde9d3590b5062d18a4c0c9863af7fe61d0986683ca31556e536edd24e449",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/settings.svg",
+      "bytes": 775,
+      "sha256": "c07bda40b1b7eaafa061c3fdc269403a8abd22a896a5f1868e911650db69761b",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/style-tab.svg",
+      "bytes": 612,
+      "sha256": "282861247410e026ee921971ee65c7f6a60a3587478dac8e6e7b884453624be8",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/tablet.svg",
+      "bytes": 440,
+      "sha256": "f53d7d1cff35dcc26f098753b8588be86e58da2c38eb356ac08516fefb3c525b",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/three-d-model.svg",
+      "bytes": 465,
+      "sha256": "881dc765fc575a154d808e324736182c92e498474ef795a7939eee131c10caa4",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/view.svg",
+      "bytes": 492,
+      "sha256": "81cebb9fbae3012070d45be7886375c37c2ecef716eff2165019348a67188174",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/wishlist.svg",
+      "bytes": 373,
+      "sha256": "26b0ca3f47876eafbcd89e2687b172c70cb429296b2ea44d41a23cb17a7a1d1a",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "interface/zoom.svg",
+      "bytes": 691,
+      "sha256": "460b8c317b86b98d5c1f6e86f19c0478df14c5eb28920f21a8ea0920973af053",
+      "source": "wordpress/wp-content/plugins/elementor/assets/lib/font-awesome/json/",
+      "role": "interface-icon"
+    },
+    {
+      "path": "LICENSES/ELEMENTOR-GPL-LICENSE.txt",
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source": "wordpress/wp-content/plugins/elementor/license.txt",
+      "role": "documentation"
+    },
+    {
+      "path": "LICENSES/FONT-AWESOME-NOTICE.txt",
+      "bytes": 558,
+      "sha256": "917d1c3ee0948c09e6b16ca2ddcb8c13dd9a7f7d71c6d5707019296cfc49644d",
+      "source": "package-documentation",
+      "role": "documentation"
+    },
+    {
+      "path": "portfolio/actions/github-action.svg",
+      "bytes": 596,
+      "sha256": "d6fde5eb5db067ae83e8fdaa04b7a1233dbf01a563bb1f4faf0d4e482851be8b",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/github-action.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/actions/see-project-eye.svg",
+      "bytes": 479,
+      "sha256": "a7cbfe6152577734ed3e22b0d1b309e3a8fcd6cac3b4d974f0d19569b087f902",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/see-project-eye.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/brand-tech/acf.svg",
+      "bytes": 390,
+      "sha256": "4c3ace9d14f5c836dfe618b2cc30185e406b95d376e3de3856fdc502b049cb0e",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/acf.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/brand-tech/crocoblock.svg",
+      "bytes": 448,
+      "sha256": "76cad50d8f4a7acf8b44aab3a870b7942b3d3568aeedaa73f7cadbc226e830a0",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/crocoblock.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/brand-tech/css.svg",
+      "bytes": 448,
+      "sha256": "fd56da1ac4aefccd60243c4c1ece667f1f071aa576d1d1a2f39f3b40c310793f",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/css.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/brand-tech/elementor.svg",
+      "bytes": 461,
+      "sha256": "bad9e65ab063a0e155a94ce0801a54a76915f4f862deb0a15489880ee1a216dc",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/elementor.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/brand-tech/git.svg",
+      "bytes": 592,
+      "sha256": "c1e2dafb03074d278eed5d4748de7512f5e342fa66f94adf34a30bc8e9174818",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/git.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/brand-tech/javascript.svg",
+      "bytes": 467,
+      "sha256": "4ccf59422b2b317c6b7bdcba09ae3f575ed06c11906cfca29c36d2d3d042f581",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/javascript.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/brand-tech/performance.svg",
+      "bytes": 511,
+      "sha256": "8450f9ee12e6c0c39a68bd9f43bfb6bcd18c18e605587a2adba1341112022cb5",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/performance.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/brand-tech/php.svg",
+      "bytes": 431,
+      "sha256": "dd88f66130b7089e31b2bf9d42c5cf64a1c05e3cc6bf252415989652573499ee",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/php.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/brand-tech/rank-math.svg",
+      "bytes": 580,
+      "sha256": "577bc9d600022c92ac9e32d7ec5cf1e239e30e868fce3d1688f5aa1e1acd6305",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/rank-math.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/brand-tech/threejs.svg",
+      "bytes": 736,
+      "sha256": "84c4e781d22bc53a188cf5bee4dc86590594acf99be112c9b4f32e864785b264",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/threejs.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/brand-tech/woocommerce.svg",
+      "bytes": 563,
+      "sha256": "2250228f1e9eef42e33048080e5dab45626a1e75bae98069275cdb6a0b577e54",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/woocommerce.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/brand-tech/wordpress.svg",
+      "bytes": 368,
+      "sha256": "ea3137df065cab7915737b299aeadaf901e0b54ece4f9b29c11e8fb8fcf00270",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/wordpress.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/capabilities/custom-solutions.svg",
+      "bytes": 612,
+      "sha256": "7b85a2fa3c668bc35cda7a084858b06b33820c1dc8d6d7e7e85221447c3808ff",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/custom-solutions.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/capabilities/elementor-implementation.svg",
+      "bytes": 582,
+      "sha256": "9ad4d299ff8271c1fe57fa64010ee421462133fdef59b98b09fb43519531a081",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/elementor-implementation.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/capabilities/jobs-freelance.svg",
+      "bytes": 577,
+      "sha256": "2ef3fde2dbc9b0ca86f68f553d9c9a0fd9af3fa29f87ef2f58984733794a4687",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/jobs-freelance.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/capabilities/woocommerce.svg",
+      "bytes": 563,
+      "sha256": "2250228f1e9eef42e33048080e5dab45626a1e75bae98069275cdb6a0b577e54",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/woocommerce.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/capabilities/wordpress-developer.svg",
+      "bytes": 479,
+      "sha256": "0af1c54fd1d97cd64b60b4bc3aa973dfc8dcd72e5fbcd3bfec97086a2dfe7059",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/wordpress-developer.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/social/email.svg",
+      "bytes": 483,
+      "sha256": "29dc3f514fab8590b5c85a0c71cc64fe1eb5698ce7e04b6d81150ac3e6706c98",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/email.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/social/github.svg",
+      "bytes": 588,
+      "sha256": "3a686bbf4aa4a85f767027a5f9a7d9f19f92568041a279970ac332cf6b5187f9",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/github.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/social/instagram.svg",
+      "bytes": 490,
+      "sha256": "e82a3b30076bac17bb40b53653c384716327acbb0535e164251b24f45d47a71a",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/instagram.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/social/linkedin.svg",
+      "bytes": 396,
+      "sha256": "525eab41480835e7fb25c73f11c92d816eda48d6587af8fb44968cc3c392d1d2",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/linkedin.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "portfolio/social/whatsapp.svg",
+      "bytes": 480,
+      "sha256": "825dd1fb343d7a4c9b3df53d33a18d21d1dd06e384a32141cf486b2fe1741161",
+      "source": "wordpress/wp-content/themes/guilherme-portfolio/assets/icons/whatsapp.svg",
+      "role": "portfolio-icon"
+    },
+    {
+      "path": "preview.html",
+      "bytes": 13323,
+      "sha256": "ce818d5f866073f6f8d6673bb1c8c7c89681b7bd844b50902826b36f5d3ec9fa",
+      "source": "package-documentation",
+      "role": "documentation"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1875,
+      "sha256": "93097300b01ccd1f8c55d57f194eb6f7ea753bb7b4123eb46b29006fa1cf7ab4",
+      "source": "package-documentation",
+      "role": "documentation"
+    }
+  ]
+}

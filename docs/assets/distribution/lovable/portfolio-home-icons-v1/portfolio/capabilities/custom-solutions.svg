@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>Custom Solutions</title>
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="#08111f" stroke="#22d3ee" stroke-width="2"/>
+
+  <path d="M25 22 15 32l10 10" fill="none" stroke="#e0fbff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M39 22 49 32 39 42" fill="none" stroke="#e0fbff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M35 18 29 46" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+
+</svg>

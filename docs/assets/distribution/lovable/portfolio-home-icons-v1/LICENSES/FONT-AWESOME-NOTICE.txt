@@ -1,0 +1,18 @@
+Font Awesome Free 5.15.3
+Copyright Fonticons, Inc.
+
+The interface icons in this package were extracted from the Font Awesome Free
+metadata bundled with Elementor.
+
+Icons: CC BY 4.0
+Fonts: SIL OFL 1.1
+Code: MIT License
+
+Project: https://fontawesome.com/
+License information: https://fontawesome.com/license/free
+CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+
+Changes made in this package:
+- path data was wrapped in standalone SVG documents;
+- descriptive titles and implementation-oriented filenames were added;
+- path geometry was not redesigned.

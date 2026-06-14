@@ -35,8 +35,9 @@ Known issues to improve in the next pass:
   placeholder divider if native Elementor shape dividers are not enough. Final
   visual dividers/background assets should be generated or refined with
   imagegen before production use.
-- `docs/assets/portfolio/final/portfolio-hero-final-v9-1672.png` is the current
-  complete hero concept after the divider correction.
+- `docs/assets/portfolio/final/portfolio-hero-final-v9.png` is the current
+  user-selected complete hero concept and the visual baseline for portfolio
+  case pages.
 - This version restores the project-level stack badge evidence from the
   provisional reference.
 - It also replaces generic 3D/SEO badges with Three.js and Rank Math / Yoast
@@ -56,11 +57,13 @@ Known issues to improve in the next pass:
 - Use the individual cropped icon WebPs in
   `docs/assets/portfolio/final/icons-custom/individual-webp/` for
   implementation and Media Library placement.
-- The generated custom icon set must remain limited to icons missing from the
-  local Elementor/Font Awesome set: ACF, Crocoblock, Three.js, and Rank Math.
-  Use native local icons for WordPress, Elementor, WooCommerce, PHP,
-  JavaScript, CSS, Git, Yoast, social/contact, GitHub/action, performance,
-  code, desktop, puzzle, and briefcase.
+- Icons are never created through code in this project. Use WordPress,
+  Elementor, the active theme, or an already approved local icon package when an
+  icon exists there. When an icon is missing or visually weak, generate it with
+  imagegen and process it through the asset pipeline.
+- The custom icon set must remain limited to icons missing from the approved
+  local sources. Do not improvise missing stack, social, contact, interface, or
+  capability icons with handwritten SVG/CSS/canvas.
 - For WordPress use, raster assets must be WebP. PNG output is allowed only as
   imagegen/chroma/intermediate source material, not as the Media Library asset.
 
