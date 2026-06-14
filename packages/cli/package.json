@@ -1,0 +1,25 @@
+{
+  "name": "@guilherme-studio/cli",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "studio": "dist/bin.js"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@guilherme-studio/adapters": "*",
+    "@guilherme-studio/core": "*",
+    "@guilherme-studio/local-api": "*",
+    "@guilherme-studio/schemas": "*",
+    "@guilherme-studio/storage": "*",
+    "commander": "15.0.0"
+  }
+}

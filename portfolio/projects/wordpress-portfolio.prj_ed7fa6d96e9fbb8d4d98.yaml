@@ -1,0 +1,25 @@
+apiVersion: studio.guilherme.dev/entity-v1
+kind: project
+id: prj_ed7fa6d96e9fbb8d4d98
+slug: wordpress-portfolio
+title: WordPress Portfolio
+status: waiting
+classification: internal
+revision: 1
+createdAt: "2026-06-14T20:30:00.000Z"
+updatedAt: "2026-06-14T20:30:00.000Z"
+ownerId: per_20260614_guilherme-silva
+summary: Portfolio website frozen until Studio OS V1 reaches acceptance.
+labels:
+  - portfolio
+  - wordpress
+relations:
+  - type: showcases
+    targetId: prd_db6f7a9dd954fe4ba1ac
+  - type: showcases
+    targetId: prd_7b85fd87ab0edb380151
+  - type: showcases
+    targetId: prd_e49afa5bd8c7f50e105a
+data:
+  runtimePath: wordpress
+  currentPolicy: frozen-before-studio-os-v1-acceptance

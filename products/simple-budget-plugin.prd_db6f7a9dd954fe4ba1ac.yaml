@@ -1,0 +1,21 @@
+apiVersion: studio.guilherme.dev/entity-v1
+kind: product
+id: prd_db6f7a9dd954fe4ba1ac
+slug: simple-budget-plugin
+title: Simple Budget Plugin
+status: active
+classification: public
+revision: 1
+createdAt: "2026-06-14T20:30:00.000Z"
+updatedAt: "2026-06-14T20:30:00.000Z"
+ownerId: per_20260614_guilherme-silva
+summary: Flexible quote workflow for Elementor projects through native widgets and an editable cart template.
+labels:
+  - wordpress
+  - elementor
+  - plugin
+relations: []
+data:
+  repositoryPath: wordpress/wp-content/plugins/simple-budget-plugin
+  signal: Elementor-friendly plugin architecture for real quote flows.
+  portfolioRole: flagship-plugin-case

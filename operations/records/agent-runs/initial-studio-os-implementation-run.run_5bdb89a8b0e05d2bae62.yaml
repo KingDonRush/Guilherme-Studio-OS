@@ -1,0 +1,21 @@
+apiVersion: studio.guilherme.dev/entity-v1
+classification: internal
+createdAt: 2026-06-14T20:34:06.090Z
+data:
+  evidenceIds:
+    - evd_a2689612f7d0e899d1bc
+  finishedAt: 2026-06-14T20:35:40.561Z
+  objective: Create the first Studio OS V1 executable vertical.
+  result: complete
+  startedAt: 2026-06-14T20:34:06.090Z
+id: run_5bdb89a8b0e05d2bae62
+kind: agentRun
+labels: []
+relations:
+  - targetId: tsk_605ab2a82c322bbdd701
+    type: executes
+revision: 2
+slug: initial-studio-os-implementation-run
+status: done
+title: Initial Studio OS implementation run
+updatedAt: 2026-06-14T20:35:40.561Z

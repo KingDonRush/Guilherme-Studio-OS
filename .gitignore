@@ -1,0 +1,40 @@
+# Studio runtime and local state.
+runtime/
+node_modules/
+**/node_modules/
+**/dist/
+**/dist-types/
+**/.vite/
+**/coverage/
+*.tsbuildinfo
+*.log
+
+# Local configuration and secrets.
+.env
+.env.*
+!.env.example
+*.local
+*.pem
+*.key
+
+# Raster and archive sources stay outside Git. Production WebP is allowed.
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.tif
+*.tiff
+*.psd
+*.xcf
+*.zip
+
+# Independent repository working trees.
+products/*/repository/
+portfolio/site/wordpress/
+clients/*/engagements/*/deliverables/*/wordpress/
+
+# OS and editor state.
+.DS_Store
+Thumbs.db
+.idea/

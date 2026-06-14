@@ -1,0 +1,21 @@
+apiVersion: studio.guilherme.dev/entity-v1
+kind: product
+id: prd_e49afa5bd8c7f50e105a
+slug: elementor-implementation-toolkit
+title: Elementor Implementation Toolkit
+status: active
+classification: internal
+revision: 1
+createdAt: "2026-06-14T20:30:00.000Z"
+updatedAt: "2026-06-14T20:30:00.000Z"
+ownerId: per_20260614_guilherme-silva
+summary: Toolkit for Elementor implementation features, filtering and future custom content structures.
+labels:
+  - wordpress
+  - elementor
+  - internal-tooling
+relations: []
+data:
+  repositoryPath: wordpress/wp-content/plugins/elementor-implementation-toolkit
+  signal: Production tooling for implementation workflows.
+  portfolioRole: infrastructure-product

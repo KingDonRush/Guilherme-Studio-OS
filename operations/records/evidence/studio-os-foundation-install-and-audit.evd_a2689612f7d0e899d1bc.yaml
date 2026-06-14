@@ -1,0 +1,18 @@
+apiVersion: studio.guilherme.dev/entity-v1
+classification: internal
+createdAt: 2026-06-14T20:34:06.092Z
+data:
+  command: npm install && npm audit --audit-level=moderate
+  evidenceType: command
+  observedAt: 2026-06-14T20:34:06.092Z
+id: evd_a2689612f7d0e899d1bc
+kind: evidence
+labels: []
+relations:
+  - targetId: tsk_605ab2a82c322bbdd701
+    type: supports
+revision: 1
+slug: studio-os-foundation-install-and-audit
+status: active
+title: Studio OS foundation install and audit
+updatedAt: 2026-06-14T20:34:06.092Z

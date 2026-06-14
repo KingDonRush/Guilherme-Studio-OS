@@ -1,0 +1,22 @@
+api_version: studio.guilherme.dev/config-v1
+root_name: Guilherme Studio OS
+operator_id: per_20260614_guilherme-silva
+canonical_roots:
+  - data
+  - clients
+  - products
+  - portfolio
+  - marketing
+  - sales
+  - career
+  - operations/records
+runtime_path: runtime
+panel:
+  host: 127.0.0.1
+  port: 4177
+adapters:
+  git: true
+  docker: true
+  wordpress: true
+  github: false
+  communication: false

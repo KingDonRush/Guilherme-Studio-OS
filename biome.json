@@ -1,0 +1,39 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.0/schema.json",
+  "files": {
+    "includes": [
+      "apps/**",
+      "packages/**",
+      "data/**/*.yaml",
+      "portfolio/projects/**/*.yaml",
+      "products/*.yaml",
+      "docs/studio-os/**/*.md",
+      "*.json",
+      "*.yaml",
+      "*.ts",
+      "!**/dist",
+      "!**/dist-types",
+      "!**/node_modules",
+      "!runtime",
+      "!wordpress",
+      "!products/*/repository",
+      "!portfolio/site/wordpress"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {}
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "always"
+    }
+  }
+}

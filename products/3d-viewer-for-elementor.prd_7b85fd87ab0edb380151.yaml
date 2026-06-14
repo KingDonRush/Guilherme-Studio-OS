@@ -1,0 +1,21 @@
+apiVersion: studio.guilherme.dev/entity-v1
+kind: product
+id: prd_7b85fd87ab0edb380151
+slug: 3d-viewer-for-elementor
+title: 3D Viewer for Elementor
+status: active
+classification: public
+revision: 1
+createdAt: "2026-06-14T20:30:00.000Z"
+updatedAt: "2026-06-14T20:30:00.000Z"
+ownerId: per_20260614_guilherme-silva
+summary: Elementor integration for interactive 3D product presentation with maintainable WordPress delivery.
+labels:
+  - wordpress
+  - elementor
+  - threejs
+relations: []
+data:
+  repositoryPath: wordpress/wp-content/plugins/3d-viewer-to-elementor
+  signal: Complex frontend integration inside WordPress and Elementor.
+  portfolioRole: technical-depth-case

@@ -1,0 +1,25 @@
+{
+  "name": "@guilherme-studio/mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "studio-mcp": "dist/bin.js"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@guilherme-studio/adapters": "*",
+    "@guilherme-studio/core": "*",
+    "@guilherme-studio/schemas": "*",
+    "@guilherme-studio/storage": "*",
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "zod": "4.4.3"
+  }
+}

@@ -1,0 +1,20 @@
+apiVersion: studio.guilherme.dev/entity-v1
+kind: person
+id: per_20260614_guilherme-silva
+slug: guilherme-silva
+title: Guilherme Silva
+status: active
+classification: internal
+revision: 1
+createdAt: "2026-06-14T20:30:00.000Z"
+updatedAt: "2026-06-14T20:30:00.000Z"
+summary: WordPress developer operating internationally through portfolio evidence, plugins, Elementor implementation and client-facing delivery.
+labels:
+  - operator
+  - wordpress
+relations: []
+data:
+  githubHandle: kingdonrush
+  clientFacingName: Guilherme Silva
+  developerHandle: kingdonrush
+  market: international-wordpress-development
