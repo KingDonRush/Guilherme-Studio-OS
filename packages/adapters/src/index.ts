@@ -1,4 +1,7 @@
 import { execFile } from "node:child_process";
+import { createHash } from "node:crypto";
+import { access, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
 import { promisify } from "node:util";
 import type { StudioContext } from "@guilherme-studio/core";
 
@@ -36,4 +39,84 @@ export async function inspectStudioRepositories(
 
 export function describeAdapterPolicy(): string {
   return "External adapters use prepare -> confirm -> execute -> reconcile. V1 does not execute external sends autonomously.";
+}
+
+export interface StudioBackupResult {
+  archivePath: string;
+  manifestPath: string;
+  checksum: string;
+}
+
+async function walkFiles(dir: string, root: string, out: string[] = []): Promise<string[]> {
+  const entries = await readdir(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const absolute = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      await walkFiles(absolute, root, out);
+      continue;
+    }
+    if (entry.isFile()) {
+      out.push(path.relative(root, absolute));
+    }
+  }
+  return out.sort((a, b) => a.localeCompare(b));
+}
+
+export async function createStudioBackup(context: StudioContext): Promise<StudioBackupResult> {
+  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const backupDir = path.join(context.paths.runtime, "backups");
+  await mkdir(backupDir, { recursive: true });
+  const archivePath = path.join(backupDir, `studio-os-${timestamp}.tar.gz`);
+  const manifestPath = path.join(backupDir, `studio-os-${timestamp}.manifest.json`);
+  const includeRoots = [
+    "studio.config.yaml",
+    "data",
+    "clients",
+    "products",
+    "portfolio",
+    "marketing",
+    "sales",
+    "career",
+    "operations",
+    "docs/studio-os",
+  ];
+  const existingRoots: string[] = [];
+  for (const root of includeRoots) {
+    try {
+      await access(path.join(context.paths.root, root));
+      existingRoots.push(root);
+    } catch {
+      // Optional domain roots are created when the first records appear.
+    }
+  }
+  await execFileAsync("tar", ["-czf", archivePath, ...existingRoots], { cwd: context.paths.root });
+  const checksum = createHash("sha256")
+    .update(await readFile(archivePath))
+    .digest("hex");
+  const files: string[] = [];
+  for (const root of includeRoots.filter((entry) => !entry.endsWith(".yaml"))) {
+    try {
+      await walkFiles(path.join(context.paths.root, root), context.paths.root, files);
+    } catch {
+      // Domain roots are optional during early V1 bootstrapping.
+    }
+  }
+  await writeFile(
+    manifestPath,
+    `${JSON.stringify(
+      {
+        apiVersion: "studio.guilherme.dev/backup-v1",
+        createdAt: new Date().toISOString(),
+        archivePath,
+        checksum,
+        files,
+        requestedRoots: includeRoots,
+        includedRoots: existingRoots,
+      },
+      null,
+      2,
+    )}\n`,
+    { mode: 0o600 },
+  );
+  return { archivePath, manifestPath, checksum };
 }

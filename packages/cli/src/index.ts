@@ -1,4 +1,4 @@
-import { inspectStudioRepositories } from "@guilherme-studio/adapters";
+import { createStudioBackup, inspectStudioRepositories } from "@guilherme-studio/adapters";
 import { optimizeAssets } from "@guilherme-studio/assets";
 import {
   createStudioContext,
@@ -192,6 +192,37 @@ export function createProgram(): Command {
       print(created, options.json);
     });
 
+  for (const alias of [
+    "person",
+    "organization",
+    "prospect",
+    "client",
+    "opportunity",
+    "engagement",
+    "project",
+    "repository",
+    "product",
+    "case",
+    "evidence",
+    "campaign",
+    "application",
+    "task",
+    "decision",
+    "communication",
+    "agentRun",
+  ]) {
+    addDomainCommand(program, alias);
+  }
+
+  const repo = program
+    .command("repo")
+    .description("Inspect registered repositories and Git health");
+  repo.command("inspect").action(async function action(this: Command) {
+    const options = globalOptions(this);
+    const context = await createStudioContext(options.root);
+    print(await inspectStudioRepositories(context), options.json);
+  });
+
   program
     .command("bootstrap-vertical")
     .description("Create the initial Task + AgentRun + Evidence vertical")
@@ -244,6 +275,36 @@ export function createProgram(): Command {
       );
     });
 
+  program
+    .command("backup")
+    .description("Create a local Studio OS backup archive")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      if (options.dryRun) {
+        print(
+          {
+            dryRun: true,
+            includes: [
+              "studio.config.yaml",
+              "data",
+              "clients",
+              "products",
+              "portfolio",
+              "marketing",
+              "sales",
+              "career",
+              "operations",
+              "docs/studio-os",
+            ],
+          },
+          options.json,
+        );
+        return;
+      }
+      const context = await createStudioContext(options.root);
+      print(await createStudioBackup(context), options.json);
+    });
+
   const asset = program.command("asset").description("Manage optimized visual assets");
   asset
     .command("optimize")
@@ -292,4 +353,47 @@ function pathJoin(root: string, relativeOrAbsolute: string): string {
     return relativeOrAbsolute;
   }
   return `${root.replace(/\/$/, "")}/${relativeOrAbsolute}`;
+}
+
+function addDomainCommand(program: Command, alias: string): void {
+  const domain = program.command(alias).description(`Shortcut commands for ${alias} entities`);
+  domain.command("list").action(async function action(this: Command) {
+    const options = globalOptions(this);
+    const context = await createStudioContext(options.root);
+    const kind = kindFromAlias(alias);
+    const { files } = await validateCanonicalFiles(context.paths.root);
+    print(
+      files
+        .filter((file) => file.entity.kind === kind)
+        .map((file) => ({
+          id: file.entity.id,
+          title: file.entity.title,
+          status: file.entity.status,
+          path: file.relativePath,
+        })),
+      options.json,
+    );
+  });
+  domain
+    .command("create")
+    .requiredOption("--title <title>", "Entity title")
+    .option("--summary <summary>", "Entity summary")
+    .option("--classification <classification>", "public, internal or confidential", "internal")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as { title: string; summary?: string; classification: string };
+      const input = {
+        kind: kindFromAlias(alias),
+        title: local.title,
+        classification: local.classification as StudioEntity["classification"],
+        ...(local.summary ? { summary: local.summary } : {}),
+      };
+      if (options.dryRun) {
+        print({ dryRun: true, entity: createEntity(input) }, options.json);
+        return;
+      }
+      const context = await createStudioContext(options.root);
+      const service = new EntityService(context);
+      print(await service.create(input), options.json);
+    });
 }
