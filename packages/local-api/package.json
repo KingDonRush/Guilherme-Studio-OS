@@ -5,6 +5,9 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "studio-local-api": "dist/bin.js"
+  },
   "exports": {
     ".": "./dist/index.js"
   },

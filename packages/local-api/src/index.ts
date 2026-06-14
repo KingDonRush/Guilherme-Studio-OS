@@ -31,7 +31,19 @@ export async function createLocalApi(
       await reply.code(403).send({ error: "Invalid origin" });
       return;
     }
-    if (request.url.startsWith("/api/") && request.headers.authorization !== `Bearer ${token}`) {
+    if (!request.url.startsWith("/api/")) {
+      reply.setCookie("studio_session", token, {
+        httpOnly: false,
+        sameSite: "strict",
+        secure: false,
+        path: "/",
+      });
+      return;
+    }
+    const bearer = request.headers.authorization === `Bearer ${token}`;
+    const { studio_session: studioSession } = request.cookies;
+    const cookieAuth = studioSession === token;
+    if (!bearer && !cookieAuth) {
       await reply.code(401).send({ error: "Unauthorized" });
     }
   });
@@ -68,4 +80,22 @@ export async function createLocalApi(
   }
 
   return { app, token };
+}
+
+export async function serveLocalApi(options: LocalApiOptions = {}): Promise<{
+  app: FastifyInstance;
+  token: string;
+  url: string;
+}> {
+  const context = await createStudioContext(options.root);
+  const { app, token } = await createLocalApi(options);
+  await app.listen({
+    host: context.config.panel.host,
+    port: context.config.panel.port,
+  });
+  return {
+    app,
+    token,
+    url: `http://${context.config.panel.host}:${context.config.panel.port}`,
+  };
 }

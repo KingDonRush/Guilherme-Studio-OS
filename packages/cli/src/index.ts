@@ -7,6 +7,7 @@ import {
   rebuildProjection,
   validateStudio,
 } from "@guilherme-studio/core";
+import { serveLocalApi } from "@guilherme-studio/local-api";
 import { createEntity, type StudioEntity } from "@guilherme-studio/schemas";
 import { validateCanonicalFiles } from "@guilherme-studio/storage";
 import { Command } from "commander";
@@ -211,9 +212,28 @@ export function createProgram(): Command {
   program
     .command("dashboard")
     .description("Print dashboard launch hint")
+    .option("--serve", "Serve the local dashboard API and built panel")
+    .option("--panel-dist <path>", "Built panel directory", "apps/panel/dist")
     .action(async function action(this: Command) {
       const options = globalOptions(this);
       const context = await createStudioContext(options.root);
+      const local = this.opts() as { serve?: boolean; panelDist: string };
+      if (local.serve) {
+        const served = await serveLocalApi({
+          root: context.paths.root,
+          panelDist: pathJoin(context.paths.root, local.panelDist),
+        });
+        print(
+          {
+            url: served.url,
+            token: served.token,
+            note: "The session token is also set as a SameSite cookie when the panel loads.",
+          },
+          options.json,
+        );
+        await new Promise(() => undefined);
+        return;
+      }
       print(
         {
           host: context.config.panel.host,

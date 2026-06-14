@@ -1,4 +1,10 @@
-import { createStudioContext, validateStudio } from "@guilherme-studio/core";
+import {
+  createStudioContext,
+  EntityService,
+  kindFromAlias,
+  validateStudio,
+} from "@guilherme-studio/core";
+import { createEntity } from "@guilherme-studio/schemas";
 import { validateCanonicalFiles } from "@guilherme-studio/storage";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
@@ -20,6 +26,30 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
     ],
   }));
 
+  server.resource("entities", "studio://entities", async () => {
+    const context = await createStudioContext(root);
+    const { files } = await validateCanonicalFiles(context.paths.root);
+    return {
+      contents: [
+        {
+          uri: "studio://entities",
+          mimeType: "application/json",
+          text: JSON.stringify(
+            files.map((file) => ({
+              id: file.entity.id,
+              kind: file.entity.kind,
+              title: file.entity.title,
+              status: file.entity.status,
+              path: file.relativePath,
+            })),
+            null,
+            2,
+          ),
+        },
+      ],
+    };
+  });
+
   server.tool("studio_validate", {}, async () => ({
     content: [{ type: "text", text: JSON.stringify(await validateStudio(root), null, 2) }],
   }));
@@ -38,6 +68,62 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
       }));
     return { content: [{ type: "text", text: JSON.stringify(entities, null, 2) }] };
   });
+
+  server.tool(
+    "studio_prepare_entity_create",
+    {
+      kind: z.string(),
+      title: z.string(),
+      summary: z.string().optional(),
+      classification: z.enum(["public", "internal", "confidential"]).default("internal"),
+    },
+    async ({ kind, title, summary, classification }) => {
+      const draft = createEntity({
+        kind: kindFromAlias(kind),
+        title,
+        classification,
+        ...(summary ? { summary } : {}),
+      });
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                prepared: true,
+                action: "entity.create",
+                draft,
+                note: "Prepared local mutation only. Use studio_create_entity to execute.",
+              },
+              null,
+              2,
+            ),
+          },
+        ],
+      };
+    },
+  );
+
+  server.tool(
+    "studio_create_entity",
+    {
+      kind: z.string(),
+      title: z.string(),
+      summary: z.string().optional(),
+      classification: z.enum(["public", "internal", "confidential"]).default("internal"),
+    },
+    async ({ kind, title, summary, classification }) => {
+      const context = await createStudioContext(root);
+      const service = new EntityService(context);
+      const entity = await service.create({
+        kind: kindFromAlias(kind),
+        title,
+        classification,
+        ...(summary ? { summary } : {}),
+      });
+      return { content: [{ type: "text", text: JSON.stringify(entity, null, 2) }] };
+    },
+  );
 
   return server;
 }
