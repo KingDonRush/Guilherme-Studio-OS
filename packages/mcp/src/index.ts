@@ -2,12 +2,14 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import {
   createStudioContext,
+  createWorkflowFixtureEntities,
   DomainCommandService,
   EntityService,
   entityMutationResult,
   kindFromAlias,
   PreparedActionService,
   validateStudio,
+  verifyWorkflowCoverage,
 } from "@guilherme-studio/core";
 import { createEntity, entityId, entityStatus, entityTitle } from "@guilherme-studio/schemas";
 import { validateCanonicalFiles } from "@guilherme-studio/storage";
@@ -84,6 +86,34 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
   server.tool("studio_validate", {}, async () => ({
     content: [{ type: "text", text: JSON.stringify(await validateStudio(root), null, 2) }],
   }));
+
+  server.tool(
+    "studio_verify_workflows",
+    { fixtures: z.boolean().default(false) },
+    async ({ fixtures }) => {
+      const context = await createStudioContext(root);
+      const entities = fixtures
+        ? createWorkflowFixtureEntities()
+        : (await context.entities.scan()).map((file) => file.entity);
+      const workflows = verifyWorkflowCoverage(entities);
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                ok: workflows.every((workflow) => workflow.ok),
+                mode: fixtures ? "fixtures" : "canonical",
+                workflows,
+              },
+              null,
+              2,
+            ),
+          },
+        ],
+      };
+    },
+  );
 
   server.tool("studio_list_entities", { kind: z.string().optional() }, async ({ kind }) => {
     const context = await createStudioContext(root);

@@ -12,6 +12,7 @@ import {
 import { optimizeAssets } from "@guilherme-studio/assets";
 import {
   createStudioContext,
+  createWorkflowFixtureEntities,
   DomainCommandService,
   EntityService,
   entityMutationResult,
@@ -19,6 +20,7 @@ import {
   PreparedActionService,
   rebuildProjection,
   validateStudio,
+  verifyWorkflowCoverage,
 } from "@guilherme-studio/core";
 import { serveLocalApi } from "@guilherme-studio/local-api";
 import {
@@ -272,6 +274,23 @@ export function createProgram(): Command {
     }
     print(await context.entities.recoverTransactions(), options.json);
   });
+
+  program
+    .command("workflow")
+    .description("Verify cross-domain journey coverage")
+    .option("--fixtures", "Verify the normative journeys against canonical fixtures")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as { fixtures?: boolean };
+      const context = await createStudioContext(options.root);
+      const entities = local.fixtures
+        ? createWorkflowFixtureEntities()
+        : (await context.entities.scan()).map((file) => file.entity);
+      const workflows = verifyWorkflowCoverage(entities);
+      const ok = workflows.every((workflow) => workflow.ok);
+      print({ ok, mode: local.fixtures ? "fixtures" : "canonical", workflows }, options.json);
+      process.exitCode = ok ? 0 : 2;
+    });
 
   const entity = program.command("entity").description("Manage canonical entities");
   entity

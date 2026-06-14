@@ -497,6 +497,161 @@ export class DomainCommandService {
   }
 }
 
+export interface WorkflowVerification {
+  id: string;
+  name: string;
+  ok: boolean;
+  missingKinds: EntityKind[];
+  requiredGates: string[];
+  requiredEvidence: string[];
+}
+
+export const WORKFLOW_REQUIREMENTS: Array<{
+  id: string;
+  name: string;
+  requiredKinds: EntityKind[];
+  requiredGates: string[];
+  requiredEvidence: string[];
+}> = [
+  {
+    id: "prospect-to-client",
+    name: "Prospect to Client",
+    requiredKinds: [
+      "organization",
+      "prospect",
+      "opportunity",
+      "proposal",
+      "client",
+      "engagement",
+      "communication",
+      "evidence",
+    ],
+    requiredGates: ["duplicate-check", "public-claim", "external-confirmation"],
+    requiredEvidence: ["research", "qualification", "acceptance"],
+  },
+  {
+    id: "multi-site-engagement",
+    name: "Client Engagement with Multiple Sites",
+    requiredKinds: [
+      "client",
+      "engagement",
+      "contract",
+      "invoice",
+      "payment",
+      "deliverable",
+      "project",
+      "repository",
+      "evidence",
+    ],
+    requiredGates: ["payment-delivery", "missing-evidence"],
+    requiredEvidence: ["scope", "approval", "handoff"],
+  },
+  {
+    id: "work-to-opportunity",
+    name: "Completed Work to New Opportunity",
+    requiredKinds: [
+      "deliverable",
+      "portfolioCase",
+      "campaign",
+      "contentItem",
+      "prospect",
+      "evidence",
+    ],
+    requiredGates: ["confidential-data", "public-claim", "external-confirmation"],
+    requiredEvidence: ["claim-map", "publication-preview"],
+  },
+  {
+    id: "plugin-release-case",
+    name: "Plugin to Release, Demo, Case, and Prospecting",
+    requiredKinds: [
+      "product",
+      "release",
+      "repository",
+      "environment",
+      "portfolioCase",
+      "campaign",
+      "prospect",
+      "evidence",
+    ],
+    requiredGates: ["missing-evidence", "public-claim", "external-confirmation"],
+    requiredEvidence: ["tests", "artifact", "demo"],
+  },
+  {
+    id: "international-application",
+    name: "International Job Application",
+    requiredKinds: ["organization", "jobApplication", "communication", "evidence", "task"],
+    requiredGates: ["duplicate-check", "public-claim", "external-confirmation"],
+    requiredEvidence: ["job-source", "evidence-matrix", "submission-receipt"],
+  },
+  {
+    id: "visual-feedback",
+    name: "Visual Feedback to Validated Implementation",
+    requiredKinds: ["project", "task", "decision", "evidence", "agentRun"],
+    requiredGates: ["missing-evidence"],
+    requiredEvidence: ["environment-calibration", "before-after", "human-approval"],
+  },
+  {
+    id: "security-incident",
+    name: "Security or Sensitive-Data Incident",
+    requiredKinds: ["decision", "task", "evidence", "repository", "agentRun"],
+    requiredGates: ["confidential-data", "destructive"],
+    requiredEvidence: ["redacted-forensics", "recovery", "prevention"],
+  },
+  {
+    id: "agent-handoff",
+    name: "New Agent Handoff",
+    requiredKinds: ["task", "decision", "evidence", "agentRun", "repository"],
+    requiredGates: ["stale-revision", "missing-evidence"],
+    requiredEvidence: ["context-pack", "repository-health", "acceptance"],
+  },
+];
+
+export function verifyWorkflowCoverage(entities: StudioEntity[]): WorkflowVerification[] {
+  const kinds = new Set(entities.map((entity) => entity.kind));
+  return WORKFLOW_REQUIREMENTS.map((workflow) => {
+    const missingKinds = workflow.requiredKinds.filter((kind) => !kinds.has(kind));
+    return {
+      id: workflow.id,
+      name: workflow.name,
+      ok: missingKinds.length === 0,
+      missingKinds,
+      requiredGates: workflow.requiredGates,
+      requiredEvidence: workflow.requiredEvidence,
+    };
+  });
+}
+
+export function createWorkflowFixtureEntities(): StudioEntity[] {
+  const kinds = [...new Set(WORKFLOW_REQUIREMENTS.flatMap((workflow) => workflow.requiredKinds))];
+  return kinds.map((kind) => {
+    const common = { kind, title: `Workflow fixture ${kind}` };
+    if (kind === "evidence") {
+      return createEntity({
+        ...common,
+        data: { evidence_type: "manual", observed_at: nowIso() },
+      });
+    }
+    if (kind === "task") {
+      return createEntity({
+        ...common,
+        data: { priority: "normal", acceptance: [], blocked_by: [] },
+      });
+    }
+    if (kind === "agentRun") {
+      return createEntity({
+        ...common,
+        data: {
+          objective: "Verify workflow fixture coverage",
+          started_at: nowIso(),
+          result: "complete",
+          evidence_ids: [],
+        },
+      });
+    }
+    return createEntity(common);
+  });
+}
+
 export class GateEngine {
   evaluate(input: {
     action: string;

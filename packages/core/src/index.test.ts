@@ -5,11 +5,13 @@ import { describe, expect, it } from "vitest";
 import YAML from "yaml";
 import {
   createStudioContext,
+  createWorkflowFixtureEntities,
   DomainCommandService,
   EntityService,
   LifecycleEngine,
   PreparedActionService,
   type StudioContext,
+  verifyWorkflowCoverage,
 } from "./index.js";
 
 describe("core governance", () => {
@@ -74,5 +76,12 @@ describe("core governance", () => {
     const engagement = await commands.createEngagementFromOpportunity(opportunity.metadata.id);
     expect(engagement.kind).toBe("engagement");
     expect(engagement.relations[0]?.target_id).toBe(opportunity.metadata.id);
+  });
+
+  it("covers all eight normative journeys with canonical fixtures", () => {
+    const verification = verifyWorkflowCoverage(createWorkflowFixtureEntities());
+
+    expect(verification).toHaveLength(8);
+    expect(verification.every((workflow) => workflow.ok)).toBe(true);
   });
 });
