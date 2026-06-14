@@ -14,7 +14,17 @@ import path from "node:path";
 import {
   assertNoSecrets,
   EventSchema,
+  entityClassification,
+  entityId,
+  entityRevision,
+  entitySlug,
+  entityStatus,
+  entityTitle,
+  entityUpdatedAt,
   KIND_DIRECTORY,
+  LegacyEntitySchema,
+  legacyToCanonical,
+  normalizeSpecData,
   type StudioEntity,
   type StudioEvent,
   TypedEntitySchema,
@@ -47,6 +57,12 @@ export interface StudioFile {
   absolutePath: string;
   relativePath: string;
   entity: StudioEntity;
+}
+
+export interface LegacyStudioFile {
+  absolutePath: string;
+  relativePath: string;
+  entity: ReturnType<typeof LegacyEntitySchema.parse>;
 }
 
 export async function loadStudioConfig(
@@ -103,9 +119,9 @@ async function fileExists(filePath: string): Promise<boolean> {
   }
 }
 
-export function entityRelativePath(entity: Pick<StudioEntity, "kind" | "slug" | "id">): string {
+export function entityRelativePath(entity: StudioEntity): string {
   const dir = KIND_DIRECTORY[entity.kind];
-  return path.posix.join(dir, `${entity.slug}.${entity.id}.yaml`);
+  return path.posix.join(dir, `${entitySlug(entity)}.${entityId(entity)}.yaml`);
 }
 
 export class EntityStore {
@@ -122,14 +138,17 @@ export class EntityStore {
     const absolutePath = await resolveInsideRoot(this.root, relativePath);
     if (await fileExists(absolutePath)) {
       const current = await this.readByPath(absolutePath);
-      if (expectedRevision !== undefined && current.revision !== expectedRevision) {
+      if (expectedRevision !== undefined && entityRevision(current) !== expectedRevision) {
         throw new Error(
-          `Revision conflict for ${parsed.id}: expected ${expectedRevision}, got ${current.revision}`,
+          `Revision conflict for ${entityId(parsed)}: expected ${expectedRevision}, got ${entityRevision(current)}`,
         );
       }
     }
     const body = YAML.stringify(parsed, { sortMapEntries: true, lineWidth: 120 });
-    const tmpPath = `${absolutePath}.${process.pid}.${Date.now()}.tmp`;
+    const tmpPath = path.join(
+      path.dirname(absolutePath),
+      `.studio-${process.pid}-${Date.now()}.tmp`,
+    );
     await writeFile(tmpPath, body, { mode: 0o600 });
     await rename(tmpPath, absolutePath);
     return relativePath;
@@ -143,7 +162,7 @@ export class EntityStore {
 
   async get(id: string): Promise<StudioFile | undefined> {
     const all = await this.scan();
-    return all.find((entry) => entry.entity.id === id);
+    return all.find((entry) => entityId(entry.entity) === id);
   }
 
   async scan(): Promise<StudioFile[]> {
@@ -179,6 +198,86 @@ export class EntityStore {
       });
     }
   }
+}
+
+export class LegacyEntityStore {
+  readonly root: string;
+
+  constructor(root: string) {
+    this.root = root;
+  }
+
+  async scan(): Promise<LegacyStudioFile[]> {
+    const roots = Object.values(KIND_DIRECTORY);
+    const uniqueRoots = [...new Set(roots)];
+    const files: LegacyStudioFile[] = [];
+    for (const dir of uniqueRoots) {
+      const absoluteDir = path.join(this.root, dir);
+      if (!(await fileExists(absoluteDir))) {
+        continue;
+      }
+      await this.walkYaml(absoluteDir, files);
+    }
+    return files.sort((a, b) => a.relativePath.localeCompare(b.relativePath));
+  }
+
+  private async walkYaml(dir: string, out: LegacyStudioFile[]): Promise<void> {
+    const entries = await readdir(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const absolutePath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        await this.walkYaml(absolutePath, out);
+        continue;
+      }
+      if (!entry.isFile() || !entry.name.endsWith(".yaml")) {
+        continue;
+      }
+      const parsed = YAML.parse(await readFile(absolutePath, "utf8"));
+      const legacy = LegacyEntitySchema.safeParse(parsed);
+      if (!legacy.success) {
+        continue;
+      }
+      assertNoSecrets(legacy.data);
+      out.push({
+        absolutePath,
+        relativePath: path.relative(this.root, absolutePath),
+        entity: legacy.data,
+      });
+    }
+  }
+}
+
+async function scanCanonicalFilesLenient(root: string): Promise<StudioFile[]> {
+  const files: StudioFile[] = [];
+  const walk = async (dir: string): Promise<void> => {
+    const entries = await readdir(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const absolutePath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        await walk(absolutePath);
+        continue;
+      }
+      if (!entry.isFile() || !entry.name.endsWith(".yaml")) {
+        continue;
+      }
+      const parsed = TypedEntitySchema.safeParse(YAML.parse(await readFile(absolutePath, "utf8")));
+      if (parsed.success) {
+        files.push({
+          absolutePath,
+          relativePath: path.relative(root, absolutePath),
+          entity: parsed.data,
+        });
+      }
+    }
+  };
+
+  for (const dir of [...new Set(Object.values(KIND_DIRECTORY))]) {
+    const absoluteDir = path.join(root, dir);
+    if (await fileExists(absoluteDir)) {
+      await walk(absoluteDir);
+    }
+  }
+  return files;
 }
 
 export class EventStore {
@@ -253,19 +352,24 @@ export class SQLiteProjection {
         for (const file of entries) {
           const entity = file.entity;
           insertEntity.run(
-            entity.id,
+            entityId(entity),
             entity.kind,
-            entity.slug,
-            entity.title,
-            entity.status,
-            entity.classification,
-            entity.revision,
+            entitySlug(entity),
+            entityTitle(entity),
+            entityStatus(entity),
+            entityClassification(entity),
+            entityRevision(entity),
             file.relativePath,
-            entity.updatedAt,
-            JSON.stringify(entity.data),
+            entityUpdatedAt(entity),
+            JSON.stringify(entity.spec),
           );
           for (const relation of entity.relations) {
-            insertRelation.run(entity.id, relation.type, relation.targetId, relation.note ?? null);
+            insertRelation.run(
+              entityId(entity),
+              relation.type,
+              relation.target_id,
+              relation.note ?? null,
+            );
           }
         }
       });
@@ -275,7 +379,7 @@ export class SQLiteProjection {
     }
     await rename(tmpPath, this.sqlitePath);
     const payload = files
-      .map((file) => `${file.entity.id}:${file.entity.revision}:${file.relativePath}`)
+      .map((file) => `${file.relativePath}:${JSON.stringify(file.entity)}`)
       .join("\n");
     return {
       entityCount: files.length,
@@ -302,11 +406,123 @@ export async function validateCanonicalFiles(
   const files: StudioFile[] = [];
   const seen = new Set<string>();
   for (const file of await store.scan()) {
-    if (seen.has(file.entity.id)) {
-      errors.push(`Duplicate entity id: ${file.entity.id}`);
+    const id = entityId(file.entity);
+    if (seen.has(id)) {
+      errors.push(`Duplicate entity id: ${id}`);
     }
-    seen.add(file.entity.id);
+    seen.add(id);
     files.push(file);
   }
   return { files, errors };
+}
+
+export interface CanonicalMigrationPlanEntry {
+  legacyPath: string;
+  canonicalPath: string;
+  legacyId: string;
+  canonicalId: string;
+  action: "create" | "replace";
+}
+
+export interface CanonicalMigrationResult {
+  dryRun: boolean;
+  migrated: number;
+  reconciled: number;
+  skipped: number;
+  entries: CanonicalMigrationPlanEntry[];
+}
+
+export async function migrateCanonicalV1(
+  root: string,
+  options: { dryRun?: boolean } = {},
+): Promise<CanonicalMigrationResult> {
+  const legacyStore = new LegacyEntityStore(root);
+  const legacyFiles = await legacyStore.scan();
+  const canonicalStore = new EntityStore(root);
+  const canonicalFiles = await scanCanonicalFilesLenient(root);
+  const existingAliases = canonicalFiles.flatMap((file) => {
+    const migration = Reflect.get(file.entity.extensions, "migration");
+    if (!migration || typeof migration !== "object") {
+      return [];
+    }
+    const previousIds = Reflect.get(migration, "previous_ids");
+    if (!Array.isArray(previousIds)) {
+      return [];
+    }
+    return previousIds
+      .filter((previousId): previousId is string => typeof previousId === "string")
+      .map((previousId) => [previousId, entityId(file.entity)] as const);
+  });
+  const idMap = Object.fromEntries([
+    ...existingAliases,
+    ...legacyFiles.map(
+      (file) => [file.entity.id, legacyToCanonical(file.entity).metadata.id] as const,
+    ),
+  ]);
+  const entries: CanonicalMigrationPlanEntry[] = [];
+  for (const file of legacyFiles) {
+    const canonical = legacyToCanonical(file.entity, idMap);
+    const canonicalPath = entityRelativePath(canonical);
+    entries.push({
+      legacyPath: file.relativePath,
+      canonicalPath,
+      legacyId: file.entity.id,
+      canonicalId: entityId(canonical),
+      action: file.relativePath === canonicalPath ? "replace" : "create",
+    });
+  }
+
+  if (options.dryRun) {
+    return { dryRun: true, migrated: 0, reconciled: 0, skipped: 0, entries };
+  }
+
+  for (const file of legacyFiles) {
+    const canonical = legacyToCanonical(file.entity, idMap);
+    const canonicalAbsolutePath = path.join(root, entityRelativePath(canonical));
+    if (path.resolve(file.absolutePath) === path.resolve(canonicalAbsolutePath)) {
+      const body = YAML.stringify(canonical, { sortMapEntries: true, lineWidth: 120 });
+      const tmpPath = path.join(
+        path.dirname(canonicalAbsolutePath),
+        `.studio-${process.pid}-${Date.now()}.tmp`,
+      );
+      await writeFile(tmpPath, body, { mode: 0o600 });
+      await rename(tmpPath, canonicalAbsolutePath);
+    } else {
+      await canonicalStore.put(canonical);
+      await rm(file.absolutePath, { force: true });
+    }
+  }
+
+  let reconciled = 0;
+  for (const file of await scanCanonicalFilesLenient(root)) {
+    const normalized = TypedEntitySchema.parse({
+      ...file.entity,
+      metadata: {
+        ...file.entity.metadata,
+        owner_id: file.entity.metadata.owner_id
+          ? (idMap[file.entity.metadata.owner_id] ?? file.entity.metadata.owner_id)
+          : undefined,
+      },
+      spec: normalizeSpecData(file.entity.spec, idMap),
+      relations: file.entity.relations.map((relation) => ({
+        ...relation,
+        target_id: idMap[relation.target_id] ?? relation.target_id,
+      })),
+    });
+    if (
+      YAML.stringify(normalized, { sortMapEntries: true, lineWidth: 120 }) !==
+      YAML.stringify(file.entity, { sortMapEntries: true, lineWidth: 120 })
+    ) {
+      await canonicalStore.put(normalized, entityRevision(file.entity));
+      reconciled += 1;
+    }
+  }
+
+  return {
+    dryRun: false,
+    migrated: legacyFiles.length,
+    reconciled,
+    skipped: 0,
+    entries,
+  };
 }

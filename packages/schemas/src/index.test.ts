@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { assertNoSecrets, createEntity, findSecretLikePaths, slugify } from "./index.js";
+import {
+  assertNoSecrets,
+  createEntity,
+  entityId,
+  entityRevision,
+  entitySlug,
+  findSecretLikePaths,
+  slugify,
+} from "./index.js";
 
 describe("schemas", () => {
   it("creates deterministic entities from business input", () => {
@@ -9,9 +17,9 @@ describe("schemas", () => {
       classification: "public",
     });
 
-    expect(entity.id).toBe("prd_db6f7a9dd954fe4ba1ac");
-    expect(entity.slug).toBe("simple-budget-plugin");
-    expect(entity.revision).toBe(1);
+    expect(entityId(entity)).toMatch(/^prod_\d{8}_simple-budget-plugin$/);
+    expect(entitySlug(entity)).toBe("simple-budget-plugin");
+    expect(entityRevision(entity)).toBe(1);
   });
 
   it("normalizes slugs without preserving accents", () => {

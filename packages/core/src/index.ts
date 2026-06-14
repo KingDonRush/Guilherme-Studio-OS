@@ -3,12 +3,16 @@ import {
   createEntityId,
   type EntityKind,
   EventSchema,
+  entityId,
+  entityRevision,
+  entityTitle,
   type GateDecision,
   type LifecycleState,
   nowIso,
   type StudioEntity,
   type StudioEvent,
   TypedEntitySchema,
+  updateEntityMetadata,
 } from "@guilherme-studio/schemas";
 import {
   EntityStore,
@@ -48,12 +52,15 @@ export class EntityService {
 
   async create(input: Parameters<typeof createEntity>[0]): Promise<StudioEntity> {
     const entity = createEntity(input);
-    const existing = await this.context.entities.get(entity.id);
+    const existing = await this.context.entities.get(entityId(entity));
     if (existing) {
-      throw new Error(`Entity already exists: ${entity.id}`);
+      throw new Error(`Entity already exists: ${entityId(entity)}`);
     }
     await this.context.entities.put(entity);
-    await this.recordEvent("entity.created", entity.id, { kind: entity.kind, title: entity.title });
+    await this.recordEvent("entity.created", entityId(entity), {
+      kind: entity.kind,
+      title: entityTitle(entity),
+    });
     return entity;
   }
 
@@ -68,20 +75,29 @@ export class EntityService {
     }
     const next = TypedEntitySchema.parse({
       ...mutated,
-      revision: current.entity.revision + 1,
-      updatedAt: nowIso(),
+      metadata: {
+        ...current.entity.metadata,
+        revision: entityRevision(current.entity) + 1,
+        updated_at: nowIso(),
+      },
     });
-    await this.context.entities.put(next, current.entity.revision);
-    await this.recordEvent("entity.updated", next.id, { revision: next.revision });
+    await this.context.entities.put(next, entityRevision(current.entity));
+    await this.recordEvent("entity.updated", entityId(next), { revision: entityRevision(next) });
     return next;
   }
 
   async transition(id: string, status: LifecycleState): Promise<StudioEntity> {
-    return this.update(id, (entity) => ({ ...entity, status }));
+    return this.update(id, (entity) => ({ ...entity, spec: { ...entity.spec, status } }));
   }
 
   async archive(id: string): Promise<StudioEntity> {
-    return this.update(id, (entity) => ({ ...entity, status: "archived", archivedAt: nowIso() }));
+    return this.update(id, (entity) => {
+      const archived = TypedEntitySchema.parse({
+        ...entity,
+        spec: { ...entity.spec, status: "archived" },
+      });
+      return updateEntityMetadata(archived, { archived_at: nowIso() });
+    });
   }
 
   async recordEvent(
@@ -92,9 +108,9 @@ export class EntityService {
     const event = EventSchema.parse({
       id: createEntityId("agentRun", `${type}:${entityId ?? "system"}:${nowIso()}`),
       type,
-      entityId,
-      actorId: this.context.config.operator_id,
-      createdAt: nowIso(),
+      entity_id: entityId,
+      actor_id: this.context.config.operator_id,
+      created_at: nowIso(),
       data,
     });
     await this.context.events.append(event);
@@ -113,27 +129,27 @@ export class GateEngine {
       return {
         result: "block",
         reason: "Secret material cannot be written to canonical Studio files.",
-        evidenceRequired: [],
+        evidence_required: [],
       };
     }
     if (input.external || input.destructive) {
       return {
         result: "require_confirmation",
         reason: "External or destructive actions must be prepared, confirmed and reconciled.",
-        evidenceRequired: ["prepared action", "human confirmation", "reconciliation result"],
+        evidence_required: ["prepared action", "human confirmation", "reconciliation result"],
       };
     }
     if (input.action.includes("publish") || input.action.includes("send")) {
       return {
         result: "require_confirmation",
         reason: "Public communication requires explicit confirmation.",
-        evidenceRequired: ["final content", "target channel", "confirmation"],
+        evidence_required: ["final content", "target channel", "confirmation"],
       };
     }
     return {
       result: "allow",
       reason: "Local reversible action within canonical files.",
-      evidenceRequired: [],
+      evidence_required: [],
     };
   }
 }
@@ -174,7 +190,7 @@ export async function createTaskEvidenceRun(root = process.cwd()): Promise<{
   const service = new EntityService(context);
   const getOrCreate = async (input: Parameters<typeof createEntity>[0]): Promise<StudioEntity> => {
     const draft = createEntity(input);
-    const existing = await context.entities.get(draft.id);
+    const existing = await context.entities.get(entityId(draft));
     if (existing) {
       return existing.entity;
     }
@@ -187,49 +203,50 @@ export async function createTaskEvidenceRun(root = process.cwd()): Promise<{
     labels: ["studio-os", "bootstrap"],
     data: {
       priority: "now",
-      economicReason: "Create a repeatable operating layer before portfolio work resumes.",
+      economic_reason: "Create a repeatable operating layer before portfolio work resumes.",
       acceptance: [
         "schemas validate",
         "storage writes canonical YAML",
         "CLI rebuilds SQLite projection",
       ],
-      blockedBy: [],
+      blocked_by: [],
     },
   });
   const run = await getOrCreate({
     kind: "agentRun",
     title: "Initial Studio OS implementation run",
-    relations: [{ type: "executes", targetId: task.id }],
+    relations: [{ type: "executes", target_id: entityId(task) }],
     data: {
       objective: "Create the first Studio OS V1 executable vertical.",
-      startedAt: nowIso(),
+      started_at: nowIso(),
       result: "running",
-      evidenceIds: [],
+      evidence_ids: [],
     },
   });
   const evidence = await getOrCreate({
     kind: "evidence",
     title: "Studio OS foundation install and audit",
-    relations: [{ type: "supports", targetId: task.id }],
+    relations: [{ type: "supports", target_id: entityId(task) }],
     data: {
-      evidenceType: "command",
+      evidence_type: "command",
       command: "npm install && npm audit --audit-level=moderate",
-      observedAt: nowIso(),
+      observed_at: nowIso(),
     },
   });
-  const completedRun = await service.update(run.id, (entity) => {
+  const completedRun = await service.update(entityId(run), (entity) => {
     if (entity.kind !== "agentRun") {
       throw new Error(`Expected agentRun entity, got ${entity.kind}`);
     }
     return {
       ...entity,
-      status: "done",
-      data: {
-        objective: entity.data.objective,
-        startedAt: entity.data.startedAt,
-        finishedAt: nowIso(),
+      spec: {
+        ...entity.spec,
+        status: "done",
+        objective: entity.spec.objective,
+        started_at: entity.spec.started_at,
+        finished_at: nowIso(),
         result: "complete",
-        evidenceIds: [evidence.id],
+        evidence_ids: [entityId(evidence)],
       },
     };
   });

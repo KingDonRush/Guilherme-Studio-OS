@@ -12,9 +12,19 @@ import {
   validateStudio,
 } from "@guilherme-studio/core";
 import { serveLocalApi } from "@guilherme-studio/local-api";
-import { createEntity, type StudioEntity } from "@guilherme-studio/schemas";
-import { validateCanonicalFiles } from "@guilherme-studio/storage";
+import {
+  type Classification,
+  createEntity,
+  entityId,
+  entityStatus,
+  entityTitle,
+  PreparedActionSchema,
+  RelationSchema,
+  TypedEntitySchema,
+} from "@guilherme-studio/schemas";
+import { migrateCanonicalV1, validateCanonicalFiles } from "@guilherme-studio/storage";
 import { Command } from "commander";
+import { z } from "zod";
 
 interface GlobalOptions {
   root?: string;
@@ -102,9 +112,12 @@ export function createProgram(): Command {
     .command("sync")
     .description("Synchronize derived indexes")
     .option("--rebuild", "Rebuild SQLite from canonical files")
-    .action(async function action(this: Command & { opts(): { rebuild?: boolean } }) {
+    .option("--verify", "Validate canonical files after rebuilding")
+    .action(async function action(
+      this: Command & { opts(): { rebuild?: boolean; verify?: boolean } },
+    ) {
       const options = globalOptions(this);
-      const local = this.opts() as { rebuild?: boolean };
+      const local = this.opts() as { rebuild?: boolean; verify?: boolean };
       if (!local.rebuild) {
         throw new Error("Nothing to sync. Use --rebuild.");
       }
@@ -114,7 +127,55 @@ export function createProgram(): Command {
         return;
       }
       const result = await rebuildProjection(options.root);
+      const verification = local.verify ? await validateStudio(options.root) : undefined;
+      print({ ...result, ...(verification ? { verification } : {}) }, options.json);
+    });
+
+  const migrate = program.command("migrate").description("Run canonical data migrations");
+  migrate
+    .command("canonical-v1")
+    .description("Migrate legacy flat YAML entities to the normative envelope")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const result = await migrateCanonicalV1(options.root ?? process.cwd(), {
+        dryRun: options.dryRun ?? false,
+      });
       print(result, options.json);
+    });
+
+  const schemas = program.command("schemas").description("Inspect and export Studio schemas");
+  schemas
+    .command("export")
+    .description("Export the versioned JSON Schema catalog")
+    .option(
+      "--output <path>",
+      "Output catalog path",
+      "docs/studio-os/schemas/generated/catalog.json",
+    )
+    .action(async function action(this: Command & { opts(): { output: string } }) {
+      const options = globalOptions(this);
+      const local = this.opts() as { output: string };
+      const catalog = {
+        api_version: "studio.guilherme.dev/schema-catalog-v1",
+        schemas: {
+          entity: z.toJSONSchema(TypedEntitySchema),
+          relation: z.toJSONSchema(RelationSchema),
+          prepared_action: z.toJSONSchema(PreparedActionSchema),
+        },
+      };
+      if (options.dryRun) {
+        print({ dryRun: true, output: local.output, catalog }, options.json);
+        return;
+      }
+      const { mkdir, writeFile } = await import("node:fs/promises");
+      const { dirname } = await import("node:path");
+      const output = pathJoin(options.root ?? process.cwd(), local.output);
+      await mkdir(dirname(output), { recursive: true });
+      await writeFile(output, `${JSON.stringify(catalog, null, 2)}\n`, { mode: 0o600 });
+      print(
+        { output: local.output, schemaCount: Object.keys(catalog.schemas).length },
+        options.json,
+      );
     });
 
   program
@@ -153,10 +214,10 @@ export function createProgram(): Command {
       const entities = files
         .filter((file) => !kind || file.entity.kind === kind)
         .map((file) => ({
-          id: file.entity.id,
+          id: entityId(file.entity),
           kind: file.entity.kind,
-          title: file.entity.title,
-          status: file.entity.status,
+          title: entityTitle(file.entity),
+          status: entityStatus(file.entity),
           path: file.relativePath,
         }));
       print(entities, options.json);
@@ -182,7 +243,7 @@ export function createProgram(): Command {
       const input = {
         kind,
         title: local.title,
-        classification: local.classification as StudioEntity["classification"],
+        classification: local.classification as Classification,
         ...(local.summary ? { summary: local.summary } : {}),
       };
       const draft = createEntity(input);
@@ -384,9 +445,9 @@ function addDomainCommand(program: Command, alias: string): void {
       files
         .filter((file) => file.entity.kind === kind)
         .map((file) => ({
-          id: file.entity.id,
-          title: file.entity.title,
-          status: file.entity.status,
+          id: entityId(file.entity),
+          title: entityTitle(file.entity),
+          status: entityStatus(file.entity),
           path: file.relativePath,
         })),
       options.json,
@@ -403,7 +464,7 @@ function addDomainCommand(program: Command, alias: string): void {
       const input = {
         kind: kindFromAlias(alias),
         title: local.title,
-        classification: local.classification as StudioEntity["classification"],
+        classification: local.classification as Classification,
         ...(local.summary ? { summary: local.summary } : {}),
       };
       if (options.dryRun) {

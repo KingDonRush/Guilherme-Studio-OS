@@ -1,0 +1,33 @@
+api_version: studio.guilherme.dev/v1
+extensions:
+  migration:
+    migrated_from: studio.guilherme.dev/entity-v1
+    previous_ids:
+      - prj_ed7fa6d96e9fbb8d4d98
+kind: project
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-14T20:30:00.000Z
+  id: prj_20260614_wordpress-portfolio
+  labels:
+    - portfolio
+    - wordpress
+  owner_id: per_20260614_guilherme-silva
+  revision: 1
+  schema_version: 1
+  slug: wordpress-portfolio
+  updated_at: 2026-06-14T20:30:00.000Z
+relations:
+  - target_id: prod_20260614_simple-budget-plugin
+    type: showcases
+  - target_id: prod_20260614_3d-viewer-for-elementor
+    type: showcases
+  - target_id: prod_20260614_elementor-implementation-toolkit
+    type: showcases
+spec:
+  current_policy: frozen-before-studio-os-v1-acceptance
+  runtime_path: wordpress
+  status: waiting
+  summary: Portfolio website frozen until Studio OS V1 reaches acceptance.
+  title: WordPress Portfolio

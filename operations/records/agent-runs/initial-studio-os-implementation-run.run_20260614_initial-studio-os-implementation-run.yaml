@@ -1,0 +1,29 @@
+api_version: studio.guilherme.dev/v1
+extensions:
+  migration:
+    migrated_from: studio.guilherme.dev/entity-v1
+    previous_ids:
+      - run_5bdb89a8b0e05d2bae62
+kind: agentRun
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-14T20:34:06.090Z
+  id: run_20260614_initial-studio-os-implementation-run
+  labels: []
+  revision: 2
+  schema_version: 1
+  slug: initial-studio-os-implementation-run
+  updated_at: 2026-06-14T20:35:40.561Z
+relations:
+  - target_id: tsk_20260614_bootstrap-studio-os-vertical
+    type: executes
+spec:
+  evidence_ids:
+    - evd_20260614_studio-os-foundation-install-and-audit
+  finished_at: 2026-06-14T20:35:40.561Z
+  objective: Create the first Studio OS V1 executable vertical.
+  result: complete
+  started_at: 2026-06-14T20:34:06.090Z
+  status: done
+  title: Initial Studio OS implementation run

@@ -4,7 +4,7 @@ import {
   kindFromAlias,
   validateStudio,
 } from "@guilherme-studio/core";
-import { createEntity } from "@guilherme-studio/schemas";
+import { createEntity, entityId, entityStatus, entityTitle } from "@guilherme-studio/schemas";
 import { validateCanonicalFiles } from "@guilherme-studio/storage";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
@@ -36,10 +36,10 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
           mimeType: "application/json",
           text: JSON.stringify(
             files.map((file) => ({
-              id: file.entity.id,
+              id: entityId(file.entity),
               kind: file.entity.kind,
-              title: file.entity.title,
-              status: file.entity.status,
+              title: entityTitle(file.entity),
+              status: entityStatus(file.entity),
               path: file.relativePath,
             })),
             null,
@@ -60,10 +60,10 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
     const entities = files
       .filter((file) => !kind || file.entity.kind === kind)
       .map((file) => ({
-        id: file.entity.id,
+        id: entityId(file.entity),
         kind: file.entity.kind,
-        title: file.entity.title,
-        status: file.entity.status,
+        title: entityTitle(file.entity),
+        status: entityStatus(file.entity),
         path: file.relativePath,
       }));
     return { content: [{ type: "text", text: JSON.stringify(entities, null, 2) }] };

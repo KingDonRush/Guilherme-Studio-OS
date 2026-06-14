@@ -3,6 +3,7 @@ import path from "node:path";
 import cookie from "@fastify/cookie";
 import fastifyStatic from "@fastify/static";
 import { createStudioContext, validateStudio } from "@guilherme-studio/core";
+import { entityId, entityStatus, entityTitle } from "@guilherme-studio/schemas";
 import { validateCanonicalFiles } from "@guilherme-studio/storage";
 import Fastify, { type FastifyInstance } from "fastify";
 
@@ -62,10 +63,10 @@ export async function createLocalApi(
   app.get("/api/v1/entities", async () => {
     const { files } = await validateCanonicalFiles(context.paths.root);
     return files.map((file) => ({
-      id: file.entity.id,
+      id: entityId(file.entity),
       kind: file.entity.kind,
-      title: file.entity.title,
-      status: file.entity.status,
+      title: entityTitle(file.entity),
+      status: entityStatus(file.entity),
       path: file.relativePath,
     }));
   });

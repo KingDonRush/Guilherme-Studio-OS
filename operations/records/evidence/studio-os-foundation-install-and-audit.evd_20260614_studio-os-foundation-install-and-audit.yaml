@@ -1,0 +1,26 @@
+api_version: studio.guilherme.dev/v1
+extensions:
+  migration:
+    migrated_from: studio.guilherme.dev/entity-v1
+    previous_ids:
+      - evd_a2689612f7d0e899d1bc
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-14T20:34:06.092Z
+  id: evd_20260614_studio-os-foundation-install-and-audit
+  labels: []
+  revision: 1
+  schema_version: 1
+  slug: studio-os-foundation-install-and-audit
+  updated_at: 2026-06-14T20:34:06.092Z
+relations:
+  - target_id: tsk_20260614_bootstrap-studio-os-vertical
+    type: supports
+spec:
+  command: npm install && npm audit --audit-level=moderate
+  evidence_type: command
+  observed_at: 2026-06-14T20:34:06.092Z
+  status: active
+  title: Studio OS foundation install and audit

@@ -1,0 +1,31 @@
+api_version: studio.guilherme.dev/v1
+extensions:
+  migration:
+    migrated_from: studio.guilherme.dev/entity-v1
+    previous_ids:
+      - tsk_605ab2a82c322bbdd701
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-14T20:34:06.080Z
+  id: tsk_20260614_bootstrap-studio-os-vertical
+  labels:
+    - studio-os
+    - bootstrap
+  revision: 1
+  schema_version: 1
+  slug: bootstrap-studio-os-vertical
+  updated_at: 2026-06-14T20:34:06.080Z
+relations: []
+spec:
+  acceptance:
+    - schemas validate
+    - storage writes canonical YAML
+    - CLI rebuilds SQLite projection
+  blocked_by: []
+  economic_reason: Create a repeatable operating layer before portfolio work resumes.
+  priority: now
+  status: active
+  summary: First validated vertical connecting Task, AgentRun and Evidence.
+  title: Bootstrap Studio OS vertical

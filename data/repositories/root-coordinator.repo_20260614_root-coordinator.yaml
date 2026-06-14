@@ -1,0 +1,28 @@
+api_version: studio.guilherme.dev/v1
+extensions:
+  migration:
+    migrated_from: studio.guilherme.dev/entity-v1
+    previous_ids:
+      - rep_41e5fe35ba9e86e2d4e4
+kind: repository
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-14T20:30:00.000Z
+  id: repo_20260614_root-coordinator
+  labels:
+    - git
+    - coordinator
+  owner_id: per_20260614_guilherme-silva
+  revision: 1
+  schema_version: 1
+  slug: root-coordinator
+  updated_at: 2026-06-14T20:30:00.000Z
+relations: []
+spec:
+  branch: codex/studio-os-v1
+  path: .
+  remote_policy: no-remote-in-v1
+  status: active
+  summary: Private local coordinator repository for Guilherme Studio OS V1.
+  title: Root Coordinator Repository

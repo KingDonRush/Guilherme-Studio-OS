@@ -1,7 +1,8 @@
 import { createHash, randomUUID } from "node:crypto";
 import { z } from "zod";
 
-export const STUDIO_SCHEMA_VERSION = "studio.guilherme.dev/entity-v1" as const;
+export const STUDIO_SCHEMA_VERSION = "studio.guilherme.dev/v1" as const;
+export const LEGACY_STUDIO_SCHEMA_VERSION = "studio.guilherme.dev/entity-v1" as const;
 
 export const EntityKindSchema = z.enum([
   "person",
@@ -40,19 +41,19 @@ export const ENTITY_PREFIX: Record<EntityKind, string> = {
   prospect: "pro",
   client: "cli",
   opportunity: "opp",
-  jobApplication: "job",
+  jobApplication: "app",
   engagement: "eng",
   deliverable: "del",
   project: "prj",
-  repository: "rep",
+  repository: "repo",
   environment: "env",
-  product: "prd",
+  product: "prod",
   release: "rel",
   portfolioCase: "case",
   evidence: "evd",
   campaign: "cmp",
   contentItem: "cnt",
-  proposal: "ppl",
+  proposal: "prp",
   contract: "ctr",
   invoice: "inv",
   payment: "pay",
@@ -65,14 +66,6 @@ export const ENTITY_PREFIX: Record<EntityKind, string> = {
 
 export const ClassificationSchema = z.enum(["public", "internal", "confidential", "secret"]);
 export type Classification = z.infer<typeof ClassificationSchema>;
-
-export const RelationSchema = z
-  .object({
-    type: z.string().min(1),
-    targetId: z.string().min(1),
-    note: z.string().optional(),
-  })
-  .strict();
 
 export const LifecycleStateSchema = z.enum([
   "draft",
@@ -89,9 +82,116 @@ export const LifecycleStateSchema = z.enum([
 ]);
 export type LifecycleState = z.infer<typeof LifecycleStateSchema>;
 
-export const EntityBaseSchema = z
+export const RelationSchema = z
   .object({
-    apiVersion: z.literal(STUDIO_SCHEMA_VERSION).default(STUDIO_SCHEMA_VERSION),
+    type: z.string().min(1),
+    target_id: z.string().min(1),
+    note: z.string().optional(),
+  })
+  .strict();
+
+export const LegacyRelationSchema = z
+  .object({
+    type: z.string().min(1),
+    targetId: z.string().min(1),
+    note: z.string().optional(),
+  })
+  .strict();
+
+export const EntityMetadataSchema = z
+  .object({
+    id: z.string().min(3),
+    slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+    schema_version: z.number().int().min(1).default(1),
+    revision: z.number().int().min(1).default(1),
+    created_at: z.string().datetime(),
+    updated_at: z.string().datetime(),
+    owner_id: z.string().optional(),
+    classification: ClassificationSchema.default("internal"),
+    labels: z.array(z.string()).default([]),
+    archived_at: z.string().datetime().nullable().optional(),
+  })
+  .strict();
+
+export const GenericSpecSchema = z
+  .object({
+    title: z.string().min(1),
+    status: LifecycleStateSchema.default("active"),
+    summary: z.string().optional(),
+  })
+  .catchall(z.unknown());
+
+export const EvidenceSpecSchema = GenericSpecSchema.extend({
+  evidence_type: z.enum(["file", "url", "command", "screenshot", "backup", "decision", "manual"]),
+  path: z.string().optional(),
+  url: z.string().url().optional(),
+  command: z.string().optional(),
+  checksum: z.string().optional(),
+  observed_at: z.string().datetime().optional(),
+});
+
+export const TaskSpecSchema = GenericSpecSchema.extend({
+  priority: z.enum(["now", "high", "normal", "low"]).default("normal"),
+  economic_reason: z.string().optional(),
+  acceptance: z.array(z.string()).default([]),
+  blocked_by: z.array(z.string()).default([]),
+});
+
+export const AgentRunSpecSchema = GenericSpecSchema.extend({
+  objective: z.string().min(1),
+  started_at: z.string().datetime(),
+  finished_at: z.string().datetime().optional(),
+  result: z.enum(["running", "complete", "blocked", "failed"]).default("running"),
+  evidence_ids: z.array(z.string()).default([]),
+  model: z.string().optional(),
+});
+
+const BaseCanonicalEntitySchema = z
+  .object({
+    api_version: z.literal(STUDIO_SCHEMA_VERSION).default(STUDIO_SCHEMA_VERSION),
+    kind: EntityKindSchema,
+    metadata: EntityMetadataSchema,
+    spec: GenericSpecSchema,
+    relations: z.array(RelationSchema).default([]),
+    extensions: z.record(z.string(), z.unknown()).default({}),
+  })
+  .strict();
+
+export const TypedEntitySchema = z.discriminatedUnion("kind", [
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("evidence"), spec: EvidenceSpecSchema }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("task"), spec: TaskSpecSchema }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("agentRun"), spec: AgentRunSpecSchema }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("person") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("organization") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("prospect") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("client") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("opportunity") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("jobApplication") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("engagement") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("deliverable") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("project") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("repository") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("environment") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("product") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("release") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("portfolioCase") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("campaign") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("contentItem") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("proposal") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("contract") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("invoice") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("payment") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("decision") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("asset") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("communication") }),
+]);
+
+export type StudioEntity = z.infer<typeof TypedEntitySchema>;
+export type StudioRelation = z.infer<typeof RelationSchema>;
+
+export const LegacyEntitySchema = z
+  .object({
+    apiVersion: z.literal(LEGACY_STUDIO_SCHEMA_VERSION),
     kind: EntityKindSchema,
     id: z.string().min(3),
     slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
@@ -105,86 +205,23 @@ export const EntityBaseSchema = z
     ownerId: z.string().optional(),
     summary: z.string().optional(),
     labels: z.array(z.string()).default([]),
-    relations: z.array(RelationSchema).default([]),
+    relations: z.array(LegacyRelationSchema).default([]),
+    data: z.record(z.string(), z.unknown()).default({}),
   })
   .strict();
 
-export const GenericEntitySchema = EntityBaseSchema.extend({
-  data: z.record(z.string(), z.unknown()).default({}),
-}).strict();
-
-export type GenericEntity = z.infer<typeof GenericEntitySchema>;
-
-export const EvidenceDataSchema = z
-  .object({
-    evidenceType: z.enum(["file", "url", "command", "screenshot", "backup", "decision", "manual"]),
-    path: z.string().optional(),
-    url: z.string().url().optional(),
-    command: z.string().optional(),
-    checksum: z.string().optional(),
-    observedAt: z.string().datetime().optional(),
-  })
-  .strict();
-
-export const TaskDataSchema = z
-  .object({
-    priority: z.enum(["now", "high", "normal", "low"]).default("normal"),
-    economicReason: z.string().optional(),
-    acceptance: z.array(z.string()).default([]),
-    blockedBy: z.array(z.string()).default([]),
-  })
-  .strict();
-
-export const AgentRunDataSchema = z
-  .object({
-    objective: z.string().min(1),
-    startedAt: z.string().datetime(),
-    finishedAt: z.string().datetime().optional(),
-    model: z.string().optional(),
-    result: z.enum(["running", "complete", "blocked", "failed"]).default("running"),
-    evidenceIds: z.array(z.string()).default([]),
-  })
-  .strict();
-
-export const TypedEntitySchema = z.discriminatedUnion("kind", [
-  GenericEntitySchema.extend({ kind: z.literal("evidence"), data: EvidenceDataSchema }),
-  GenericEntitySchema.extend({ kind: z.literal("task"), data: TaskDataSchema }),
-  GenericEntitySchema.extend({ kind: z.literal("agentRun"), data: AgentRunDataSchema }),
-  GenericEntitySchema.extend({ kind: z.literal("person") }),
-  GenericEntitySchema.extend({ kind: z.literal("organization") }),
-  GenericEntitySchema.extend({ kind: z.literal("prospect") }),
-  GenericEntitySchema.extend({ kind: z.literal("client") }),
-  GenericEntitySchema.extend({ kind: z.literal("opportunity") }),
-  GenericEntitySchema.extend({ kind: z.literal("jobApplication") }),
-  GenericEntitySchema.extend({ kind: z.literal("engagement") }),
-  GenericEntitySchema.extend({ kind: z.literal("deliverable") }),
-  GenericEntitySchema.extend({ kind: z.literal("project") }),
-  GenericEntitySchema.extend({ kind: z.literal("repository") }),
-  GenericEntitySchema.extend({ kind: z.literal("environment") }),
-  GenericEntitySchema.extend({ kind: z.literal("product") }),
-  GenericEntitySchema.extend({ kind: z.literal("release") }),
-  GenericEntitySchema.extend({ kind: z.literal("portfolioCase") }),
-  GenericEntitySchema.extend({ kind: z.literal("campaign") }),
-  GenericEntitySchema.extend({ kind: z.literal("contentItem") }),
-  GenericEntitySchema.extend({ kind: z.literal("proposal") }),
-  GenericEntitySchema.extend({ kind: z.literal("contract") }),
-  GenericEntitySchema.extend({ kind: z.literal("invoice") }),
-  GenericEntitySchema.extend({ kind: z.literal("payment") }),
-  GenericEntitySchema.extend({ kind: z.literal("decision") }),
-  GenericEntitySchema.extend({ kind: z.literal("asset") }),
-  GenericEntitySchema.extend({ kind: z.literal("communication") }),
-]);
-
-export type StudioEntity = z.infer<typeof TypedEntitySchema>;
+export type LegacyEntity = z.infer<typeof LegacyEntitySchema>;
 
 export const EventSchema = z
   .object({
-    apiVersion: z.literal("studio.guilherme.dev/event-v1").default("studio.guilherme.dev/event-v1"),
+    api_version: z
+      .literal("studio.guilherme.dev/event-v1")
+      .default("studio.guilherme.dev/event-v1"),
     id: z.string().min(3),
     type: z.string().min(1),
-    entityId: z.string().optional(),
-    actorId: z.string().optional(),
-    createdAt: z.string().datetime(),
+    entity_id: z.string().optional(),
+    actor_id: z.string().optional(),
+    created_at: z.string().datetime(),
     data: z.record(z.string(), z.unknown()).default({}),
   })
   .strict();
@@ -194,21 +231,21 @@ export const GateDecisionSchema = z
   .object({
     result: z.enum(["allow", "warn", "require_confirmation", "block"]),
     reason: z.string(),
-    evidenceRequired: z.array(z.string()).default([]),
+    evidence_required: z.array(z.string()).default([]),
   })
   .strict();
 export type GateDecision = z.infer<typeof GateDecisionSchema>;
 
 export const PreparedActionSchema = z
   .object({
-    apiVersion: z
+    api_version: z
       .literal("studio.guilherme.dev/prepared-action-v1")
       .default("studio.guilherme.dev/prepared-action-v1"),
     id: z.string().min(3),
-    actionType: z.string().min(1),
-    createdAt: z.string().datetime(),
-    expiresAt: z.string().datetime(),
-    actorId: z.string().optional(),
+    action_type: z.string().min(1),
+    created_at: z.string().datetime(),
+    expires_at: z.string().datetime(),
+    actor_id: z.string().optional(),
     payload: z.record(z.string(), z.unknown()).default({}),
     status: z
       .enum(["prepared", "confirmed", "executed", "expired", "cancelled"])
@@ -221,13 +258,17 @@ export function nowIso(): string {
   return new Date().toISOString();
 }
 
-export function createEntityId(kind: EntityKind, seed?: string): string {
+export function dateStamp(input = new Date()): string {
+  return input.toISOString().slice(0, 10).replaceAll("-", "");
+}
+
+export function createEntityId(kind: EntityKind, seed?: string, createdAt?: string): string {
   const prefix = ENTITY_PREFIX[kind];
+  const stamp = createdAt ? createdAt.slice(0, 10).replaceAll("-", "") : dateStamp();
   if (!seed) {
-    return `${prefix}_${randomUUID().replaceAll("-", "").slice(0, 20)}`;
+    return `${prefix}_${stamp}_${randomUUID().replaceAll("-", "").slice(0, 12)}`;
   }
-  const digest = createHash("sha256").update(`${kind}:${seed}`).digest("hex").slice(0, 20);
-  return `${prefix}_${digest}`;
+  return `${prefix}_${stamp}_${slugify(seed)}`;
 }
 
 export function slugify(input: string): string {
@@ -241,6 +282,35 @@ export function slugify(input: string): string {
   return normalized || "item";
 }
 
+function camelToSnake(input: string): string {
+  return input.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
+}
+
+function normalizeSpecValue(value: unknown, idMap: Record<string, string> = {}): unknown {
+  if (typeof value === "string") {
+    return idMap[value] ?? value;
+  }
+  if (Array.isArray(value)) {
+    return value.map((item) => normalizeSpecValue(item, idMap));
+  }
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [
+        camelToSnake(key),
+        normalizeSpecValue(item, idMap),
+      ]),
+    );
+  }
+  return value;
+}
+
+export function normalizeSpecData(
+  value: Record<string, unknown>,
+  idMap: Record<string, string> = {},
+): Record<string, unknown> {
+  return normalizeSpecValue(value, idMap) as Record<string, unknown>;
+}
+
 export function createEntity(input: {
   kind: EntityKind;
   title: string;
@@ -251,27 +321,137 @@ export function createEntity(input: {
   ownerId?: string;
   summary?: string;
   labels?: string[];
-  relations?: z.infer<typeof RelationSchema>[];
+  relations?: StudioRelation[];
+  spec?: Record<string, unknown>;
   data?: Record<string, unknown>;
+  extensions?: Record<string, unknown>;
 }): StudioEntity {
   const timestamp = nowIso();
   const slug = input.slug ?? slugify(input.title);
   return TypedEntitySchema.parse({
-    apiVersion: STUDIO_SCHEMA_VERSION,
+    api_version: STUDIO_SCHEMA_VERSION,
     kind: input.kind,
-    id: input.id ?? createEntityId(input.kind, slug),
-    slug,
-    title: input.title,
-    status: input.status ?? "active",
-    classification: input.classification ?? "internal",
-    revision: 1,
-    createdAt: timestamp,
-    updatedAt: timestamp,
-    ownerId: input.ownerId,
-    summary: input.summary,
-    labels: input.labels ?? [],
+    metadata: {
+      id: input.id ?? createEntityId(input.kind, slug, timestamp),
+      slug,
+      schema_version: 1,
+      revision: 1,
+      created_at: timestamp,
+      updated_at: timestamp,
+      owner_id: input.ownerId,
+      classification: input.classification ?? "internal",
+      labels: input.labels ?? [],
+      archived_at: null,
+    },
+    spec: {
+      title: input.title,
+      status: input.status ?? "active",
+      ...(input.summary ? { summary: input.summary } : {}),
+      ...(input.data ? normalizeSpecData(input.data) : {}),
+      ...(input.spec ?? {}),
+    },
     relations: input.relations ?? [],
-    data: input.data ?? {},
+    extensions: input.extensions ?? {},
+  });
+}
+
+export function canonicalIdForLegacy(entity: LegacyEntity): string {
+  if (entity.id.startsWith(`${ENTITY_PREFIX[entity.kind]}_`)) {
+    const documentedPrefix = ENTITY_PREFIX[entity.kind];
+    const [, maybeStamp, ...rest] = entity.id.split("_");
+    if (
+      maybeStamp &&
+      /^\d{8}$/.test(maybeStamp) &&
+      rest.length > 0 &&
+      entity.id.startsWith(`${documentedPrefix}_`)
+    ) {
+      return entity.id;
+    }
+  }
+  return createEntityId(entity.kind, entity.slug, entity.createdAt);
+}
+
+export function legacyToCanonical(
+  legacy: LegacyEntity,
+  idMap: Record<string, string> = {},
+): StudioEntity {
+  const canonicalId = idMap[legacy.id] ?? canonicalIdForLegacy(legacy);
+  const previousIds = canonicalId === legacy.id ? [] : [legacy.id];
+  return TypedEntitySchema.parse({
+    api_version: STUDIO_SCHEMA_VERSION,
+    kind: legacy.kind,
+    metadata: {
+      id: canonicalId,
+      slug: legacy.slug,
+      schema_version: 1,
+      revision: legacy.revision,
+      created_at: legacy.createdAt,
+      updated_at: legacy.updatedAt,
+      owner_id: legacy.ownerId ? (idMap[legacy.ownerId] ?? legacy.ownerId) : undefined,
+      classification: legacy.classification,
+      labels: legacy.labels,
+      archived_at: legacy.archivedAt ?? null,
+    },
+    spec: {
+      title: legacy.title,
+      status: legacy.status,
+      ...(legacy.summary ? { summary: legacy.summary } : {}),
+      ...normalizeSpecData(legacy.data, idMap),
+    },
+    relations: legacy.relations.map((relation) => ({
+      type: relation.type,
+      target_id: idMap[relation.targetId] ?? relation.targetId,
+      ...(relation.note ? { note: relation.note } : {}),
+    })),
+    extensions:
+      previousIds.length > 0
+        ? { migration: { previous_ids: previousIds, migrated_from: LEGACY_STUDIO_SCHEMA_VERSION } }
+        : {},
+  });
+}
+
+export function entityId(entity: StudioEntity): string {
+  return entity.metadata.id;
+}
+
+export function entitySlug(entity: StudioEntity): string {
+  return entity.metadata.slug;
+}
+
+export function entityTitle(entity: StudioEntity): string {
+  return entity.spec.title;
+}
+
+export function entityStatus(entity: StudioEntity): LifecycleState {
+  return entity.spec.status;
+}
+
+export function entityClassification(entity: StudioEntity): Classification {
+  return entity.metadata.classification;
+}
+
+export function entityRevision(entity: StudioEntity): number {
+  return entity.metadata.revision;
+}
+
+export function entityUpdatedAt(entity: StudioEntity): string {
+  return entity.metadata.updated_at;
+}
+
+export function entitySummary(entity: StudioEntity): string | undefined {
+  return entity.spec.summary;
+}
+
+export function updateEntityMetadata(
+  entity: StudioEntity,
+  patch: Partial<StudioEntity["metadata"]>,
+): StudioEntity {
+  return TypedEntitySchema.parse({
+    ...entity,
+    metadata: {
+      ...entity.metadata,
+      ...patch,
+    },
   });
 }
 
@@ -335,3 +515,7 @@ export const KIND_DIRECTORY: Record<EntityKind, string> = {
   communication: "sales/communications",
   agentRun: "operations/records/agent-runs",
 };
+
+export function stableChecksum(value: unknown): string {
+  return createHash("sha256").update(JSON.stringify(value)).digest("hex");
+}

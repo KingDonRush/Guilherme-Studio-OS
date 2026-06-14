@@ -1,20 +1,25 @@
-apiVersion: studio.guilherme.dev/entity-v1
+api_version: studio.guilherme.dev/v1
+extensions: {}
 kind: person
-id: per_20260614_guilherme-silva
-slug: guilherme-silva
-title: Guilherme Silva
-status: active
-classification: internal
-revision: 1
-createdAt: "2026-06-14T20:30:00.000Z"
-updatedAt: "2026-06-14T20:30:00.000Z"
-summary: WordPress developer operating internationally through portfolio evidence, plugins, Elementor implementation and client-facing delivery.
-labels:
-  - operator
-  - wordpress
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-14T20:30:00.000Z
+  id: per_20260614_guilherme-silva
+  labels:
+    - operator
+    - wordpress
+  revision: 1
+  schema_version: 1
+  slug: guilherme-silva
+  updated_at: 2026-06-14T20:30:00.000Z
 relations: []
-data:
-  githubHandle: kingdonrush
-  clientFacingName: Guilherme Silva
-  developerHandle: kingdonrush
+spec:
+  client_facing_name: Guilherme Silva
+  developer_handle: kingdonrush
+  github_handle: kingdonrush
   market: international-wordpress-development
+  status: active
+  summary: WordPress developer operating internationally through portfolio evidence, plugins, Elementor implementation and
+    client-facing delivery.
+  title: Guilherme Silva
