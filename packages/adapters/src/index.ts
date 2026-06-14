@@ -1,6 +1,6 @@
 import { execFile } from "node:child_process";
 import { createHash } from "node:crypto";
-import { access, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { access, mkdir, readdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { promisify } from "node:util";
 import type { StudioContext } from "@guilherme-studio/core";
@@ -45,6 +45,14 @@ export interface StudioBackupResult {
   archivePath: string;
   manifestPath: string;
   checksum: string;
+}
+
+export interface WordPressOwnershipResult {
+  path: string;
+  uid: number;
+  gid: number;
+  command: string[];
+  dryRun: boolean;
 }
 
 async function walkFiles(dir: string, root: string, out: string[] = []): Promise<string[]> {
@@ -119,4 +127,44 @@ export async function createStudioBackup(context: StudioContext): Promise<Studio
     { mode: 0o600 },
   );
   return { archivePath, manifestPath, checksum };
+}
+
+export async function fixWordPressRootOwnership(
+  context: StudioContext,
+  sitePath: string,
+  options: { dryRun?: boolean } = {},
+): Promise<WordPressOwnershipResult> {
+  const absolutePath = path.isAbsolute(sitePath)
+    ? path.resolve(sitePath)
+    : path.resolve(context.paths.root, sitePath);
+  const root = path.resolve(context.paths.root);
+  if (absolutePath !== root && !absolutePath.startsWith(`${root}${path.sep}`)) {
+    throw new Error(`Refusing to change ownership outside Studio root: ${sitePath}`);
+  }
+  const info = await stat(absolutePath);
+  if (!info.isDirectory()) {
+    throw new Error(`WordPress site path must be a directory: ${sitePath}`);
+  }
+  const uid = process.getuid?.() ?? 1000;
+  const gid = process.getgid?.() ?? 1000;
+  const command = [
+    "run",
+    "--rm",
+    "-v",
+    `${absolutePath}:/work`,
+    "alpine:3.20",
+    "chown",
+    `${uid}:${gid}`,
+    "/work",
+  ];
+  if (!options.dryRun) {
+    await execFileAsync("docker", command);
+  }
+  return {
+    path: absolutePath,
+    uid,
+    gid,
+    command: ["docker", ...command],
+    dryRun: options.dryRun ?? false,
+  };
 }

@@ -3,13 +3,13 @@ kind: task
 id: tsk_16fa28b576361318be84
 slug: initialize-wordpress-independent-git
 title: Initialize WordPress independent Git repository
-status: blocked
+status: done
 classification: internal
-revision: 1
+revision: 2
 createdAt: "2026-06-14T21:14:00.000Z"
-updatedAt: "2026-06-14T21:14:00.000Z"
+updatedAt: "2026-06-14T22:19:00.000Z"
 ownerId: per_20260614_guilherme-silva
-summary: Create the independent Git repository inside wordpress/ after fixing directory ownership.
+summary: Independent Git repository created inside wordpress/ after fixing root ownership through Docker.
 labels:
   - wordpress
   - git
@@ -25,5 +25,4 @@ data:
     - wordpress tracked files are limited by wordpress/.gitignore
     - product plugin repositories remain separate
     - root repository still ignores wordpress runtime
-  blockedBy:
-    - wordpress directory is owned by www-data and sudo requires a password
+  blockedBy: []

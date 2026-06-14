@@ -1,0 +1,25 @@
+apiVersion: studio.guilherme.dev/entity-v1
+kind: evidence
+id: evd_d900c33c3029209f99e9
+slug: wordpress-independent-git-initialized
+title: WordPress independent Git initialized
+status: active
+classification: internal
+revision: 1
+createdAt: "2026-06-14T22:19:00.000Z"
+updatedAt: "2026-06-14T22:19:00.000Z"
+ownerId: per_20260614_guilherme-silva
+summary: Docker-based ownership fix allowed wordpress/ to become its own Git repository with a scoped initial commit.
+labels:
+  - wordpress
+  - git
+  - automation
+relations:
+  - type: verifies
+    targetId: tsk_16fa28b576361318be84
+  - type: verifies
+    targetId: env_ce9881acca0ee2779776
+data:
+  evidenceType: command
+  command: studio wordpress fix-ownership wordpress && git -C wordpress init && git -C wordpress commit
+  observedAt: "2026-06-14T22:19:00.000Z"

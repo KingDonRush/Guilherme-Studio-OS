@@ -1,4 +1,8 @@
-import { createStudioBackup, inspectStudioRepositories } from "@guilherme-studio/adapters";
+import {
+  createStudioBackup,
+  fixWordPressRootOwnership,
+  inspectStudioRepositories,
+} from "@guilherme-studio/adapters";
 import { optimizeAssets } from "@guilherme-studio/assets";
 import {
   createStudioContext,
@@ -303,6 +307,20 @@ export function createProgram(): Command {
       }
       const context = await createStudioContext(options.root);
       print(await createStudioBackup(context), options.json);
+    });
+
+  const wordpress = program.command("wordpress").description("WordPress runtime helpers");
+  wordpress
+    .command("fix-ownership")
+    .argument("<site-path>", "WordPress site root path, relative to Studio root or absolute")
+    .description("Make the WordPress site root writable by the host user without recursive chown")
+    .action(async function action(this: Command, sitePath: string) {
+      const options = globalOptions(this);
+      const context = await createStudioContext(options.root);
+      print(
+        await fixWordPressRootOwnership(context, sitePath, { dryRun: options.dryRun ?? false }),
+        options.json,
+      );
     });
 
   const asset = program.command("asset").description("Manage optimized visual assets");
