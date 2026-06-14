@@ -1,4 +1,5 @@
 import { inspectStudioRepositories } from "@guilherme-studio/adapters";
+import { optimizeAssets } from "@guilherme-studio/assets";
 import {
   createStudioContext,
   EntityService,
@@ -223,5 +224,52 @@ export function createProgram(): Command {
       );
     });
 
+  const asset = program.command("asset").description("Manage optimized visual assets");
+  asset
+    .command("optimize")
+    .description("Convert ignored raster sources to optimized WebP assets")
+    .option("--source <path>", "Source raster directory", "runtime/assets/sources")
+    .option("--output <path>", "Output WebP directory", "docs/assets/generated")
+    .option("--manifest <path>", "Manifest JSON path", "docs/assets/generated/asset-manifest.json")
+    .option("--quality <number>", "WebP quality", "82")
+    .option("--max-width <number>", "Maximum output width", "2400")
+    .action(async function action(
+      this: Command & {
+        opts(): {
+          source: string;
+          output: string;
+          manifest: string;
+          quality: string;
+          maxWidth: string;
+        };
+      },
+    ) {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        source: string;
+        output: string;
+        manifest: string;
+        quality: string;
+        maxWidth: string;
+      };
+      const root = options.root ?? process.cwd();
+      const manifest = await optimizeAssets({
+        sourceDir: pathJoin(root, local.source),
+        outputDir: pathJoin(root, local.output),
+        manifestPath: pathJoin(root, local.manifest),
+        quality: Number.parseInt(local.quality, 10),
+        maxWidth: Number.parseInt(local.maxWidth, 10),
+        ...(options.dryRun ? { dryRun: true } : {}),
+      });
+      print(manifest, options.json);
+    });
+
   return program;
+}
+
+function pathJoin(root: string, relativeOrAbsolute: string): string {
+  if (relativeOrAbsolute.startsWith("/")) {
+    return relativeOrAbsolute;
+  }
+  return `${root.replace(/\/$/, "")}/${relativeOrAbsolute}`;
 }

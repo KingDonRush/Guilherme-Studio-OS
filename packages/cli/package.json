@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@guilherme-studio/adapters": "*",
+    "@guilherme-studio/assets": "*",
     "@guilherme-studio/core": "*",
     "@guilherme-studio/local-api": "*",
     "@guilherme-studio/schemas": "*",

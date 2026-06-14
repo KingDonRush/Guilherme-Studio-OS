@@ -4,6 +4,7 @@
     { "path": "packages/schemas" },
     { "path": "packages/storage" },
     { "path": "packages/core" },
+    { "path": "packages/assets" },
     { "path": "packages/adapters" },
     { "path": "packages/local-api" },
     { "path": "packages/cli" },

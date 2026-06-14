@@ -9,6 +9,7 @@
     { "path": "../schemas" },
     { "path": "../storage" },
     { "path": "../core" },
+    { "path": "../assets" },
     { "path": "../adapters" },
     { "path": "../local-api" }
   ]
