@@ -1,5 +1,0 @@
-tmp/
-cache/
-tools/mcp/node_modules/
-tools/mcp/.env
-tools/mcp/*.local.json

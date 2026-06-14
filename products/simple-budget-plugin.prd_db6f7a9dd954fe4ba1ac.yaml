@@ -16,6 +16,7 @@ labels:
   - plugin
 relations: []
 data:
-  repositoryPath: wordpress/wp-content/plugins/simple-budget-plugin
+  repositoryPath: products/simple-budget-plugin/repository
+  wordpressMount: wordpress/wp-content/plugins/simple-budget-plugin
   signal: Elementor-friendly plugin architecture for real quote flows.
   portfolioRole: flagship-plugin-case

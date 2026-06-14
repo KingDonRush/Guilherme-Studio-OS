@@ -2,125 +2,100 @@
 
 ## Mission
 
-Build a professional WordPress developer portfolio aimed at international jobs,
-especially roles involving design implementation, Elementor, plugin development,
-custom code, performance, and maintainable delivery.
+Operate the Guilherme Studio OS: a local-first production system for turning
+WordPress development into international income through portfolio evidence,
+client delivery, products, marketing, sales, job applications, documentation and
+agent-assisted execution.
 
-The portfolio is not just a website. It is evidence:
-- polished plugin code;
-- documented engineering decisions;
-- local WordPress environments that can be reproduced;
-- case studies that translate technical depth into hiring signals.
+The portfolio still matters, but it is now one domain inside the Studio OS.
+Do not resume portfolio implementation until the current Studio OS V1 acceptance
+work is complete.
 
 ## Repository Map
 
 - `AGENTS.md`: root operating guide.
-- `.ai/`: operational brain for AI work only. It stores methods, strategy,
-  memory, protocols, MCP configuration/tooling, and decision records. It must
-  not store project objects, generated deliverables, WordPress core, plugin
-  source code, design exports, or files that belong to a client/product build.
-- `docs/`: human-facing documentation, strategy, roadmaps, setup notes, research
-  logs, and portfolio narratives.
-- `wordpress/`: the actual WordPress working root. Local runtime, scripts,
-  plugins, themes, and page work live inside this folder.
+- `docs/studio-os/`: human-readable constitution, PRDs, architecture,
+  workflows, schemas, decisions, migration notes and legacy brain material.
+- `packages/`: Studio OS TypeScript workspaces for schemas, storage, core, CLI,
+  MCP, API, adapters, assets and testing.
+- `apps/panel/`: local human dashboard served by the Studio local API.
+- `data/`: canonical cross-domain records such as people, repositories and
+  environments.
+- `operations/`: tasks, evidence, agent runs, operational records, tools and
+  local execution material that is not a product build.
+- `products/`: own products and plugins. Product repository working trees live
+  under `products/<slug>/repository/` and keep their own Git history.
+- `portfolio/`: portfolio projects, cases and portfolio-owned assets.
+- `clients/`, `sales/`, `marketing/`, `career/`: domain roots created as records
+  appear.
+- `wordpress/`: current local WordPress runtime for inspection and tests during
+  migration. It is ignored by the root repo and must become its own independent
+  repository when the migration reaches that step.
+- `runtime/`: ignored local state, SQLite projection, backups, locks, logs and
+  source raster assets.
 
-Nothing else should live in the repository root.
-
-Inside `wordpress/`:
-- `wp-content/plugins/`: plugin repositories or submodules. Each plugin keeps
-  its own git history.
-- `wp-content/themes/`: custom themes or child themes.
-- `wp-content/pages/`: page specs or local page implementation artifacts when
-  they belong to the WordPress build.
-- `scripts/`: local WordPress automation.
-
-MCP tooling belongs in `.ai/tools/mcp/`, because it is part of the agent
-operational layer.
+Nothing source-like should live accidentally in the repository root. Add a root
+file only when it is a workspace config, operating guide, lockfile or required
+entrypoint.
 
 ## Non-Negotiables
 
-1. Use git before, during, and after work. This is mandatory, not optional
-   hygiene.
-2. Start with `git status --short --branch` before editing and read the output
-   as a contract: identify the branch, modified files, untracked files, and
-   whether the change belongs to the root repo or to a plugin repo.
-3. Never edit WordPress core directly. Work through plugins, themes, mu-plugins,
-   configuration, or documented scripts.
-4. Keep `.ai/` as the brain. Put implementation artifacts inside `wordpress/`
-   or human-facing narrative inside `docs/`.
-5. When the scope grows, modularize before the file becomes hard to reason
-   about. See `.ai/operational/modularization-policy.md`.
-6. Prefer reproducible local setup over one-off manual steps.
-7. Preserve user changes. Do not revert unrelated work.
-8. Do not leave useful work as accidental untracked files. Before pausing,
-   switching tasks, or reporting completion, decide whether each new file must
-   be committed, documented as intentionally temporary, or removed if it is only
-   disposable output.
-9. When the user asks for a commit, commit the relevant scope before continuing
-   implementation. Do not keep building on top of uncommitted work that the user
-   explicitly asked to checkpoint.
-10. Commits must pass the repository quality gate: precise scope, reviewed diff,
-    relevant verification, agentic evidence when the work used Agentic Ops, and
-    the mandatory trilingual Commit Standard from
-    `.ai/operational/git-protocol.md` plus
-    `.ai/operational/commit-message-policy.md`.
+1. Use Git before, during and after work.
+2. Start with `git status --short --branch` before editing.
+3. Preserve user changes. Do not revert unrelated work.
+4. Never edit WordPress core directly.
+5. Keep canonical human data in Markdown/YAML. SQLite is derived and
+   rebuildable.
+6. Keep secrets out of Git. Never ask Guilherme to paste secrets into chat; use
+   local secret collection when needed.
+7. Keep source raster assets out of Git. Approved production visuals should be
+   optimized WebP or legitimate SVG with manifest evidence.
+8. Use `studio validate`, `studio sync --rebuild`, tests, lint, typecheck and
+   Gitleaks when the change touches Studio OS behavior or data.
+9. External/public/destructive actions follow `prepare -> confirm -> execute ->
+   reconcile`.
+10. Commits must be scoped, evidence-backed and understandable in English with
+    PT-BR context when useful.
 
 ## Default Agent Loop
 
 1. Read this file.
-2. Check git status.
-3. Load the smallest relevant `.ai/` files:
-   - `.ai/README.md`
-   - `.ai/operational/core-loop.md`
-   - the relevant project or strategy note
-   - `.ai/operational/git-protocol.md` and
-     `.ai/operational/commit-message-policy.md` before committing
-   - `.ai/operational/github-micromanagement.md` when touching plugin GitHub
-     issues, PRs, labels, milestones, or public repo presentation
-4. Identify the layer being changed:
-   - brain: `.ai/`
-   - documentation: `docs/`
-   - source code/runtime: `wordpress/`
-   - MCP/tool brain: `.ai/tools/mcp/`
+2. Check Git status.
+3. Load the smallest relevant docs from `docs/studio-os/`.
+4. Identify the ownership layer:
+   - Studio OS source: `packages/` or `apps/panel/`
+   - canonical data: `data/`, `operations/`, `products/`, `portfolio/`,
+     `clients/`, `sales/`, `marketing/`, `career/`
+   - human documentation: `docs/studio-os/`
+   - local runtime: `runtime/` or `wordpress/`
 5. Make a focused change.
 6. Run the smallest useful verification.
-7. Update docs or memory when the decision matters later.
-8. End with `git status --short --branch`, call out remaining modified or
-   untracked files, and give clear next steps.
+7. Update records, evidence or decisions when the decision matters later.
+8. End with Git status and explicit next steps.
 
 ## WordPress Containment
 
-The project may run from the root of a full WordPress install, but the agent must
-stay calm about that surface area:
-- treat `wordpress/` as the active WordPress root;
-- do not chase unrelated WordPress files;
-- only inspect WordPress core when debugging compatibility or hooks;
-- keep plugin work inside `wordpress/wp-content/plugins/<plugin>`;
-- keep portfolio strategy in `docs/` and `.ai/`.
+- Treat `wordpress/` as runtime during Studio OS migration.
+- Do not chase unrelated WordPress files.
+- Plugin repositories keep their own Git history.
+- Root Git must not absorb nested WordPress/plugin repositories.
+- Product repos should be registered under `products/<slug>/repository/` and
+  attached to WordPress by documented mounts or links, not copied ad hoc.
 
-## Current Project Focus
+## Current Product Signals
 
-Primary portfolio assets:
+1. `simple-budget-plugin`
+   - Signal: Elementor-friendly quote flow with native widgets and editable cart
+     template.
 
-1. `3d-viewer-to-elementor`
-   - GitHub source: `https://github.com/KingDonRush/3d-viewer-to-wordpress`
-   - Signal: complex Elementor widget, 3D rendering, JS-heavy work, WordPress
-     integration.
+2. `3d-viewer-to-elementor`
+   - Signal: complex frontend/3D integration inside WordPress and Elementor.
 
-2. `simple-budget-plugin`
-   - GitHub source: `https://github.com/KingDonRush/simple-budget-plugin`
-   - Signal: simple product-flow solution, Elementor-friendly integration,
-     budget/cart UX, business usefulness.
+3. `elementor-implementation-toolkit`
+   - Signal: implementation tooling, filters and future custom content
+     structures for Elementor delivery.
 
-3. Suggested third project
-   - See `.ai/projects/project-idea-third.md`.
-   - Goal: prove design implementation and plugin architecture in a compact,
-     job-relevant way.
+## Operating Bias
 
-## Research Direction
-
-The positioning strategy should combine:
-- reports from friends already landing international work;
-- current market research from the web;
-- honest assessment of the user's strongest technical signals;
-- a portfolio narrative that is specific, evidence-based, and practical.
+The goal is not to create bureaucracy. The goal is to reduce rebriefing, protect
+state, create evidence and make the next profitable action obvious.

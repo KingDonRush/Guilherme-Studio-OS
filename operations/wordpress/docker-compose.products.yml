@@ -1,0 +1,11 @@
+services:
+  wordpress:
+    volumes:
+      - ../products/simple-budget-plugin/repository:/var/www/html/wp-content/plugins/simple-budget-plugin
+      - ../products/3d-viewer-to-elementor/repository:/var/www/html/wp-content/plugins/3d-viewer-to-elementor
+      - ../products/elementor-implementation-toolkit/repository:/var/www/html/wp-content/plugins/elementor-implementation-toolkit
+  wpcli:
+    volumes:
+      - ../products/simple-budget-plugin/repository:/var/www/html/wp-content/plugins/simple-budget-plugin
+      - ../products/3d-viewer-to-elementor/repository:/var/www/html/wp-content/plugins/3d-viewer-to-elementor
+      - ../products/elementor-implementation-toolkit/repository:/var/www/html/wp-content/plugins/elementor-implementation-toolkit

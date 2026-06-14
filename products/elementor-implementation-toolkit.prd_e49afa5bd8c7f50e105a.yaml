@@ -16,6 +16,7 @@ labels:
   - internal-tooling
 relations: []
 data:
-  repositoryPath: wordpress/wp-content/plugins/elementor-implementation-toolkit
+  repositoryPath: products/elementor-implementation-toolkit/repository
+  wordpressMount: wordpress/wp-content/plugins/elementor-implementation-toolkit
   signal: Production tooling for implementation workflows.
   portfolioRole: infrastructure-product

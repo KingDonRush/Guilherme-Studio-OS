@@ -16,6 +16,7 @@ labels:
   - threejs
 relations: []
 data:
-  repositoryPath: wordpress/wp-content/plugins/3d-viewer-to-elementor
+  repositoryPath: products/3d-viewer-to-elementor/repository
+  wordpressMount: wordpress/wp-content/plugins/3d-viewer-to-elementor
   signal: Complex frontend integration inside WordPress and Elementor.
   portfolioRole: technical-depth-case
