@@ -4,7 +4,13 @@ import path from "node:path";
 import { createEntity, entityId, entityTitle } from "@guilherme-studio/schemas";
 import { describe, expect, it } from "vitest";
 import YAML from "yaml";
-import { EntityStore, migrateCanonicalV1, resolveInsideRoot, SQLiteProjection } from "./index.js";
+import {
+  EntityStore,
+  entityRelativePath,
+  migrateCanonicalV1,
+  resolveInsideRoot,
+  SQLiteProjection,
+} from "./index.js";
 
 describe("storage", () => {
   const createTempStudioRoot = () => mkdtemp(path.join(os.tmpdir(), "studio-os-test-"));
@@ -28,6 +34,47 @@ describe("storage", () => {
     const result = await projection.rebuild(await store.scan());
     expect(result.entityCount).toBe(1);
     expect(result.checksum).toHaveLength(64);
+  });
+
+  it("requires revision checks for updates and recovers an interrupted create", async () => {
+    const root = await createTempStudioRoot();
+    const store = new EntityStore(root);
+    const entity = createEntity({ kind: "task", title: "Revision task" });
+    await store.put(entity);
+    await expect(store.put(entity)).rejects.toThrow(/Expected revision is required/);
+
+    const updated = {
+      ...entity,
+      metadata: {
+        ...entity.metadata,
+        revision: 2,
+        updated_at: "2026-06-14T13:00:00.000Z",
+      },
+    };
+    await store.put(updated, 1);
+
+    const interrupted = createEntity({ kind: "task", title: "Interrupted task" });
+    const targetRelative = entityRelativePath(interrupted);
+    const temporaryRelative = path.join(path.dirname(targetRelative), ".studio-interrupted.tmp");
+    const temporaryAbsolute = path.join(root, temporaryRelative);
+    const transactionDir = path.join(root, "runtime/transactions");
+    await mkdir(path.dirname(temporaryAbsolute), { recursive: true });
+    await mkdir(transactionDir, { recursive: true });
+    await writeFile(temporaryAbsolute, YAML.stringify(interrupted));
+    await writeFile(
+      path.join(transactionDir, "interrupted.json"),
+      JSON.stringify({
+        api_version: "studio.guilherme.dev/transaction-v1",
+        id: "interrupted",
+        entity_id: entityId(interrupted),
+        target_path: targetRelative,
+        temporary_path: temporaryRelative,
+        started_at: "2026-06-14T13:00:00.000Z",
+      }),
+    );
+
+    expect(await store.recoverTransactions()).toEqual({ recovered: 1, discarded: 0 });
+    expect(await store.get(entityId(interrupted))).toBeDefined();
   });
 
   it("does not follow a parent symlink that escapes the root", async () => {

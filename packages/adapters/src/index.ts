@@ -4,37 +4,111 @@ import { access, mkdir, readdir, readFile, stat, writeFile } from "node:fs/promi
 import path from "node:path";
 import { promisify } from "node:util";
 import type { StudioContext } from "@guilherme-studio/core";
+import { entityId, entityTitle } from "@guilherme-studio/schemas";
 
 const execFileAsync = promisify(execFile);
 
 export interface GitRepositoryHealth {
+  id: string;
+  title: string;
   cwd: string;
   branch: string;
   shortStatus: string;
   hasRemote: boolean;
   isDirty: boolean;
+  remotePolicy: "forbidden" | "allowed";
+  remotePolicyViolation: boolean;
 }
 
-export async function inspectGitRepository(cwd: string): Promise<GitRepositoryHealth> {
+export async function inspectGitRepository(
+  input: Pick<GitRepositoryHealth, "id" | "title" | "cwd" | "remotePolicy">,
+): Promise<GitRepositoryHealth> {
+  const { cwd } = input;
   const [{ stdout: branch }, { stdout: status }, { stdout: remotes }] = await Promise.all([
     execFileAsync("git", ["branch", "--show-current"], { cwd }),
     execFileAsync("git", ["status", "--short"], { cwd }),
     execFileAsync("git", ["remote"], { cwd }),
   ]);
   return {
+    id: input.id,
+    title: input.title,
     cwd,
     branch: branch.trim(),
     shortStatus: status.trim(),
     hasRemote: remotes.trim().length > 0,
     isDirty: status.trim().length > 0,
+    remotePolicy: input.remotePolicy,
+    remotePolicyViolation: input.remotePolicy === "forbidden" && remotes.trim().length > 0,
   };
 }
 
 export async function inspectStudioRepositories(
   context: StudioContext,
 ): Promise<GitRepositoryHealth[]> {
-  const root = await inspectGitRepository(context.paths.root);
-  return [root];
+  const candidates = new Map<
+    string,
+    Pick<GitRepositoryHealth, "id" | "title" | "cwd" | "remotePolicy">
+  >();
+  candidates.set(context.paths.root, {
+    id: "root",
+    title: "Guilherme Studio OS coordinator",
+    cwd: context.paths.root,
+    remotePolicy: "forbidden",
+  });
+  for (const file of await context.entities.scan()) {
+    const repositoryPath = Reflect.get(file.entity.spec, "path");
+    if (file.entity.kind === "repository" && typeof repositoryPath === "string") {
+      const remotePolicy = Reflect.get(file.entity.spec, "remote_policy");
+      const cwd = path.resolve(context.paths.root, repositoryPath);
+      candidates.set(cwd, {
+        id: entityId(file.entity),
+        title: entityTitle(file.entity),
+        cwd,
+        remotePolicy: remotePolicy === "no-remote-in-v1" ? "forbidden" : "allowed",
+      });
+    }
+    const productRepositoryPath = Reflect.get(file.entity.spec, "repository_path");
+    if (file.entity.kind === "product" && typeof productRepositoryPath === "string") {
+      const cwd = path.resolve(context.paths.root, productRepositoryPath);
+      candidates.set(cwd, {
+        id: `${entityId(file.entity)}:repository`,
+        title: `${entityTitle(file.entity)} repository`,
+        cwd,
+        remotePolicy: "allowed",
+      });
+    }
+    if (file.entity.kind === "environment") {
+      const repository = Reflect.get(file.entity.spec, "wordpress_git_repository");
+      if (repository && typeof repository === "object") {
+        const repositoryPath = Reflect.get(repository, "path");
+        if (typeof repositoryPath === "string") {
+          const cwd = path.resolve(context.paths.root, repositoryPath);
+          candidates.set(cwd, {
+            id: `${entityId(file.entity)}:wordpress`,
+            title: `${entityTitle(file.entity)} WordPress`,
+            cwd,
+            remotePolicy: "allowed",
+          });
+        }
+      }
+    }
+  }
+  const health: GitRepositoryHealth[] = [];
+  for (const candidate of candidates.values()) {
+    try {
+      health.push(await inspectGitRepository(candidate));
+    } catch {
+      health.push({
+        ...candidate,
+        branch: "",
+        shortStatus: "Repository unavailable or invalid",
+        hasRemote: false,
+        isDirty: true,
+        remotePolicyViolation: false,
+      });
+    }
+  }
+  return health;
 }
 
 export function describeAdapterPolicy(): string {

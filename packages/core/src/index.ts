@@ -37,7 +37,7 @@ export async function createStudioContext(root = process.cwd()): Promise<StudioC
   return {
     config,
     paths,
-    entities: new EntityStore(paths.root),
+    entities: new EntityStore(paths.root, paths.runtime),
     events: new EventStore(paths.eventsPath),
     projection: new SQLiteProjection(paths.sqlitePath),
   };

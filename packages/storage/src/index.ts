@@ -1,8 +1,9 @@
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { constants as fsConstants, statSync } from "node:fs";
 import {
   access,
   mkdir,
+  open,
   readdir,
   readFile,
   realpath,
@@ -51,6 +52,8 @@ export interface StudioPaths {
   runtime: string;
   sqlitePath: string;
   eventsPath: string;
+  transactionsPath: string;
+  locksPath: string;
 }
 
 export interface StudioFile {
@@ -74,6 +77,8 @@ export async function loadStudioConfig(
   const runtime = path.join(resolvedRoot, config.runtime_path);
   const sqlitePath = path.join(runtime, "studio.sqlite");
   const eventsPath = path.join(runtime, "events.jsonl");
+  const transactionsPath = path.join(runtime, "transactions");
+  const locksPath = path.join(runtime, "locks");
   return {
     config,
     paths: {
@@ -82,13 +87,16 @@ export async function loadStudioConfig(
       runtime,
       sqlitePath,
       eventsPath,
+      transactionsPath,
+      locksPath,
     },
   };
 }
 
 export async function ensureStudioRuntime(paths: StudioPaths): Promise<void> {
   await mkdir(paths.runtime, { recursive: true });
-  await mkdir(path.join(paths.runtime, "locks"), { recursive: true });
+  await mkdir(paths.locksPath, { recursive: true });
+  await mkdir(paths.transactionsPath, { recursive: true });
   await mkdir(path.dirname(paths.eventsPath), { recursive: true });
 }
 
@@ -124,11 +132,27 @@ export function entityRelativePath(entity: StudioEntity): string {
   return path.posix.join(dir, `${entitySlug(entity)}.${entityId(entity)}.yaml`);
 }
 
+interface EntityTransactionManifest {
+  api_version: "studio.guilherme.dev/transaction-v1";
+  id: string;
+  entity_id: string;
+  target_path: string;
+  temporary_path: string;
+  expected_revision?: number;
+  started_at: string;
+}
+
 export class EntityStore {
   readonly root: string;
+  readonly runtime: string;
+  readonly locksPath: string;
+  readonly transactionsPath: string;
 
-  constructor(root: string) {
+  constructor(root: string, runtime = path.join(root, "runtime")) {
     this.root = root;
+    this.runtime = runtime;
+    this.locksPath = path.join(runtime, "locks");
+    this.transactionsPath = path.join(runtime, "transactions");
   }
 
   async put(entity: StudioEntity, expectedRevision?: number): Promise<string> {
@@ -136,22 +160,128 @@ export class EntityStore {
     const parsed = TypedEntitySchema.parse(entity);
     const relativePath = entityRelativePath(parsed);
     const absolutePath = await resolveInsideRoot(this.root, relativePath);
-    if (await fileExists(absolutePath)) {
-      const current = await this.readByPath(absolutePath);
-      if (expectedRevision !== undefined && entityRevision(current) !== expectedRevision) {
-        throw new Error(
-          `Revision conflict for ${entityId(parsed)}: expected ${expectedRevision}, got ${entityRevision(current)}`,
-        );
+    await this.withEntityLock(entityId(parsed), async () => {
+      if (await fileExists(absolutePath)) {
+        const current = await this.readByPath(absolutePath);
+        if (expectedRevision === undefined) {
+          throw new Error(`Expected revision is required when updating ${entityId(parsed)}`);
+        }
+        if (entityRevision(current) !== expectedRevision) {
+          throw new Error(
+            `Revision conflict for ${entityId(parsed)}: expected ${expectedRevision}, got ${entityRevision(current)}`,
+          );
+        }
       }
+      await this.commitEntityWrite(parsed, absolutePath, expectedRevision);
+    });
+    return relativePath;
+  }
+
+  async recoverTransactions(): Promise<{ recovered: number; discarded: number }> {
+    await mkdir(this.transactionsPath, { recursive: true });
+    const entries = await readdir(this.transactionsPath, { withFileTypes: true });
+    let recovered = 0;
+    let discarded = 0;
+    for (const entry of entries) {
+      if (!entry.isFile() || !entry.name.endsWith(".json")) {
+        continue;
+      }
+      const manifestPath = path.join(this.transactionsPath, entry.name);
+      const manifest = JSON.parse(
+        await readFile(manifestPath, "utf8"),
+      ) as EntityTransactionManifest;
+      const targetPath = path.join(this.root, manifest.target_path);
+      const temporaryPath = path.join(this.root, manifest.temporary_path);
+      if (await fileExists(temporaryPath)) {
+        const parsed = TypedEntitySchema.parse(YAML.parse(await readFile(temporaryPath, "utf8")));
+        if (entityId(parsed) !== manifest.entity_id) {
+          throw new Error(`Transaction entity mismatch: ${manifest.id}`);
+        }
+        if (await fileExists(targetPath)) {
+          const current = await this.readByPath(targetPath);
+          if (entityRevision(current) === entityRevision(parsed)) {
+            await rm(temporaryPath, { force: true });
+            discarded += 1;
+          } else if (
+            manifest.expected_revision !== undefined &&
+            entityRevision(current) === manifest.expected_revision
+          ) {
+            await rename(temporaryPath, targetPath);
+            recovered += 1;
+          } else {
+            throw new Error(`Transaction revision conflict: ${manifest.id}`);
+          }
+        } else {
+          await rename(temporaryPath, targetPath);
+          recovered += 1;
+        }
+      } else {
+        discarded += 1;
+      }
+      await rm(manifestPath, { force: true });
     }
-    const body = YAML.stringify(parsed, { sortMapEntries: true, lineWidth: 120 });
+    return { recovered, discarded };
+  }
+
+  async pendingTransactions(): Promise<string[]> {
+    await mkdir(this.transactionsPath, { recursive: true });
+    return (await readdir(this.transactionsPath))
+      .filter((entry) => entry.endsWith(".json"))
+      .sort((a, b) => a.localeCompare(b));
+  }
+
+  private async withEntityLock<T>(id: string, action: () => Promise<T>): Promise<T> {
+    await mkdir(this.locksPath, { recursive: true });
+    const lockPath = path.join(this.locksPath, `${id}.lock`);
+    let lockHandle: Awaited<ReturnType<typeof open>>;
+    try {
+      lockHandle = await open(lockPath, "wx", 0o600);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "EEXIST") {
+        throw new Error(`Entity is locked by another operation: ${id}`);
+      }
+      throw error;
+    }
+    try {
+      await lockHandle.writeFile(`${process.pid}\n${new Date().toISOString()}\n`);
+      return await action();
+    } finally {
+      await lockHandle.close();
+      await rm(lockPath, { force: true });
+    }
+  }
+
+  private async commitEntityWrite(
+    entity: StudioEntity,
+    absolutePath: string,
+    expectedRevision?: number,
+  ): Promise<void> {
+    await mkdir(this.transactionsPath, { recursive: true });
+    const transactionId = randomUUID();
     const tmpPath = path.join(
       path.dirname(absolutePath),
       `.studio-${process.pid}-${Date.now()}.tmp`,
     );
-    await writeFile(tmpPath, body, { mode: 0o600 });
-    await rename(tmpPath, absolutePath);
-    return relativePath;
+    const manifestPath = path.join(this.transactionsPath, `${transactionId}.json`);
+    const manifest: EntityTransactionManifest = {
+      api_version: "studio.guilherme.dev/transaction-v1",
+      id: transactionId,
+      entity_id: entityId(entity),
+      target_path: path.relative(this.root, absolutePath),
+      temporary_path: path.relative(this.root, tmpPath),
+      ...(expectedRevision === undefined ? {} : { expected_revision: expectedRevision }),
+      started_at: new Date().toISOString(),
+    };
+    await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, { mode: 0o600 });
+    try {
+      const body = YAML.stringify(entity, { sortMapEntries: true, lineWidth: 120 });
+      await writeFile(tmpPath, body, { mode: 0o600 });
+      await rename(tmpPath, absolutePath);
+      await rm(manifestPath, { force: true });
+    } catch (error) {
+      await rm(tmpPath, { force: true });
+      throw error;
+    }
   }
 
   async readByPath(absolutePath: string): Promise<StudioEntity> {
@@ -335,6 +465,49 @@ export class SQLiteProjection {
           note TEXT,
           PRIMARY KEY (source_id, type, target_id)
         );
+        CREATE TABLE events (
+          id TEXT PRIMARY KEY,
+          type TEXT NOT NULL,
+          entity_id TEXT,
+          actor_id TEXT,
+          created_at TEXT NOT NULL,
+          data_json TEXT NOT NULL
+        );
+        CREATE TABLE tasks (
+          id TEXT PRIMARY KEY,
+          title TEXT NOT NULL,
+          status TEXT NOT NULL,
+          priority TEXT,
+          economic_reason TEXT,
+          updated_at TEXT NOT NULL
+        );
+        CREATE TABLE money (
+          id TEXT PRIMARY KEY,
+          kind TEXT NOT NULL,
+          status TEXT NOT NULL,
+          amount REAL,
+          currency TEXT,
+          updated_at TEXT NOT NULL
+        );
+        CREATE TABLE repositories (
+          id TEXT PRIMARY KEY,
+          title TEXT NOT NULL,
+          path TEXT,
+          branch TEXT,
+          remote_policy TEXT,
+          updated_at TEXT NOT NULL
+        );
+        CREATE TABLE next_actions (
+          entity_id TEXT PRIMARY KEY,
+          kind TEXT NOT NULL,
+          title TEXT NOT NULL,
+          priority TEXT,
+          status TEXT NOT NULL
+        );
+        CREATE TABLE projection_meta (
+          key TEXT PRIMARY KEY,
+          value TEXT NOT NULL
+        );
         CREATE INDEX entities_kind_idx ON entities(kind);
         CREATE INDEX entities_status_idx ON entities(status);
         CREATE INDEX relations_target_idx ON relations(target_id);
@@ -347,6 +520,22 @@ export class SQLiteProjection {
       `);
       const insertRelation = db.prepare(`
         INSERT INTO relations (source_id, type, target_id, note) VALUES (?, ?, ?, ?)
+      `);
+      const insertTask = db.prepare(`
+        INSERT INTO tasks (id, title, status, priority, economic_reason, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `);
+      const insertMoney = db.prepare(`
+        INSERT INTO money (id, kind, status, amount, currency, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `);
+      const insertRepository = db.prepare(`
+        INSERT INTO repositories (id, title, path, branch, remote_policy, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `);
+      const insertNextAction = db.prepare(`
+        INSERT INTO next_actions (entity_id, kind, title, priority, status)
+        VALUES (?, ?, ?, ?, ?)
       `);
       const tx = db.transaction((entries: StudioFile[]) => {
         for (const file of entries) {
@@ -371,31 +560,100 @@ export class SQLiteProjection {
               relation.note ?? null,
             );
           }
+          if (entity.kind === "task") {
+            insertTask.run(
+              entityId(entity),
+              entityTitle(entity),
+              entityStatus(entity),
+              typeof entity.spec.priority === "string" ? entity.spec.priority : null,
+              typeof entity.spec.economic_reason === "string" ? entity.spec.economic_reason : null,
+              entityUpdatedAt(entity),
+            );
+          }
+          if (["invoice", "payment", "contract"].includes(entity.kind)) {
+            const amount = Reflect.get(entity.spec, "amount");
+            const currency = Reflect.get(entity.spec, "currency");
+            insertMoney.run(
+              entityId(entity),
+              entity.kind,
+              entityStatus(entity),
+              typeof amount === "number" ? amount : null,
+              typeof currency === "string" ? currency : null,
+              entityUpdatedAt(entity),
+            );
+          }
+          if (entity.kind === "repository") {
+            const repositoryPath = Reflect.get(entity.spec, "path");
+            const branch = Reflect.get(entity.spec, "branch");
+            const remotePolicy = Reflect.get(entity.spec, "remote_policy");
+            insertRepository.run(
+              entityId(entity),
+              entityTitle(entity),
+              typeof repositoryPath === "string" ? repositoryPath : null,
+              typeof branch === "string" ? branch : null,
+              typeof remotePolicy === "string" ? remotePolicy : null,
+              entityUpdatedAt(entity),
+            );
+          }
+          if (
+            entity.kind === "task" &&
+            !["done", "archived", "cancelled"].includes(entityStatus(entity))
+          ) {
+            insertNextAction.run(
+              entityId(entity),
+              entity.kind,
+              entityTitle(entity),
+              typeof entity.spec.priority === "string" ? entity.spec.priority : null,
+              entityStatus(entity),
+            );
+          }
         }
       });
       tx(files);
+      const checksum = projectionChecksum(files);
+      db.prepare("INSERT INTO projection_meta (key, value) VALUES (?, ?)").run(
+        "canonical_checksum",
+        checksum,
+      );
     } finally {
       db.close();
     }
     await rename(tmpPath, this.sqlitePath);
-    const payload = files
-      .map((file) => `${file.relativePath}:${JSON.stringify(file.entity)}`)
-      .join("\n");
     return {
       entityCount: files.length,
       relationCount: files.reduce((count, file) => count + file.entity.relations.length, 0),
-      checksum: createHash("sha256").update(payload).digest("hex"),
+      checksum: projectionChecksum(files),
     };
   }
 
-  inspect(): { exists: boolean; sizeBytes: number } {
+  inspect(): { exists: boolean; sizeBytes: number; checksum?: string } {
     try {
       const info = statSync(this.sqlitePath);
-      return { exists: true, sizeBytes: info.size };
+      const db = new Database(this.sqlitePath, { readonly: true });
+      try {
+        const row = db
+          .prepare("SELECT value FROM projection_meta WHERE key = ?")
+          .get("canonical_checksum") as { value?: string } | undefined;
+        return {
+          exists: true,
+          sizeBytes: info.size,
+          ...(row?.value ? { checksum: row.value } : {}),
+        };
+      } finally {
+        db.close();
+      }
     } catch {
       return { exists: false, sizeBytes: 0 };
     }
   }
+}
+
+export function projectionChecksum(files: StudioFile[]): string {
+  const payload = [...files]
+    .sort((a, b) => a.relativePath.localeCompare(b.relativePath))
+    .map((file) => `${file.relativePath}:${JSON.stringify(file.entity)}`)
+    .join("\n");
+  return createHash("sha256").update(payload).digest("hex");
 }
 
 export async function validateCanonicalFiles(
@@ -411,7 +669,22 @@ export async function validateCanonicalFiles(
       errors.push(`Duplicate entity id: ${id}`);
     }
     seen.add(id);
+    const expectedPath = entityRelativePath(file.entity);
+    if (file.relativePath !== expectedPath) {
+      errors.push(`Canonical path mismatch for ${id}: expected ${expectedPath}`);
+    }
     files.push(file);
+  }
+  for (const file of files) {
+    const id = entityId(file.entity);
+    if (file.entity.metadata.owner_id && !seen.has(file.entity.metadata.owner_id)) {
+      errors.push(`Broken owner relation from ${id} to ${file.entity.metadata.owner_id}`);
+    }
+    for (const relation of file.entity.relations) {
+      if (!seen.has(relation.target_id)) {
+        errors.push(`Broken relation from ${id} to ${relation.target_id}`);
+      }
+    }
   }
   return { files, errors };
 }

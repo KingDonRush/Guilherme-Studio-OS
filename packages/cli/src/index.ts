@@ -22,7 +22,11 @@ import {
   RelationSchema,
   TypedEntitySchema,
 } from "@guilherme-studio/schemas";
-import { migrateCanonicalV1, validateCanonicalFiles } from "@guilherme-studio/storage";
+import {
+  migrateCanonicalV1,
+  projectionChecksum,
+  validateCanonicalFiles,
+} from "@guilherme-studio/storage";
 import { Command } from "commander";
 import { z } from "zod";
 
@@ -180,27 +184,84 @@ export function createProgram(): Command {
 
   program
     .command("doctor")
-    .description("Run a conservative health check")
+    .description("Diagnose canonical data, projection, transactions, repositories and backups")
     .action(async function action(this: Command) {
       const options = globalOptions(this);
       const context = await createStudioContext(options.root);
       const validation = await validateStudio(options.root);
+      const { files } = await validateCanonicalFiles(context.paths.root);
       const repositories = await inspectStudioRepositories(context);
       const dirty = repositories.filter((repo) => repo.isDirty);
+      const unexpectedRemotes = repositories.filter((repo) => repo.remotePolicyViolation);
+      const pendingTransactions = await context.entities.pendingTransactions();
+      const projection = context.projection.inspect();
+      const expectedChecksum = projectionChecksum(files);
+      const projectionStale = !projection.exists || projection.checksum !== expectedChecksum;
+      const { readdir } = await import("node:fs/promises");
+      const backupDir = pathJoin(context.paths.runtime, "backups");
+      let backups: string[] = [];
+      try {
+        backups = (await readdir(backupDir))
+          .filter((entry) => entry.endsWith(".manifest.json"))
+          .sort((a, b) => b.localeCompare(a));
+      } catch {
+        backups = [];
+      }
+      const checks = [
+        {
+          name: "canonical_data",
+          ok: validation.ok,
+          detail: validation.errors,
+          remediation: "Run studio validate and repair the reported canonical files.",
+        },
+        {
+          name: "projection",
+          ok: !projectionStale,
+          detail: { expectedChecksum, actualChecksum: projection.checksum ?? null },
+          remediation: "Run studio sync --rebuild --verify.",
+        },
+        {
+          name: "transactions",
+          ok: pendingTransactions.length === 0,
+          detail: pendingTransactions,
+          remediation: "Run studio recovery transactions after inspecting pending manifests.",
+        },
+        {
+          name: "repositories",
+          ok: dirty.length === 0 && unexpectedRemotes.length === 0,
+          detail: { dirty, unexpectedRemotes },
+          remediation: "Commit intentional changes and remove unexpected V1 remotes.",
+        },
+        {
+          name: "backup",
+          ok: backups.length > 0,
+          detail: { latest: backups[0] ?? null },
+          remediation: "Run studio backup.",
+        },
+      ];
+      const ok = checks.every((check) => check.ok);
       print(
         {
-          ok: validation.ok,
-          validation,
-          dirtyRepositories: dirty,
-          warnings:
-            dirty.length > 0
-              ? ["There are dirty repositories; inspect before destructive work."]
-              : [],
+          ok,
+          checks,
         },
         options.json,
       );
-      process.exitCode = validation.ok ? 0 : 2;
+      process.exitCode = ok ? 0 : 2;
     });
+
+  const recovery = program
+    .command("recovery")
+    .description("Inspect and recover local transactions");
+  recovery.command("transactions").action(async function action(this: Command) {
+    const options = globalOptions(this);
+    const context = await createStudioContext(options.root);
+    if (options.dryRun) {
+      print({ dryRun: true, pending: await context.entities.pendingTransactions() }, options.json);
+      return;
+    }
+    print(await context.entities.recoverTransactions(), options.json);
+  });
 
   const entity = program.command("entity").description("Manage canonical entities");
   entity
