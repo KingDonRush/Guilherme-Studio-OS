@@ -1,7 +1,13 @@
 import {
+  backupWordPressDatabase,
+  backupWordPressUploads,
   createStudioBackup,
   fixWordPressRootOwnership,
   inspectStudioRepositories,
+  restoreCheckWordPressDatabase,
+  restoreCheckWordPressUploads,
+  wordpressPluginList,
+  wordpressStatus,
 } from "@guilherme-studio/adapters";
 import { optimizeAssets } from "@guilherme-studio/assets";
 import {
@@ -518,6 +524,61 @@ export function createProgram(): Command {
         await fixWordPressRootOwnership(context, sitePath, { dryRun: options.dryRun ?? false }),
         options.json,
       );
+    });
+  wordpress.command("status").action(async function action(this: Command) {
+    const options = globalOptions(this);
+    const context = await createStudioContext(options.root);
+    print(await wordpressStatus(context), options.json);
+  });
+  wordpress.command("plugin-list").action(async function action(this: Command) {
+    const options = globalOptions(this);
+    const context = await createStudioContext(options.root);
+    print(await wordpressPluginList(context), options.json);
+  });
+  wordpress.command("backup-db").action(async function action(this: Command) {
+    const options = globalOptions(this);
+    if (options.dryRun) {
+      print({ dryRun: true, action: "wordpress.backup-db" }, options.json);
+      return;
+    }
+    const context = await createStudioContext(options.root);
+    print(await backupWordPressDatabase(context), options.json);
+  });
+  wordpress.command("backup-uploads").action(async function action(this: Command) {
+    const options = globalOptions(this);
+    if (options.dryRun) {
+      print({ dryRun: true, action: "wordpress.backup-uploads" }, options.json);
+      return;
+    }
+    const context = await createStudioContext(options.root);
+    print(await backupWordPressUploads(context), options.json);
+  });
+  wordpress
+    .command("restore-check")
+    .argument("<sql-path>", "SQL backup path inside the Studio root")
+    .action(async function action(this: Command, sqlPath: string) {
+      const options = globalOptions(this);
+      if (options.dryRun) {
+        print({ dryRun: true, action: "wordpress.restore-check", sqlPath }, options.json);
+        return;
+      }
+      const context = await createStudioContext(options.root);
+      print(await restoreCheckWordPressDatabase(context, sqlPath), options.json);
+    });
+  wordpress
+    .command("restore-check-uploads")
+    .argument("<archive-path>", "Uploads archive path inside the Studio root")
+    .action(async function action(this: Command, archivePath: string) {
+      const options = globalOptions(this);
+      if (options.dryRun) {
+        print(
+          { dryRun: true, action: "wordpress.restore-check-uploads", archivePath },
+          options.json,
+        );
+        return;
+      }
+      const context = await createStudioContext(options.root);
+      print(await restoreCheckWordPressUploads(context, archivePath), options.json);
     });
 
   const asset = program.command("asset").description("Manage optimized visual assets");

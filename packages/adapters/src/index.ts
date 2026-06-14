@@ -1,6 +1,6 @@
-import { execFile } from "node:child_process";
+import { execFile, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
-import { access, mkdir, readdir, readFile, stat, writeFile } from "node:fs/promises";
+import { access, mkdir, mkdtemp, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { promisify } from "node:util";
 import type { StudioContext } from "@guilherme-studio/core";
@@ -129,6 +129,198 @@ export interface WordPressOwnershipResult {
   dryRun: boolean;
 }
 
+export interface WordPressRuntimeDefinition {
+  composeFiles: string[];
+  url?: string;
+}
+
+export interface WordPressDbBackupResult {
+  sqlPath: string;
+  manifestPath: string;
+  checksum: string;
+  sizeBytes: number;
+}
+
+export interface WordPressUploadsBackupResult {
+  archivePath: string;
+  manifestPath: string;
+  checksum: string;
+  sizeBytes: number;
+}
+
+async function wordpressRuntime(context: StudioContext): Promise<WordPressRuntimeDefinition> {
+  for (const file of await context.entities.scan()) {
+    if (file.entity.kind !== "environment") {
+      continue;
+    }
+    const composeFiles = Reflect.get(file.entity.spec, "compose_files");
+    if (!Array.isArray(composeFiles) || !composeFiles.every((item) => typeof item === "string")) {
+      continue;
+    }
+    const url = Reflect.get(file.entity.spec, "url");
+    return {
+      composeFiles,
+      ...(typeof url === "string" ? { url } : {}),
+    };
+  }
+  throw new Error("No WordPress environment with compose_files is registered.");
+}
+
+async function composeInvocation(
+  context: StudioContext,
+  args: string[],
+): Promise<{ stdout: string; stderr: string }> {
+  const runtime = await wordpressRuntime(context);
+  const composeArgs = runtime.composeFiles.flatMap((file) => ["-f", file]);
+  return execFileAsync("docker", ["compose", ...composeArgs, ...args], {
+    cwd: context.paths.root,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+}
+
+export async function wordpressStatus(context: StudioContext): Promise<{
+  url?: string;
+  services: unknown[];
+}> {
+  const runtime = await wordpressRuntime(context);
+  const { stdout } = await composeInvocation(context, ["ps", "--format", "json"]);
+  const services = stdout
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => JSON.parse(line) as unknown);
+  return { ...(runtime.url ? { url: runtime.url } : {}), services };
+}
+
+export async function wordpressPluginList(context: StudioContext): Promise<unknown[]> {
+  const { stdout } = await composeInvocation(context, [
+    "run",
+    "--rm",
+    "-T",
+    "wpcli",
+    "plugin",
+    "list",
+    "--format=json",
+  ]);
+  return JSON.parse(stdout) as unknown[];
+}
+
+export async function backupWordPressDatabase(
+  context: StudioContext,
+): Promise<WordPressDbBackupResult> {
+  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const directory = path.join(context.paths.runtime, "backups", "wordpress", timestamp);
+  await mkdir(directory, { recursive: true });
+  const sqlPath = path.join(directory, "database.sql");
+  const manifestPath = path.join(directory, "manifest.json");
+  const { stdout } = await composeInvocation(context, [
+    "exec",
+    "-T",
+    "db",
+    "sh",
+    "-c",
+    'mysqldump -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE"',
+  ]);
+  await writeFile(sqlPath, stdout, { mode: 0o600 });
+  const checksum = createHash("sha256").update(stdout).digest("hex");
+  const sizeBytes = Buffer.byteLength(stdout);
+  await writeFile(
+    manifestPath,
+    `${JSON.stringify(
+      {
+        api_version: "studio.guilherme.dev/wordpress-backup-v1",
+        created_at: new Date().toISOString(),
+        sql_path: sqlPath,
+        checksum,
+        size_bytes: sizeBytes,
+      },
+      null,
+      2,
+    )}\n`,
+    { mode: 0o600 },
+  );
+  return { sqlPath, manifestPath, checksum, sizeBytes };
+}
+
+async function spawnWithInput(
+  command: string,
+  args: string[],
+  input: Buffer,
+  cwd: string,
+): Promise<{ stdout: string; stderr: string }> {
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, args, { cwd, stdio: ["pipe", "pipe", "pipe"] });
+    const stdout: Buffer[] = [];
+    const stderr: Buffer[] = [];
+    child.stdout.on("data", (chunk: Buffer) => stdout.push(chunk));
+    child.stderr.on("data", (chunk: Buffer) => stderr.push(chunk));
+    child.on("error", reject);
+    child.on("close", (code) => {
+      const result = {
+        stdout: Buffer.concat(stdout).toString("utf8"),
+        stderr: Buffer.concat(stderr).toString("utf8"),
+      };
+      if (code === 0) {
+        resolve(result);
+      } else {
+        reject(new Error(`Command exited with ${code}: ${result.stderr}`));
+      }
+    });
+    child.stdin.end(input);
+  });
+}
+
+export async function restoreCheckWordPressDatabase(
+  context: StudioContext,
+  sqlPath: string,
+): Promise<{ ok: true; tableCount: number }> {
+  const absoluteSqlPath = path.resolve(context.paths.root, sqlPath);
+  const root = path.resolve(context.paths.root);
+  if (absoluteSqlPath !== root && !absoluteSqlPath.startsWith(`${root}${path.sep}`)) {
+    throw new Error("Restore check SQL must stay inside the Studio root.");
+  }
+  const sql = await readFile(absoluteSqlPath);
+  const runtime = await wordpressRuntime(context);
+  const composeArgs = runtime.composeFiles.flatMap((file) => ["-f", file]);
+  const database = `studio_restore_${Date.now()}`;
+  const mysqlArgs = [
+    "compose",
+    ...composeArgs,
+    "exec",
+    "-T",
+    "db",
+    "sh",
+    "-c",
+    'mysql -uroot -p"$MYSQL_ROOT_PASSWORD" "$@"',
+    "studio-mysql",
+  ];
+  await execFileAsync("docker", [...mysqlArgs, "-e", `CREATE DATABASE \`${database}\``], {
+    cwd: context.paths.root,
+  });
+  try {
+    await spawnWithInput("docker", [...mysqlArgs, database], sql, context.paths.root);
+    const { stdout } = await execFileAsync(
+      "docker",
+      [
+        ...mysqlArgs,
+        "-N",
+        "-e",
+        `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='${database}'`,
+      ],
+      { cwd: context.paths.root },
+    );
+    const tableCount = Number.parseInt(stdout.trim(), 10);
+    if (!Number.isFinite(tableCount) || tableCount < 1) {
+      throw new Error("Restore check completed without WordPress tables.");
+    }
+    return { ok: true, tableCount };
+  } finally {
+    await execFileAsync("docker", [...mysqlArgs, "-e", `DROP DATABASE \`${database}\``], {
+      cwd: context.paths.root,
+    });
+  }
+}
+
 async function walkFiles(dir: string, root: string, out: string[] = []): Promise<string[]> {
   const entries = await readdir(dir, { withFileTypes: true });
   for (const entry of entries) {
@@ -142,6 +334,62 @@ async function walkFiles(dir: string, root: string, out: string[] = []): Promise
     }
   }
   return out.sort((a, b) => a.localeCompare(b));
+}
+
+export async function backupWordPressUploads(
+  context: StudioContext,
+): Promise<WordPressUploadsBackupResult> {
+  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const directory = path.join(context.paths.runtime, "backups", "wordpress", timestamp);
+  await mkdir(directory, { recursive: true });
+  const archivePath = path.join(directory, "uploads.tar.gz");
+  const manifestPath = path.join(directory, "uploads.manifest.json");
+  const uploadsPath = path.join(context.paths.root, "wordpress", "wp-content", "uploads");
+  await access(uploadsPath);
+  await execFileAsync("tar", ["-czf", archivePath, "-C", uploadsPath, "."], {
+    cwd: context.paths.root,
+  });
+  const archive = await readFile(archivePath);
+  const checksum = createHash("sha256").update(archive).digest("hex");
+  const sizeBytes = archive.byteLength;
+  await writeFile(
+    manifestPath,
+    `${JSON.stringify(
+      {
+        api_version: "studio.guilherme.dev/wordpress-uploads-backup-v1",
+        created_at: new Date().toISOString(),
+        archive_path: archivePath,
+        checksum,
+        size_bytes: sizeBytes,
+      },
+      null,
+      2,
+    )}\n`,
+    { mode: 0o600 },
+  );
+  return { archivePath, manifestPath, checksum, sizeBytes };
+}
+
+export async function restoreCheckWordPressUploads(
+  context: StudioContext,
+  archivePath: string,
+): Promise<{ ok: true; fileCount: number }> {
+  const absoluteArchivePath = path.resolve(context.paths.root, archivePath);
+  const root = path.resolve(context.paths.root);
+  if (absoluteArchivePath !== root && !absoluteArchivePath.startsWith(`${root}${path.sep}`)) {
+    throw new Error("Restore check archive must stay inside the Studio root.");
+  }
+  const temporary = await mkdtemp(path.join(context.paths.runtime, "uploads-restore-check-"));
+  try {
+    await execFileAsync("tar", ["-xzf", absoluteArchivePath, "-C", temporary]);
+    const files = await walkFiles(temporary, temporary);
+    if (files.length < 1) {
+      throw new Error("Uploads restore check extracted no files.");
+    }
+    return { ok: true, fileCount: files.length };
+  } finally {
+    await rm(temporary, { recursive: true, force: true });
+  }
 }
 
 export async function createStudioBackup(context: StudioContext): Promise<StudioBackupResult> {
