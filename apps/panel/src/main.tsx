@@ -1,8 +1,9 @@
-import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, useMutation, useQuery } from "@tanstack/react-query";
 import {
   Activity,
   Archive,
   BriefcaseBusiness,
+  CheckCircle2,
   CircleAlert,
   Megaphone,
   ShieldCheck,
@@ -52,11 +53,37 @@ interface PrdCoverageReport {
   }>;
 }
 
+interface PreparedAction {
+  id: string;
+  action_type: string;
+  status: string;
+  provider?: string;
+  target?: string;
+  expires_at: string;
+  payload: Record<string, unknown>;
+  payload_checksum: string;
+}
+
 async function getJson<T>(url: string): Promise<T> {
   const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${window.localStorage.getItem("studio_token") ?? ""}`,
     },
+  });
+  if (!response.ok) {
+    throw new Error(`Request failed: ${response.status}`);
+  }
+  return response.json() as Promise<T>;
+}
+
+async function postJson<T>(url: string, body: Record<string, unknown>): Promise<T> {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${window.localStorage.getItem("studio_token") ?? ""}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
   });
   if (!response.ok) {
     throw new Error(`Request failed: ${response.status}`);
@@ -99,10 +126,7 @@ function useStudioData() {
   });
   const preparedActions = useQuery({
     queryKey: ["prepared-actions"],
-    queryFn: () =>
-      getJson<Array<{ id: string; action_type: string; status: string; expires_at: string }>>(
-        "/api/v1/prepared-actions",
-      ),
+    queryFn: () => getJson<PreparedAction[]>("/api/v1/prepared-actions"),
     retry: false,
   });
   const coverage = useQuery({
@@ -310,15 +334,7 @@ function Control({ data }: { data: ReturnType<typeof useStudioData> }) {
         }))}
         empty="Cobertura ainda não carregada."
       />
-      <EntityTable
-        title="Ações preparadas"
-        rows={(data.preparedActions.data ?? []).map((action) => ({
-          left: action.status,
-          title: action.action_type,
-          right: new Date(action.expires_at).toLocaleString("pt-BR"),
-        }))}
-        empty="Nenhuma ação aguardando confirmação."
-      />
+      <PreparedActionReview actions={data.preparedActions.data ?? []} />
       <section className="panel">
         <h3>Diagnósticos</h3>
         <div className="table">
@@ -345,6 +361,49 @@ function Control({ data }: { data: ReturnType<typeof useStudioData> }) {
         </p>
       ) : null}
     </>
+  );
+}
+
+function PreparedActionReview({ actions }: { actions: PreparedAction[] }) {
+  const confirm = useMutation({
+    mutationFn: (action: PreparedAction) =>
+      postJson<ResultEnvelope<PreparedAction>>(`/api/v1/prepared-actions/${action.id}/confirm`, {
+        payload_checksum: action.payload_checksum,
+      }),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["prepared-actions"] });
+    },
+  });
+
+  return (
+    <section className="panel">
+      <h3>Ações preparadas</h3>
+      <div className="action-list">
+        {actions.map((action) => (
+          <article className="action-review" key={action.id}>
+            <div className="action-head">
+              <span>{action.status}</span>
+              <strong>{action.action_type}</strong>
+              <em>{new Date(action.expires_at).toLocaleString("pt-BR")}</em>
+            </div>
+            <pre>{JSON.stringify(action.payload, null, 2)}</pre>
+            <div className="checksum">
+              <code>{action.payload_checksum}</code>
+              <button
+                disabled={action.status !== "awaiting_confirmation" || confirm.isPending}
+                onClick={() => confirm.mutate(action)}
+                type="button"
+              >
+                <CheckCircle2 size={16} /> Confirmar checksum
+              </button>
+            </div>
+          </article>
+        ))}
+        {actions.length === 0 ? (
+          <p className="empty">Nenhuma ação aguardando confirmação.</p>
+        ) : null}
+      </div>
+    </section>
   );
 }
 

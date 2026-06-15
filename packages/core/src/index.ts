@@ -115,11 +115,7 @@ export class EntityService {
     if (!current) {
       throw new Error(`Entity not found: ${id}`);
     }
-    new LifecycleEngine().assertTransition(
-      current.entity.kind,
-      entityStatus(current.entity),
-      status,
-    );
+    new LifecycleEngine().assertEntityTransition(current.entity, status);
     return this.update(id, (entity) => ({ ...entity, spec: { ...entity.spec, status } }));
   }
 
@@ -291,6 +287,50 @@ export class LifecycleEngine {
     if (!this.canTransition(kind, current, next)) {
       throw new Error(`Invalid ${kind} lifecycle transition: ${current} -> ${next}`);
     }
+  }
+
+  assertEntityTransition(entity: StudioEntity, next: LifecycleState): void {
+    this.assertTransition(entity.kind, entityStatus(entity), next);
+    const missing = this.missingPreconditions(entity, next);
+    if (missing.length > 0) {
+      throw new Error(
+        `Missing ${entity.kind} lifecycle preconditions for ${entityStatus(entity)} -> ${next}: ${missing.join(", ")}`,
+      );
+    }
+  }
+
+  private missingPreconditions(entity: StudioEntity, next: LifecycleState): string[] {
+    const spec = entity.spec as Record<string, unknown>;
+    const evidenceIds = Array.isArray(spec["evidence_ids"])
+      ? spec["evidence_ids"].filter((value): value is string => typeof value === "string")
+      : [];
+    const sourceEvidenceIds = Array.isArray(spec["source_evidence_ids"])
+      ? spec["source_evidence_ids"].filter((value): value is string => typeof value === "string")
+      : [];
+    const hasEvidence =
+      evidenceIds.length > 0 ||
+      sourceEvidenceIds.length > 0 ||
+      entity.relations.some((relation) =>
+        ["supports", "supported_by", "verified_by"].includes(relation.type),
+      );
+
+    if (entity.kind === "deliverable" && next === "done" && !hasEvidence) {
+      return ["evidence_ids or supporting evidence relation"];
+    }
+    if (entity.kind === "portfolioCase" && next === "published" && !hasEvidence) {
+      return ["source_evidence_ids or supporting evidence relation"];
+    }
+    if (entity.kind === "release" && next === "published" && !hasEvidence) {
+      return ["evidence_ids or supporting evidence relation"];
+    }
+    if (
+      entity.kind === "payment" &&
+      next === "paid" &&
+      typeof spec["reconciliation_reference"] !== "string"
+    ) {
+      return ["reconciliation_reference"];
+    }
+    return [];
   }
 }
 
@@ -474,6 +514,73 @@ export class DomainCommandService {
     this.actions = new PreparedActionService(context);
   }
 
+  async reviewDuplicates(input: {
+    kind?: EntityKind;
+    title?: string;
+    email?: string;
+    website?: string;
+  }): Promise<{
+    query: Record<string, string>;
+    candidates: Array<{
+      entity_id: string;
+      kind: EntityKind;
+      title: string;
+      status: LifecycleState;
+      reasons: string[];
+    }>;
+  }> {
+    const defaultKinds = new Set<EntityKind>([
+      "person",
+      "organization",
+      "prospect",
+      "client",
+      "opportunity",
+      "jobApplication",
+    ]);
+    const files = await this.context.entities.scan();
+    const queryTitle = input.title ? normalizeComparable(input.title) : "";
+    const queryEmail = input.email ? normalizeComparable(input.email) : "";
+    const queryWebsite = input.website ? normalizeUrl(input.website) : "";
+    const candidates = files
+      .map((file) => file.entity)
+      .filter((entity) => (input.kind ? entity.kind === input.kind : defaultKinds.has(entity.kind)))
+      .map((entity) => {
+        const spec = entity.spec as Record<string, unknown>;
+        const reasons: string[] = [];
+        const title = normalizeComparable(entityTitle(entity));
+        const email = typeof spec["email"] === "string" ? normalizeComparable(spec["email"]) : "";
+        const website = typeof spec["website"] === "string" ? normalizeUrl(spec["website"]) : "";
+        if (queryTitle && (title === queryTitle || title.includes(queryTitle))) {
+          reasons.push("title");
+        }
+        if (queryEmail && email === queryEmail) {
+          reasons.push("email");
+        }
+        if (queryWebsite && website === queryWebsite) {
+          reasons.push("website");
+        }
+        return {
+          entity_id: entityId(entity),
+          kind: entity.kind,
+          title: entityTitle(entity),
+          status: entityStatus(entity),
+          reasons,
+        };
+      })
+      .filter((candidate) => candidate.reasons.length > 0)
+      .sort((left, right) => right.reasons.length - left.reasons.length);
+
+    return {
+      query: {
+        ...(input.kind ? { kind: input.kind } : {}),
+        ...(input.title ? { title: input.title } : {}),
+        ...(input.email ? { email: input.email } : {}),
+        ...(input.website ? { website: input.website } : {}),
+      },
+      candidates,
+    };
+  }
+
   async qualifyProspect(
     id: string,
     input: { rationale: string; score: number; qualified: boolean },
@@ -525,10 +632,85 @@ export class DomainCommandService {
       status: "draft",
       relations: [{ type: "proposes_for", target_id: opportunityId }],
       data: {
+        opportunity_id: opportunityId,
         stage: "prepared",
         prepared_at: nowIso(),
       },
     });
+  }
+
+  async convertOpportunity(input: {
+    opportunityId: string;
+    clientTitle?: string;
+    engagementTitle?: string;
+  }): Promise<{ opportunity: StudioEntity; client: StudioEntity; engagement: StudioEntity }> {
+    const opportunity = await this.requireKind(input.opportunityId, "opportunity");
+    const spec = opportunity.spec as Record<string, unknown>;
+    const existingClientId = typeof spec["client_id"] === "string" ? spec["client_id"] : undefined;
+    const existingEngagementId =
+      typeof spec["engagement_id"] === "string" ? spec["engagement_id"] : undefined;
+    if (existingClientId && existingEngagementId) {
+      const client = await this.requireKind(existingClientId, "client");
+      const engagement = await this.requireKind(existingEngagementId, "engagement");
+      return { opportunity, client, engagement };
+    }
+
+    const client = createEntity({
+      kind: "client",
+      title: input.clientTitle ?? entityTitle(opportunity),
+      status: "active",
+      relations: [{ type: "converted_from", target_id: input.opportunityId }],
+      data: {
+        relationship_stage: "active",
+        source_opportunity_id: input.opportunityId,
+      },
+    });
+    const engagement = createEntity({
+      kind: "engagement",
+      title: input.engagementTitle ?? `Engagement for ${entityTitle(opportunity)}`,
+      status: "draft",
+      relations: [
+        { type: "originates_from", target_id: input.opportunityId },
+        { type: "for_client", target_id: entityId(client) },
+      ],
+      data: {
+        opportunity_id: input.opportunityId,
+        client_id: entityId(client),
+      },
+    });
+    const updatedOpportunity = TypedEntitySchema.parse({
+      ...opportunity,
+      metadata: {
+        ...opportunity.metadata,
+        revision: entityRevision(opportunity) + 1,
+        updated_at: nowIso(),
+      },
+      spec: {
+        ...opportunity.spec,
+        status: "won",
+        stage: "converted",
+        client_id: entityId(client),
+        engagement_id: entityId(engagement),
+        converted_at: nowIso(),
+      },
+      relations: [
+        ...opportunity.relations.filter(
+          (relation) => !["converted_to", "creates_engagement"].includes(relation.type),
+        ),
+        { type: "converted_to", target_id: entityId(client) },
+        { type: "creates_engagement", target_id: entityId(engagement) },
+      ],
+    });
+    await this.context.entities.putMany([
+      { entity: client },
+      { entity: engagement },
+      { entity: updatedOpportunity, expectedRevision: entityRevision(opportunity) },
+    ]);
+    await this.entities.recordEvent("opportunity.converted", input.opportunityId, {
+      client_id: entityId(client),
+      engagement_id: entityId(engagement),
+    });
+    return { opportunity: updatedOpportunity, client, engagement };
   }
 
   async createEngagementFromOpportunity(
@@ -545,6 +727,40 @@ export class DomainCommandService {
       status: "draft",
       relations: [{ type: "originates_from", target_id: opportunityId }],
       data: { created_from_opportunity_at: nowIso() },
+    });
+  }
+
+  async completeDeliverable(input: {
+    deliverableId: string;
+    evidenceIds: string[];
+  }): Promise<StudioEntity> {
+    if (input.evidenceIds.length === 0) {
+      throw new Error("At least one evidence id is required to complete a deliverable.");
+    }
+    await this.requireEvidenceIds(input.evidenceIds);
+    return this.entities.update(input.deliverableId, (entity) => {
+      if (entity.kind !== "deliverable") {
+        throw new Error(`Expected deliverable entity, got ${entity.kind}`);
+      }
+      const evidenceIds = uniqueStrings([
+        ...(((entity.spec as Record<string, unknown>)["evidence_ids"] as string[] | undefined) ??
+          []),
+        ...input.evidenceIds,
+      ]);
+      return {
+        ...entity,
+        spec: {
+          ...entity.spec,
+          status: "done",
+          evidence_missing: false,
+          evidence_ids: evidenceIds,
+          completed_at: nowIso(),
+        },
+        relations: mergeRelations(
+          entity.relations,
+          input.evidenceIds.map((targetId) => ({ type: "supported_by", target_id: targetId })),
+        ),
+      };
     });
   }
 
@@ -586,6 +802,42 @@ export class DomainCommandService {
     });
   }
 
+  async publishRelease(input: {
+    releaseId: string;
+    evidenceIds: string[];
+    demoUrl?: string;
+  }): Promise<StudioEntity> {
+    if (input.evidenceIds.length === 0) {
+      throw new Error("At least one evidence id is required to publish a release.");
+    }
+    await this.requireEvidenceIds(input.evidenceIds);
+    return this.entities.update(input.releaseId, (entity) => {
+      if (entity.kind !== "release") {
+        throw new Error(`Expected release entity, got ${entity.kind}`);
+      }
+      const evidenceIds = uniqueStrings([
+        ...(((entity.spec as Record<string, unknown>)["evidence_ids"] as string[] | undefined) ??
+          []),
+        ...input.evidenceIds,
+      ]);
+      return {
+        ...entity,
+        spec: {
+          ...entity.spec,
+          status: "published",
+          stage: "published",
+          evidence_ids: evidenceIds,
+          published_at: nowIso(),
+          ...(input.demoUrl ? { demo_url: input.demoUrl } : {}),
+        },
+        relations: mergeRelations(
+          entity.relations,
+          input.evidenceIds.map((targetId) => ({ type: "supported_by", target_id: targetId })),
+        ),
+      };
+    });
+  }
+
   async createPortfolioCaseFromEvidence(input: {
     evidenceId: string;
     title: string;
@@ -602,6 +854,131 @@ export class DomainCommandService {
       data: {
         source_evidence_ids: [input.evidenceId],
         ...(input.caseUrl ? { case_url: input.caseUrl } : {}),
+      },
+    });
+  }
+
+  async prepareContent(input: {
+    title: string;
+    campaignId?: string;
+    channel?: string;
+    publishAt?: string;
+    publicClaims?: string[];
+    evidenceIds?: string[];
+  }): Promise<StudioEntity> {
+    if (input.campaignId) {
+      await this.requireKind(input.campaignId, "campaign");
+    }
+    if (input.evidenceIds) {
+      await this.requireEvidenceIds(input.evidenceIds);
+    }
+    return this.entities.create({
+      kind: "contentItem",
+      title: input.title,
+      status: "draft",
+      relations: [
+        ...(input.campaignId ? [{ type: "belongs_to_campaign", target_id: input.campaignId }] : []),
+        ...(input.evidenceIds ?? []).map((targetId) => ({
+          type: "supported_by",
+          target_id: targetId,
+        })),
+      ],
+      data: {
+        ...(input.campaignId ? { campaign_id: input.campaignId } : {}),
+        ...(input.channel ? { channel: input.channel } : {}),
+        ...(input.publishAt ? { publish_at: input.publishAt } : {}),
+        public_claims: input.publicClaims ?? [],
+        proof_evidence_ids: input.evidenceIds ?? [],
+        prepared_at: nowIso(),
+      },
+    });
+  }
+
+  async createContractFromEngagement(input: {
+    engagementId: string;
+    title?: string;
+    valueMinor?: number;
+    currency?: string;
+  }): Promise<StudioEntity> {
+    const engagement = await this.requireKind(input.engagementId, "engagement");
+    const contract = createEntity({
+      kind: "contract",
+      title: input.title ?? `Contract for ${entityTitle(engagement)}`,
+      status: "draft",
+      relations: [{ type: "contracts_engagement", target_id: input.engagementId }],
+      data: {
+        engagement_id: input.engagementId,
+        ...(input.valueMinor !== undefined ? { value_minor: input.valueMinor } : {}),
+        ...(input.currency ? { currency: input.currency } : {}),
+      },
+    });
+    const updatedEngagement = TypedEntitySchema.parse({
+      ...engagement,
+      metadata: {
+        ...engagement.metadata,
+        revision: entityRevision(engagement) + 1,
+        updated_at: nowIso(),
+      },
+      spec: {
+        ...engagement.spec,
+        contract_id: entityId(contract),
+      },
+      relations: mergeRelations(engagement.relations, [
+        { type: "governed_by_contract", target_id: entityId(contract) },
+      ]),
+    });
+    await this.context.entities.putMany([
+      { entity: contract },
+      { entity: updatedEngagement, expectedRevision: entityRevision(engagement) },
+    ]);
+    await this.entities.recordEvent("contract.created", entityId(contract), {
+      engagement_id: input.engagementId,
+    });
+    return contract;
+  }
+
+  async createInvoiceForContract(input: {
+    contractId: string;
+    title?: string;
+    amountMinor: number;
+    currency: string;
+    dueAt?: string;
+    reference?: string;
+  }): Promise<StudioEntity> {
+    const contract = await this.requireKind(input.contractId, "contract");
+    return this.entities.create({
+      kind: "invoice",
+      title: input.title ?? `Invoice for ${entityTitle(contract)}`,
+      status: "active",
+      relations: [{ type: "bills_contract", target_id: input.contractId }],
+      data: {
+        contract_id: input.contractId,
+        amount_minor: input.amountMinor,
+        currency: input.currency,
+        ...(input.dueAt ? { due_at: input.dueAt } : {}),
+        ...(input.reference ? { reference: input.reference } : {}),
+      },
+    });
+  }
+
+  async recordPaymentForInvoice(input: {
+    invoiceId: string;
+    title?: string;
+    amountMinor: number;
+    currency: string;
+    expectedAt?: string;
+  }): Promise<StudioEntity> {
+    const invoice = await this.requireKind(input.invoiceId, "invoice");
+    return this.entities.create({
+      kind: "payment",
+      title: input.title ?? `Payment for ${entityTitle(invoice)}`,
+      status: "waiting",
+      relations: [{ type: "pays_invoice", target_id: input.invoiceId }],
+      data: {
+        invoice_id: input.invoiceId,
+        amount_minor: input.amountMinor,
+        currency: input.currency,
+        ...(input.expectedAt ? { expected_at: input.expectedAt } : {}),
       },
     });
   }
@@ -712,6 +1089,58 @@ export class DomainCommandService {
     });
   }
 
+  async scheduleApplicationFollowUp(input: {
+    applicationId: string;
+    followUpAt: string;
+    message?: string;
+    channel?: string;
+  }): Promise<{ application: StudioEntity; action?: PreparedAction }> {
+    const application = await this.entities.update(input.applicationId, (entity) => {
+      if (entity.kind !== "jobApplication") {
+        throw new Error(`Expected jobApplication entity, got ${entity.kind}`);
+      }
+      return {
+        ...entity,
+        spec: {
+          ...entity.spec,
+          status: "waiting",
+          stage: "follow-up",
+          follow_up_at: input.followUpAt,
+        },
+      };
+    });
+    const action = input.message
+      ? await this.prepareCommunication({
+          subjectId: input.applicationId,
+          channel: input.channel ?? "email",
+          message: input.message,
+        })
+      : undefined;
+    return { application, ...(action ? { action } : {}) };
+  }
+
+  async recordApplicationInterview(input: {
+    applicationId: string;
+    interviewAt: string;
+    notes?: string;
+  }): Promise<StudioEntity> {
+    return this.entities.update(input.applicationId, (entity) => {
+      if (entity.kind !== "jobApplication") {
+        throw new Error(`Expected jobApplication entity, got ${entity.kind}`);
+      }
+      return {
+        ...entity,
+        spec: {
+          ...entity.spec,
+          status: "active",
+          stage: "interview",
+          interview_at: input.interviewAt,
+          ...(input.notes ? { interview_notes: input.notes } : {}),
+        },
+      };
+    });
+  }
+
   async reconcilePayment(id: string, input: { reference: string }): Promise<StudioEntity> {
     return this.entities.update(id, (entity) => {
       if (entity.kind !== "payment") {
@@ -726,6 +1155,32 @@ export class DomainCommandService {
           reconciliation_reference: input.reference,
         },
       };
+    });
+  }
+
+  async recordDecision(input: {
+    title: string;
+    decision: string;
+    rationale?: string;
+    evidenceIds?: string[];
+  }): Promise<StudioEntity> {
+    if (input.evidenceIds) {
+      await this.requireEvidenceIds(input.evidenceIds);
+    }
+    return this.entities.create({
+      kind: "decision",
+      title: input.title,
+      status: "done",
+      relations: (input.evidenceIds ?? []).map((targetId) => ({
+        type: "supported_by",
+        target_id: targetId,
+      })),
+      data: {
+        decision: input.decision,
+        ...(input.rationale ? { rationale: input.rationale } : {}),
+        evidence_ids: input.evidenceIds ?? [],
+        decided_at: nowIso(),
+      },
     });
   }
 
@@ -744,6 +1199,44 @@ export class DomainCommandService {
     }
     return entity;
   }
+
+  private async requireEvidenceIds(ids: string[]): Promise<void> {
+    for (const id of ids) {
+      await this.requireKind(id, "evidence");
+    }
+  }
+}
+
+function normalizeComparable(input: string): string {
+  return input.trim().toLowerCase();
+}
+
+function normalizeUrl(input: string): string {
+  return input
+    .trim()
+    .toLowerCase()
+    .replace(/^https?:\/\//, "")
+    .replace(/\/$/, "");
+}
+
+function uniqueStrings(values: string[]): string[] {
+  return [...new Set(values.filter((value) => typeof value === "string" && value.length > 0))];
+}
+
+function mergeRelations(
+  current: StudioEntity["relations"],
+  additions: StudioEntity["relations"],
+): StudioEntity["relations"] {
+  const seen = new Set(current.map((relation) => `${relation.type}:${relation.target_id}`));
+  const next = [...current];
+  for (const relation of additions) {
+    const key = `${relation.type}:${relation.target_id}`;
+    if (!seen.has(key)) {
+      next.push(relation);
+      seen.add(key);
+    }
+  }
+  return next;
 }
 
 export interface WorkflowVerification {

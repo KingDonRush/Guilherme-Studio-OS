@@ -560,12 +560,14 @@ export function createProgram(): Command {
     "client",
     "opportunity",
     "engagement",
+    "deliverable",
     "project",
     "repository",
     "product",
     "case",
     "evidence",
     "campaign",
+    "content",
     "proposal",
     "release",
     "payment",
@@ -579,6 +581,29 @@ export function createProgram(): Command {
   ]) {
     domainCommands.set(alias, addDomainCommand(program, alias));
   }
+
+  const crm = program.command("crm").description("CRM and relationship operations");
+  crm
+    .command("review-duplicates")
+    .option("--kind <kind>", "Restrict duplicate review to one entity kind")
+    .option("--title <title>", "Title or name to compare")
+    .option("--email <email>", "Email to compare")
+    .option("--website <url>", "Website to compare")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        kind?: string;
+        title?: string;
+        email?: string;
+        website?: string;
+      };
+      await executeCliCommand(options, "crm.review-duplicates", {
+        ...(local.kind ? { kind: local.kind } : {}),
+        ...(local.title ? { title: local.title } : {}),
+        ...(local.email ? { email: local.email } : {}),
+        ...(local.website ? { website: local.website } : {}),
+      });
+    });
 
   domainCommands
     .get("prospect")
@@ -665,6 +690,41 @@ export function createProgram(): Command {
     });
 
   domainCommands
+    .get("opportunity")
+    ?.command("convert")
+    .argument("<opportunity-id>")
+    .option("--client-title <title>")
+    .option("--engagement-title <title>")
+    .action(async function action(this: Command, opportunityId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as { clientTitle?: string; engagementTitle?: string };
+      await executeCliCommand(options, "opportunity.convert", {
+        opportunity_id: opportunityId,
+        ...(local.clientTitle ? { client_title: local.clientTitle } : {}),
+        ...(local.engagementTitle ? { engagement_title: local.engagementTitle } : {}),
+      });
+    });
+
+  domainCommands
+    .get("deliverable")
+    ?.command("complete")
+    .argument("<deliverable-id>")
+    .requiredOption("--evidence <id...>")
+    .action(async function action(this: Command, deliverableId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as { evidence: string[] };
+      await executeCliCommand(
+        options,
+        "deliverable.complete",
+        {
+          deliverable_id: deliverableId,
+          evidence_ids: local.evidence,
+        },
+        deliverableId,
+      );
+    });
+
+  domainCommands
     .get("proposal")
     ?.command("prepare")
     .argument("<opportunity-id>")
@@ -695,6 +755,50 @@ export function createProgram(): Command {
     });
 
   domainCommands
+    .get("application")
+    ?.command("follow-up")
+    .argument("<application-id>")
+    .requiredOption("--at <iso-date>")
+    .option("--channel <channel>")
+    .option("--message <text>")
+    .action(async function action(this: Command, applicationId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as { at: string; channel?: string; message?: string };
+      await executeCliCommand(
+        options,
+        "application.follow-up",
+        {
+          application_id: applicationId,
+          follow_up_at: local.at,
+          ...(local.channel ? { channel: local.channel } : {}),
+          ...(local.message ? { message: local.message } : {}),
+        },
+        applicationId,
+      );
+    });
+
+  domainCommands
+    .get("application")
+    ?.command("record-interview")
+    .argument("<application-id>")
+    .requiredOption("--at <iso-date>")
+    .option("--notes <text>")
+    .action(async function action(this: Command, applicationId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as { at: string; notes?: string };
+      await executeCliCommand(
+        options,
+        "application.record-interview",
+        {
+          application_id: applicationId,
+          interview_at: local.at,
+          ...(local.notes ? { notes: local.notes } : {}),
+        },
+        applicationId,
+      );
+    });
+
+  domainCommands
     .get("product")
     ?.command("prepare-release")
     .argument("<product-id>")
@@ -705,6 +809,126 @@ export function createProgram(): Command {
       await executeCliCommand(options, "release.prepare", {
         product_id: productId,
         version: local.version,
+      });
+    });
+
+  domainCommands
+    .get("release")
+    ?.command("publish")
+    .argument("<release-id>")
+    .requiredOption("--evidence <id...>")
+    .option("--demo-url <url>")
+    .action(async function action(this: Command, releaseId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as { evidence: string[]; demoUrl?: string };
+      await executeCliCommand(
+        options,
+        "release.publish",
+        {
+          release_id: releaseId,
+          evidence_ids: local.evidence,
+          ...(local.demoUrl ? { demo_url: local.demoUrl } : {}),
+        },
+        releaseId,
+      );
+    });
+
+  domainCommands
+    .get("campaign")
+    ?.command("prepare-content")
+    .argument("<campaign-id>")
+    .requiredOption("--title <title>")
+    .option("--channel <channel>")
+    .option("--publish-at <iso-date>")
+    .option("--claim <text...>")
+    .option("--evidence <id...>")
+    .action(async function action(this: Command, campaignId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        title: string;
+        channel?: string;
+        publishAt?: string;
+        claim?: string[];
+        evidence?: string[];
+      };
+      await executeCliCommand(options, "content.prepare", {
+        campaign_id: campaignId,
+        title: local.title,
+        ...(local.channel ? { channel: local.channel } : {}),
+        ...(local.publishAt ? { publish_at: local.publishAt } : {}),
+        public_claims: local.claim ?? [],
+        evidence_ids: local.evidence ?? [],
+      });
+    });
+
+  domainCommands
+    .get("contract")
+    ?.command("create-from-engagement")
+    .argument("<engagement-id>")
+    .option("--title <title>")
+    .option("--value-minor <amount>")
+    .option("--currency <currency>")
+    .action(async function action(this: Command, engagementId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as { title?: string; valueMinor?: string; currency?: string };
+      await executeCliCommand(options, "contract.create-from-engagement", {
+        engagement_id: engagementId,
+        ...(local.title ? { title: local.title } : {}),
+        ...(local.valueMinor ? { value_minor: Number.parseInt(local.valueMinor, 10) } : {}),
+        ...(local.currency ? { currency: local.currency } : {}),
+      });
+    });
+
+  domainCommands
+    .get("invoice")
+    ?.command("create-for-contract")
+    .argument("<contract-id>")
+    .requiredOption("--amount-minor <amount>")
+    .requiredOption("--currency <currency>")
+    .option("--title <title>")
+    .option("--due-at <iso-date>")
+    .option("--reference <reference>")
+    .action(async function action(this: Command, contractId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        amountMinor: string;
+        currency: string;
+        title?: string;
+        dueAt?: string;
+        reference?: string;
+      };
+      await executeCliCommand(options, "invoice.create-for-contract", {
+        contract_id: contractId,
+        amount_minor: Number.parseInt(local.amountMinor, 10),
+        currency: local.currency,
+        ...(local.title ? { title: local.title } : {}),
+        ...(local.dueAt ? { due_at: local.dueAt } : {}),
+        ...(local.reference ? { reference: local.reference } : {}),
+      });
+    });
+
+  domainCommands
+    .get("payment")
+    ?.command("record-for-invoice")
+    .argument("<invoice-id>")
+    .requiredOption("--amount-minor <amount>")
+    .requiredOption("--currency <currency>")
+    .option("--title <title>")
+    .option("--expected-at <iso-date>")
+    .action(async function action(this: Command, invoiceId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        amountMinor: string;
+        currency: string;
+        title?: string;
+        expectedAt?: string;
+      };
+      await executeCliCommand(options, "payment.record-for-invoice", {
+        invoice_id: invoiceId,
+        amount_minor: Number.parseInt(local.amountMinor, 10),
+        currency: local.currency,
+        ...(local.title ? { title: local.title } : {}),
+        ...(local.expectedAt ? { expected_at: local.expectedAt } : {}),
       });
     });
 
@@ -725,6 +949,29 @@ export function createProgram(): Command {
         },
         paymentId,
       );
+    });
+
+  domainCommands
+    .get("decision")
+    ?.command("record")
+    .requiredOption("--title <title>")
+    .requiredOption("--decision <text>")
+    .option("--rationale <text>")
+    .option("--evidence <id...>")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        title: string;
+        decision: string;
+        rationale?: string;
+        evidence?: string[];
+      };
+      await executeCliCommand(options, "decision.record", {
+        title: local.title,
+        decision: local.decision,
+        ...(local.rationale ? { rationale: local.rationale } : {}),
+        evidence_ids: local.evidence ?? [],
+      });
     });
 
   domainCommands

@@ -212,11 +212,16 @@ export const ProspectSpecSchema = GenericSpecSchema.extend({
   stage: z.string().optional(),
   qualification: QualificationSchema.optional(),
   source: z.string().optional(),
+  source_url: z.string().url().optional(),
+  organization_id: z.string().optional(),
+  contact_person_id: z.string().optional(),
+  reason_for_contact: z.string().optional(),
   follow_up_at: z.string().datetime().optional(),
 });
 export const ClientSpecSchema = GenericSpecSchema.extend({
   relationship_stage: z.string().optional(),
   preferences: z.array(z.string()).default([]),
+  source_opportunity_id: z.string().optional(),
 });
 export const OpportunitySpecSchema = GenericSpecSchema.extend({
   stage: z.string().optional(),
@@ -224,22 +229,37 @@ export const OpportunitySpecSchema = GenericSpecSchema.extend({
   currency: z.string().length(3).optional(),
   follow_up_at: z.string().datetime().optional(),
   international_relevance: z.boolean().default(false),
+  source_url: z.string().url().optional(),
+  proposal_id: z.string().optional(),
+  client_id: z.string().optional(),
+  engagement_id: z.string().optional(),
+  converted_at: z.string().datetime().optional(),
 });
 export const JobApplicationSpecSchema = GenericSpecSchema.extend({
   source_url: z.string().url().optional(),
   stage: z.string().optional(),
   follow_up_at: z.string().datetime().optional(),
+  organization_id: z.string().optional(),
+  interview_at: z.string().datetime().optional(),
+  interview_notes: z.string().optional(),
 });
 export const EngagementSpecSchema = GenericSpecSchema.extend({
   stage: z.string().optional(),
   value_minor: z.number().int().min(0).optional(),
   currency: z.string().length(3).optional(),
   started_at: z.string().datetime().optional(),
+  opportunity_id: z.string().optional(),
+  client_id: z.string().optional(),
+  contract_id: z.string().optional(),
 });
 export const DeliverableSpecSchema = GenericSpecSchema.extend({
+  engagement_id: z.string().optional(),
+  project_id: z.string().optional(),
   due_at: z.string().datetime().optional(),
   acceptance: z.array(z.string()).default([]),
   evidence_missing: z.boolean().default(false),
+  evidence_ids: z.array(z.string()).default([]),
+  completed_at: z.string().datetime().optional(),
 });
 export const ProjectSpecSchema = GenericSpecSchema.extend({
   project_type: z.string().optional(),
@@ -270,44 +290,64 @@ export const ProductSpecSchema = GenericSpecSchema.extend({
   current_version: z.string().optional(),
 });
 export const ReleaseSpecSchema = GenericSpecSchema.extend({
+  product_id: z.string().optional(),
   version: z.string().optional(),
   stage: z.string().optional(),
   prepared_at: z.string().datetime().optional(),
+  published_at: z.string().datetime().optional(),
+  demo_url: z.string().url().optional(),
+  evidence_ids: z.array(z.string()).default([]),
 });
 export const PortfolioCaseSpecSchema = GenericSpecSchema.extend({
   case_url: z.string().url().optional(),
   source_evidence_ids: z.array(z.string()).default([]),
+  public_claims: z.array(z.string()).default([]),
 });
 export const CampaignSpecSchema = GenericSpecSchema.extend({
+  audience: z.string().optional(),
+  cta: z.string().optional(),
   channels: z.array(z.string()).default([]),
   starts_at: z.string().datetime().optional(),
   ends_at: z.string().datetime().optional(),
+  proof_evidence_ids: z.array(z.string()).default([]),
 });
 export const ContentItemSpecSchema = GenericSpecSchema.extend({
+  campaign_id: z.string().optional(),
   channel: z.string().optional(),
   publish_at: z.string().datetime().optional(),
   public_claims: z.array(z.string()).default([]),
+  proof_evidence_ids: z.array(z.string()).default([]),
+  prepared_at: z.string().datetime().optional(),
 });
 export const ProposalSpecSchema = GenericSpecSchema.extend({
+  opportunity_id: z.string().optional(),
+  version: z.string().optional(),
   stage: z.string().optional(),
   value_minor: z.number().int().min(0).optional(),
   currency: z.string().length(3).optional(),
   prepared_at: z.string().datetime().optional(),
+  evidence_ids: z.array(z.string()).default([]),
 });
 export const ContractSpecSchema = GenericSpecSchema.extend({
+  engagement_id: z.string().optional(),
+  value_minor: z.number().int().min(0).optional(),
+  currency: z.string().length(3).optional(),
   signed_at: z.string().datetime().optional(),
   effective_at: z.string().datetime().optional(),
   ends_at: z.string().datetime().optional(),
 });
 export const InvoiceSpecSchema = GenericSpecSchema.extend({
+  contract_id: z.string().optional(),
   amount_minor: z.number().int().min(0).optional(),
   currency: z.string().length(3).optional(),
   due_at: z.string().datetime().optional(),
   reference: z.string().optional(),
 });
 export const PaymentSpecSchema = GenericSpecSchema.extend({
+  invoice_id: z.string().optional(),
   amount_minor: z.number().int().min(0).optional(),
   currency: z.string().length(3).optional(),
+  expected_at: z.string().datetime().optional(),
   reconciled_at: z.string().datetime().optional(),
   reconciliation_reference: z.string().optional(),
 });
@@ -315,6 +355,7 @@ export const DecisionSpecSchema = GenericSpecSchema.extend({
   decision: z.string().optional(),
   rationale: z.string().optional(),
   decided_at: z.string().datetime().optional(),
+  evidence_ids: z.array(z.string()).default([]),
 });
 export const AssetSpecSchema = GenericSpecSchema.extend({
   path: z.string().optional(),
@@ -323,10 +364,12 @@ export const AssetSpecSchema = GenericSpecSchema.extend({
   manifest_path: z.string().optional(),
 });
 export const CommunicationSpecSchema = GenericSpecSchema.extend({
+  subject_id: z.string().optional(),
   channel: z.string().optional(),
   direction: z.enum(["inbound", "outbound"]).optional(),
   occurred_at: z.string().datetime().optional(),
   prepared_action_id: z.string().optional(),
+  message: z.string().optional(),
 });
 
 const BaseCanonicalEntitySchema = z

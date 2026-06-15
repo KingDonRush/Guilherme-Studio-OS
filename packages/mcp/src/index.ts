@@ -535,6 +535,221 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
   );
 
   server.tool(
+    "studio_review_duplicates",
+    {
+      kind: z.string().optional(),
+      title: z.string().optional(),
+      email: z.string().optional(),
+      website: z.string().optional(),
+    },
+    async ({ kind, title, email, website }) => {
+      const context = await createStudioContext(root);
+      const result = await executeStudioCommand(
+        context,
+        createStudioCommand(context, {
+          command: "crm.review-duplicates",
+          actor: operatorActor(context.config.operator_id),
+          payload: {
+            ...(kind ? { kind: kindFromAlias(kind) } : {}),
+            ...(title ? { title } : {}),
+            ...(email ? { email } : {}),
+            ...(website ? { website } : {}),
+          },
+        }),
+      );
+      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+    },
+  );
+
+  server.tool(
+    "studio_convert_opportunity",
+    {
+      opportunity_id: z.string(),
+      client_title: z.string().optional(),
+      engagement_title: z.string().optional(),
+    },
+    async ({ opportunity_id, client_title, engagement_title }) => {
+      const context = await createStudioContext(root);
+      const result = await executeStudioCommand(
+        context,
+        createStudioCommand(context, {
+          command: "opportunity.convert",
+          actor: operatorActor(context.config.operator_id),
+          payload: {
+            opportunity_id,
+            ...(client_title ? { client_title } : {}),
+            ...(engagement_title ? { engagement_title } : {}),
+          },
+        }),
+      );
+      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+    },
+  );
+
+  server.tool(
+    "studio_complete_deliverable",
+    { deliverable_id: z.string(), evidence_ids: z.array(z.string()).min(1) },
+    async ({ deliverable_id, evidence_ids }) => {
+      const context = await createStudioContext(root);
+      const result = await executeStudioCommand(
+        context,
+        createStudioCommand(context, {
+          command: "deliverable.complete",
+          actor: operatorActor(context.config.operator_id),
+          targetId: deliverable_id,
+          payload: { deliverable_id, evidence_ids },
+        }),
+      );
+      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+    },
+  );
+
+  server.tool(
+    "studio_create_contract_from_engagement",
+    {
+      engagement_id: z.string(),
+      title: z.string().optional(),
+      value_minor: z.number().int().min(0).optional(),
+      currency: z.string().length(3).optional(),
+    },
+    async ({ engagement_id, title, value_minor, currency }) => {
+      const context = await createStudioContext(root);
+      const result = await executeStudioCommand(
+        context,
+        createStudioCommand(context, {
+          command: "contract.create-from-engagement",
+          actor: operatorActor(context.config.operator_id),
+          payload: {
+            engagement_id,
+            ...(title ? { title } : {}),
+            ...(value_minor !== undefined ? { value_minor } : {}),
+            ...(currency ? { currency } : {}),
+          },
+        }),
+      );
+      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+    },
+  );
+
+  server.tool(
+    "studio_create_invoice_for_contract",
+    {
+      contract_id: z.string(),
+      amount_minor: z.number().int().min(0),
+      currency: z.string().length(3),
+      title: z.string().optional(),
+      due_at: z.string().optional(),
+      reference: z.string().optional(),
+    },
+    async ({ contract_id, amount_minor, currency, title, due_at, reference }) => {
+      const context = await createStudioContext(root);
+      const result = await executeStudioCommand(
+        context,
+        createStudioCommand(context, {
+          command: "invoice.create-for-contract",
+          actor: operatorActor(context.config.operator_id),
+          payload: {
+            contract_id,
+            amount_minor,
+            currency,
+            ...(title ? { title } : {}),
+            ...(due_at ? { due_at } : {}),
+            ...(reference ? { reference } : {}),
+          },
+        }),
+      );
+      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+    },
+  );
+
+  server.tool(
+    "studio_record_payment_for_invoice",
+    {
+      invoice_id: z.string(),
+      amount_minor: z.number().int().min(0),
+      currency: z.string().length(3),
+      title: z.string().optional(),
+      expected_at: z.string().optional(),
+    },
+    async ({ invoice_id, amount_minor, currency, title, expected_at }) => {
+      const context = await createStudioContext(root);
+      const result = await executeStudioCommand(
+        context,
+        createStudioCommand(context, {
+          command: "payment.record-for-invoice",
+          actor: operatorActor(context.config.operator_id),
+          payload: {
+            invoice_id,
+            amount_minor,
+            currency,
+            ...(title ? { title } : {}),
+            ...(expected_at ? { expected_at } : {}),
+          },
+        }),
+      );
+      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+    },
+  );
+
+  server.tool(
+    "studio_prepare_content",
+    {
+      title: z.string(),
+      campaign_id: z.string().optional(),
+      channel: z.string().optional(),
+      publish_at: z.string().optional(),
+      public_claims: z.array(z.string()).default([]),
+      evidence_ids: z.array(z.string()).default([]),
+    },
+    async ({ title, campaign_id, channel, publish_at, public_claims, evidence_ids }) => {
+      const context = await createStudioContext(root);
+      const result = await executeStudioCommand(
+        context,
+        createStudioCommand(context, {
+          command: "content.prepare",
+          actor: operatorActor(context.config.operator_id),
+          payload: {
+            title,
+            ...(campaign_id ? { campaign_id } : {}),
+            ...(channel ? { channel } : {}),
+            ...(publish_at ? { publish_at } : {}),
+            public_claims,
+            evidence_ids,
+          },
+        }),
+      );
+      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+    },
+  );
+
+  server.tool(
+    "studio_record_decision",
+    {
+      title: z.string(),
+      decision: z.string(),
+      rationale: z.string().optional(),
+      evidence_ids: z.array(z.string()).default([]),
+    },
+    async ({ title, decision, rationale, evidence_ids }) => {
+      const context = await createStudioContext(root);
+      const result = await executeStudioCommand(
+        context,
+        createStudioCommand(context, {
+          command: "decision.record",
+          actor: operatorActor(context.config.operator_id),
+          payload: {
+            title,
+            decision,
+            ...(rationale ? { rationale } : {}),
+            evidence_ids,
+          },
+        }),
+      );
+      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+    },
+  );
+
+  server.tool(
     "studio_create_case_from_evidence",
     {
       evidence_id: z.string(),

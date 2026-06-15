@@ -154,4 +154,122 @@ describe("core governance", () => {
     expect(linked.project.spec.repository_id).toBe(linked.repository.metadata.id);
     expect(handoff.kind).toBe("agentRun");
   });
+
+  it("runs cross-domain semantic commands without fabricating external records", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "studio-prd-domain-test-"));
+    await writeFile(
+      path.join(root, "studio.config.yaml"),
+      YAML.stringify({
+        api_version: "studio.guilherme.dev/config-v1",
+        root_name: "PRD domain test",
+        operator_id: "per_20260614_guilherme-silva",
+        canonical_roots: ["data", "sales", "clients", "marketing", "operations"],
+        runtime_path: "runtime",
+        panel: { host: "127.0.0.1", port: 47836 },
+        adapters: {},
+      }),
+    );
+    const context = await createStudioContext(root);
+    const entities = new EntityService(context);
+    const commands = new DomainCommandService(context);
+    await entities.create({
+      kind: "organization",
+      title: "Acme Studio",
+      data: { website: "https://acme.test" },
+    });
+    const opportunity = await entities.create({
+      kind: "opportunity",
+      title: "Acme WordPress build",
+    });
+
+    const duplicates = await commands.reviewDuplicates({
+      title: "Acme",
+      website: "https://acme.test/",
+    });
+    expect(duplicates.candidates[0]).toMatchObject({
+      kind: "organization",
+      reasons: expect.arrayContaining(["website"]),
+    });
+
+    const converted = await commands.convertOpportunity({
+      opportunityId: opportunity.metadata.id,
+      clientTitle: "Acme Studio",
+    });
+    expect(converted.opportunity.spec.status).toBe("won");
+    expect(converted.client.kind).toBe("client");
+    expect(converted.engagement.spec.client_id).toBe(converted.client.metadata.id);
+
+    const contract = await commands.createContractFromEngagement({
+      engagementId: converted.engagement.metadata.id,
+      valueMinor: 120_000,
+      currency: "USD",
+    });
+    const invoice = await commands.createInvoiceForContract({
+      contractId: contract.metadata.id,
+      amountMinor: 120_000,
+      currency: "USD",
+      reference: "INV-001",
+    });
+    const payment = await commands.recordPaymentForInvoice({
+      invoiceId: invoice.metadata.id,
+      amountMinor: 120_000,
+      currency: "USD",
+    });
+    const reconciled = await commands.reconcilePayment(payment.metadata.id, {
+      reference: "bank-confirmation-001",
+    });
+    expect(reconciled.spec.status).toBe("paid");
+    expect(reconciled.spec.reconciliation_reference).toBe("bank-confirmation-001");
+  });
+
+  it("requires evidence for completion and publication preconditions", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "studio-precondition-test-"));
+    await writeFile(
+      path.join(root, "studio.config.yaml"),
+      YAML.stringify({
+        api_version: "studio.guilherme.dev/config-v1",
+        root_name: "Precondition test",
+        operator_id: "per_20260614_guilherme-silva",
+        canonical_roots: ["clients", "products", "operations", "marketing"],
+        runtime_path: "runtime",
+        panel: { host: "127.0.0.1", port: 47837 },
+        adapters: {},
+      }),
+    );
+    const context = await createStudioContext(root);
+    const entities = new EntityService(context);
+    const commands = new DomainCommandService(context);
+    const deliverable = await entities.create({ kind: "deliverable", title: "Template QA" });
+    const evidence = await commands.registerEvidence({
+      title: "Acceptance screenshot",
+      evidenceType: "screenshot",
+      subjectId: deliverable.metadata.id,
+      checksum: "f".repeat(64),
+    });
+
+    await expect(entities.transition(deliverable.metadata.id, "done")).rejects.toThrow(
+      /preconditions/,
+    );
+    const completed = await commands.completeDeliverable({
+      deliverableId: deliverable.metadata.id,
+      evidenceIds: [evidence.metadata.id],
+    });
+    expect(completed.spec.status).toBe("done");
+
+    const campaign = await entities.create({ kind: "campaign", title: "Proof campaign" });
+    const content = await commands.prepareContent({
+      campaignId: campaign.metadata.id,
+      title: "Case announcement",
+      channel: "linkedin",
+      publicClaims: ["Evidence-backed WordPress delivery"],
+      evidenceIds: [evidence.metadata.id],
+    });
+    const decision = await commands.recordDecision({
+      title: "Keep portfolio frozen",
+      decision: "Portfolio remains frozen until PRD gate is green.",
+      evidenceIds: [evidence.metadata.id],
+    });
+    expect(content.kind).toBe("contentItem");
+    expect(decision.spec.evidence_ids).toContain(evidence.metadata.id);
+  });
 });

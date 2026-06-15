@@ -10,17 +10,17 @@ verification, operator verification, documentation, and durable evidence exist.
 | Area | Owner | Status | Evidence | Verification command | Remaining gap |
 |---|---|---|---|---|---|
 | Entity and relation contracts | `packages/schemas` | in progress | schema tests and generated catalog | `npm run test -- packages/schemas/src/index.test.ts` | complete per-domain fixtures and reduce practical dependence on generic catchall fields |
-| Commands, results and events | `packages/schemas`, `packages/core` | in progress | command runtime tests | `npm run test -- packages/core/src/command-runtime.test.ts` | broaden CLI/API/MCP equivalence fixtures across all PRD workflows |
+| Commands, results and events | `packages/schemas`, `packages/core` | in progress | command runtime tests; `evd_20260615_prd-semantic-command-slice-verification` | `npm run test -- packages/core/src/command-runtime.test.ts` | broaden CLI/API/MCP equivalence fixtures across all PRD workflows |
 | Authority and gates | `packages/core` | in progress | core governance tests | `npm run test -- packages/core/src/index.test.ts` | encode domain preconditions and gate catalog fixtures |
 | Prepared actions | `packages/core` | in progress | exact checksum confirmation tests | `npm run test -- packages/core/src/index.test.ts` | panel exact-payload review and stale payload UI flow |
 | Canonical transactions | `packages/storage` | in progress | storage transaction tests | `npm run test -- packages/storage/src/index.test.ts` | expand crash/recovery matrix and event replay evidence |
 | Derived projection | `packages/storage` | in progress | rebuild checksum verification | `npm run studio -- sync --rebuild --verify --json` | expose stale projection recovery in panel/API diagnostics |
 | Economic next actions | `packages/core` | in progress | economic resolver tests | `npm run test -- packages/core/src/economics.test.ts` | domain-specific obligation ranking and intake-aware gaps |
-| Domain lifecycles | `packages/core` | in progress | lifecycle and semantic command tests | `npm run test -- packages/core/src/index.test.ts` | implement preconditions for every PRD lifecycle |
-| CLI | `packages/cli` | in progress | command help and runtime tests | `npm run studio -- --help` | complete semantic command grammar and stable exit tests |
-| MCP | `packages/mcp` | in progress | MCP smoke from V1 evidence | `npm run build -w @guilherme-studio/mcp` | add prompts/context packs and PRD coverage resource smoke |
+| Domain lifecycles | `packages/core` | in progress | lifecycle preconditions and semantic command tests; `evd_20260615_prd-semantic-command-slice-verification` | `npm run test -- packages/core/src/index.test.ts` | complete remaining domain-specific preconditions and fixture coverage |
+| CLI | `packages/cli` | in progress | semantic command smoke; `evd_20260615_prd-semantic-command-slice-verification` | `npm run studio -- --help` | add stable exit tests for every semantic command |
+| MCP | `packages/mcp` | in progress | MCP semantic tools build; `evd_20260615_prd-semantic-command-slice-verification` | `npm run build -w @guilherme-studio/mcp` | add context-pack prompts and MCP Inspector smoke transcript |
 | Local API | `packages/local-api` | in progress | local API tests | `npm run test -- packages/local-api/src/index.test.ts` | cover every mutating route through command runtime |
-| Panel | `apps/panel` | in progress | build and Playwright smoke from V1 evidence | `npm run build -w @guilherme-studio/panel` | domain views, exact-payload review, coverage and intake views |
+| Panel | `apps/panel` | in progress | build and Playwright smoke; exact-payload review; `evd_20260615_prd-semantic-command-slice-verification` | `npm run build -w @guilherme-studio/panel` | complete domain-specific views and intake workflows |
 | Git adapter | `packages/adapters` | in progress | repository health inspection | `npm run studio -- repo inspect --json` | explicit root mismatch and package script evidence |
 | WordPress adapter | `packages/adapters` | in progress | WordPress health/restore evidence | `npm run studio -- wordpress health --json` | alternate-path restore evidence and provision/register template |
 | GitHub adapter | `packages/adapters` | in progress | disabled adapter contract test | `npm run test -- packages/adapters/src/index.test.ts` | provider interface and fake prepare/confirm/reconcile flow |
@@ -52,3 +52,25 @@ Evidence:
 The bootstrap task is complete. The PRD completion work remains active until
 this ledger has no `pending` rows and every `in progress` row is either
 `complete` or explicitly deferred by a decision record.
+
+## Semantic Command Slice
+
+On 2026-06-15, `tsk_20260615_implement-prd-semantic-command-slice` was created
+and completed for the first PRD-domain command expansion.
+
+Evidence:
+
+- `evd_20260615_prd-semantic-command-slice-verification`.
+
+Delivered capacity:
+
+- CRM duplicate review defaults to relationship/pipeline entities only.
+- Opportunity conversion can create linked client and engagement records.
+- Contract, invoice and expected payment records can be created from the
+  engagement/contract/invoice chain.
+- Deliverable completion and release publication require supporting evidence.
+- Campaign content and decisions can be prepared with proof links.
+- MCP exposes semantic tools for duplicate review, conversion, finance,
+  deliverable completion, content preparation and decision records.
+- Panel prepared-action review shows exact JSON payload and checksum before
+  local confirmation.
