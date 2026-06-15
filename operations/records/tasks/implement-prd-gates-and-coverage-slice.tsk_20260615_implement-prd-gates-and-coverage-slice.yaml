@@ -1,0 +1,27 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T21:56:14.025Z
+  id: tsk_20260615_implement-prd-gates-and-coverage-slice
+  labels:
+    - studio-os
+    - prd-completion
+  revision: 1
+  schema_version: 1
+  slug: implement-prd-gates-and-coverage-slice
+  updated_at: 2026-06-15T21:56:14.025Z
+relations: []
+spec:
+  acceptance:
+    - coverage separates capability completeness from canonical intake
+    - gate catalog is executable from core tests
+    - evidence validates claims, checksums and mutable sources
+    - schema catalog is regenerated
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Adds PRD completion contracts for coverage, normative gates and claim-to-evidence validation without inventing business records.
+  title: Implement PRD gates and coverage slice

@@ -9,9 +9,9 @@ verification, operator verification, documentation, and durable evidence exist.
 
 | Area | Owner | Status | Evidence | Verification command | Remaining gap |
 |---|---|---|---|---|---|
-| Entity and relation contracts | `packages/schemas` | in progress | schema tests and generated catalog | `npm run test -- packages/schemas/src/index.test.ts` | complete per-domain fixtures and reduce practical dependence on generic catchall fields |
+| Entity and relation contracts | `packages/schemas` | in progress | schema tests, generated catalog and `evd_20260615_prd-gates-and-coverage-verification` | `npm run test -- packages/schemas/src/index.test.ts` | complete per-domain workflow fixtures and keep new PRD fields covered by fixtures |
 | Commands, results and events | `packages/schemas`, `packages/core` | in progress | command runtime tests; `evd_20260615_prd-semantic-command-slice-verification` | `npm run test -- packages/core/src/command-runtime.test.ts` | broaden CLI/API/MCP equivalence fixtures across all PRD workflows |
-| Authority and gates | `packages/core` | in progress | core governance tests | `npm run test -- packages/core/src/index.test.ts` | encode domain preconditions and gate catalog fixtures |
+| Authority and gates | `packages/core` | in progress | gate catalog tests and `evd_20260615_prd-gates-and-coverage-verification` | `npm run test -- packages/core/src/index.test.ts` | connect every gate to executable workflow fixtures and acceptance report |
 | Prepared actions | `packages/core` | in progress | exact checksum confirmation tests | `npm run test -- packages/core/src/index.test.ts` | panel exact-payload review and stale payload UI flow |
 | Canonical transactions | `packages/storage` | in progress | storage transaction tests | `npm run test -- packages/storage/src/index.test.ts` | expand crash/recovery matrix and event replay evidence |
 | Derived projection | `packages/storage` | in progress | rebuild checksum verification | `npm run studio -- sync --rebuild --verify --json` | expose stale projection recovery in panel/API diagnostics |
@@ -28,7 +28,7 @@ verification, operator verification, documentation, and durable evidence exist.
 | Coordinated backup | `packages/adapters` | in progress | backup manifests | `npm run studio -- backup --json` | restore rehearsal that reports all registered components |
 | Eight journeys | `packages/testing`, `packages/core` | in progress | workflow fixture check | `npm run studio -- workflow --fixtures --json` | executable CLI/API/MCP journey fixtures, not only kind coverage |
 | Physical migration | root coordinator | in progress | renamed root and repository status | `npm run studio -- doctor --json` | path drift check green after final commit |
-| PRD coverage and intake | `packages/core`, interfaces | in progress | coverage command and intake packet | `npm run studio -- coverage --json` | canonical records for PRDs with real data, collected through intake |
+| PRD coverage and intake | `packages/core`, interfaces | intake_required | coverage command, intake packet and `evd_20260615_prd-gates-and-coverage-verification` | `npm run studio -- coverage --json` | canonical records for PRDs with real data, collected through intake; capability coverage is separated from data readiness |
 | Operational acceptance | cross-package | in progress | V1 acceptance evidence and reconciliation evidence | full final gate command set | every row complete or explicitly deferred by decision |
 
 ## Completion Rule
@@ -36,6 +36,9 @@ verification, operator verification, documentation, and durable evidence exist.
 - `pending`: no accepted implementation evidence.
 - `in progress`: implementation exists but one or more normative checks remain.
 - `complete`: code, tests, operator verification and durable evidence all pass.
+- `deferred_by_decision`: intentionally not implemented yet and linked to a decision record.
+- `intake_required`: capability exists, but real canonical data is absent and must not be fabricated.
+- Terminal acceptance uses only `complete`, `deferred_by_decision` or `intake_required`.
 - Canonical business data is never fabricated to make a workflow green.
 - Fixture verification and canonical coverage audit are reported separately.
 
@@ -95,3 +98,24 @@ Delivered capacity:
 - GitHub and communication adapters have an explicit fake provider interface.
 - Fake providers are blocked by default and, when explicitly enabled, report
   local preparation with `external_send: false`.
+
+## Gates and Coverage Contract Slice
+
+On 2026-06-15,
+`tsk_20260615_implement-prd-gates-and-coverage-slice` was created and completed
+for PRD coverage, gate and claim-evidence contracts.
+
+Evidence:
+
+- `evd_20260615_prd-gates-and-coverage-verification`.
+
+Delivered capacity:
+
+- `studio coverage` separates capability completeness, canonical data readiness,
+  intake-required PRDs and missing evidence.
+- Core exposes a named gate catalog for duplicate review, missing evidence,
+  public claims, external confirmation, payment/delivery, confidential data,
+  destructive action, stale revision and restore requirements.
+- Evidence validation checks public claims, file/screenshot/backup checksums,
+  mutable source handling and subject mismatch.
+- Schema catalog was regenerated after the new PRD contract fields were added.

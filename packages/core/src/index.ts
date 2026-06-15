@@ -772,9 +772,37 @@ export class DomainCommandService {
     url?: string;
     command?: string;
     checksum?: string;
+    claims?: string[];
+    sourceMutability?: "immutable" | "mutable" | "operator-observed";
   }): Promise<StudioEntity> {
     if (input.subjectId) {
       await this.requireEntity(input.subjectId);
+    }
+    const validation = new EvidenceClaimService().validate({
+      claims: input.claims ?? [],
+      evidence: [
+        createEntity({
+          kind: "evidence",
+          title: input.title,
+          data: {
+            evidence_type: input.evidenceType,
+            ...(input.subjectId ? { subject_id: input.subjectId } : {}),
+            ...(input.path ? { path: input.path } : {}),
+            ...(input.url ? { url: input.url } : {}),
+            ...(input.command ? { command: input.command } : {}),
+            ...(input.checksum ? { checksum: input.checksum } : {}),
+            claims: input.claims ?? [],
+            source_mutability: input.sourceMutability ?? "operator-observed",
+          },
+        }),
+      ],
+      ...(input.subjectId ? { subjectId: input.subjectId } : {}),
+      publicClaim: (input.claims ?? []).length > 0,
+    });
+    if (!validation.ok) {
+      throw new Error(
+        `Evidence validation failed: ${validation.issues.map((issue) => issue.message).join("; ")}`,
+      );
     }
     return this.entities.create({
       kind: "evidence",
@@ -782,10 +810,14 @@ export class DomainCommandService {
       relations: input.subjectId ? [{ type: "supports", target_id: input.subjectId }] : [],
       data: {
         evidence_type: input.evidenceType,
+        ...(input.subjectId ? { subject_id: input.subjectId } : {}),
         ...(input.path ? { path: input.path } : {}),
         ...(input.url ? { url: input.url } : {}),
         ...(input.command ? { command: input.command } : {}),
         ...(input.checksum ? { checksum: input.checksum } : {}),
+        claims: input.claims ?? [],
+        source_mutability: input.sourceMutability ?? "operator-observed",
+        validated_at: nowIso(),
         observed_at: nowIso(),
       },
     });
@@ -871,6 +903,21 @@ export class DomainCommandService {
     }
     if (input.evidenceIds) {
       await this.requireEvidenceIds(input.evidenceIds);
+    }
+    const evidence = await Promise.all(
+      (input.evidenceIds ?? []).map((id) => this.requireKind(id, "evidence")),
+    );
+    const validation = new EvidenceClaimService().validate({
+      claims: input.publicClaims ?? [],
+      evidence,
+      publicClaim: (input.publicClaims ?? []).length > 0,
+    });
+    if (!validation.ok) {
+      throw new Error(
+        `Content evidence validation failed: ${validation.issues
+          .map((issue) => issue.message)
+          .join("; ")}`,
+      );
     }
     return this.entities.create({
       kind: "contentItem",
@@ -1248,6 +1295,105 @@ export interface WorkflowVerification {
   requiredEvidence: string[];
 }
 
+export type StudioGateId =
+  | "duplicate-check"
+  | "missing-evidence"
+  | "public-claim"
+  | "external-confirmation"
+  | "payment-delivery"
+  | "confidential-data"
+  | "destructive"
+  | "stale-revision"
+  | "restore-required";
+
+export interface StudioGateDefinition {
+  id: StudioGateId;
+  owner: string;
+  applies_when: string;
+  risk: "normal" | "high" | "critical";
+  required_evidence: string[];
+  failure_recovery: string;
+}
+
+export const GATE_CATALOG: StudioGateDefinition[] = [
+  {
+    id: "duplicate-check",
+    owner: "CRM and sales",
+    applies_when: "Creating or qualifying relationship, prospect, client or application records.",
+    risk: "normal",
+    required_evidence: ["duplicate review result"],
+    failure_recovery: "Review candidates and link or reuse the existing record.",
+  },
+  {
+    id: "missing-evidence",
+    owner: "Studio Core",
+    applies_when: "Completing, publishing or publicly claiming work.",
+    risk: "high",
+    required_evidence: ["supporting evidence id"],
+    failure_recovery: "Register evidence before advancing the lifecycle.",
+  },
+  {
+    id: "public-claim",
+    owner: "Marketing and portfolio",
+    applies_when: "Publishing claims or preparing outbound public communication.",
+    risk: "high",
+    required_evidence: ["claim map", "proof evidence", "exact payload confirmation"],
+    failure_recovery: "Remove unsupported claims or attach supporting evidence.",
+  },
+  {
+    id: "external-confirmation",
+    owner: "Adapters",
+    applies_when: "Any action that may send, publish or mutate outside the local Studio root.",
+    risk: "high",
+    required_evidence: ["prepared action", "human confirmation", "reconciliation result"],
+    failure_recovery: "Keep the action local until exact payload confirmation exists.",
+  },
+  {
+    id: "payment-delivery",
+    owner: "Finance and delivery",
+    applies_when: "Delivery completes while payment, contract or invoice state is unresolved.",
+    risk: "high",
+    required_evidence: ["invoice status", "delivery acceptance"],
+    failure_recovery: "Rank the unresolved obligation as an economic next action.",
+  },
+  {
+    id: "confidential-data",
+    owner: "Security",
+    applies_when: "A mutation touches confidential or secret classified material.",
+    risk: "critical",
+    required_evidence: ["classification review"],
+    failure_recovery: "Redact or lower scope before writing or preparing a payload.",
+  },
+  {
+    id: "destructive",
+    owner: "Operations",
+    applies_when: "A command deletes, restores, overwrites or changes external state.",
+    risk: "critical",
+    required_evidence: ["backup", "explicit confirmation", "reconciliation result"],
+    failure_recovery: "Stop and require a prepared destructive action with recovery evidence.",
+  },
+  {
+    id: "stale-revision",
+    owner: "Storage",
+    applies_when: "A command has an expected revision and the canonical record changed.",
+    risk: "high",
+    required_evidence: ["fresh entity revision"],
+    failure_recovery: "Reload the entity and re-run the dry-run before confirming.",
+  },
+  {
+    id: "restore-required",
+    owner: "Recovery",
+    applies_when: "Acceptance depends on backup or restore rehearsal freshness.",
+    risk: "high",
+    required_evidence: ["backup manifest", "restore rehearsal result"],
+    failure_recovery: "Run backup and restore-check before release or portfolio work.",
+  },
+];
+
+export function gateCatalogIds(): StudioGateId[] {
+  return GATE_CATALOG.map((gate) => gate.id);
+}
+
 export const WORKFLOW_REQUIREMENTS: Array<{
   id: string;
   name: string;
@@ -1429,7 +1575,7 @@ export class GateEngine {
     }
     if (input.classification === "secret") {
       return {
-        gate: "secret-data",
+        gate: "confidential-data",
         result: "block",
         reason: "Secret material cannot be written to canonical Studio files.",
         evidence_required: [],
@@ -1468,7 +1614,7 @@ export class GateEngine {
     }
     if (input.external || input.destructive) {
       return {
-        gate: input.destructive ? "destructive" : "external",
+        gate: input.destructive ? "destructive" : "external-confirmation",
         result: "require_confirmation",
         reason: "External or destructive actions must be prepared, confirmed and reconciled.",
         evidence_required: ["prepared action", "human confirmation", "reconciliation result"],
@@ -1490,6 +1636,91 @@ export class GateEngine {
       reason: "Local reversible action within canonical files.",
       evidence_required: [],
     };
+  }
+}
+
+export interface EvidenceValidationIssue {
+  code:
+    | "missing-evidence"
+    | "missing-claim"
+    | "missing-checksum"
+    | "mutable-source"
+    | "subject-mismatch";
+  evidence_id?: string;
+  claim?: string;
+  message: string;
+}
+
+export interface EvidenceValidationResult {
+  ok: boolean;
+  issues: EvidenceValidationIssue[];
+}
+
+export class EvidenceClaimService {
+  validate(input: {
+    claims?: string[];
+    evidence: StudioEntity[];
+    subjectId?: string;
+    publicClaim?: boolean;
+  }): EvidenceValidationResult {
+    const claims = uniqueStrings(input.claims ?? []);
+    const issues: EvidenceValidationIssue[] = [];
+    if ((input.publicClaim || claims.length > 0) && input.evidence.length === 0) {
+      issues.push({
+        code: "missing-evidence",
+        message: "Public claims require at least one evidence record.",
+      });
+    }
+    const evidenceClaims = new Set(
+      input.evidence.flatMap((entity) =>
+        Array.isArray((entity.spec as Record<string, unknown>)["claims"])
+          ? ((entity.spec as Record<string, unknown>)["claims"] as unknown[]).filter(
+              (value): value is string => typeof value === "string" && value.length > 0,
+            )
+          : [],
+      ),
+    );
+    for (const claim of claims) {
+      if (!evidenceClaims.has(claim)) {
+        issues.push({
+          code: "missing-claim",
+          claim,
+          message: `No evidence record explicitly supports claim: ${claim}`,
+        });
+      }
+    }
+    for (const entity of input.evidence) {
+      const spec = entity.spec as Record<string, unknown>;
+      const type = spec["evidence_type"];
+      const checksum = spec["checksum"];
+      const mutability = spec["source_mutability"];
+      const subjectId = spec["subject_id"];
+      if (
+        ["file", "screenshot", "backup"].includes(typeof type === "string" ? type : "") &&
+        typeof checksum !== "string"
+      ) {
+        issues.push({
+          code: "missing-checksum",
+          evidence_id: entityId(entity),
+          message: `Evidence ${entityId(entity)} requires a checksum.`,
+        });
+      }
+      if (mutability === "mutable" && typeof checksum !== "string") {
+        issues.push({
+          code: "mutable-source",
+          evidence_id: entityId(entity),
+          message: `Mutable evidence ${entityId(entity)} requires a checksum or snapshot.`,
+        });
+      }
+      if (input.subjectId && subjectId && subjectId !== input.subjectId) {
+        issues.push({
+          code: "subject-mismatch",
+          evidence_id: entityId(entity),
+          message: `Evidence ${entityId(entity)} is attached to ${subjectId}, not ${input.subjectId}.`,
+        });
+      }
+    }
+    return { ok: issues.length === 0, issues };
   }
 }
 

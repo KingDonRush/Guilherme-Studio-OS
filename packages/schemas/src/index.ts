@@ -162,6 +162,12 @@ export const EvidenceSpecSchema = GenericSpecSchema.extend({
   command: z.string().optional(),
   checksum: z.string().optional(),
   observed_at: z.string().datetime().optional(),
+  subject_id: z.string().optional(),
+  claims: z.array(z.string()).default([]),
+  source_mutability: z
+    .enum(["immutable", "mutable", "operator-observed"])
+    .default("operator-observed"),
+  validated_at: z.string().datetime().optional(),
 });
 
 export const TaskSpecSchema = GenericSpecSchema.extend({
@@ -302,6 +308,8 @@ export const PortfolioCaseSpecSchema = GenericSpecSchema.extend({
   case_url: z.string().url().optional(),
   source_evidence_ids: z.array(z.string()).default([]),
   public_claims: z.array(z.string()).default([]),
+  asset_ids: z.array(z.string()).default([]),
+  publish_channel: z.string().optional(),
 });
 export const CampaignSpecSchema = GenericSpecSchema.extend({
   audience: z.string().optional(),
@@ -370,6 +378,23 @@ export const CommunicationSpecSchema = GenericSpecSchema.extend({
   occurred_at: z.string().datetime().optional(),
   prepared_action_id: z.string().optional(),
   message: z.string().optional(),
+  provider: z.string().optional(),
+  target: z.string().optional(),
+  external_send: z.boolean().default(false),
+});
+
+export const HandoffSpecSchema = z
+  .object({
+    summary: z.string().min(1),
+    created_at: z.string().datetime(),
+    context_pack_id: z.string().optional(),
+    repository_ids: z.array(z.string()).default([]),
+    omitted_sensitive_sections: z.array(z.string()).default([]),
+  })
+  .strict();
+
+export const AgentRunExtendedSpecSchema = AgentRunSpecSchema.extend({
+  handoff: HandoffSpecSchema.optional(),
 });
 
 const BaseCanonicalEntitySchema = z
@@ -386,7 +411,10 @@ const BaseCanonicalEntitySchema = z
 export const TypedEntitySchema = z.discriminatedUnion("kind", [
   BaseCanonicalEntitySchema.extend({ kind: z.literal("evidence"), spec: EvidenceSpecSchema }),
   BaseCanonicalEntitySchema.extend({ kind: z.literal("task"), spec: TaskSpecSchema }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("agentRun"), spec: AgentRunSpecSchema }),
+  BaseCanonicalEntitySchema.extend({
+    kind: z.literal("agentRun"),
+    spec: AgentRunExtendedSpecSchema,
+  }),
   BaseCanonicalEntitySchema.extend({ kind: z.literal("person"), spec: PersonSpecSchema }),
   BaseCanonicalEntitySchema.extend({
     kind: z.literal("organization"),

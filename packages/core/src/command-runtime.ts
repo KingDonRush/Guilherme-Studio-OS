@@ -215,6 +215,7 @@ export async function executeStudioCommand(
         const url = optionalString(payload, "url");
         const evidenceCommand = optionalString(payload, "command");
         const checksum = optionalString(payload, "checksum");
+        const sourceMutability = optionalString(payload, "source_mutability");
         const entity = await domains.registerEvidence({
           title: stringValue(payload, "title"),
           evidenceType: stringValue(payload, "evidence_type") as
@@ -230,6 +231,12 @@ export async function executeStudioCommand(
           ...(url ? { url } : {}),
           ...(evidenceCommand ? { command: evidenceCommand } : {}),
           ...(checksum ? { checksum } : {}),
+          claims: stringArray(payload, "claims"),
+          ...(sourceMutability
+            ? {
+                sourceMutability: sourceMutability as "immutable" | "mutable" | "operator-observed",
+              }
+            : {}),
         });
         return entityMutationResult(command.command, entity);
       }

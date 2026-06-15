@@ -10,6 +10,8 @@ import {
   createWorkflowFixtureEntities,
   DomainCommandService,
   EntityService,
+  EvidenceClaimService,
+  gateCatalogIds,
   LifecycleEngine,
   operatorActor,
   PreparedActionService,
@@ -245,6 +247,7 @@ describe("core governance", () => {
       evidenceType: "screenshot",
       subjectId: deliverable.metadata.id,
       checksum: "f".repeat(64),
+      claims: ["Evidence-backed WordPress delivery"],
     });
 
     await expect(entities.transition(deliverable.metadata.id, "done")).rejects.toThrow(
@@ -272,4 +275,67 @@ describe("core governance", () => {
     expect(content.kind).toBe("contentItem");
     expect(decision.spec.evidence_ids).toContain(evidence.metadata.id);
   });
+
+  it("exposes the normative gate catalog and validates claim evidence", async () => {
+    expect(gateCatalogIds()).toEqual(
+      expect.arrayContaining([
+        "duplicate-check",
+        "missing-evidence",
+        "public-claim",
+        "external-confirmation",
+        "payment-delivery",
+        "confidential-data",
+        "destructive",
+        "stale-revision",
+        "restore-required",
+      ]),
+    );
+
+    const evidence = await new DomainCommandService(
+      await createContextFixture("studio-evidence-claims-", ["operations"]),
+    ).registerEvidence({
+      title: "Immutable claim proof",
+      evidenceType: "file",
+      checksum: "a".repeat(64),
+      claims: ["Claim with proof"],
+      sourceMutability: "immutable",
+    });
+
+    const valid = new EvidenceClaimService().validate({
+      claims: ["Claim with proof"],
+      evidence: [evidence],
+      publicClaim: true,
+    });
+    const invalid = new EvidenceClaimService().validate({
+      claims: ["Unsupported claim"],
+      evidence: [evidence],
+      publicClaim: true,
+    });
+
+    expect(valid.ok).toBe(true);
+    expect(invalid).toMatchObject({
+      ok: false,
+      issues: [expect.objectContaining({ code: "missing-claim" })],
+    });
+  });
 });
+
+async function createContextFixture(
+  name: string,
+  canonicalRoots: string[],
+): Promise<StudioContext> {
+  const root = await mkdtemp(path.join(os.tmpdir(), name));
+  await writeFile(
+    path.join(root, "studio.config.yaml"),
+    YAML.stringify({
+      api_version: "studio.guilherme.dev/config-v1",
+      root_name: "Core fixture",
+      operator_id: "per_20260614_guilherme-silva",
+      canonical_roots: canonicalRoots,
+      runtime_path: "runtime",
+      panel: { host: "127.0.0.1", port: 47838 },
+      adapters: {},
+    }),
+  );
+  return createStudioContext(root);
+}

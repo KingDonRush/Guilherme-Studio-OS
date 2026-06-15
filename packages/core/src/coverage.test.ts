@@ -15,8 +15,10 @@ describe("PRD coverage", () => {
       createEntity({ kind: "repository", title: "Repository" }),
     ]);
 
+    expect(report.ok).toBe(true);
+    expect(report.summary.capability_complete).toBeGreaterThan(0);
     expect(report.summary.missing_capability).toBe(0);
-    expect(report.summary.needs_intake).toBeGreaterThan(0);
+    expect(report.summary.intake_required).toBeGreaterThan(0);
     expect(
       report.intake_required.some(
         (entry) => entry.prd_id === "prd-09-finance-contracts-obligations",

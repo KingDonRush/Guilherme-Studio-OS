@@ -656,6 +656,12 @@ export function createProgram(): Command {
     .option("--url <url>")
     .option("--command <command>")
     .option("--checksum <sha256>")
+    .option("--claim <claim...>", "Claim supported by this evidence")
+    .option(
+      "--source-mutability <mode>",
+      "immutable, mutable or operator-observed",
+      "operator-observed",
+    )
     .action(async function action(this: Command) {
       const options = globalOptions(this);
       const local = this.opts() as {
@@ -666,6 +672,8 @@ export function createProgram(): Command {
         url?: string;
         command?: string;
         checksum?: string;
+        claim?: string[];
+        sourceMutability?: "immutable" | "mutable" | "operator-observed";
       };
       await executeCliCommand(options, "evidence.register", {
         title: local.title,
@@ -675,6 +683,8 @@ export function createProgram(): Command {
         ...(local.url ? { url: local.url } : {}),
         ...(local.command ? { command: local.command } : {}),
         ...(local.checksum ? { checksum: local.checksum } : {}),
+        claims: local.claim ?? [],
+        ...(local.sourceMutability ? { source_mutability: local.sourceMutability } : {}),
       });
     });
 
