@@ -38,6 +38,20 @@ interface NextAction {
   blocked: boolean;
 }
 
+interface PrdCoverageReport {
+  summary: {
+    covered: number;
+    needs_intake: number;
+    missing_capability: number;
+  };
+  prds: Array<{
+    id: string;
+    title: string;
+    status: "covered" | "needs-intake" | "missing-capability";
+    missing_canonical_kinds: string[];
+  }>;
+}
+
 async function getJson<T>(url: string): Promise<T> {
   const response = await fetch(url, {
     headers: {
@@ -91,6 +105,11 @@ function useStudioData() {
       ),
     retry: false,
   });
+  const coverage = useQuery({
+    queryKey: ["coverage"],
+    queryFn: () => getJson<ResultEnvelope<PrdCoverageReport>>("/api/v1/coverage"),
+    retry: false,
+  });
   const diagnostics = useQuery({
     queryKey: ["diagnostics"],
     queryFn: () =>
@@ -103,7 +122,7 @@ function useStudioData() {
       >("/api/v1/diagnostics"),
     retry: false,
   });
-  return { summary, entities, repositories, preparedActions, diagnostics };
+  return { summary, entities, repositories, preparedActions, coverage, diagnostics };
 }
 
 function App(): React.JSX.Element {
@@ -259,8 +278,38 @@ function Distribution({ data }: { data: ReturnType<typeof useStudioData> }) {
 
 function Control({ data }: { data: ReturnType<typeof useStudioData> }) {
   const diagnostics = data.diagnostics.data?.result;
+  const coverage = data.coverage.data?.result;
   return (
     <>
+      <section className="grid three">
+        <article className="panel compact">
+          <ShieldCheck size={24} />
+          <h3>PRDs cobertos</h3>
+          <strong className="big">{coverage?.summary.covered ?? "-"}</strong>
+        </article>
+        <article className="panel compact">
+          <Archive size={24} />
+          <h3>Intake pendente</h3>
+          <strong className="big">{coverage?.summary.needs_intake ?? "-"}</strong>
+        </article>
+        <article className="panel compact">
+          <CircleAlert size={24} />
+          <h3>Capacidade ausente</h3>
+          <strong className="big">{coverage?.summary.missing_capability ?? "-"}</strong>
+        </article>
+      </section>
+      <EntityTable
+        title="Cobertura dos PRDs"
+        rows={(coverage?.prds ?? []).map((prd) => ({
+          left: prd.status,
+          title: prd.title,
+          right:
+            prd.missing_canonical_kinds.length > 0
+              ? prd.missing_canonical_kinds.join(", ")
+              : "Sem lacuna canônica",
+        }))}
+        empty="Cobertura ainda não carregada."
+      />
       <EntityTable
         title="Ações preparadas"
         rows={(data.preparedActions.data ?? []).map((action) => ({

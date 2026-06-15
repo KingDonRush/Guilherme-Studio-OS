@@ -2,7 +2,11 @@
 
 Status: observed baseline
 Observation date: 2026-06-14
-Workspace: `/home/kingdonrush/Área de trabalho/Dev/Wordpress`
+Historical workspace at observation time: previous local WordPress workspace
+under the user desktop development directory.
+
+Current coordinator workspace after root rename:
+`/home/kingdonrush/Área de trabalho/Dev/Guilherme-Studio-OS`
 
 This inventory records the current root without treating its layout as the
 future architecture. It must be refreshed immediately before migration.

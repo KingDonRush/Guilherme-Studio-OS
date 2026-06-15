@@ -13,10 +13,10 @@ metadata:
   labels:
     - studio-os
     - bootstrap
-  revision: 1
+  revision: 2
   schema_version: 1
   slug: bootstrap-studio-os-vertical
-  updated_at: 2026-06-14T20:34:06.080Z
+  updated_at: 2026-06-15T02:40:53.417Z
 relations: []
 spec:
   acceptance:
@@ -26,6 +26,6 @@ spec:
   blocked_by: []
   economic_reason: Create a repeatable operating layer before portfolio work resumes.
   priority: now
-  status: active
+  status: done
   summary: First validated vertical connecting Task, AgentRun and Evidence.
   title: Bootstrap Studio OS vertical

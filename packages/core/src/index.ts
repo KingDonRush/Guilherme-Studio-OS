@@ -1034,6 +1034,14 @@ export {
   classifyStudioError,
   StudioCommandService,
 } from "./command-service.js";
+export {
+  coverageEntityIds,
+  evaluatePrdCoverage,
+  PRD_COVERAGE_REQUIREMENTS,
+  type PrdCoverageReport,
+  type PrdCoverageRequirement,
+  type PrdCoverageStatus,
+} from "./coverage.js";
 export { type EconomicNextAction, EconomicNextActionResolver } from "./economics.js";
 export { IdempotencyStore } from "./idempotency.js";
 

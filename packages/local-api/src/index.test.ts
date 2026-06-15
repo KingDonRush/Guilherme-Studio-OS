@@ -65,6 +65,21 @@ describe("local API", () => {
       },
     });
 
+    const coverage = await app.inject({
+      method: "GET",
+      url: "/api/v1/coverage",
+      headers,
+    });
+    expect(coverage.json()).toMatchObject({
+      status: "ok",
+      result: {
+        summary: {
+          missing_capability: 0,
+        },
+      },
+    });
+    expect(coverage.json().result.summary.needs_intake).toBeGreaterThan(0);
+
     const prepared = await app.inject({
       method: "POST",
       url: "/api/v1/prepared-actions",

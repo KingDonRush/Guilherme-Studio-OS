@@ -1,34 +1,35 @@
-# Studio OS V1 Completion Matrix
+# Studio OS PRD Completion Matrix
 
 Status: active execution ledger
-Updated: 2026-06-14
+Updated: 2026-06-15
 
-This matrix connects normative requirements to implementation, verification and
-evidence. A row is complete only when code, automated verification and durable
-evidence exist.
+This matrix connects normative requirements to implementation, verification,
+evidence, and remaining gaps. A row is complete only when code, automated
+verification, operator verification, documentation, and durable evidence exist.
 
-| Area | Normative source | Implementation owner | Acceptance | Status |
-|---|---|---|---|---|
-| Entity and relation contracts | schemas/01 | `packages/schemas` | Versioned catalog and valid fixtures | in progress |
-| Commands, results and events | architecture/03 | `packages/schemas`, `packages/core` | CLI, MCP and API equivalence | in progress |
-| Authority and gates | security/01 | `packages/core` | Default deny and capability tests | in progress |
-| Prepared actions | architecture/03 | `packages/core` | Exact confirmation, execution and reconciliation | in progress |
-| Canonical transactions | architecture/01 | `packages/storage` | Crash recovery and revision conflict tests | in progress |
-| Derived projection | architecture/01 | `packages/storage` | Delete/rebuild/verify with matching checksum | in progress |
-| Economic next actions | PRD 01 and 02 | `packages/core` | Explainable ranked obligations | pending |
-| Domain lifecycles | ontology and PRDs | `packages/core` | Semantic command and invalid transition tests | in progress |
-| CLI | architecture/03 | `packages/cli` | Required grammar, flags and stable exit codes | in progress |
-| MCP | architecture/03 | `packages/mcp` | Resources, governed tools, prompts and Inspector | in progress |
-| Local API | architecture/03 | `packages/local-api` | Loopback security and shared command execution | in progress |
-| Panel | architecture/03 | `apps/panel` | Economic, work, distribution and control views | in progress |
-| Git adapter | architecture/04 | `packages/adapters` | Root, branch, remote and dirty-state diagnostics | in progress |
-| WordPress adapter | architecture/04 | `packages/adapters` | Start, stop, health, WP-CLI, backup and restore | in progress |
-| GitHub adapter | PRD 11 | `packages/adapters` | Disabled-by-default fake-provider acceptance | pending |
-| Communication adapter | PRD 11 | `packages/adapters` | No send without exact confirmation | pending |
-| Coordinated backup | architecture/04 | `packages/adapters` | Checksummed manifest and restore rehearsal | in progress |
-| Eight journeys | workflows/01 | `packages/testing` | Deterministic fixtures pass through interfaces | in progress |
-| Physical migration | migration/02 | root coordinator | Four independent repositories and final rename | in progress |
-| V1 acceptance | operations/04 | cross-package | Full verification suite and evidence pack | pending |
+| Area | Owner | Status | Evidence | Verification command | Remaining gap |
+|---|---|---|---|---|---|
+| Entity and relation contracts | `packages/schemas` | in progress | schema tests and generated catalog | `npm run test -- packages/schemas/src/index.test.ts` | complete per-domain fixtures and reduce practical dependence on generic catchall fields |
+| Commands, results and events | `packages/schemas`, `packages/core` | in progress | command runtime tests | `npm run test -- packages/core/src/command-runtime.test.ts` | broaden CLI/API/MCP equivalence fixtures across all PRD workflows |
+| Authority and gates | `packages/core` | in progress | core governance tests | `npm run test -- packages/core/src/index.test.ts` | encode domain preconditions and gate catalog fixtures |
+| Prepared actions | `packages/core` | in progress | exact checksum confirmation tests | `npm run test -- packages/core/src/index.test.ts` | panel exact-payload review and stale payload UI flow |
+| Canonical transactions | `packages/storage` | in progress | storage transaction tests | `npm run test -- packages/storage/src/index.test.ts` | expand crash/recovery matrix and event replay evidence |
+| Derived projection | `packages/storage` | in progress | rebuild checksum verification | `npm run studio -- sync --rebuild --verify --json` | expose stale projection recovery in panel/API diagnostics |
+| Economic next actions | `packages/core` | in progress | economic resolver tests | `npm run test -- packages/core/src/economics.test.ts` | domain-specific obligation ranking and intake-aware gaps |
+| Domain lifecycles | `packages/core` | in progress | lifecycle and semantic command tests | `npm run test -- packages/core/src/index.test.ts` | implement preconditions for every PRD lifecycle |
+| CLI | `packages/cli` | in progress | command help and runtime tests | `npm run studio -- --help` | complete semantic command grammar and stable exit tests |
+| MCP | `packages/mcp` | in progress | MCP smoke from V1 evidence | `npm run build -w @guilherme-studio/mcp` | add prompts/context packs and PRD coverage resource smoke |
+| Local API | `packages/local-api` | in progress | local API tests | `npm run test -- packages/local-api/src/index.test.ts` | cover every mutating route through command runtime |
+| Panel | `apps/panel` | in progress | build and Playwright smoke from V1 evidence | `npm run build -w @guilherme-studio/panel` | domain views, exact-payload review, coverage and intake views |
+| Git adapter | `packages/adapters` | in progress | repository health inspection | `npm run studio -- repo inspect --json` | explicit root mismatch and package script evidence |
+| WordPress adapter | `packages/adapters` | in progress | WordPress health/restore evidence | `npm run studio -- wordpress health --json` | alternate-path restore evidence and provision/register template |
+| GitHub adapter | `packages/adapters` | in progress | disabled adapter contract test | `npm run test -- packages/adapters/src/index.test.ts` | provider interface and fake prepare/confirm/reconcile flow |
+| Communication adapter | `packages/adapters` | in progress | disabled adapter contract test | `npm run test -- packages/adapters/src/index.test.ts` | provider interface and fake prepare/confirm/reconcile flow |
+| Coordinated backup | `packages/adapters` | in progress | backup manifests | `npm run studio -- backup --json` | restore rehearsal that reports all registered components |
+| Eight journeys | `packages/testing`, `packages/core` | in progress | workflow fixture check | `npm run studio -- workflow --fixtures --json` | executable CLI/API/MCP journey fixtures, not only kind coverage |
+| Physical migration | root coordinator | in progress | renamed root and repository status | `npm run studio -- doctor --json` | path drift check green after final commit |
+| PRD coverage and intake | `packages/core`, interfaces | in progress | coverage command and intake packet | `npm run studio -- coverage --json` | canonical records for PRDs with real data, collected through intake |
+| Operational acceptance | cross-package | in progress | V1 acceptance evidence and reconciliation evidence | full final gate command set | every row complete or explicitly deferred by decision |
 
 ## Completion Rule
 
@@ -37,3 +38,17 @@ evidence exist.
 - `complete`: code, tests, operator verification and durable evidence all pass.
 - Canonical business data is never fabricated to make a workflow green.
 - Fixture verification and canonical coverage audit are reported separately.
+
+## Acceptance Reconciliation
+
+On 2026-06-15, `tsk_20260614_bootstrap-studio-os-vertical` was transitioned to
+`done` after current verification passed and durable evidence was registered.
+
+Evidence:
+
+- `evd_20260615_studio-os-v1-acceptance-verification`;
+- `evd_20260615_studio-os-v1-acceptance-reconciliation-verification`.
+
+The bootstrap task is complete. The PRD completion work remains active until
+this ledger has no `pending` rows and every `in progress` row is either
+`complete` or explicitly deferred by a decision record.

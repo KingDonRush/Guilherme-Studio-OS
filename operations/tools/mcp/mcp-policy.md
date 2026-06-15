@@ -24,15 +24,15 @@ the local-only Elementor MCP path we want.
 
 ## Local Files
 
-- package setup: `.ai/tools/mcp/package.json`
-- example client config: `.ai/tools/mcp/mcp.example.json`
-- notes: `.ai/tools/mcp/README.md`
-- local Elementor MCP guide: `.ai/tools/mcp/elementor-local.md`
-- stdio runner: `.ai/tools/mcp/elementor-mcp-stdio.sh`
+- package setup: `operations/tools/mcp/mcp/package.json`
+- example client config: `operations/tools/mcp/mcp/mcp.example.json`
+- notes: `operations/tools/mcp/mcp/README.md`
+- local Elementor MCP guide: `operations/tools/mcp/mcp/elementor-local.md`
+- stdio runner: `operations/tools/mcp/mcp/elementor-mcp-stdio.sh`
 
 ## Safety
 
 - Do not connect MCPs to production without explicit approval.
 - Prefer duplicate-first or draft-first operations for page edits.
-- Keep credentials in `.env`, never in `.ai/` or committed config.
+- Keep credentials in `.env`, never in committed config.
 - Document exact MCP capabilities before trusting write operations.

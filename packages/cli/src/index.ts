@@ -20,6 +20,7 @@ import {
   createStudioContext,
   createWorkflowFixtureEntities,
   type DomainCommandService,
+  evaluatePrdCoverage,
   executeStudioCommand,
   kindFromAlias,
   operatorActor,
@@ -333,6 +334,7 @@ export function createProgram(): Command {
       const projection = context.projection.inspect();
       const expectedChecksum = projectionChecksum(files);
       const projectionStale = !projection.exists || projection.checksum !== expectedChecksum;
+      const pathDrift = await inspectPathDrift(context.paths.root);
       const { readdir } = await import("node:fs/promises");
       const backupDir = pathJoin(context.paths.runtime, "backups");
       let backups: string[] = [];
@@ -367,6 +369,12 @@ export function createProgram(): Command {
           ok: dirty.length === 0 && unexpectedRemotes.length === 0,
           detail: { dirty, unexpectedRemotes },
           remediation: "Commit intentional changes and remove unexpected V1 remotes.",
+        },
+        {
+          name: "path_drift",
+          ok: pathDrift.length === 0,
+          detail: pathDrift,
+          remediation: "Update stale absolute or pre-migration paths to the renamed Studio root.",
         },
         {
           name: "backup",
@@ -414,6 +422,23 @@ export function createProgram(): Command {
       const ok = workflows.every((workflow) => workflow.ok);
       print({ ok, mode: local.fixtures ? "fixtures" : "canonical", workflows }, options.json);
       process.exitCode = ok ? 0 : 2;
+    });
+
+  program
+    .command("coverage")
+    .description("Report PRD coverage against canonical records")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const context = await createStudioContext(options.root);
+      const { files, errors } = await validateCanonicalFiles(context.paths.root);
+      if (errors.length > 0) {
+        print({ ok: false, errors }, options.json, options.quiet);
+        process.exitCode = 2;
+        return;
+      }
+      const report = evaluatePrdCoverage(files.map((file) => file.entity));
+      print(report, options.json, options.quiet);
+      process.exitCode = report.summary.missing_capability > 0 ? 2 : 0;
     });
 
   const entity = program.command("entity").description("Manage canonical entities");
@@ -1052,6 +1077,53 @@ function pathJoin(root: string, relativeOrAbsolute: string): string {
     return relativeOrAbsolute;
   }
   return `${root.replace(/\/$/, "")}/${relativeOrAbsolute}`;
+}
+
+async function inspectPathDrift(root: string): Promise<Array<{ path: string; pattern: string }>> {
+  const { readdir, readFile, stat } = await import("node:fs/promises");
+  const roots = [
+    "docs",
+    "operations",
+    "data",
+    "portfolio",
+    "AGENTS.md",
+    "README.md",
+    "studio.config.yaml",
+  ];
+  const patterns = ["Dev/Wordpress", ".ai/tools/mcp"];
+  const allowedExtensions = new Set([".json", ".md", ".yaml", ".yml", ".toml", ".txt", ".sh"]);
+  const results: Array<{ path: string; pattern: string }> = [];
+
+  async function visit(relativePath: string): Promise<void> {
+    const absolutePath = pathJoin(root, relativePath);
+    let isDirectory = false;
+    try {
+      isDirectory = (await stat(absolutePath)).isDirectory();
+    } catch {
+      return;
+    }
+    if (isDirectory) {
+      for (const entry of await readdir(absolutePath)) {
+        await visit(`${relativePath}/${entry}`);
+      }
+      return;
+    }
+    const extension = relativePath.includes(".") ? `.${relativePath.split(".").pop() ?? ""}` : "";
+    if (!allowedExtensions.has(extension)) {
+      return;
+    }
+    const text = await readFile(absolutePath, "utf8");
+    for (const pattern of patterns) {
+      if (text.includes(pattern)) {
+        results.push({ path: relativePath, pattern });
+      }
+    }
+  }
+
+  for (const rootPath of roots) {
+    await visit(rootPath);
+  }
+  return results.sort((left, right) => left.path.localeCompare(right.path));
 }
 
 function addDomainCommand(program: Command, alias: string): Command {

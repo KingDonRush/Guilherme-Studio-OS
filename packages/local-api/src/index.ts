@@ -7,6 +7,7 @@ import {
   createStudioCommand,
   createStudioContext,
   EconomicNextActionResolver,
+  evaluatePrdCoverage,
   executeStudioCommand,
   kindFromAlias,
   operatorActor,
@@ -150,6 +151,14 @@ export async function createLocalApi(
     const { files } = await validateCanonicalFiles(context.paths.root);
     return createResultEnvelope({
       result: new EconomicNextActionResolver().rank(files.map((file) => file.entity)),
+      projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+    });
+  });
+
+  app.get("/api/v1/coverage", async () => {
+    const { files } = await validateCanonicalFiles(context.paths.root);
+    return createResultEnvelope({
+      result: evaluatePrdCoverage(files.map((file) => file.entity)),
       projectionRevision: context.projection.inspect().projectionRevision ?? 0,
     });
   });

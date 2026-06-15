@@ -6,6 +6,7 @@ import {
   createStudioContext,
   createWorkflowFixtureEntities,
   EconomicNextActionResolver,
+  evaluatePrdCoverage,
   executeStudioCommand,
   kindFromAlias,
   operatorActor,
@@ -78,6 +79,20 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
             null,
             2,
           ),
+        },
+      ],
+    };
+  });
+
+  server.resource("prd-coverage", "studio://dashboard/prd-coverage", async () => {
+    const context = await createStudioContext(root);
+    const { files } = await validateCanonicalFiles(context.paths.root);
+    return {
+      contents: [
+        {
+          uri: "studio://dashboard/prd-coverage",
+          mimeType: "application/json",
+          text: JSON.stringify(evaluatePrdCoverage(files.map((file) => file.entity)), null, 2),
         },
       ],
     };
@@ -202,6 +217,19 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
             null,
             2,
           ),
+        },
+      ],
+    };
+  });
+
+  server.tool("studio_get_prd_coverage", {}, async () => {
+    const context = await createStudioContext(root);
+    const { files } = await validateCanonicalFiles(context.paths.root);
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(evaluatePrdCoverage(files.map((file) => file.entity)), null, 2),
         },
       ],
     };

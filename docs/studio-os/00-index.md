@@ -1,12 +1,13 @@
 # Guilherme Studio OS
 
-Status: specification authored; implementation and migration not started
+Status: Studio OS V1 accepted locally; migration and portfolio resumption need
+their own next task
 Purpose: canonical map for the operating system that governs Guilherme's
 international WordPress business.
 
 ## Delivery State
 
-Completed in this specification:
+Completed:
 
 - Constitution and authority model;
 - five connected planning graphs;
@@ -18,14 +19,13 @@ Completed in this specification:
 - operating model and quality gates;
 - primary-source research register;
 - current-state inventory and reversible migration plan;
-- topologically ordered implementation backlog.
+- topologically ordered implementation backlog;
+- first executable Studio OS V1 vertical with schemas, storage, CLI, MCP,
+  local API, panel, adapters, workflow fixtures, backup/restore checks and
+  acceptance evidence.
 
-Not executed:
+Not executed or still requiring separate task authority:
 
-- technology spikes and final stack decisions;
-- Studio Core, CLI, MCP, panel, or adapters;
-- canonical data migration;
-- repository relocation;
 - physical root rename;
 - deletion of legacy directories.
 
@@ -110,6 +110,8 @@ inputs to migration. They do not override this specification.
 - [Quality gates](./operations/02-quality-gates.md)
 - [Research packets](./operations/03-research-packets.md)
 - [Topological implementation backlog](./operations/04-implementation-backlog.md)
+- [V1 completion matrix](./operations/05-v1-completion-matrix.md)
+- [Real data intake packet](./operations/06-real-data-intake.md)
 - [Current-state inventory](./migration/01-current-state-inventory.md)
 - [Migration plan](./migration/02-migration-plan.md)
 - [Decision register](./decisions/00-decision-register.md)

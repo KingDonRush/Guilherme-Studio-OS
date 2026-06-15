@@ -2,7 +2,7 @@
   "mcpServers": {
     "elementor-local": {
       "type": "stdio",
-      "command": "/home/kingdonrush/Área de trabalho/Dev/Wordpress/.ai/tools/mcp/elementor-mcp-stdio.sh",
+      "command": "/home/kingdonrush/Área de trabalho/Dev/Guilherme-Studio-OS/operations/tools/mcp/mcp/elementor-mcp-stdio.sh",
       "args": [
       ]
     }

@@ -7,7 +7,7 @@
 - Set up local WordPress environment.
 - Install Elementor.
 - Clone plugin repositories.
-- Install useful MCP packages in `.ai/tools/mcp/` and document usage.
+- Install useful MCP packages in `operations/tools/mcp/` and document usage.
 
 ## Phase 2: Plugin Audit
 

@@ -25,7 +25,7 @@ These are independent git checkouts and are ignored by the root repository.
 The MCP stdio command is:
 
 ```bash
-.ai/tools/mcp/elementor-mcp-stdio.sh
+operations/tools/mcp/mcp/elementor-mcp-stdio.sh
 ```
 
 Example client config:
@@ -35,7 +35,7 @@ Example client config:
   "mcpServers": {
     "elementor-local": {
       "type": "stdio",
-      "command": "/home/kingdonrush/Área de trabalho/Dev/Wordpress/.ai/tools/mcp/elementor-mcp-stdio.sh",
+      "command": "/home/kingdonrush/Área de trabalho/Dev/Guilherme-Studio-OS/operations/tools/mcp/mcp/elementor-mcp-stdio.sh",
       "args": []
     }
   }
@@ -46,7 +46,7 @@ Example client config:
 
 ```bash
 printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \
-  | .ai/tools/mcp/elementor-mcp-stdio.sh
+  | operations/tools/mcp/mcp/elementor-mcp-stdio.sh
 ```
 
 Expected:
