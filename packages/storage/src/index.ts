@@ -142,6 +142,21 @@ interface EntityTransactionManifest {
   started_at: string;
 }
 
+interface MultiEntityTransactionEntry {
+  entity_id: string;
+  target_path: string;
+  temporary_path: string;
+  expected_revision?: number;
+  next_revision: number;
+}
+
+interface MultiEntityTransactionManifest {
+  api_version: "studio.guilherme.dev/transaction-v2";
+  id: string;
+  entries: MultiEntityTransactionEntry[];
+  started_at: string;
+}
+
 export class EntityStore {
   readonly root: string;
   readonly runtime: string;
@@ -177,6 +192,88 @@ export class EntityStore {
     return relativePath;
   }
 
+  async putMany(
+    writes: Array<{ entity: StudioEntity; expectedRevision?: number }>,
+  ): Promise<string[]> {
+    if (writes.length === 0) {
+      return [];
+    }
+    const parsedWrites = writes.map((write) => ({
+      entity: TypedEntitySchema.parse(write.entity),
+      expectedRevision: write.expectedRevision,
+    }));
+    for (const write of parsedWrites) {
+      assertNoSecrets(write.entity);
+    }
+    const ids = parsedWrites.map((write) => entityId(write.entity));
+    if (new Set(ids).size !== ids.length) {
+      throw new Error("A multi-record transaction cannot write the same entity twice.");
+    }
+
+    return this.withEntityLocks(ids, async () => {
+      const entries: Array<MultiEntityTransactionEntry & { entity: StudioEntity }> = [];
+      for (const write of parsedWrites) {
+        const targetPath = await resolveInsideRoot(this.root, entityRelativePath(write.entity));
+        if (await fileExists(targetPath)) {
+          const current = await this.readByPath(targetPath);
+          if (write.expectedRevision === undefined) {
+            throw new Error(
+              `Expected revision is required when updating ${entityId(write.entity)}`,
+            );
+          }
+          if (entityRevision(current) !== write.expectedRevision) {
+            throw new Error(
+              `Revision conflict for ${entityId(write.entity)}: expected ${write.expectedRevision}, got ${entityRevision(current)}`,
+            );
+          }
+        }
+        entries.push({
+          entity: write.entity,
+          entity_id: entityId(write.entity),
+          target_path: path.relative(this.root, targetPath),
+          temporary_path: path.relative(
+            this.root,
+            path.join(
+              path.dirname(targetPath),
+              `.studio-${process.pid}-${Date.now()}-${entries.length}.tmp`,
+            ),
+          ),
+          ...(write.expectedRevision === undefined
+            ? {}
+            : { expected_revision: write.expectedRevision }),
+          next_revision: entityRevision(write.entity),
+        });
+      }
+
+      await mkdir(this.transactionsPath, { recursive: true });
+      const manifest: MultiEntityTransactionManifest = {
+        api_version: "studio.guilherme.dev/transaction-v2",
+        id: randomUUID(),
+        entries: entries.map(({ entity: _entity, ...entry }) => entry),
+        started_at: new Date().toISOString(),
+      };
+      const manifestPath = path.join(this.transactionsPath, `${manifest.id}.json`);
+      for (const entry of entries) {
+        await writeFile(
+          path.join(this.root, entry.temporary_path),
+          YAML.stringify(entry.entity, { sortMapEntries: true, lineWidth: 120 }),
+          { mode: 0o600 },
+        );
+      }
+      await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, {
+        mode: 0o600,
+      });
+      for (const entry of entries) {
+        await rename(
+          path.join(this.root, entry.temporary_path),
+          path.join(this.root, entry.target_path),
+        );
+      }
+      await rm(manifestPath, { force: true });
+      return entries.map((entry) => entry.target_path);
+    });
+  }
+
   async recoverTransactions(): Promise<{ recovered: number; discarded: number }> {
     await mkdir(this.transactionsPath, { recursive: true });
     const entries = await readdir(this.transactionsPath, { withFileTypes: true });
@@ -187,9 +284,51 @@ export class EntityStore {
         continue;
       }
       const manifestPath = path.join(this.transactionsPath, entry.name);
-      const manifest = JSON.parse(
-        await readFile(manifestPath, "utf8"),
-      ) as EntityTransactionManifest;
+      const raw = JSON.parse(await readFile(manifestPath, "utf8")) as
+        | EntityTransactionManifest
+        | MultiEntityTransactionManifest;
+      if (raw.api_version === "studio.guilherme.dev/transaction-v2") {
+        for (const entry of raw.entries) {
+          const targetPath = path.join(this.root, entry.target_path);
+          const temporaryPath = path.join(this.root, entry.temporary_path);
+          if (!(await fileExists(temporaryPath))) {
+            if (await fileExists(targetPath)) {
+              const current = await this.readByPath(targetPath);
+              if (entityRevision(current) === entry.next_revision) {
+                discarded += 1;
+                continue;
+              }
+            }
+            throw new Error(`Missing staged transaction entry: ${entry.entity_id}`);
+          }
+          const staged = await this.readByPath(temporaryPath);
+          if (
+            entityId(staged) !== entry.entity_id ||
+            entityRevision(staged) !== entry.next_revision
+          ) {
+            throw new Error(`Transaction entry mismatch: ${entry.entity_id}`);
+          }
+          if (await fileExists(targetPath)) {
+            const current = await this.readByPath(targetPath);
+            if (entityRevision(current) === entry.next_revision) {
+              await rm(temporaryPath, { force: true });
+              discarded += 1;
+              continue;
+            }
+            if (
+              entry.expected_revision === undefined ||
+              entityRevision(current) !== entry.expected_revision
+            ) {
+              throw new Error(`Transaction revision conflict: ${raw.id}`);
+            }
+          }
+          await rename(temporaryPath, targetPath);
+          recovered += 1;
+        }
+        await rm(manifestPath, { force: true });
+        continue;
+      }
+      const manifest = raw;
       const targetPath = path.join(this.root, manifest.target_path);
       const temporaryPath = path.join(this.root, manifest.temporary_path);
       if (await fileExists(temporaryPath)) {
@@ -249,6 +388,39 @@ export class EntityStore {
       await lockHandle.close();
       await rm(lockPath, { force: true });
     }
+  }
+
+  private async withEntityLocks<T>(ids: string[], action: () => Promise<T>): Promise<T> {
+    const sortedIds = [...new Set(ids)].sort((left, right) => left.localeCompare(right));
+    const run = async (index: number): Promise<T> => {
+      const id = sortedIds[index];
+      if (!id) {
+        return action();
+      }
+      return this.withEntityLock(id, () => run(index + 1));
+    };
+    return run(0);
+  }
+
+  async inspectLocks(): Promise<
+    Array<{ id: string; path: string; pid?: number; createdAt?: string; stale: boolean }>
+  > {
+    await mkdir(this.locksPath, { recursive: true });
+    const results = [];
+    for (const entry of (await readdir(this.locksPath)).filter((name) => name.endsWith(".lock"))) {
+      const lockPath = path.join(this.locksPath, entry);
+      const [pidValue, createdAt] = (await readFile(lockPath, "utf8")).trim().split("\n");
+      const pid = Number.parseInt(pidValue ?? "", 10);
+      const age = createdAt ? Date.now() - Date.parse(createdAt) : Number.POSITIVE_INFINITY;
+      results.push({
+        id: entry.slice(0, -5),
+        path: lockPath,
+        ...(Number.isFinite(pid) ? { pid } : {}),
+        ...(createdAt ? { createdAt } : {}),
+        stale: age > 15 * 60 * 1000,
+      });
+    }
+    return results;
   }
 
   private async commitEntityWrite(
@@ -423,12 +595,25 @@ export class EventStore {
     await mkdir(path.dirname(this.eventsPath), { recursive: true });
     await writeFile(this.eventsPath, `${JSON.stringify(parsed)}\n`, { flag: "a", mode: 0o600 });
   }
+
+  async list(): Promise<StudioEvent[]> {
+    if (!(await fileExists(this.eventsPath))) {
+      return [];
+    }
+    const body = await readFile(this.eventsPath, "utf8");
+    return body
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((line) => EventSchema.parse(JSON.parse(line)));
+  }
 }
 
 export interface ProjectionStats {
   entityCount: number;
   relationCount: number;
   checksum: string;
+  projectionRevision: number;
 }
 
 export class SQLiteProjection {
@@ -438,7 +623,7 @@ export class SQLiteProjection {
     this.sqlitePath = sqlitePath;
   }
 
-  async rebuild(files: StudioFile[]): Promise<ProjectionStats> {
+  async rebuild(files: StudioFile[], events: StudioEvent[] = []): Promise<ProjectionStats> {
     await mkdir(path.dirname(this.sqlitePath), { recursive: true });
     const tmpPath = `${this.sqlitePath}.${process.pid}.${Date.now()}.tmp`;
     await rm(tmpPath, { force: true });
@@ -537,6 +722,10 @@ export class SQLiteProjection {
         INSERT INTO next_actions (entity_id, kind, title, priority, status)
         VALUES (?, ?, ?, ?, ?)
       `);
+      const insertEvent = db.prepare(`
+        INSERT INTO events (id, type, entity_id, actor_id, created_at, data_json)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `);
       const tx = db.transaction((entries: StudioFile[]) => {
         for (const file of entries) {
           const entity = file.entity;
@@ -610,10 +799,31 @@ export class SQLiteProjection {
         }
       });
       tx(files);
+      const eventTx = db.transaction((entries: StudioEvent[]) => {
+        for (const event of entries) {
+          insertEvent.run(
+            event.id,
+            event.type,
+            event.entity_id ?? null,
+            event.actor_id ?? null,
+            event.created_at,
+            JSON.stringify(event.data),
+          );
+        }
+      });
+      eventTx(events);
       const checksum = projectionChecksum(files);
+      const projectionRevision = files.reduce(
+        (total, file) => total + entityRevision(file.entity),
+        events.length,
+      );
       db.prepare("INSERT INTO projection_meta (key, value) VALUES (?, ?)").run(
         "canonical_checksum",
         checksum,
+      );
+      db.prepare("INSERT INTO projection_meta (key, value) VALUES (?, ?)").run(
+        "projection_revision",
+        String(projectionRevision),
       );
     } finally {
       db.close();
@@ -623,10 +833,19 @@ export class SQLiteProjection {
       entityCount: files.length,
       relationCount: files.reduce((count, file) => count + file.entity.relations.length, 0),
       checksum: projectionChecksum(files),
+      projectionRevision: files.reduce(
+        (total, file) => total + entityRevision(file.entity),
+        events.length,
+      ),
     };
   }
 
-  inspect(): { exists: boolean; sizeBytes: number; checksum?: string } {
+  inspect(): {
+    exists: boolean;
+    sizeBytes: number;
+    checksum?: string;
+    projectionRevision?: number;
+  } {
     try {
       const info = statSync(this.sqlitePath);
       const db = new Database(this.sqlitePath, { readonly: true });
@@ -634,16 +853,52 @@ export class SQLiteProjection {
         const row = db
           .prepare("SELECT value FROM projection_meta WHERE key = ?")
           .get("canonical_checksum") as { value?: string } | undefined;
+        const revisionRow = db
+          .prepare("SELECT value FROM projection_meta WHERE key = ?")
+          .get("projection_revision") as { value?: string } | undefined;
         return {
           exists: true,
           sizeBytes: info.size,
           ...(row?.value ? { checksum: row.value } : {}),
+          ...(revisionRow?.value
+            ? { projectionRevision: Number.parseInt(revisionRow.value, 10) }
+            : {}),
         };
       } finally {
         db.close();
       }
     } catch {
       return { exists: false, sizeBytes: 0 };
+    }
+  }
+
+  queryNextActions(limit = 20): Array<{
+    entity_id: string;
+    kind: string;
+    title: string;
+    priority: string | null;
+    status: string;
+  }> {
+    const db = new Database(this.sqlitePath, { readonly: true });
+    try {
+      return db
+        .prepare(
+          `SELECT entity_id, kind, title, priority, status
+           FROM next_actions
+           ORDER BY CASE priority
+             WHEN 'now' THEN 0 WHEN 'high' THEN 1 WHEN 'normal' THEN 2 ELSE 3 END,
+             title
+           LIMIT ?`,
+        )
+        .all(limit) as Array<{
+        entity_id: string;
+        kind: string;
+        title: string;
+        priority: string | null;
+        status: string;
+      }>;
+    } finally {
+      db.close();
     }
   }
 }

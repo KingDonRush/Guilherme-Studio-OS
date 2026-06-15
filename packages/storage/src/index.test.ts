@@ -77,6 +77,20 @@ describe("storage", () => {
     expect(await store.get(entityId(interrupted))).toBeDefined();
   });
 
+  it("commits multiple records under one recoverable transaction", async () => {
+    const root = await createTempStudioRoot();
+    const store = new EntityStore(root);
+    const first = createEntity({ kind: "task", title: "First transaction task" });
+    const second = createEntity({ kind: "task", title: "Second transaction task" });
+
+    const paths = await store.putMany([{ entity: first }, { entity: second }]);
+
+    expect(paths).toHaveLength(2);
+    expect(await store.get(entityId(first))).toBeDefined();
+    expect(await store.get(entityId(second))).toBeDefined();
+    expect(await store.pendingTransactions()).toEqual([]);
+  });
+
   it("does not follow a parent symlink that escapes the root", async () => {
     const root = await createTempStudioRoot();
     const outside = await createTempStudioRoot();

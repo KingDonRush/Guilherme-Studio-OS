@@ -180,6 +180,155 @@ export const AgentRunSpecSchema = GenericSpecSchema.extend({
   model: z.string().optional(),
 });
 
+export const MoneySchema = z
+  .object({
+    amount_minor: z.number().int().min(0),
+    currency: z
+      .string()
+      .length(3)
+      .transform((value) => value.toUpperCase()),
+  })
+  .strict();
+
+const QualificationSchema = z
+  .object({
+    score: z.number().int().min(0).max(100),
+    rationale: z.string().min(1),
+    assessed_at: z.string().datetime(),
+  })
+  .strict();
+
+export const PersonSpecSchema = GenericSpecSchema.extend({
+  email: z.string().email().optional(),
+  location: z.string().optional(),
+  roles: z.array(z.string()).default([]),
+});
+export const OrganizationSpecSchema = GenericSpecSchema.extend({
+  website: z.string().url().optional(),
+  country: z.string().optional(),
+  organization_type: z.string().optional(),
+});
+export const ProspectSpecSchema = GenericSpecSchema.extend({
+  stage: z.string().optional(),
+  qualification: QualificationSchema.optional(),
+  source: z.string().optional(),
+  follow_up_at: z.string().datetime().optional(),
+});
+export const ClientSpecSchema = GenericSpecSchema.extend({
+  relationship_stage: z.string().optional(),
+  preferences: z.array(z.string()).default([]),
+});
+export const OpportunitySpecSchema = GenericSpecSchema.extend({
+  stage: z.string().optional(),
+  potential_value_minor: z.number().int().min(0).optional(),
+  currency: z.string().length(3).optional(),
+  follow_up_at: z.string().datetime().optional(),
+  international_relevance: z.boolean().default(false),
+});
+export const JobApplicationSpecSchema = GenericSpecSchema.extend({
+  source_url: z.string().url().optional(),
+  stage: z.string().optional(),
+  follow_up_at: z.string().datetime().optional(),
+});
+export const EngagementSpecSchema = GenericSpecSchema.extend({
+  stage: z.string().optional(),
+  value_minor: z.number().int().min(0).optional(),
+  currency: z.string().length(3).optional(),
+  started_at: z.string().datetime().optional(),
+});
+export const DeliverableSpecSchema = GenericSpecSchema.extend({
+  due_at: z.string().datetime().optional(),
+  acceptance: z.array(z.string()).default([]),
+  evidence_missing: z.boolean().default(false),
+});
+export const ProjectSpecSchema = GenericSpecSchema.extend({
+  project_type: z.string().optional(),
+  repository_id: z.string().optional(),
+  environment_id: z.string().optional(),
+});
+export const RepositorySpecSchema = GenericSpecSchema.extend({
+  path: z.string().optional(),
+  branch: z.string().optional(),
+  remote_policy: z.enum(["allowed", "forbidden", "no-remote-in-v1"]).optional(),
+  expected_remote: z.string().optional(),
+});
+export const EnvironmentSpecSchema = GenericSpecSchema.extend({
+  url: z.string().url().optional(),
+  compose_files: z.array(z.string()).default([]),
+  wordpress_git_repository: z
+    .object({
+      path: z.string(),
+      branch: z.string().optional(),
+      initial_commit: z.string().optional(),
+    })
+    .strict()
+    .optional(),
+});
+export const ProductSpecSchema = GenericSpecSchema.extend({
+  repository_path: z.string().optional(),
+  signal: z.string().optional(),
+  current_version: z.string().optional(),
+});
+export const ReleaseSpecSchema = GenericSpecSchema.extend({
+  version: z.string().optional(),
+  stage: z.string().optional(),
+  prepared_at: z.string().datetime().optional(),
+});
+export const PortfolioCaseSpecSchema = GenericSpecSchema.extend({
+  case_url: z.string().url().optional(),
+  source_evidence_ids: z.array(z.string()).default([]),
+});
+export const CampaignSpecSchema = GenericSpecSchema.extend({
+  channels: z.array(z.string()).default([]),
+  starts_at: z.string().datetime().optional(),
+  ends_at: z.string().datetime().optional(),
+});
+export const ContentItemSpecSchema = GenericSpecSchema.extend({
+  channel: z.string().optional(),
+  publish_at: z.string().datetime().optional(),
+  public_claims: z.array(z.string()).default([]),
+});
+export const ProposalSpecSchema = GenericSpecSchema.extend({
+  stage: z.string().optional(),
+  value_minor: z.number().int().min(0).optional(),
+  currency: z.string().length(3).optional(),
+  prepared_at: z.string().datetime().optional(),
+});
+export const ContractSpecSchema = GenericSpecSchema.extend({
+  signed_at: z.string().datetime().optional(),
+  effective_at: z.string().datetime().optional(),
+  ends_at: z.string().datetime().optional(),
+});
+export const InvoiceSpecSchema = GenericSpecSchema.extend({
+  amount_minor: z.number().int().min(0).optional(),
+  currency: z.string().length(3).optional(),
+  due_at: z.string().datetime().optional(),
+  reference: z.string().optional(),
+});
+export const PaymentSpecSchema = GenericSpecSchema.extend({
+  amount_minor: z.number().int().min(0).optional(),
+  currency: z.string().length(3).optional(),
+  reconciled_at: z.string().datetime().optional(),
+  reconciliation_reference: z.string().optional(),
+});
+export const DecisionSpecSchema = GenericSpecSchema.extend({
+  decision: z.string().optional(),
+  rationale: z.string().optional(),
+  decided_at: z.string().datetime().optional(),
+});
+export const AssetSpecSchema = GenericSpecSchema.extend({
+  path: z.string().optional(),
+  media_type: z.string().optional(),
+  checksum: z.string().optional(),
+  manifest_path: z.string().optional(),
+});
+export const CommunicationSpecSchema = GenericSpecSchema.extend({
+  channel: z.string().optional(),
+  direction: z.enum(["inbound", "outbound"]).optional(),
+  occurred_at: z.string().datetime().optional(),
+  prepared_action_id: z.string().optional(),
+});
+
 const BaseCanonicalEntitySchema = z
   .object({
     api_version: z.literal(STUDIO_SCHEMA_VERSION).default(STUDIO_SCHEMA_VERSION),
@@ -195,29 +344,59 @@ export const TypedEntitySchema = z.discriminatedUnion("kind", [
   BaseCanonicalEntitySchema.extend({ kind: z.literal("evidence"), spec: EvidenceSpecSchema }),
   BaseCanonicalEntitySchema.extend({ kind: z.literal("task"), spec: TaskSpecSchema }),
   BaseCanonicalEntitySchema.extend({ kind: z.literal("agentRun"), spec: AgentRunSpecSchema }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("person") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("organization") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("prospect") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("client") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("opportunity") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("jobApplication") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("engagement") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("deliverable") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("project") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("repository") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("environment") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("product") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("release") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("portfolioCase") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("campaign") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("contentItem") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("proposal") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("contract") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("invoice") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("payment") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("decision") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("asset") }),
-  BaseCanonicalEntitySchema.extend({ kind: z.literal("communication") }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("person"), spec: PersonSpecSchema }),
+  BaseCanonicalEntitySchema.extend({
+    kind: z.literal("organization"),
+    spec: OrganizationSpecSchema,
+  }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("prospect"), spec: ProspectSpecSchema }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("client"), spec: ClientSpecSchema }),
+  BaseCanonicalEntitySchema.extend({
+    kind: z.literal("opportunity"),
+    spec: OpportunitySpecSchema,
+  }),
+  BaseCanonicalEntitySchema.extend({
+    kind: z.literal("jobApplication"),
+    spec: JobApplicationSpecSchema,
+  }),
+  BaseCanonicalEntitySchema.extend({
+    kind: z.literal("engagement"),
+    spec: EngagementSpecSchema,
+  }),
+  BaseCanonicalEntitySchema.extend({
+    kind: z.literal("deliverable"),
+    spec: DeliverableSpecSchema,
+  }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("project"), spec: ProjectSpecSchema }),
+  BaseCanonicalEntitySchema.extend({
+    kind: z.literal("repository"),
+    spec: RepositorySpecSchema,
+  }),
+  BaseCanonicalEntitySchema.extend({
+    kind: z.literal("environment"),
+    spec: EnvironmentSpecSchema,
+  }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("product"), spec: ProductSpecSchema }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("release"), spec: ReleaseSpecSchema }),
+  BaseCanonicalEntitySchema.extend({
+    kind: z.literal("portfolioCase"),
+    spec: PortfolioCaseSpecSchema,
+  }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("campaign"), spec: CampaignSpecSchema }),
+  BaseCanonicalEntitySchema.extend({
+    kind: z.literal("contentItem"),
+    spec: ContentItemSpecSchema,
+  }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("proposal"), spec: ProposalSpecSchema }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("contract"), spec: ContractSpecSchema }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("invoice"), spec: InvoiceSpecSchema }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("payment"), spec: PaymentSpecSchema }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("decision"), spec: DecisionSpecSchema }),
+  BaseCanonicalEntitySchema.extend({ kind: z.literal("asset"), spec: AssetSpecSchema }),
+  BaseCanonicalEntitySchema.extend({
+    kind: z.literal("communication"),
+    spec: CommunicationSpecSchema,
+  }),
 ]);
 
 export type StudioEntity = z.infer<typeof TypedEntitySchema>;

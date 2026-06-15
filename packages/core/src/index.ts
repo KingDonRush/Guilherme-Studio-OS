@@ -586,6 +586,109 @@ export class DomainCommandService {
     });
   }
 
+  async createPortfolioCaseFromEvidence(input: {
+    evidenceId: string;
+    title: string;
+    caseUrl?: string;
+    summary?: string;
+  }): Promise<StudioEntity> {
+    await this.requireKind(input.evidenceId, "evidence");
+    return this.entities.create({
+      kind: "portfolioCase",
+      title: input.title,
+      status: "draft",
+      ...(input.summary ? { summary: input.summary } : {}),
+      relations: [{ type: "supported_by", target_id: input.evidenceId }],
+      data: {
+        source_evidence_ids: [input.evidenceId],
+        ...(input.caseUrl ? { case_url: input.caseUrl } : {}),
+      },
+    });
+  }
+
+  async registerProjectRepository(input: {
+    projectId: string;
+    title: string;
+    repositoryPath: string;
+    branch?: string;
+    remotePolicy?: "allowed" | "forbidden" | "no-remote-in-v1";
+  }): Promise<{ project: StudioEntity; repository: StudioEntity }> {
+    const project = await this.requireKind(input.projectId, "project");
+    const repository = createEntity({
+      kind: "repository",
+      title: input.title,
+      relations: [{ type: "repository_for", target_id: input.projectId }],
+      data: {
+        path: input.repositoryPath,
+        ...(input.branch ? { branch: input.branch } : {}),
+        remote_policy: input.remotePolicy ?? "allowed",
+      },
+    });
+    if (await this.context.entities.get(entityId(repository))) {
+      throw new Error(`Repository entity already exists: ${entityId(repository)}`);
+    }
+    const updatedProject = TypedEntitySchema.parse({
+      ...project,
+      metadata: {
+        ...project.metadata,
+        revision: entityRevision(project) + 1,
+        updated_at: nowIso(),
+      },
+      spec: {
+        ...project.spec,
+        repository_id: entityId(repository),
+      },
+      relations: [
+        ...project.relations.filter((relation) => relation.type !== "uses_repository"),
+        { type: "uses_repository", target_id: entityId(repository) },
+      ],
+    });
+    await this.context.entities.putMany([
+      { entity: repository },
+      { entity: updatedProject, expectedRevision: entityRevision(project) },
+    ]);
+    await this.entities.recordEvent("repository.registered", entityId(repository), {
+      project_id: input.projectId,
+      path: input.repositoryPath,
+    });
+    return { project: updatedProject, repository };
+  }
+
+  async createHandoff(input: {
+    taskId: string;
+    title: string;
+    objective: string;
+    summary: string;
+    repositoryIds?: string[];
+  }): Promise<StudioEntity> {
+    await this.requireKind(input.taskId, "task");
+    for (const repositoryId of input.repositoryIds ?? []) {
+      await this.requireKind(repositoryId, "repository");
+    }
+    return this.entities.create({
+      kind: "agentRun",
+      title: input.title,
+      status: "active",
+      relations: [
+        { type: "hands_off", target_id: input.taskId },
+        ...(input.repositoryIds ?? []).map((targetId) => ({
+          type: "uses_repository",
+          target_id: targetId,
+        })),
+      ],
+      data: {
+        objective: input.objective,
+        started_at: nowIso(),
+        result: "running",
+        evidence_ids: [],
+        handoff: {
+          summary: input.summary,
+          created_at: nowIso(),
+        },
+      },
+    });
+  }
+
   async prepareApplication(input: {
     title: string;
     organizationId?: string;
@@ -915,14 +1018,23 @@ export async function rebuildProjection(root = process.cwd()): Promise<{
   entityCount: number;
   relationCount: number;
   checksum: string;
+  projectionRevision: number;
 }> {
   const context = await createStudioContext(root);
   const { files, errors } = await validateCanonicalFiles(context.paths.root);
   if (errors.length > 0) {
     throw new Error(`Cannot rebuild projection with validation errors: ${errors.join("; ")}`);
   }
-  return context.projection.rebuild(files);
+  return context.projection.rebuild(files, await context.events.list());
 }
+
+export {
+  type CommandRequirement,
+  classifyStudioError,
+  StudioCommandService,
+} from "./command-service.js";
+export { type EconomicNextAction, EconomicNextActionResolver } from "./economics.js";
+export { IdempotencyStore } from "./idempotency.js";
 
 export async function createTaskEvidenceRun(root = process.cwd()): Promise<{
   task: StudioEntity;
@@ -1005,13 +1117,17 @@ export function kindFromAlias(alias: string): EntityKind {
     opportunity: "opportunity",
     engagement: "engagement",
     project: "project",
+    deliverable: "deliverable",
     repo: "repository",
     repository: "repository",
+    environment: "environment",
     product: "product",
     case: "portfolioCase",
     portfolioCase: "portfolioCase",
     evidence: "evidence",
     campaign: "campaign",
+    content: "contentItem",
+    contentItem: "contentItem",
     proposal: "proposal",
     release: "release",
     payment: "payment",

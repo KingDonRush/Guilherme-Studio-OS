@@ -106,4 +106,52 @@ describe("core governance", () => {
     expect(verification).toHaveLength(8);
     expect(verification.every((workflow) => workflow.ok)).toBe(true);
   });
+
+  it("creates cases, repository links and handoffs through semantic commands", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "studio-semantic-test-"));
+    await writeFile(
+      path.join(root, "studio.config.yaml"),
+      YAML.stringify({
+        api_version: "studio.guilherme.dev/config-v1",
+        root_name: "Semantic test",
+        operator_id: "per_20260614_guilherme-silva",
+        canonical_roots: ["portfolio", "operations", "data"],
+        runtime_path: "runtime",
+        panel: { host: "127.0.0.1", port: 47834 },
+        adapters: {},
+      }),
+    );
+    const context = await createStudioContext(root);
+    const entities = new EntityService(context);
+    const commands = new DomainCommandService(context);
+    const project = await entities.create({ kind: "project", title: "Portfolio site" });
+    const task = await entities.create({ kind: "task", title: "Implement portfolio site" });
+    const evidence = await commands.registerEvidence({
+      title: "Approved implementation",
+      evidenceType: "manual",
+      subjectId: project.metadata.id,
+    });
+
+    const portfolioCase = await commands.createPortfolioCaseFromEvidence({
+      evidenceId: evidence.metadata.id,
+      title: "Portfolio implementation case",
+    });
+    const linked = await commands.registerProjectRepository({
+      projectId: project.metadata.id,
+      title: "Portfolio repository",
+      repositoryPath: "wordpress",
+      branch: "main",
+    });
+    const handoff = await commands.createHandoff({
+      taskId: task.metadata.id,
+      title: "Portfolio continuation handoff",
+      objective: "Continue implementation from approved evidence.",
+      summary: "Read the case evidence and verify repository health first.",
+      repositoryIds: [linked.repository.metadata.id],
+    });
+
+    expect(portfolioCase.kind).toBe("portfolioCase");
+    expect(linked.project.spec.repository_id).toBe(linked.repository.metadata.id);
+    expect(handoff.kind).toBe("agentRun");
+  });
 });
