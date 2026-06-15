@@ -2,12 +2,17 @@ import {
   backupWordPressDatabase,
   backupWordPressUploads,
   createStudioBackup,
+  executeDisabledExternalAdapter,
   fixWordPressRootOwnership,
   inspectStudioRepositories,
   restoreCheckWordPressDatabase,
   restoreCheckWordPressUploads,
+  wordpressHealth,
   wordpressPluginList,
+  wordpressStart,
   wordpressStatus,
+  wordpressStop,
+  wordpressWpCli,
 } from "@guilherme-studio/adapters";
 import { optimizeAssets } from "@guilherme-studio/assets";
 import {
@@ -863,6 +868,23 @@ export function createProgram(): Command {
     });
 
   const wordpress = program.command("wordpress").description("WordPress runtime helpers");
+  wordpress.command("start").action(async function action(this: Command) {
+    const options = globalOptions(this);
+    const context = await createStudioContext(options.root);
+    print(await wordpressStart(context), options.json, options.quiet);
+  });
+  wordpress.command("stop").action(async function action(this: Command) {
+    const options = globalOptions(this);
+    const context = await createStudioContext(options.root);
+    print(await wordpressStop(context), options.json, options.quiet);
+  });
+  wordpress.command("health").action(async function action(this: Command) {
+    const options = globalOptions(this);
+    const context = await createStudioContext(options.root);
+    const result = await wordpressHealth(context);
+    print(result, options.json, options.quiet);
+    process.exitCode = result.ok ? 0 : 7;
+  });
   wordpress
     .command("fix-ownership")
     .argument("<site-path>", "WordPress site root path, relative to Studio root or absolute")
@@ -885,6 +907,15 @@ export function createProgram(): Command {
     const context = await createStudioContext(options.root);
     print(await wordpressPluginList(context), options.json);
   });
+  wordpress
+    .command("wp")
+    .allowUnknownOption(true)
+    .argument("[args...]", "Arguments passed to WP-CLI")
+    .action(async function action(this: Command, args: string[] = []) {
+      const options = globalOptions(this);
+      const context = await createStudioContext(options.root);
+      print(await wordpressWpCli(context, args), options.json, options.quiet);
+    });
   wordpress.command("backup-db").action(async function action(this: Command) {
     const options = globalOptions(this);
     if (options.dryRun) {
@@ -969,6 +1000,48 @@ export function createProgram(): Command {
         ...(options.dryRun ? { dryRun: true } : {}),
       });
       print(manifest, options.json);
+    });
+
+  const github = program.command("github").description("Governed GitHub adapter placeholder");
+  github
+    .command("prepare")
+    .requiredOption("--operation <operation>")
+    .option("--payload <json>", "JSON payload", "{}")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as { operation: string; payload: string };
+      print(
+        await executeDisabledExternalAdapter({
+          adapter: "github",
+          operation: local.operation,
+          payload: JSON.parse(local.payload) as Record<string, unknown>,
+        }),
+        options.json,
+        options.quiet,
+      );
+      process.exitCode = 7;
+    });
+
+  const communication = program
+    .command("communication-adapter")
+    .description("Governed communication adapter placeholder");
+  communication
+    .command("prepare")
+    .requiredOption("--operation <operation>")
+    .option("--payload <json>", "JSON payload", "{}")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as { operation: string; payload: string };
+      print(
+        await executeDisabledExternalAdapter({
+          adapter: "communication",
+          operation: local.operation,
+          payload: JSON.parse(local.payload) as Record<string, unknown>,
+        }),
+        options.json,
+        options.quiet,
+      );
+      process.exitCode = 7;
     });
 
   return program;

@@ -4,7 +4,14 @@ import { access, mkdir, mkdtemp, readdir, readFile, rm, stat, writeFile } from "
 import path from "node:path";
 import { promisify } from "node:util";
 import type { StudioContext } from "@guilherme-studio/core";
-import { entityId, entityTitle } from "@guilherme-studio/schemas";
+import {
+  type AdapterResult,
+  AdapterResultSchema,
+  createActor,
+  createRecordId,
+  entityId,
+  entityTitle,
+} from "@guilherme-studio/schemas";
 
 const execFileAsync = promisify(execFile);
 
@@ -119,6 +126,8 @@ export interface StudioBackupResult {
   archivePath: string;
   manifestPath: string;
   checksum: string;
+  repositories?: GitRepositoryHealth[];
+  components?: Record<string, unknown>;
 }
 
 export interface WordPressOwnershipResult {
@@ -190,6 +199,55 @@ export async function wordpressStatus(context: StudioContext): Promise<{
     .filter(Boolean)
     .map((line) => JSON.parse(line) as unknown);
   return { ...(runtime.url ? { url: runtime.url } : {}), services };
+}
+
+export async function wordpressStart(
+  context: StudioContext,
+): Promise<{ ok: true; services: unknown[] }> {
+  await composeInvocation(context, ["up", "-d"]);
+  return { ok: true, services: (await wordpressStatus(context)).services };
+}
+
+export async function wordpressStop(context: StudioContext): Promise<{ ok: true }> {
+  await composeInvocation(context, ["stop"]);
+  return { ok: true };
+}
+
+export async function wordpressHealth(context: StudioContext): Promise<{
+  ok: boolean;
+  url?: string;
+  httpStatus?: number;
+  services: unknown[];
+}> {
+  const status = await wordpressStatus(context);
+  let httpStatus: number | undefined;
+  if (status.url) {
+    try {
+      const response = await fetch(status.url, { method: "HEAD" });
+      httpStatus = response.status;
+    } catch {
+      httpStatus = undefined;
+    }
+  }
+  return {
+    ok: status.services.length > 0 && (!status.url || (httpStatus ?? 0) < 500),
+    ...(status.url ? { url: status.url } : {}),
+    ...(httpStatus ? { httpStatus } : {}),
+    services: status.services,
+  };
+}
+
+export async function wordpressWpCli(
+  context: StudioContext,
+  args: string[],
+): Promise<{ stdout: string; stderr: string }> {
+  if (args.length === 0) {
+    throw new Error("WP-CLI arguments are required.");
+  }
+  if (args.some((arg) => arg.includes("\u0000"))) {
+    throw new Error("Invalid WP-CLI argument.");
+  }
+  return composeInvocation(context, ["run", "--rm", "-T", "wpcli", ...args]);
 }
 
 export async function wordpressPluginList(context: StudioContext): Promise<unknown[]> {
@@ -431,6 +489,7 @@ export async function createStudioBackup(context: StudioContext): Promise<Studio
       // Domain roots are optional during early V1 bootstrapping.
     }
   }
+  const repositories = await inspectStudioRepositories(context);
   await writeFile(
     manifestPath,
     `${JSON.stringify(
@@ -442,13 +501,51 @@ export async function createStudioBackup(context: StudioContext): Promise<Studio
         files,
         requestedRoots: includeRoots,
         includedRoots: existingRoots,
+        repositories: repositories.map((repository) => ({
+          id: repository.id,
+          title: repository.title,
+          cwd: repository.cwd,
+          branch: repository.branch,
+          dirty: repository.isDirty,
+          has_remote: repository.hasRemote,
+          remote_policy: repository.remotePolicy,
+        })),
       },
       null,
       2,
     )}\n`,
     { mode: 0o600 },
   );
-  return { archivePath, manifestPath, checksum };
+  return { archivePath, manifestPath, checksum, repositories };
+}
+
+export async function executeDisabledExternalAdapter(input: {
+  adapter: "github" | "communication";
+  operation: string;
+  payload?: Record<string, unknown>;
+  reason?: string;
+}): Promise<AdapterResult> {
+  return AdapterResultSchema.parse({
+    request_id: createRecordId("req", `${input.adapter}:${input.operation}:${Date.now()}`),
+    adapter: input.adapter,
+    operation: input.operation,
+    status: "blocked",
+    data: {
+      enabled: false,
+      payload_keys: Object.keys(input.payload ?? {}),
+    },
+    error: {
+      code: "adapter_disabled",
+      message: input.reason ?? `${input.adapter} adapter is disabled by default in Studio OS V1.`,
+      details: {
+        actor: createActor({
+          id: "adapter_disabled",
+          type: "adapter",
+          capabilities: [],
+        }),
+      },
+    },
+  });
 }
 
 export async function fixWordPressRootOwnership(
