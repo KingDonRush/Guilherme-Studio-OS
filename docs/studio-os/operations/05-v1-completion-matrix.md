@@ -18,9 +18,9 @@ verification, operator verification, documentation, and durable evidence exist.
 | Economic next actions | `packages/core` | in progress | economic resolver tests | `npm run test -- packages/core/src/economics.test.ts` | domain-specific obligation ranking and intake-aware gaps |
 | Domain lifecycles | `packages/core` | in progress | lifecycle preconditions and semantic command tests; `evd_20260615_prd-semantic-command-slice-verification` | `npm run test -- packages/core/src/index.test.ts` | complete remaining domain-specific preconditions and fixture coverage |
 | CLI | `packages/cli` | in progress | semantic command smoke; CLI equivalence tests; `evd_20260615_executable-workflow-fixtures-verification` | `npm run test -- packages/cli/src/index.test.ts` | add stable exit tests for every semantic command |
-| MCP | `packages/mcp` | in progress | MCP semantic tools build; `evd_20260615_prd-semantic-command-slice-verification` | `npm run build -w @guilherme-studio/mcp` | add context-pack prompts and MCP Inspector smoke transcript |
-| Local API | `packages/local-api` | in progress | local API tests | `npm run test -- packages/local-api/src/index.test.ts` | cover every mutating route through command runtime |
-| Panel | `apps/panel` | in progress | build and Playwright smoke; exact-payload review; `evd_20260615_prd-semantic-command-slice-verification` | `npm run build -w @guilherme-studio/panel` | complete domain-specific views and intake workflows |
+| MCP | `packages/mcp` | in progress | MCP semantic tools build; acceptance resources; `evd_20260615_acceptance-surfaces-and-domain-panel-verification` | `npm run build -w @guilherme-studio/mcp` | add MCP Inspector smoke transcript on final path |
+| Local API | `packages/local-api` | in progress | local API tests and `evd_20260615_acceptance-surfaces-and-domain-panel-verification` | `npm run test -- packages/local-api/src/index.test.ts` | add broader API/MCP equivalence fixtures |
+| Panel | `apps/panel` | in progress | build, domain views, exact-payload review and `evd_20260615_acceptance-surfaces-and-domain-panel-verification` | `npm run build -w @guilherme-studio/panel` | run final Playwright smoke on acceptance path |
 | Git adapter | `packages/adapters` | in progress | repository health inspection; `evd_20260615_adapter-health-and-fake-provider-verification` | `npm run studio -- repo inspect --json` | policy decisions for registered nested WordPress/plugin repos |
 | WordPress adapter | `packages/adapters` | in progress | WordPress health/restore evidence | `npm run studio -- wordpress health --json` | alternate-path restore evidence and provision/register template |
 | GitHub adapter | `packages/adapters` | in progress | disabled and fake provider contract tests; `evd_20260615_adapter-health-and-fake-provider-verification` | `npm run test -- packages/adapters/src/index.test.ts` | reconcile fake-provider actions through prepared-action records |
@@ -29,7 +29,7 @@ verification, operator verification, documentation, and durable evidence exist.
 | Eight journeys | `packages/testing`, `packages/core` | in progress | executable workflow fixture report and `evd_20260615_executable-workflow-fixtures-verification` | `npm run studio -- workflow --fixtures --execute --json` | add API/MCP smoke coverage over the executable workflow report |
 | Physical migration | root coordinator | in progress | renamed root and repository status | `npm run studio -- doctor --json` | path drift check green after final commit |
 | PRD coverage and intake | `packages/core`, interfaces | intake_required | coverage command, intake packet and `evd_20260615_prd-gates-and-coverage-verification` | `npm run studio -- coverage --json` | canonical records for PRDs with real data, collected through intake; capability coverage is separated from data readiness |
-| Operational acceptance | cross-package | in progress | V1 acceptance evidence and reconciliation evidence | full final gate command set | every row complete or explicitly deferred by decision |
+| Operational acceptance | cross-package | in progress | V1 acceptance evidence, reconciliation evidence and `evd_20260615_acceptance-surfaces-and-domain-panel-verification` | `npm run studio -- acceptance --json` | repo clean state plus panel/MCP smoke required before portfolio release |
 
 ## Completion Rule
 
@@ -136,3 +136,25 @@ Delivered capacity:
 - Each fixture uses real Studio command envelopes and produces entities, events
   and prepared actions where the workflow requires them.
 - CLI tests compare dry-run output against the core command runtime envelope.
+
+## Acceptance Surfaces and Domain Panel Slice
+
+On 2026-06-15,
+`tsk_20260615_implement-acceptance-surfaces-and-domain-panel` was created and
+completed for CLI/API/MCP/panel acceptance surfaces.
+
+Evidence:
+
+- `evd_20260615_acceptance-surfaces-and-domain-panel-verification`.
+
+Delivered capacity:
+
+- `studio acceptance --json` returns a normalized envelope with coverage,
+  workflow, canonical data, repository, backup, panel smoke, MCP smoke and
+  portfolio release checks.
+- Local API exposes read-only `/api/v1/acceptance` and `/api/v1/workflows`.
+- MCP exposes `studio://acceptance`, `studio://repositories/health`,
+  `studio://prepared-actions`, `studio_get_acceptance` and
+  `studio_execute_workflow_fixtures`.
+- Panel has domain views for economy, CRM, delivery, products, portfolio,
+  career, finance, agents and diagnostics without a generic YAML editor.

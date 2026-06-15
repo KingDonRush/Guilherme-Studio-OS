@@ -1,0 +1,30 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T22:09:48.909Z
+  id: evd_20260615_acceptance-surfaces-and-domain-panel-verification
+  labels:
+    - studio-os
+    - prd-completion
+  revision: 1
+  schema_version: 1
+  slug: acceptance-surfaces-and-domain-panel-verification
+  updated_at: 2026-06-15T22:09:48.909Z
+relations:
+  - target_id: tsk_20260615_implement-acceptance-surfaces-and-domain-panel
+    type: supports
+spec:
+  claims:
+    - CLI, API and MCP expose acceptance/workflow diagnostics.
+    - Panel exposes domain views and exact prepared-action review.
+    - Portfolio remains blocked when repository or smoke gates are not green.
+  command: npm run typecheck && npm run test -- packages/local-api/src/index.test.ts packages/core/src/index.test.ts packages/cli/src/index.test.ts && npm run build -w @guilherme-studio/local-api && npm run build -w @guilherme-studio/cli && npm run build -w @guilherme-studio/mcp && npm run build -w @guilherme-studio/panel && npm run lint && (npm run studio -- acceptance --json || test "$?" -eq 4)
+  evidence_type: command
+  observed_at: 2026-06-15T22:09:48.909Z
+  source_mutability: operator-observed
+  status: active
+  title: Acceptance surfaces and domain panel verification
+  validated_at: 2026-06-15T22:09:48.909Z

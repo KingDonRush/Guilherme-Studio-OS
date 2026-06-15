@@ -3,11 +3,15 @@ import {
   Activity,
   Archive,
   BriefcaseBusiness,
+  Building2,
   CheckCircle2,
   CircleAlert,
+  CircleDollarSign,
+  ClipboardList,
   Megaphone,
+  PackageCheck,
   ShieldCheck,
-  WalletCards,
+  UserRoundSearch,
 } from "lucide-react";
 import React from "react";
 import { createRoot } from "react-dom/client";
@@ -41,6 +45,10 @@ interface NextAction {
 
 interface PrdCoverageReport {
   summary: {
+    capability_complete: number;
+    canonical_data_ready: number;
+    intake_required: number;
+    missing_evidence: number;
     covered: number;
     needs_intake: number;
     missing_capability: number;
@@ -48,8 +56,35 @@ interface PrdCoverageReport {
   prds: Array<{
     id: string;
     title: string;
-    status: "covered" | "needs-intake" | "missing-capability";
+    status: "capability-complete" | "intake-required" | "missing-capability";
     missing_canonical_kinds: string[];
+  }>;
+}
+
+interface AcceptanceReport {
+  ok: boolean;
+  blockers: string[];
+  checks: Array<{
+    name: string;
+    status: "pass" | "warn" | "block" | "not_checked";
+    summary: string;
+  }>;
+  portfolio_release: {
+    allowed: boolean;
+    reasons: string[];
+  };
+}
+
+interface WorkflowReport {
+  ok: boolean;
+  mode: string;
+  workflows: Array<{
+    id: string;
+    name: string;
+    ok: boolean;
+    entity_count: number;
+    event_count: number;
+    prepared_action_count: number;
   }>;
 }
 
@@ -62,6 +97,7 @@ interface PreparedAction {
   expires_at: string;
   payload: Record<string, unknown>;
   payload_checksum: string;
+  source_revisions?: Record<string, number>;
 }
 
 async function getJson<T>(url: string): Promise<T> {
@@ -134,6 +170,16 @@ function useStudioData() {
     queryFn: () => getJson<ResultEnvelope<PrdCoverageReport>>("/api/v1/coverage"),
     retry: false,
   });
+  const acceptance = useQuery({
+    queryKey: ["acceptance"],
+    queryFn: () => getJson<ResultEnvelope<AcceptanceReport>>("/api/v1/acceptance"),
+    retry: false,
+  });
+  const workflows = useQuery({
+    queryKey: ["workflows"],
+    queryFn: () => getJson<ResultEnvelope<WorkflowReport>>("/api/v1/workflows"),
+    retry: false,
+  });
   const diagnostics = useQuery({
     queryKey: ["diagnostics"],
     queryFn: () =>
@@ -146,7 +192,16 @@ function useStudioData() {
       >("/api/v1/diagnostics"),
     retry: false,
   });
-  return { summary, entities, repositories, preparedActions, coverage, diagnostics };
+  return {
+    summary,
+    entities,
+    repositories,
+    preparedActions,
+    coverage,
+    acceptance,
+    workflows,
+    diagnostics,
+  };
 }
 
 function App(): React.JSX.Element {
@@ -164,14 +219,26 @@ function App(): React.JSX.Element {
             <NavLink to="/">
               <Activity size={18} /> Economia
             </NavLink>
-            <NavLink to="/pipeline">
-              <WalletCards size={18} /> Pipelines
+            <NavLink to="/crm">
+              <UserRoundSearch size={18} /> CRM
             </NavLink>
-            <NavLink to="/work">
-              <BriefcaseBusiness size={18} /> Trabalho
+            <NavLink to="/delivery">
+              <BriefcaseBusiness size={18} /> Delivery
             </NavLink>
-            <NavLink to="/distribution">
-              <Megaphone size={18} /> Distribuição
+            <NavLink to="/products">
+              <PackageCheck size={18} /> Produtos
+            </NavLink>
+            <NavLink to="/portfolio">
+              <Megaphone size={18} /> Portfolio
+            </NavLink>
+            <NavLink to="/career">
+              <Building2 size={18} /> Career
+            </NavLink>
+            <NavLink to="/finance">
+              <CircleDollarSign size={18} /> Finance
+            </NavLink>
+            <NavLink to="/agents">
+              <ClipboardList size={18} /> Agentes
             </NavLink>
             <NavLink to="/control">
               <ShieldCheck size={18} /> Controle
@@ -182,9 +249,13 @@ function App(): React.JSX.Element {
           <Topbar data={data} />
           <Routes>
             <Route path="/" element={<Economy data={data} />} />
-            <Route path="/pipeline" element={<Pipeline data={data} />} />
-            <Route path="/work" element={<Work data={data} />} />
-            <Route path="/distribution" element={<Distribution data={data} />} />
+            <Route path="/crm" element={<Crm data={data} />} />
+            <Route path="/delivery" element={<Delivery data={data} />} />
+            <Route path="/products" element={<Products data={data} />} />
+            <Route path="/portfolio" element={<PortfolioMarketing data={data} />} />
+            <Route path="/career" element={<Career data={data} />} />
+            <Route path="/finance" element={<Finance data={data} />} />
+            <Route path="/agents" element={<Agents data={data} />} />
             <Route path="/control" element={<Control data={data} />} />
           </Routes>
         </section>
@@ -194,11 +265,12 @@ function App(): React.JSX.Element {
 }
 
 function Topbar({ data }: { data: ReturnType<typeof useStudioData> }) {
+  const acceptance = data.acceptance.data?.result;
   return (
     <header className="topbar">
       <Metric title="Status" value={data.summary.data?.ok ? "Operável" : "Pendente"} />
       <Metric title="Entidades" value={String(data.summary.data?.entityCount ?? "-")} />
-      <Metric title="Operador" value={data.summary.data?.operatorId ?? "-"} />
+      <Metric title="Acceptance" value={acceptance?.ok ? "Verde" : "Bloqueado"} />
     </header>
   );
 }
@@ -259,26 +331,22 @@ function CountCard({
   );
 }
 
-function Pipeline({ data }: { data: ReturnType<typeof useStudioData> }) {
-  const rows = (data.entities.data ?? [])
-    .filter((entity) =>
-      ["prospect", "opportunity", "proposal", "client", "jobApplication"].includes(entity.kind),
-    )
-    .map(rowFromEntity);
-  return <EntityTable title="Pipeline comercial e carreira" rows={rows} />;
+function Crm({ data }: { data: ReturnType<typeof useStudioData> }) {
+  return (
+    <EntityTable
+      title="CRM e sales"
+      rows={entityRows(data, ["prospect", "opportunity", "proposal", "client", "communication"])}
+    />
+  );
 }
 
-function Work({ data }: { data: ReturnType<typeof useStudioData> }) {
-  const workRows = (data.entities.data ?? [])
-    .filter((entity) =>
-      ["engagement", "deliverable", "project", "product", "release", "repository"].includes(
-        entity.kind,
-      ),
-    )
-    .map(rowFromEntity);
+function Delivery({ data }: { data: ReturnType<typeof useStudioData> }) {
   return (
     <>
-      <EntityTable title="Trabalhos, produtos e repositórios" rows={workRows} />
+      <EntityTable
+        title="Delivery e projetos"
+        rows={entityRows(data, ["engagement", "deliverable", "project"])}
+      />
       <EntityTable
         title="Saúde dos repositórios"
         rows={(data.repositories.data ?? []).map((repository) => ({
@@ -291,25 +359,72 @@ function Work({ data }: { data: ReturnType<typeof useStudioData> }) {
   );
 }
 
-function Distribution({ data }: { data: ReturnType<typeof useStudioData> }) {
-  const rows = (data.entities.data ?? [])
-    .filter((entity) =>
-      ["portfolioCase", "campaign", "contentItem", "evidence"].includes(entity.kind),
-    )
-    .map(rowFromEntity);
-  return <EntityTable title="Cases, campanhas, conteúdo e evidências" rows={rows} />;
+function Products({ data }: { data: ReturnType<typeof useStudioData> }) {
+  return (
+    <EntityTable
+      title="Produtos, releases e ambientes"
+      rows={entityRows(data, ["product", "release", "repository", "environment"])}
+    />
+  );
+}
+
+function PortfolioMarketing({ data }: { data: ReturnType<typeof useStudioData> }) {
+  return (
+    <EntityTable
+      title="Portfolio, campanhas e conteúdo"
+      rows={entityRows(data, ["portfolioCase", "campaign", "contentItem", "asset", "evidence"])}
+    />
+  );
+}
+
+function Career({ data }: { data: ReturnType<typeof useStudioData> }) {
+  return (
+    <EntityTable
+      title="Career pipeline"
+      rows={entityRows(data, ["organization", "jobApplication", "communication", "portfolioCase"])}
+    />
+  );
+}
+
+function Finance({ data }: { data: ReturnType<typeof useStudioData> }) {
+  return (
+    <EntityTable
+      title="Finance"
+      rows={entityRows(data, ["contract", "invoice", "payment", "engagement"])}
+    />
+  );
+}
+
+function Agents({ data }: { data: ReturnType<typeof useStudioData> }) {
+  return (
+    <>
+      <EntityTable
+        title="Agent runs, decisões e handoffs"
+        rows={entityRows(data, ["agentRun", "task", "decision", "evidence"])}
+      />
+      <EntityTable
+        title="Workflow fixtures"
+        rows={(data.workflows.data?.result.workflows ?? []).map((workflow) => ({
+          left: workflow.ok ? "ok" : "block",
+          title: workflow.name,
+          right: `${workflow.entity_count} records / ${workflow.event_count} events`,
+        }))}
+      />
+    </>
+  );
 }
 
 function Control({ data }: { data: ReturnType<typeof useStudioData> }) {
   const diagnostics = data.diagnostics.data?.result;
   const coverage = data.coverage.data?.result;
+  const acceptance = data.acceptance.data?.result;
   return (
     <>
       <section className="grid three">
         <article className="panel compact">
           <ShieldCheck size={24} />
-          <h3>PRDs cobertos</h3>
-          <strong className="big">{coverage?.summary.covered ?? "-"}</strong>
+          <h3>Capacidade PRD</h3>
+          <strong className="big">{coverage?.summary.capability_complete ?? "-"}</strong>
         </article>
         <article className="panel compact">
           <Archive size={24} />
@@ -318,10 +433,19 @@ function Control({ data }: { data: ReturnType<typeof useStudioData> }) {
         </article>
         <article className="panel compact">
           <CircleAlert size={24} />
-          <h3>Capacidade ausente</h3>
-          <strong className="big">{coverage?.summary.missing_capability ?? "-"}</strong>
+          <h3>Acceptance blockers</h3>
+          <strong className="big">{acceptance?.blockers.length ?? "-"}</strong>
         </article>
       </section>
+      <EntityTable
+        title="Acceptance"
+        rows={(acceptance?.checks ?? []).map((check) => ({
+          left: check.status,
+          title: check.name,
+          right: check.summary,
+        }))}
+        empty="Acceptance ainda não carregado."
+      />
       <EntityTable
         title="Cobertura dos PRDs"
         rows={(coverage?.prds ?? []).map((prd) => ({
@@ -384,7 +508,11 @@ function PreparedActionReview({ actions }: { actions: PreparedAction[] }) {
             <div className="action-head">
               <span>{action.status}</span>
               <strong>{action.action_type}</strong>
-              <em>{new Date(action.expires_at).toLocaleString("pt-BR")}</em>
+              <em>
+                {action.provider ??
+                  action.target ??
+                  new Date(action.expires_at).toLocaleString("pt-BR")}
+              </em>
             </div>
             <pre>{JSON.stringify(action.payload, null, 2)}</pre>
             <div className="checksum">
@@ -439,6 +567,12 @@ function rowFromEntity(entity: EntitySummary) {
     title: entity.title,
     right: entity.status,
   };
+}
+
+function entityRows(data: ReturnType<typeof useStudioData>, kinds: string[]) {
+  return (data.entities.data ?? [])
+    .filter((entity) => kinds.includes(entity.kind))
+    .map(rowFromEntity);
 }
 
 createRoot(document.getElementById("root") as HTMLElement).render(

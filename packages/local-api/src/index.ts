@@ -8,7 +8,9 @@ import {
   createStudioContext,
   EconomicNextActionResolver,
   evaluatePrdCoverage,
+  evaluateStudioAcceptance,
   executeStudioCommand,
+  executeWorkflowFixtures,
   kindFromAlias,
   operatorActor,
   PreparedActionService,
@@ -159,6 +161,67 @@ export async function createLocalApi(
     const { files } = await validateCanonicalFiles(context.paths.root);
     return createResultEnvelope({
       result: evaluatePrdCoverage(files.map((file) => file.entity)),
+      projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+    });
+  });
+
+  app.get("/api/v1/workflows", async () => {
+    return createResultEnvelope({
+      result: await executeWorkflowFixtures(),
+      projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+    });
+  });
+
+  app.get("/api/v1/acceptance", async () => {
+    const validation = await validateStudio(context.paths.root);
+    const { files } = await validateCanonicalFiles(context.paths.root);
+    const coverage = evaluatePrdCoverage(files.map((file) => file.entity));
+    const workflows = await executeWorkflowFixtures();
+    const repositories = await inspectStudioRepositories(context);
+    const repositoryBlocks = repositories.filter(
+      (repository) =>
+        repository.isDirty ||
+        repository.rootMismatch ||
+        repository.expectedBranchViolation ||
+        repository.remotePolicyViolation,
+    );
+    const { readdir } = await import("node:fs/promises");
+    let backups: string[] = [];
+    try {
+      backups = (await readdir(path.join(context.paths.runtime, "backups"))).filter((entry) =>
+        entry.endsWith(".manifest.json"),
+      );
+    } catch {
+      backups = [];
+    }
+    const explicitDeferralsOk = files.some((file) => {
+      if (file.entity.kind !== "decision") {
+        return false;
+      }
+      const decision = Reflect.get(file.entity.spec, "decision");
+      return typeof decision === "string" && /defer|deferred|diferid/i.test(decision);
+    });
+    const report = evaluateStudioAcceptance({
+      coverage,
+      workflowOk: workflows.ok,
+      workflowFailures: workflows.workflows
+        .filter((workflow) => !workflow.ok)
+        .map((workflow) => workflow.id),
+      validationOk: validation.ok,
+      repositoryOk: repositoryBlocks.length === 0,
+      backupOk: backups.length > 0,
+      explicitDeferralsOk,
+      detail: {
+        repositories: repositoryBlocks,
+        backup: { manifest_count: backups.length, latest: backups.sort().at(-1) ?? null },
+      },
+    });
+    return createResultEnvelope({
+      status: report.ok ? "ok" : "blocked",
+      result: report,
+      requiredActions: report.portfolio_release.allowed
+        ? []
+        : ["resolve_acceptance_blockers_before_portfolio"],
       projectionRevision: context.projection.inspect().projectionRevision ?? 0,
     });
   });

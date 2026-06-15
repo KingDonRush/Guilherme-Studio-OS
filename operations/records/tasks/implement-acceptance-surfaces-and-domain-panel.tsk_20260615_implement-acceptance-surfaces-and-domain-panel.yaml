@@ -1,0 +1,27 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T22:09:48.909Z
+  id: tsk_20260615_implement-acceptance-surfaces-and-domain-panel
+  labels:
+    - studio-os
+    - prd-completion
+  revision: 1
+  schema_version: 1
+  slug: implement-acceptance-surfaces-and-domain-panel
+  updated_at: 2026-06-15T22:09:48.909Z
+relations: []
+spec:
+  acceptance:
+    - studio acceptance returns a blocked/ok envelope with portfolio release status
+    - API exposes read-only acceptance and executable workflow reports
+    - MCP exposes acceptance, workflow fixtures, repository health and prepared-action resources/tools
+    - panel has domain views without a generic YAML editor
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Adds acceptance reporting surfaces across CLI, API, MCP and panel while keeping portfolio blocked until final gates pass.
+  title: Implement acceptance surfaces and domain panel

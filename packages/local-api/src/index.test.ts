@@ -80,6 +80,32 @@ describe("local API", () => {
     });
     expect(coverage.json().result.summary.needs_intake).toBeGreaterThan(0);
 
+    const workflows = await app.inject({
+      method: "GET",
+      url: "/api/v1/workflows",
+      headers,
+    });
+    expect(workflows.json()).toMatchObject({
+      status: "ok",
+      result: {
+        ok: true,
+        mode: "executed-fixtures",
+      },
+    });
+
+    const acceptance = await app.inject({
+      method: "GET",
+      url: "/api/v1/acceptance",
+      headers,
+    });
+    expect(acceptance.json()).toMatchObject({
+      status: "blocked",
+      result: {
+        portfolio_release: { allowed: false },
+      },
+      required_actions: ["resolve_acceptance_blockers_before_portfolio"],
+    });
+
     const prepared = await app.inject({
       method: "POST",
       url: "/api/v1/prepared-actions",

@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { inspectStudioRepositories } from "@guilherme-studio/adapters";
 import {
@@ -7,7 +7,9 @@ import {
   createWorkflowFixtureEntities,
   EconomicNextActionResolver,
   evaluatePrdCoverage,
+  evaluateStudioAcceptance,
   executeStudioCommand,
+  executeWorkflowFixtures,
   kindFromAlias,
   operatorActor,
   PreparedActionService,
@@ -98,6 +100,45 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
     };
   });
 
+  server.resource("acceptance", "studio://acceptance", async () => {
+    const context = await createStudioContext(root);
+    return {
+      contents: [
+        {
+          uri: "studio://acceptance",
+          mimeType: "application/json",
+          text: JSON.stringify(await buildMcpAcceptanceReport(root, context), null, 2),
+        },
+      ],
+    };
+  });
+
+  server.resource("repository-health", "studio://repositories/health", async () => {
+    const context = await createStudioContext(root);
+    return {
+      contents: [
+        {
+          uri: "studio://repositories/health",
+          mimeType: "application/json",
+          text: JSON.stringify(await inspectStudioRepositories(context), null, 2),
+        },
+      ],
+    };
+  });
+
+  server.resource("prepared-actions", "studio://prepared-actions", async () => {
+    const context = await createStudioContext(root);
+    return {
+      contents: [
+        {
+          uri: "studio://prepared-actions",
+          mimeType: "application/json",
+          text: JSON.stringify(await new PreparedActionService(context).list(), null, 2),
+        },
+      ],
+    };
+  });
+
   server.resource(
     "entity-context",
     new ResourceTemplate("studio://entities/{id}/context", { list: undefined }),
@@ -125,6 +166,24 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
               null,
               2,
             ),
+          },
+        ],
+      };
+    },
+  );
+
+  server.resource(
+    "prepared-action",
+    new ResourceTemplate("studio://prepared-actions/{id}", { list: undefined }),
+    async (uri, variables) => {
+      const id = String(resourceVariable(variables, "id"));
+      const context = await createStudioContext(root);
+      return {
+        contents: [
+          {
+            uri: uri.href,
+            mimeType: "application/json",
+            text: JSON.stringify(await new PreparedActionService(context).get(id), null, 2),
           },
         ],
       };
@@ -234,6 +293,39 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
       ],
     };
   });
+
+  server.tool("studio_get_acceptance", {}, async () => {
+    const context = await createStudioContext(root);
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(await buildMcpAcceptanceReport(root, context), null, 2),
+        },
+      ],
+    };
+  });
+
+  server.tool(
+    "studio_execute_workflow_fixtures",
+    { workflow_id: z.string().optional() },
+    async ({ workflow_id }) => {
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              await executeWorkflowFixtures({
+                ...(workflow_id ? { workflowId: workflow_id } : {}),
+              }),
+              null,
+              2,
+            ),
+          },
+        ],
+      };
+    },
+  );
 
   server.tool("studio_inspect_repository", { id: z.string().optional() }, async ({ id }) => {
     const context = await createStudioContext(root);
@@ -380,6 +472,12 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
   );
 
   server.tool("studio_check_confirmation", { action_id: z.string() }, async ({ action_id }) => {
+    const context = await createStudioContext(root);
+    const action = await new PreparedActionService(context).get(action_id);
+    return { content: [{ type: "text", text: JSON.stringify(action, null, 2) }] };
+  });
+
+  server.tool("studio_get_prepared_action", { action_id: z.string() }, async ({ action_id }) => {
     const context = await createStudioContext(root);
     const action = await new PreparedActionService(context).get(action_id);
     return { content: [{ type: "text", text: JSON.stringify(action, null, 2) }] };
@@ -869,6 +967,54 @@ export async function createStudioMcpServer(root = process.cwd()): Promise<McpSe
   );
 
   return server;
+}
+
+async function buildMcpAcceptanceReport(
+  root: string,
+  context: Awaited<ReturnType<typeof createStudioContext>>,
+) {
+  const validation = await validateStudio(root);
+  const { files } = await validateCanonicalFiles(context.paths.root);
+  const coverage = evaluatePrdCoverage(files.map((file) => file.entity));
+  const workflows = await executeWorkflowFixtures();
+  const repositories = await inspectStudioRepositories(context);
+  const repositoryBlocks = repositories.filter(
+    (repository) =>
+      repository.isDirty ||
+      repository.rootMismatch ||
+      repository.expectedBranchViolation ||
+      repository.remotePolicyViolation,
+  );
+  let backups: string[] = [];
+  try {
+    backups = (await readdir(path.join(context.paths.runtime, "backups"))).filter((entry) =>
+      entry.endsWith(".manifest.json"),
+    );
+  } catch {
+    backups = [];
+  }
+  const explicitDeferralsOk = files.some((file) => {
+    if (file.entity.kind !== "decision") {
+      return false;
+    }
+    const decision = Reflect.get(file.entity.spec, "decision");
+    return typeof decision === "string" && /defer|deferred|diferid/i.test(decision);
+  });
+  return evaluateStudioAcceptance({
+    coverage,
+    workflowOk: workflows.ok,
+    workflowFailures: workflows.workflows
+      .filter((workflow) => !workflow.ok)
+      .map((workflow) => workflow.id),
+    validationOk: validation.ok,
+    repositoryOk: repositoryBlocks.length === 0,
+    backupOk: backups.length > 0,
+    explicitDeferralsOk,
+    detail: {
+      repositories: repositoryBlocks,
+      backup: { manifest_count: backups.length, latest: backups.sort().at(-1) ?? null },
+    },
+  });
 }
 
 function resourceVariable(

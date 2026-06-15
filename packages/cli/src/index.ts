@@ -22,6 +22,7 @@ import {
   createWorkflowFixtureEntities,
   type DomainCommandService,
   evaluatePrdCoverage,
+  evaluateStudioAcceptance,
   executeStudioCommand,
   executeWorkflowFixtures,
   kindFromAlias,
@@ -471,6 +472,66 @@ export function createProgram(): Command {
       const report = evaluatePrdCoverage(files.map((file) => file.entity));
       print(report, options.json, options.quiet);
       process.exitCode = report.summary.missing_capability > 0 ? 2 : 0;
+    });
+
+  program
+    .command("acceptance")
+    .description("Aggregate PRD completion, workflow, repository and release gates")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const context = await createStudioContext(options.root);
+      const validation = await validateStudio(options.root);
+      const { files } = await validateCanonicalFiles(context.paths.root);
+      const coverage = evaluatePrdCoverage(files.map((file) => file.entity));
+      const workflows = await executeWorkflowFixtures();
+      const repositories = await inspectStudioRepositories(context);
+      const repositoryBlocks = repositories.filter(
+        (repository) =>
+          repository.isDirty ||
+          repository.rootMismatch ||
+          repository.expectedBranchViolation ||
+          repository.remotePolicyViolation,
+      );
+      const { readdir } = await import("node:fs/promises");
+      let backups: string[] = [];
+      try {
+        backups = (await readdir(pathJoin(context.paths.runtime, "backups"))).filter((entry) =>
+          entry.endsWith(".manifest.json"),
+        );
+      } catch {
+        backups = [];
+      }
+      const explicitDeferralsOk = files.some((file) => {
+        if (file.entity.kind !== "decision") {
+          return false;
+        }
+        const decision = Reflect.get(file.entity.spec, "decision");
+        return typeof decision === "string" && /defer|deferred|diferid/i.test(decision);
+      });
+      const report = evaluateStudioAcceptance({
+        coverage,
+        workflowOk: workflows.ok,
+        workflowFailures: workflows.workflows
+          .filter((workflow) => !workflow.ok)
+          .map((workflow) => workflow.id),
+        validationOk: validation.ok,
+        repositoryOk: repositoryBlocks.length === 0,
+        backupOk: backups.length > 0,
+        explicitDeferralsOk,
+        detail: {
+          repositories: repositoryBlocks,
+          backup: { manifest_count: backups.length, latest: backups.sort().at(-1) ?? null },
+        },
+      });
+      const envelope = createResultEnvelope({
+        status: report.ok ? "ok" : "blocked",
+        result: report,
+        requiredActions: report.portfolio_release.allowed
+          ? []
+          : ["resolve_acceptance_blockers_before_portfolio"],
+      });
+      print(envelope, options.json, options.quiet);
+      process.exitCode = exitCodeForEnvelope(envelope);
     });
 
   const entity = program.command("entity").description("Manage canonical entities");
