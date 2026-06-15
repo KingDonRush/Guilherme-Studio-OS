@@ -1,0 +1,26 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T01:10:40.950Z
+  id: evd_20260615_studio-os-v1-acceptance-verification
+  labels: []
+  revision: 1
+  schema_version: 1
+  slug: studio-os-v1-acceptance-verification
+  updated_at: 2026-06-15T01:10:40.950Z
+relations:
+  - target_id: tsk_20260614_bootstrap-studio-os-vertical
+    type: supports
+spec:
+  checksum: 4f8cd1ef5c47e6567a506f0bfd01aff416119ea02da5bd6acbf8e200c3283c93
+  command: npm run verify && npm audit --audit-level=moderate && gitleaks git --no-banner && git fsck --strict
+    --no-dangling && studio validate && studio doctor && studio sync --rebuild --verify && studio workflow --fixtures &&
+    studio wordpress health && studio wordpress restore-check
+  evidence_type: command
+  observed_at: 2026-06-15T01:10:40.950Z
+  path: runtime/backups/studio-os-2026-06-15T01-00-47-891Z.manifest.json
+  status: active
+  title: Studio OS V1 acceptance verification
