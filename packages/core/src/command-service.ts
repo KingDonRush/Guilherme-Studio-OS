@@ -53,6 +53,17 @@ export class StudioCommandService {
   ): Promise<ResultEnvelope> {
     try {
       this.authorize(command, requirement);
+      if (command.target_id && command.expected_revision !== undefined) {
+        const current = await this.context.entities.get(command.target_id);
+        if (!current) {
+          throw new Error(`Entity not found: ${command.target_id}`);
+        }
+        if (current.entity.metadata.revision !== command.expected_revision) {
+          throw new Error(
+            `Revision conflict for ${command.target_id}: expected ${command.expected_revision}, got ${current.entity.metadata.revision}`,
+          );
+        }
+      }
       const execution = await this.idempotency.execute(command, async () => {
         const result = await operation();
         return createResultEnvelope({

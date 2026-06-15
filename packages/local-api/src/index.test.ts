@@ -75,15 +75,15 @@ describe("local API", () => {
       },
     });
     const action = prepared.json();
-    expect(action.status).toBe("awaiting_confirmation");
+    expect(action.result.status).toBe("awaiting_confirmation");
 
     const confirmed = await app.inject({
       method: "POST",
-      url: `/api/v1/prepared-actions/${action.id}/confirm`,
+      url: `/api/v1/prepared-actions/${action.result.id}/confirm`,
       headers,
-      payload: { payload_checksum: action.payload_checksum },
+      payload: { payload_checksum: action.result.payload_checksum },
     });
-    expect(confirmed.json().status).toBe("confirmed");
+    expect(confirmed.json().result.status).toBe("confirmed");
     await app.close();
   });
 });

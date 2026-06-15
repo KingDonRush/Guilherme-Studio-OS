@@ -744,11 +744,27 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "roles": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               },
               "required": [
                 "title",
-                "status"
+                "status",
+                "roles"
               ],
               "additionalProperties": {}
             },
@@ -918,6 +934,16 @@
                   ]
                 },
                 "summary": {
+                  "type": "string"
+                },
+                "website": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "organization_type": {
                   "type": "string"
                 }
               },
@@ -1094,6 +1120,42 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "stage": {
+                  "type": "string"
+                },
+                "qualification": {
+                  "type": "object",
+                  "properties": {
+                    "score": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "rationale": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "assessed_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                    }
+                  },
+                  "required": [
+                    "score",
+                    "rationale",
+                    "assessed_at"
+                  ],
+                  "additionalProperties": false
+                },
+                "source": {
+                  "type": "string"
+                },
+                "follow_up_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
                 }
               },
               "required": [
@@ -1269,11 +1331,22 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "relationship_stage": {
+                  "type": "string"
+                },
+                "preferences": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               },
               "required": [
                 "title",
-                "status"
+                "status",
+                "preferences"
               ],
               "additionalProperties": {}
             },
@@ -1444,11 +1517,34 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "stage": {
+                  "type": "string"
+                },
+                "potential_value_minor": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "currency": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 3
+                },
+                "follow_up_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "international_relevance": {
+                  "default": false,
+                  "type": "boolean"
                 }
               },
               "required": [
                 "title",
-                "status"
+                "status",
+                "international_relevance"
               ],
               "additionalProperties": {}
             },
@@ -1619,6 +1715,18 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "source_url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "stage": {
+                  "type": "string"
+                },
+                "follow_up_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
                 }
               },
               "required": [
@@ -1794,6 +1902,24 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "stage": {
+                  "type": "string"
+                },
+                "value_minor": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "currency": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 3
+                },
+                "started_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
                 }
               },
               "required": [
@@ -1969,11 +2095,29 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "due_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "acceptance": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "evidence_missing": {
+                  "default": false,
+                  "type": "boolean"
                 }
               },
               "required": [
                 "title",
-                "status"
+                "status",
+                "acceptance",
+                "evidence_missing"
               ],
               "additionalProperties": {}
             },
@@ -2143,6 +2287,15 @@
                   ]
                 },
                 "summary": {
+                  "type": "string"
+                },
+                "project_type": {
+                  "type": "string"
+                },
+                "repository_id": {
+                  "type": "string"
+                },
+                "environment_id": {
                   "type": "string"
                 }
               },
@@ -2319,6 +2472,23 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "branch": {
+                  "type": "string"
+                },
+                "remote_policy": {
+                  "type": "string",
+                  "enum": [
+                    "allowed",
+                    "forbidden",
+                    "no-remote-in-v1"
+                  ]
+                },
+                "expected_remote": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -2494,11 +2664,41 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "compose_files": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "wordpress_git_repository": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "branch": {
+                      "type": "string"
+                    },
+                    "initial_commit": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "path"
+                  ],
+                  "additionalProperties": false
                 }
               },
               "required": [
                 "title",
-                "status"
+                "status",
+                "compose_files"
               ],
               "additionalProperties": {}
             },
@@ -2668,6 +2868,15 @@
                   ]
                 },
                 "summary": {
+                  "type": "string"
+                },
+                "repository_path": {
+                  "type": "string"
+                },
+                "signal": {
+                  "type": "string"
+                },
+                "current_version": {
                   "type": "string"
                 }
               },
@@ -2844,6 +3053,17 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "version": {
+                  "type": "string"
+                },
+                "stage": {
+                  "type": "string"
+                },
+                "prepared_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
                 }
               },
               "required": [
@@ -3019,11 +3239,23 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "case_url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "source_evidence_ids": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               },
               "required": [
                 "title",
-                "status"
+                "status",
+                "source_evidence_ids"
               ],
               "additionalProperties": {}
             },
@@ -3194,11 +3426,29 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "channels": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "starts_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "ends_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
                 }
               },
               "required": [
                 "title",
-                "status"
+                "status",
+                "channels"
               ],
               "additionalProperties": {}
             },
@@ -3369,11 +3619,27 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "channel": {
+                  "type": "string"
+                },
+                "publish_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "public_claims": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               },
               "required": [
                 "title",
-                "status"
+                "status",
+                "public_claims"
               ],
               "additionalProperties": {}
             },
@@ -3544,6 +3810,24 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "stage": {
+                  "type": "string"
+                },
+                "value_minor": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "currency": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 3
+                },
+                "prepared_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
                 }
               },
               "required": [
@@ -3719,6 +4003,21 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "signed_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "effective_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "ends_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
                 }
               },
               "required": [
@@ -3893,6 +4192,24 @@
                   ]
                 },
                 "summary": {
+                  "type": "string"
+                },
+                "amount_minor": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "currency": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 3
+                },
+                "due_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "reference": {
                   "type": "string"
                 }
               },
@@ -4069,6 +4386,24 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "amount_minor": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "currency": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 3
+                },
+                "reconciled_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "reconciliation_reference": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -4244,6 +4579,17 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "decision": {
+                  "type": "string"
+                },
+                "rationale": {
+                  "type": "string"
+                },
+                "decided_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
                 }
               },
               "required": [
@@ -4418,6 +4764,18 @@
                   ]
                 },
                 "summary": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "media_type": {
+                  "type": "string"
+                },
+                "checksum": {
+                  "type": "string"
+                },
+                "manifest_path": {
                   "type": "string"
                 }
               },
@@ -4594,6 +4952,24 @@
                 },
                 "summary": {
                   "type": "string"
+                },
+                "channel": {
+                  "type": "string"
+                },
+                "direction": {
+                  "type": "string",
+                  "enum": [
+                    "inbound",
+                    "outbound"
+                  ]
+                },
+                "occurred_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "prepared_action_id": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -4681,6 +5057,379 @@
       "required": [
         "type",
         "target_id"
+      ],
+      "additionalProperties": false
+    },
+    "actor": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "human",
+            "agent",
+            "cli",
+            "panel",
+            "automation",
+            "adapter"
+          ]
+        },
+        "capabilities": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "entity.read",
+              "entity.write",
+              "entity.transition",
+              "evidence.register",
+              "repository.inspect",
+              "repository.mutate",
+              "environment.inspect",
+              "environment.mutate",
+              "action.prepare",
+              "action.confirm",
+              "action.execute",
+              "action.reconcile",
+              "external.execute",
+              "destructive.execute",
+              "public.publish",
+              "finance.reconcile"
+            ]
+          }
+        },
+        "classification_ceiling": {
+          "default": "internal",
+          "type": "string",
+          "enum": [
+            "public",
+            "internal",
+            "confidential",
+            "secret"
+          ]
+        },
+        "delegated_by": {
+          "type": "string"
+        },
+        "delegated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "capabilities",
+        "classification_ceiling"
+      ],
+      "additionalProperties": false
+    },
+    "command": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "api_version": {
+          "default": "studio.guilherme.dev/command-v1",
+          "type": "string",
+          "const": "studio.guilherme.dev/command-v1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 3
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "human",
+                "agent",
+                "cli",
+                "panel",
+                "automation",
+                "adapter"
+              ]
+            },
+            "capabilities": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "entity.read",
+                  "entity.write",
+                  "entity.transition",
+                  "evidence.register",
+                  "repository.inspect",
+                  "repository.mutate",
+                  "environment.inspect",
+                  "environment.mutate",
+                  "action.prepare",
+                  "action.confirm",
+                  "action.execute",
+                  "action.reconcile",
+                  "external.execute",
+                  "destructive.execute",
+                  "public.publish",
+                  "finance.reconcile"
+                ]
+              }
+            },
+            "classification_ceiling": {
+              "default": "internal",
+              "type": "string",
+              "enum": [
+                "public",
+                "internal",
+                "confidential",
+                "secret"
+              ]
+            },
+            "delegated_by": {
+              "type": "string"
+            },
+            "delegated_at": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+            },
+            "expires_at": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "capabilities",
+            "classification_ceiling"
+          ],
+          "additionalProperties": false
+        },
+        "target_id": {
+          "type": "string"
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 200
+        },
+        "dry_run": {
+          "default": false,
+          "type": "boolean"
+        },
+        "payload": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+        }
+      },
+      "required": [
+        "api_version",
+        "id",
+        "request_id",
+        "command",
+        "actor",
+        "dry_run",
+        "payload",
+        "created_at"
+      ],
+      "additionalProperties": false
+    },
+    "event": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "api_version": {
+          "default": "studio.guilherme.dev/event-v1",
+          "type": "string",
+          "const": "studio.guilherme.dev/event-v1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_id": {
+          "type": "string"
+        },
+        "command_id": {
+          "type": "string"
+        },
+        "correlation_id": {
+          "type": "string"
+        },
+        "entity_id": {
+          "type": "string"
+        },
+        "actor_id": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+        },
+        "classification": {
+          "default": "internal",
+          "type": "string",
+          "enum": [
+            "public",
+            "internal",
+            "confidential",
+            "secret"
+          ]
+        },
+        "data": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "api_version",
+        "id",
+        "type",
+        "created_at",
+        "classification",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "gate": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "gate": {
+          "default": "general",
+          "type": "string"
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "allow",
+            "warn",
+            "require_confirmation",
+            "block"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "capability_required": {
+          "type": "string",
+          "enum": [
+            "entity.read",
+            "entity.write",
+            "entity.transition",
+            "evidence.register",
+            "repository.inspect",
+            "repository.mutate",
+            "environment.inspect",
+            "environment.mutate",
+            "action.prepare",
+            "action.confirm",
+            "action.execute",
+            "action.reconcile",
+            "external.execute",
+            "destructive.execute",
+            "public.publish",
+            "finance.reconcile"
+          ]
+        },
+        "evidence_required": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "confirmation_scope": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "gate",
+        "result",
+        "reason",
+        "evidence_required"
+      ],
+      "additionalProperties": false
+    },
+    "evidence_reference": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "claim": {
+          "type": "string"
+        },
+        "reliability": {
+          "default": "observed",
+          "type": "string",
+          "enum": [
+            "observed",
+            "verified",
+            "reported",
+            "inferred"
+          ]
+        },
+        "checksum": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "id",
+        "reliability"
       ],
       "additionalProperties": false
     },
@@ -4811,6 +5560,367 @@
         "payload",
         "payload_checksum",
         "status"
+      ],
+      "additionalProperties": false
+    },
+    "result": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "api_version": {
+          "default": "studio.guilherme.dev/v1",
+          "type": "string",
+          "const": "studio.guilherme.dev/v1"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "warning",
+            "confirmation_required",
+            "blocked",
+            "conflict",
+            "error"
+          ]
+        },
+        "result": {
+          "default": null,
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "warnings": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "required_actions": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 3
+              },
+              "claim": {
+                "type": "string"
+              },
+              "reliability": {
+                "default": "observed",
+                "type": "string",
+                "enum": [
+                  "observed",
+                  "verified",
+                  "reported",
+                  "inferred"
+                ]
+              },
+              "checksum": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "reliability"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "projection_revision": {
+          "default": 0,
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "minLength": 1
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "details": {
+              "default": {},
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {}
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "api_version",
+        "request_id",
+        "status",
+        "result",
+        "warnings",
+        "required_actions",
+        "evidence",
+        "projection_revision"
+      ],
+      "additionalProperties": false
+    },
+    "adapter_request": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "api_version": {
+          "default": "studio.guilherme.dev/adapter-request-v1",
+          "type": "string",
+          "const": "studio.guilherme.dev/adapter-request-v1"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "adapter": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 3
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "human",
+                "agent",
+                "cli",
+                "panel",
+                "automation",
+                "adapter"
+              ]
+            },
+            "capabilities": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "entity.read",
+                  "entity.write",
+                  "entity.transition",
+                  "evidence.register",
+                  "repository.inspect",
+                  "repository.mutate",
+                  "environment.inspect",
+                  "environment.mutate",
+                  "action.prepare",
+                  "action.confirm",
+                  "action.execute",
+                  "action.reconcile",
+                  "external.execute",
+                  "destructive.execute",
+                  "public.publish",
+                  "finance.reconcile"
+                ]
+              }
+            },
+            "classification_ceiling": {
+              "default": "internal",
+              "type": "string",
+              "enum": [
+                "public",
+                "internal",
+                "confidential",
+                "secret"
+              ]
+            },
+            "delegated_by": {
+              "type": "string"
+            },
+            "delegated_at": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+            },
+            "expires_at": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "capabilities",
+            "classification_ceiling"
+          ],
+          "additionalProperties": false
+        },
+        "dry_run": {
+          "default": false,
+          "type": "boolean"
+        },
+        "payload": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "api_version",
+        "request_id",
+        "adapter",
+        "operation",
+        "actor",
+        "dry_run",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "adapter_result": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "api_version": {
+          "default": "studio.guilherme.dev/adapter-result-v1",
+          "type": "string",
+          "const": "studio.guilherme.dev/adapter-result-v1"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "adapter": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "warning",
+            "blocked",
+            "error"
+          ]
+        },
+        "data": {
+          "default": null,
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 3
+              },
+              "claim": {
+                "type": "string"
+              },
+              "reliability": {
+                "default": "observed",
+                "type": "string",
+                "enum": [
+                  "observed",
+                  "verified",
+                  "reported",
+                  "inferred"
+                ]
+              },
+              "checksum": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "reliability"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "minLength": 1
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "details": {
+              "default": {},
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {}
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "api_version",
+        "request_id",
+        "adapter",
+        "operation",
+        "status",
+        "data",
+        "evidence"
       ],
       "additionalProperties": false
     }

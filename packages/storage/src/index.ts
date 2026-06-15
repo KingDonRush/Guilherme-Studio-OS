@@ -605,8 +605,35 @@ export class EventStore {
       .split("\n")
       .map((line) => line.trim())
       .filter(Boolean)
-      .map((line) => EventSchema.parse(JSON.parse(line)));
+      .map((line) => normalizeEventRecord(JSON.parse(line)));
   }
+}
+
+function normalizeEventRecord(value: unknown): StudioEvent {
+  const parsed = value as Record<string, unknown>;
+  if ("apiVersion" in parsed || "createdAt" in parsed) {
+    const legacy = parsed as {
+      id?: unknown;
+      type?: unknown;
+      entityId?: unknown;
+      actorId?: unknown;
+      createdAt?: unknown;
+      data?: unknown;
+    };
+    return EventSchema.parse({
+      api_version: "studio.guilherme.dev/event-v1",
+      id: legacy.id,
+      type: legacy.type,
+      entity_id: legacy.entityId,
+      actor_id: legacy.actorId,
+      created_at: legacy.createdAt,
+      data:
+        legacy.data && typeof legacy.data === "object" && !Array.isArray(legacy.data)
+          ? legacy.data
+          : {},
+    });
+  }
+  return EventSchema.parse(value);
 }
 
 export interface ProjectionStats {

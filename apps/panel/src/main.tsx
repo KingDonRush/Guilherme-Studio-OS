@@ -4,14 +4,39 @@ import {
   Archive,
   BriefcaseBusiness,
   CircleAlert,
-  GitBranch,
+  Megaphone,
   ShieldCheck,
+  WalletCards,
 } from "lucide-react";
 import React from "react";
 import { createRoot } from "react-dom/client";
+import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import "./styles.css";
 
 const queryClient = new QueryClient();
+
+interface ResultEnvelope<T> {
+  status: "ok" | "warning" | "confirmation_required" | "blocked" | "conflict" | "error";
+  result: T;
+  error?: { code: string; message: string };
+}
+
+interface EntitySummary {
+  id: string;
+  kind: string;
+  title: string;
+  status: string;
+  path?: string;
+}
+
+interface NextAction {
+  entity_id: string;
+  kind: string;
+  title: string;
+  score: number;
+  reasons: string[];
+  blocked: boolean;
+}
 
 async function getJson<T>(url: string): Promise<T> {
   const response = await fetch(url, {
@@ -25,7 +50,7 @@ async function getJson<T>(url: string): Promise<T> {
   return response.json() as Promise<T>;
 }
 
-function App(): React.JSX.Element {
+function useStudioData() {
   const summary = useQuery({
     queryKey: ["summary"],
     queryFn: () =>
@@ -35,7 +60,13 @@ function App(): React.JSX.Element {
         operatorId: string;
         root: string;
         byKind: Record<string, number>;
+        nextActions: NextAction[];
       }>("/api/v1/summary"),
+    retry: false,
+  });
+  const entities = useQuery({
+    queryKey: ["entities"],
+    queryFn: () => getJson<EntitySummary[]>("/api/v1/entities"),
     retry: false,
   });
   const repositories = useQuery({
@@ -60,144 +91,246 @@ function App(): React.JSX.Element {
       ),
     retry: false,
   });
-  const kindCount = (kind: string): number => {
-    const value = Reflect.get(summary.data?.byKind ?? {}, kind);
-    return typeof value === "number" ? value : 0;
-  };
-  const entities = useQuery({
-    queryKey: ["entities"],
+  const diagnostics = useQuery({
+    queryKey: ["diagnostics"],
     queryFn: () =>
-      getJson<Array<{ id: string; kind: string; title: string; status: string }>>(
-        "/api/v1/entities",
-      ),
+      getJson<
+        ResultEnvelope<{
+          validation: { ok: boolean; errors: string[] };
+          pending_transactions: string[];
+          locks: unknown[];
+        }>
+      >("/api/v1/diagnostics"),
     retry: false,
   });
+  return { summary, entities, repositories, preparedActions, diagnostics };
+}
+
+function App(): React.JSX.Element {
+  const data = useStudioData();
 
   return (
-    <main className="shell">
-      <aside className="sidebar">
-        <div>
-          <p className="eyebrow">Guilherme Studio OS</p>
-          <h1>Operação local-first para ganhar dinheiro com WordPress.</h1>
-        </div>
-        <nav>
-          <a href="#economia">
-            <Activity size={18} /> Economia
-          </a>
-          <a href="#trampos">
-            <BriefcaseBusiness size={18} /> Trabalhos
-          </a>
-          <a href="#repos">
-            <GitBranch size={18} /> Repositórios
-          </a>
-          <a href="#gates">
-            <ShieldCheck size={18} /> Gates
-          </a>
-        </nav>
-      </aside>
-      <section className="content">
-        <header className="topbar">
+    <HashRouter>
+      <main className="shell">
+        <aside className="sidebar">
           <div>
-            <strong>Status</strong>
-            <span>{summary.data?.ok ? "Operável" : "Pendente de validação"}</span>
+            <p className="eyebrow">Guilherme Studio OS</p>
+            <h1>Operação local-first para renda WordPress internacional.</h1>
           </div>
-          <div>
-            <strong>Entidades</strong>
-            <span>{summary.data?.entityCount ?? "-"}</span>
-          </div>
-          <div>
-            <strong>Operador</strong>
-            <span>{summary.data?.operatorId ?? "-"}</span>
-          </div>
-        </header>
-
-        <section id="economia" className="panel hero">
-          <p className="eyebrow">Prioridade econômica</p>
-          <h2>Portfólio, prospecção, produtos e entregas precisam compartilhar o mesmo estado.</h2>
-          <p>
-            A V1 transforma documentos canônicos em uma operação consultável por CLI, MCP e painel
-            local. Ações externas continuam bloqueadas por confirmação.
-          </p>
+          <nav>
+            <NavLink to="/">
+              <Activity size={18} /> Economia
+            </NavLink>
+            <NavLink to="/pipeline">
+              <WalletCards size={18} /> Pipelines
+            </NavLink>
+            <NavLink to="/work">
+              <BriefcaseBusiness size={18} /> Trabalho
+            </NavLink>
+            <NavLink to="/distribution">
+              <Megaphone size={18} /> Distribuição
+            </NavLink>
+            <NavLink to="/control">
+              <ShieldCheck size={18} /> Controle
+            </NavLink>
+          </nav>
+        </aside>
+        <section className="content">
+          <Topbar data={data} />
+          <Routes>
+            <Route path="/" element={<Economy data={data} />} />
+            <Route path="/pipeline" element={<Pipeline data={data} />} />
+            <Route path="/work" element={<Work data={data} />} />
+            <Route path="/distribution" element={<Distribution data={data} />} />
+            <Route path="/control" element={<Control data={data} />} />
+          </Routes>
         </section>
-
-        <section id="trampos" className="grid">
-          <article className="panel">
-            <Archive size={24} />
-            <h3>Próximos passos</h3>
-            <p>
-              Completar domínios, adapters e migração física sem retomar o portfólio antes da
-              aceitação.
-            </p>
-          </article>
-          <article className="panel">
-            <ShieldCheck size={24} />
-            <h3>Gates</h3>
-            <p>
-              Publicação, envio, destruição e ações externas usam prepare, confirm, execute e
-              reconcile.
-            </p>
-          </article>
-          <article className="panel">
-            <Activity size={24} />
-            <h3>Pipeline registrado</h3>
-            <p>
-              {kindCount("opportunity")} oportunidades, {kindCount("engagement")} engagements e{" "}
-              {kindCount("jobApplication")} candidaturas.
-            </p>
-          </article>
-        </section>
-
-        <section className="panel" id="repos">
-          <h3>Saúde dos repositórios</h3>
-          <div className="table">
-            {(repositories.data ?? []).map((repository) => (
-              <div className="row" key={repository.id}>
-                <span>{repository.branch || "sem branch"}</span>
-                <strong>{repository.title}</strong>
-                <em>
-                  {repository.isDirty || repository.remotePolicyViolation ? "Atenção" : "Limpo"}
-                </em>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="panel" id="gates">
-          <h3>Ações preparadas</h3>
-          <div className="table">
-            {(preparedActions.data ?? []).map((action) => (
-              <div className="row" key={action.id}>
-                <span>{action.status}</span>
-                <strong>{action.action_type}</strong>
-                <em>{new Date(action.expires_at).toLocaleString("pt-BR")}</em>
-              </div>
-            ))}
-            {(preparedActions.data ?? []).length === 0 ? (
-              <p>Nenhuma ação externa aguardando confirmação.</p>
-            ) : null}
-          </div>
-        </section>
-
-        <section className="panel">
-          <h3>Entidades canônicas</h3>
-          <div className="table">
-            {(entities.data ?? []).map((entity) => (
-              <div className="row" key={entity.id}>
-                <span>{entity.kind}</span>
-                <strong>{entity.title}</strong>
-                <em>{entity.status}</em>
-              </div>
-            ))}
-            {entities.isError ? (
-              <p>
-                <CircleAlert size={16} /> A sessão local não pôde carregar as entidades.
-              </p>
-            ) : null}
-          </div>
-        </section>
-      </section>
-    </main>
+      </main>
+    </HashRouter>
   );
+}
+
+function Topbar({ data }: { data: ReturnType<typeof useStudioData> }) {
+  return (
+    <header className="topbar">
+      <Metric title="Status" value={data.summary.data?.ok ? "Operável" : "Pendente"} />
+      <Metric title="Entidades" value={String(data.summary.data?.entityCount ?? "-")} />
+      <Metric title="Operador" value={data.summary.data?.operatorId ?? "-"} />
+    </header>
+  );
+}
+
+function Metric({ title, value }: { title: string; value: string }) {
+  return (
+    <div>
+      <strong>{title}</strong>
+      <span>{value}</span>
+    </div>
+  );
+}
+
+function Economy({ data }: { data: ReturnType<typeof useStudioData> }) {
+  return (
+    <>
+      <section className="panel hero">
+        <p className="eyebrow">Prioridade econômica</p>
+        <h2>O próximo passo precisa proteger ou criar renda.</h2>
+        <p>
+          O Studio cruza tarefas, evidências, produtos, candidaturas, repositórios e pagamentos para
+          deixar claro o que merece execução agora.
+        </p>
+      </section>
+      <section className="grid three">
+        <CountCard data={data} kind="opportunity" label="Oportunidades" />
+        <CountCard data={data} kind="engagement" label="Engagements" />
+        <CountCard data={data} kind="jobApplication" label="Candidaturas" />
+      </section>
+      <EntityTable
+        title="Próximas ações"
+        rows={(data.summary.data?.nextActions ?? []).map((action) => ({
+          left: String(action.score),
+          title: action.title,
+          right: action.reasons.join(", "),
+        }))}
+      />
+    </>
+  );
+}
+
+function CountCard({
+  data,
+  kind,
+  label,
+}: {
+  data: ReturnType<typeof useStudioData>;
+  kind: string;
+  label: string;
+}) {
+  const count = data.summary.data?.byKind[kind] ?? 0;
+  return (
+    <article className="panel compact">
+      <Archive size={24} />
+      <h3>{label}</h3>
+      <strong className="big">{count}</strong>
+    </article>
+  );
+}
+
+function Pipeline({ data }: { data: ReturnType<typeof useStudioData> }) {
+  const rows = (data.entities.data ?? [])
+    .filter((entity) =>
+      ["prospect", "opportunity", "proposal", "client", "jobApplication"].includes(entity.kind),
+    )
+    .map(rowFromEntity);
+  return <EntityTable title="Pipeline comercial e carreira" rows={rows} />;
+}
+
+function Work({ data }: { data: ReturnType<typeof useStudioData> }) {
+  const workRows = (data.entities.data ?? [])
+    .filter((entity) =>
+      ["engagement", "deliverable", "project", "product", "release", "repository"].includes(
+        entity.kind,
+      ),
+    )
+    .map(rowFromEntity);
+  return (
+    <>
+      <EntityTable title="Trabalhos, produtos e repositórios" rows={workRows} />
+      <EntityTable
+        title="Saúde dos repositórios"
+        rows={(data.repositories.data ?? []).map((repository) => ({
+          left: repository.branch || "sem branch",
+          title: repository.title,
+          right: repository.isDirty || repository.remotePolicyViolation ? "Atenção" : "Limpo",
+        }))}
+      />
+    </>
+  );
+}
+
+function Distribution({ data }: { data: ReturnType<typeof useStudioData> }) {
+  const rows = (data.entities.data ?? [])
+    .filter((entity) =>
+      ["portfolioCase", "campaign", "contentItem", "evidence"].includes(entity.kind),
+    )
+    .map(rowFromEntity);
+  return <EntityTable title="Cases, campanhas, conteúdo e evidências" rows={rows} />;
+}
+
+function Control({ data }: { data: ReturnType<typeof useStudioData> }) {
+  const diagnostics = data.diagnostics.data?.result;
+  return (
+    <>
+      <EntityTable
+        title="Ações preparadas"
+        rows={(data.preparedActions.data ?? []).map((action) => ({
+          left: action.status,
+          title: action.action_type,
+          right: new Date(action.expires_at).toLocaleString("pt-BR"),
+        }))}
+        empty="Nenhuma ação aguardando confirmação."
+      />
+      <section className="panel">
+        <h3>Diagnósticos</h3>
+        <div className="table">
+          <div className="row">
+            <span>validate</span>
+            <strong>{diagnostics?.validation.ok ? "Sem erros" : "Com pendências"}</strong>
+            <em>{diagnostics?.validation.errors.length ?? "-"}</em>
+          </div>
+          <div className="row">
+            <span>locks</span>
+            <strong>Locks ativos</strong>
+            <em>{diagnostics?.locks.length ?? "-"}</em>
+          </div>
+          <div className="row">
+            <span>tx</span>
+            <strong>Transações pendentes</strong>
+            <em>{diagnostics?.pending_transactions.length ?? "-"}</em>
+          </div>
+        </div>
+      </section>
+      {data.entities.isError ? (
+        <p className="error">
+          <CircleAlert size={16} /> A sessão local não pôde carregar as entidades.
+        </p>
+      ) : null}
+    </>
+  );
+}
+
+function EntityTable({
+  title,
+  rows,
+  empty = "Nada registrado nessa visão.",
+}: {
+  title: string;
+  rows: Array<{ left: string; title: string; right: string }>;
+  empty?: string;
+}) {
+  return (
+    <section className="panel">
+      <h3>{title}</h3>
+      <div className="table">
+        {rows.map((row) => (
+          <div className="row" key={`${row.left}-${row.title}-${row.right}`}>
+            <span>{row.left}</span>
+            <strong>{row.title}</strong>
+            <em>{row.right}</em>
+          </div>
+        ))}
+        {rows.length === 0 ? <p className="empty">{empty}</p> : null}
+      </div>
+    </section>
+  );
+}
+
+function rowFromEntity(entity: EntitySummary) {
+  return {
+    left: entity.kind,
+    title: entity.title,
+    right: entity.status,
+  };
 }
 
 createRoot(document.getElementById("root") as HTMLElement).render(

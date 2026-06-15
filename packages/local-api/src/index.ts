@@ -4,15 +4,21 @@ import cookie from "@fastify/cookie";
 import fastifyStatic from "@fastify/static";
 import { inspectStudioRepositories } from "@guilherme-studio/adapters";
 import {
+  createStudioCommand,
   createStudioContext,
-  DomainCommandService,
-  EntityService,
-  entityMutationResult,
+  EconomicNextActionResolver,
+  executeStudioCommand,
   kindFromAlias,
+  operatorActor,
   PreparedActionService,
   validateStudio,
 } from "@guilherme-studio/core";
-import { entityId, entityStatus, entityTitle } from "@guilherme-studio/schemas";
+import {
+  createResultEnvelope,
+  entityId,
+  entityStatus,
+  entityTitle,
+} from "@guilherme-studio/schemas";
 import { validateCanonicalFiles } from "@guilherme-studio/storage";
 import Fastify, { type FastifyInstance } from "fastify";
 
@@ -26,7 +32,8 @@ export async function createLocalApi(
 ): Promise<{ app: FastifyInstance; token: string }> {
   const context = await createStudioContext(options.root);
   const token = crypto.randomBytes(24).toString("hex");
-  const app = Fastify({ logger: false });
+  const sessionExpiresAt = Date.now() + 8 * 60 * 60 * 1000;
+  const app = Fastify({ logger: false, bodyLimit: 1024 * 1024 });
   await app.register(cookie);
 
   app.addHook("onRequest", async (request, reply) => {
@@ -43,11 +50,16 @@ export async function createLocalApi(
     }
     if (!request.url.startsWith("/api/")) {
       reply.setCookie("studio_session", token, {
-        httpOnly: false,
+        httpOnly: true,
         sameSite: "strict",
         secure: false,
         path: "/",
+        maxAge: 8 * 60 * 60,
       });
+      return;
+    }
+    if (Date.now() >= sessionExpiresAt) {
+      await reply.code(401).send({ error: "Session expired" });
       return;
     }
     const bearer = request.headers.authorization === `Bearer ${token}`;
@@ -56,6 +68,25 @@ export async function createLocalApi(
     if (!bearer && !cookieAuth) {
       await reply.code(401).send({ error: "Unauthorized" });
     }
+  });
+
+  app.setErrorHandler((error, _request, reply) => {
+    const normalizedError = error as { statusCode?: number; message?: string };
+    const statusCode =
+      normalizedError.statusCode && normalizedError.statusCode >= 400
+        ? normalizedError.statusCode
+        : 500;
+    return reply.code(statusCode).send(
+      createResultEnvelope({
+        status: statusCode >= 500 ? "error" : "blocked",
+        error: {
+          code: statusCode >= 500 ? "internal_error" : "request_rejected",
+          message: normalizedError.message ?? "Unexpected local API error",
+          details: {},
+        },
+        projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+      }),
+    );
   });
 
   app.get("/favicon.ico", async (_request, reply) => reply.code(204).send());
@@ -74,6 +105,10 @@ export async function createLocalApi(
       byKind,
       operatorId: context.config.operator_id,
       root: context.paths.root,
+      projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+      nextActions: new EconomicNextActionResolver()
+        .rank(files.map((file) => file.entity))
+        .slice(0, 5),
     };
   });
 
@@ -88,6 +123,99 @@ export async function createLocalApi(
     }));
   });
 
+  app.get<{ Params: { id: string } }>("/api/v1/entities/:id", async (request, reply) => {
+    const file = await context.entities.get(request.params.id);
+    if (!file) {
+      return reply.code(404).send(
+        createResultEnvelope({
+          status: "error",
+          error: {
+            code: "entity_not_found",
+            message: `Entity not found: ${request.params.id}`,
+            details: {},
+          },
+        }),
+      );
+    }
+    return createResultEnvelope({
+      result: {
+        entity: file.entity,
+        path: file.relativePath,
+      },
+      projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+    });
+  });
+
+  app.get("/api/v1/next-actions", async () => {
+    const { files } = await validateCanonicalFiles(context.paths.root);
+    return createResultEnvelope({
+      result: new EconomicNextActionResolver().rank(files.map((file) => file.entity)),
+      projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+    });
+  });
+
+  app.get("/api/v1/events", async () =>
+    createResultEnvelope({
+      result: await context.events.list(),
+      projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+    }),
+  );
+
+  app.get("/api/v1/diagnostics", async () => {
+    const validation = await validateStudio(context.paths.root);
+    return createResultEnvelope({
+      status: validation.ok ? "ok" : "warning",
+      result: {
+        validation,
+        projection: context.projection.inspect(),
+        pending_transactions: await context.entities.pendingTransactions(),
+        locks: await context.entities.inspectLocks(),
+        repositories: await inspectStudioRepositories(context),
+      },
+      projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+    });
+  });
+
+  const runCommand = async (body: {
+    command?: unknown;
+    target_id?: unknown;
+    expected_revision?: unknown;
+    idempotency_key?: unknown;
+    payload?: unknown;
+    dry_run?: unknown;
+  }) => {
+    if (typeof body.command !== "string") {
+      return createResultEnvelope({
+        status: "error",
+        error: { code: "invalid_input", message: "command is required", details: {} },
+      });
+    }
+    const payload =
+      body.payload && typeof body.payload === "object" && !Array.isArray(body.payload)
+        ? (body.payload as Record<string, unknown>)
+        : {};
+    const command = createStudioCommand(context, {
+      command: body.command,
+      actor: operatorActor(context.config.operator_id),
+      payload,
+      ...(typeof body.target_id === "string" ? { targetId: body.target_id } : {}),
+      ...(typeof body.expected_revision === "number"
+        ? { expectedRevision: body.expected_revision }
+        : {}),
+      ...(typeof body.idempotency_key === "string" ? { idempotencyKey: body.idempotency_key } : {}),
+      dryRun: body.dry_run === true,
+    });
+    return executeStudioCommand(context, command);
+  };
+
+  app.post<{ Body: Record<string, unknown> }>("/api/v1/commands/dry-run", async (request) =>
+    runCommand({ ...request.body, dry_run: true }),
+  );
+
+  app.post<{ Body: Record<string, unknown> }>("/api/v1/commands/execute", async (request) =>
+    runCommand({ ...request.body, dry_run: false }),
+  );
+
   app.post<{
     Body: {
       kind: string;
@@ -100,13 +228,15 @@ export async function createLocalApi(
     if (!body || typeof body.kind !== "string" || typeof body.title !== "string") {
       return reply.code(400).send({ ok: false, errors: ["kind and title are required"] });
     }
-    const entity = await new EntityService(context).create({
-      kind: kindFromAlias(body.kind),
-      title: body.title,
-      classification: body.classification ?? "internal",
-      ...(body.summary ? { summary: body.summary } : {}),
+    return runCommand({
+      command: "entity.create",
+      payload: {
+        kind: kindFromAlias(body.kind),
+        title: body.title,
+        classification: body.classification ?? "internal",
+        ...(body.summary ? { summary: body.summary } : {}),
+      },
     });
-    return entityMutationResult("entity.create", entity);
   });
 
   app.get("/api/v1/prepared-actions", async () => {
@@ -129,10 +259,13 @@ export async function createLocalApi(
     ) {
       return reply.code(400).send({ ok: false, errors: ["action_type and payload are required"] });
     }
-    return new PreparedActionService(context).prepare({
-      actionType: body.action_type,
-      payload: body.payload,
-      ...(body.ttl_seconds ? { ttlSeconds: body.ttl_seconds } : {}),
+    return runCommand({
+      command: "action.prepare",
+      payload: {
+        action_type: body.action_type,
+        payload: body.payload,
+        ...(body.ttl_seconds ? { ttl_seconds: body.ttl_seconds } : {}),
+      },
     });
   });
 
@@ -143,10 +276,13 @@ export async function createLocalApi(
     if (!request.body || typeof request.body.payload_checksum !== "string") {
       return reply.code(400).send({ ok: false, errors: ["payload_checksum is required"] });
     }
-    return new PreparedActionService(context).confirm(
-      request.params.id,
-      request.body.payload_checksum,
-    );
+    return runCommand({
+      command: "action.confirm",
+      payload: {
+        action_id: request.params.id,
+        payload_checksum: request.body.payload_checksum,
+      },
+    });
   });
 
   app.post<{
@@ -160,12 +296,15 @@ export async function createLocalApi(
     ) {
       return reply.code(400).send({ ok: false, errors: ["rationale and score are required"] });
     }
-    const entity = await new DomainCommandService(context).qualifyProspect(request.params.id, {
-      rationale: request.body.rationale,
-      score: request.body.score,
-      qualified: request.body.qualified ?? true,
+    return runCommand({
+      command: "prospect.qualify",
+      target_id: request.params.id,
+      payload: {
+        rationale: request.body.rationale,
+        score: request.body.score,
+        qualified: request.body.qualified ?? true,
+      },
     });
-    return entityMutationResult("prospect.qualify", entity);
   });
 
   app.post<{
@@ -183,16 +322,18 @@ export async function createLocalApi(
       return reply.code(400).send({ ok: false, errors: ["title is required"] });
     }
     const body = request.body;
-    const entity = await new DomainCommandService(context).registerEvidence({
-      title: body.title,
-      evidenceType: body.evidence_type,
-      ...(body.subject_id ? { subjectId: body.subject_id } : {}),
-      ...(body.path ? { path: body.path } : {}),
-      ...(body.url ? { url: body.url } : {}),
-      ...(body.command ? { command: body.command } : {}),
-      ...(body.checksum ? { checksum: body.checksum } : {}),
+    return runCommand({
+      command: "evidence.register",
+      payload: {
+        title: body.title,
+        evidence_type: body.evidence_type,
+        ...(body.subject_id ? { subject_id: body.subject_id } : {}),
+        ...(body.path ? { path: body.path } : {}),
+        ...(body.url ? { url: body.url } : {}),
+        ...(body.command ? { command: body.command } : {}),
+        ...(body.checksum ? { checksum: body.checksum } : {}),
+      },
     });
-    return entityMutationResult("evidence.register", entity);
   });
 
   if (options.panelDist) {

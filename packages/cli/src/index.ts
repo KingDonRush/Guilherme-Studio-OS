@@ -11,12 +11,13 @@ import {
 } from "@guilherme-studio/adapters";
 import { optimizeAssets } from "@guilherme-studio/assets";
 import {
+  createStudioCommand,
   createStudioContext,
   createWorkflowFixtureEntities,
-  DomainCommandService,
-  EntityService,
-  entityMutationResult,
+  type DomainCommandService,
+  executeStudioCommand,
   kindFromAlias,
+  operatorActor,
   PreparedActionService,
   rebuildProjection,
   validateStudio,
@@ -24,14 +25,23 @@ import {
 } from "@guilherme-studio/core";
 import { serveLocalApi } from "@guilherme-studio/local-api";
 import {
+  ActorSchema,
+  AdapterRequestSchema,
+  AdapterResultSchema,
   type Classification,
-  createEntity,
+  CommandEnvelopeSchema,
+  createActor,
+  createResultEnvelope,
+  EventSchema,
+  EvidenceReferenceSchema,
   entityId,
   entityStatus,
   entityTitle,
-  type LifecycleState,
+  GateDecisionSchema,
   PreparedActionSchema,
   RelationSchema,
+  type ResultEnvelope,
+  ResultEnvelopeSchema,
   TypedEntitySchema,
 } from "@guilherme-studio/schemas";
 import {
@@ -46,9 +56,18 @@ interface GlobalOptions {
   root?: string;
   json?: boolean;
   dryRun?: boolean;
+  quiet?: boolean;
+  verbose?: boolean;
+  actor?: string;
+  idempotencyKey?: string;
+  expectedRevision?: string;
+  yes?: boolean;
 }
 
-function print(value: unknown, json = false): void {
+function print(value: unknown, json = false, quiet = false): void {
+  if (quiet) {
+    return;
+  }
   if (json) {
     console.log(JSON.stringify(value, null, 2));
     return;
@@ -60,8 +79,57 @@ function print(value: unknown, json = false): void {
   console.log(JSON.stringify(value, null, 2));
 }
 
+export function exitCodeForEnvelope(result: ResultEnvelope): number {
+  switch (result.status) {
+    case "ok":
+    case "warning":
+      return 0;
+    case "confirmation_required":
+      return 5;
+    case "blocked":
+      return 4;
+    case "conflict":
+      return 6;
+    case "error":
+      return result.error?.code === "invalid_input" ? 2 : 10;
+  }
+}
+
 function globalOptions(command: Command): GlobalOptions {
   return command.optsWithGlobals<GlobalOptions>();
+}
+
+async function executeCliCommand(
+  options: GlobalOptions,
+  command: string,
+  payload: Record<string, unknown>,
+  targetId?: string,
+): Promise<ResultEnvelope> {
+  const context = await createStudioContext(options.root);
+  const actor =
+    !options.actor || options.actor === context.config.operator_id
+      ? operatorActor(context.config.operator_id)
+      : createActor({
+          id: options.actor,
+          type: "agent",
+          capabilities: ["entity.read", "repository.inspect", "environment.inspect"],
+          classification_ceiling: "internal",
+        });
+  const envelope = createStudioCommand(context, {
+    command,
+    actor,
+    payload,
+    ...(targetId ? { targetId } : {}),
+    ...(options.expectedRevision
+      ? { expectedRevision: Number.parseInt(options.expectedRevision, 10) }
+      : {}),
+    ...(options.idempotencyKey ? { idempotencyKey: options.idempotencyKey } : {}),
+    dryRun: options.dryRun ?? false,
+  });
+  const result = await executeStudioCommand(context, envelope);
+  process.exitCode = exitCodeForEnvelope(result);
+  print(result, options.json, options.quiet);
+  return result;
 }
 
 export function createProgram(): Command {
@@ -71,7 +139,50 @@ export function createProgram(): Command {
     .description("Guilherme Studio OS local-first operations CLI")
     .option("--root <path>", "Studio root", process.cwd())
     .option("--json", "Print JSON output")
-    .option("--dry-run", "Validate without writing");
+    .option("--quiet", "Suppress human output")
+    .option("--verbose", "Include diagnostic detail")
+    .option("--dry-run", "Validate without writing")
+    .option("--actor <id>", "Actor identity")
+    .option("--idempotency-key <value>", "Retry-safe mutation key")
+    .option("--expected-revision <number>", "Required entity revision")
+    .option("--yes", "Acknowledge ordinary local prompts");
+
+  program
+    .command("init")
+    .description("Inspect whether the current directory is an initialized Studio root")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      try {
+        const context = await createStudioContext(options.root);
+        print(
+          createResultEnvelope({
+            status: "warning",
+            result: {
+              initialized: true,
+              root: context.paths.root,
+              message: "Studio root already initialized.",
+            },
+          }),
+          options.json,
+          options.quiet,
+        );
+      } catch (error) {
+        print(
+          createResultEnvelope({
+            status: "blocked",
+            requiredActions: ["create_studio_config_from_approved_template"],
+            error: {
+              code: "workspace_not_initialized",
+              message: error instanceof Error ? error.message : String(error),
+              details: {},
+            },
+          }),
+          options.json,
+          options.quiet,
+        );
+        process.exitCode = 4;
+      }
+    });
 
   program
     .command("validate")
@@ -176,7 +287,15 @@ export function createProgram(): Command {
         schemas: {
           entity: z.toJSONSchema(TypedEntitySchema),
           relation: z.toJSONSchema(RelationSchema),
+          actor: z.toJSONSchema(ActorSchema),
+          command: z.toJSONSchema(CommandEnvelopeSchema),
+          event: z.toJSONSchema(EventSchema),
+          gate: z.toJSONSchema(GateDecisionSchema),
+          evidence_reference: z.toJSONSchema(EvidenceReferenceSchema),
           prepared_action: z.toJSONSchema(PreparedActionSchema),
+          result: z.toJSONSchema(ResultEnvelopeSchema),
+          adapter_request: z.toJSONSchema(AdapterRequestSchema),
+          adapter_result: z.toJSONSchema(AdapterResultSchema),
         },
       };
       if (options.dryRun) {
@@ -336,15 +455,7 @@ export function createProgram(): Command {
         classification: local.classification as Classification,
         ...(local.summary ? { summary: local.summary } : {}),
       };
-      const draft = createEntity(input);
-      if (options.dryRun) {
-        print({ dryRun: true, entity: draft }, options.json);
-        return;
-      }
-      const context = await createStudioContext(options.root);
-      const service = new EntityService(context);
-      const created = await service.create(input);
-      print(entityMutationResult("entity.create", created), options.json);
+      await executeCliCommand(options, "entity.create", input);
     });
 
   entity
@@ -353,20 +464,7 @@ export function createProgram(): Command {
     .argument("<status>", "Target lifecycle status")
     .action(async function action(this: Command, id: string, status: string) {
       const options = globalOptions(this);
-      const context = await createStudioContext(options.root);
-      if (options.dryRun) {
-        const current = await context.entities.get(id);
-        print(
-          { dryRun: true, current: current?.entity ?? null, targetStatus: status },
-          options.json,
-        );
-        return;
-      }
-      const transitioned = await new EntityService(context).transition(
-        id,
-        status as LifecycleState,
-      );
-      print(entityMutationResult("entity.transition", transitioned), options.json);
+      await executeCliCommand(options, "entity.transition", { status }, id);
     });
 
   const action = program.command("action").description("Manage governed prepared actions");
@@ -382,19 +480,11 @@ export function createProgram(): Command {
       const options = globalOptions(this);
       const local = this.opts() as { payload: string; ttl: string };
       const payload = JSON.parse(local.payload) as Record<string, unknown>;
-      if (options.dryRun) {
-        print({ dryRun: true, type, payload }, options.json);
-        return;
-      }
-      const context = await createStudioContext(options.root);
-      print(
-        await new PreparedActionService(context).prepare({
-          actionType: type,
-          payload,
-          ttlSeconds: Number.parseInt(local.ttl, 10),
-        }),
-        options.json,
-      );
+      await executeCliCommand(options, "action.prepare", {
+        action_type: type,
+        payload,
+        ttl_seconds: Number.parseInt(local.ttl, 10),
+      });
     });
   action.command("list").action(async function actionCommand(this: Command) {
     const options = globalOptions(this);
@@ -411,12 +501,25 @@ export function createProgram(): Command {
     ) {
       const options = globalOptions(this);
       const local = this.opts() as { checksum: string };
-      if (options.dryRun) {
-        print({ dryRun: true, id, checksum: local.checksum }, options.json);
-        return;
-      }
-      const context = await createStudioContext(options.root);
-      print(await new PreparedActionService(context).confirm(id, local.checksum), options.json);
+      await executeCliCommand(options, "action.confirm", {
+        action_id: id,
+        payload_checksum: local.checksum,
+      });
+    });
+  action
+    .command("reconcile")
+    .argument("<id>", "Executed action id")
+    .requiredOption("--result <json>", "Observed reconciliation result")
+    .action(async function actionCommand(
+      this: Command & { opts(): { result: string } },
+      id: string,
+    ) {
+      const options = globalOptions(this);
+      const local = this.opts() as { result: string };
+      await executeCliCommand(options, "action.reconcile", {
+        action_id: id,
+        result: JSON.parse(local.result) as Record<string, unknown>,
+      });
     });
 
   const domainCommands = new Map<string, Command>();
@@ -457,13 +560,16 @@ export function createProgram(): Command {
     .action(async function action(this: Command, id: string) {
       const options = globalOptions(this);
       const local = this.opts() as { rationale: string; score: string; disqualify?: boolean };
-      const context = await createStudioContext(options.root);
-      const result = await new DomainCommandService(context).qualifyProspect(id, {
-        rationale: local.rationale,
-        score: Number.parseInt(local.score, 10),
-        qualified: !local.disqualify,
-      });
-      print(entityMutationResult("prospect.qualify", result), options.json);
+      await executeCliCommand(
+        options,
+        "prospect.qualify",
+        {
+          rationale: local.rationale,
+          score: Number.parseInt(local.score, 10),
+          qualified: !local.disqualify,
+        },
+        id,
+      );
     });
 
   domainCommands
@@ -475,15 +581,11 @@ export function createProgram(): Command {
     .action(async function action(this: Command) {
       const options = globalOptions(this);
       const local = this.opts() as { subject: string; channel: string; message: string };
-      const context = await createStudioContext(options.root);
-      print(
-        await new DomainCommandService(context).prepareCommunication({
-          subjectId: local.subject,
-          channel: local.channel,
-          message: local.message,
-        }),
-        options.json,
-      );
+      await executeCliCommand(options, "communication.prepare", {
+        subject_id: local.subject,
+        channel: local.channel,
+        message: local.message,
+      });
     });
 
   domainCommands
@@ -507,17 +609,15 @@ export function createProgram(): Command {
         command?: string;
         checksum?: string;
       };
-      const context = await createStudioContext(options.root);
-      const result = await new DomainCommandService(context).registerEvidence({
+      await executeCliCommand(options, "evidence.register", {
         title: local.title,
-        evidenceType: local.type,
-        ...(local.subject ? { subjectId: local.subject } : {}),
+        evidence_type: local.type,
+        ...(local.subject ? { subject_id: local.subject } : {}),
         ...(local.path ? { path: local.path } : {}),
         ...(local.url ? { url: local.url } : {}),
         ...(local.command ? { command: local.command } : {}),
         ...(local.checksum ? { checksum: local.checksum } : {}),
       });
-      print(entityMutationResult("evidence.register", result), options.json);
     });
 
   domainCommands
@@ -528,12 +628,10 @@ export function createProgram(): Command {
     .action(async function action(this: Command, opportunityId: string) {
       const options = globalOptions(this);
       const local = this.opts() as { title?: string };
-      const context = await createStudioContext(options.root);
-      const result = await new DomainCommandService(context).createEngagementFromOpportunity(
-        opportunityId,
-        local.title,
-      );
-      print(entityMutationResult("engagement.create-from-opportunity", result), options.json);
+      await executeCliCommand(options, "engagement.create-from-opportunity", {
+        opportunity_id: opportunityId,
+        ...(local.title ? { title: local.title } : {}),
+      });
     });
 
   domainCommands
@@ -544,12 +642,10 @@ export function createProgram(): Command {
     .action(async function action(this: Command, opportunityId: string) {
       const options = globalOptions(this);
       const local = this.opts() as { title?: string };
-      const context = await createStudioContext(options.root);
-      const result = await new DomainCommandService(context).prepareProposal(
-        opportunityId,
-        local.title,
-      );
-      print(entityMutationResult("proposal.prepare", result), options.json);
+      await executeCliCommand(options, "proposal.prepare", {
+        opportunity_id: opportunityId,
+        ...(local.title ? { title: local.title } : {}),
+      });
     });
 
   domainCommands
@@ -561,13 +657,11 @@ export function createProgram(): Command {
     .action(async function action(this: Command) {
       const options = globalOptions(this);
       const local = this.opts() as { title: string; source: string; organization?: string };
-      const context = await createStudioContext(options.root);
-      const result = await new DomainCommandService(context).prepareApplication({
+      await executeCliCommand(options, "application.prepare", {
         title: local.title,
-        sourceUrl: local.source,
-        ...(local.organization ? { organizationId: local.organization } : {}),
+        source_url: local.source,
+        ...(local.organization ? { organization_id: local.organization } : {}),
       });
-      print(entityMutationResult("application.prepare", result), options.json);
     });
 
   domainCommands
@@ -578,12 +672,10 @@ export function createProgram(): Command {
     .action(async function action(this: Command, productId: string) {
       const options = globalOptions(this);
       const local = this.opts() as { version: string };
-      const context = await createStudioContext(options.root);
-      const result = await new DomainCommandService(context).prepareRelease(
-        productId,
-        local.version,
-      );
-      print(entityMutationResult("release.prepare", result), options.json);
+      await executeCliCommand(options, "release.prepare", {
+        product_id: productId,
+        version: local.version,
+      });
     });
 
   domainCommands
@@ -594,11 +686,89 @@ export function createProgram(): Command {
     .action(async function action(this: Command, paymentId: string) {
       const options = globalOptions(this);
       const local = this.opts() as { reference: string };
-      const context = await createStudioContext(options.root);
-      const result = await new DomainCommandService(context).reconcilePayment(paymentId, {
-        reference: local.reference,
+      await executeCliCommand(
+        options,
+        "payment.reconcile",
+        {
+          payment_id: paymentId,
+          reference: local.reference,
+        },
+        paymentId,
+      );
+    });
+
+  domainCommands
+    .get("case")
+    ?.command("create-from-evidence")
+    .requiredOption("--evidence <id>")
+    .requiredOption("--title <title>")
+    .option("--summary <summary>")
+    .option("--url <url>")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        evidence: string;
+        title: string;
+        summary?: string;
+        url?: string;
+      };
+      await executeCliCommand(options, "case.create-from-evidence", {
+        evidence_id: local.evidence,
+        title: local.title,
+        ...(local.summary ? { summary: local.summary } : {}),
+        ...(local.url ? { case_url: local.url } : {}),
       });
-      print(entityMutationResult("payment.reconcile", result), options.json);
+    });
+
+  domainCommands
+    .get("project")
+    ?.command("register-repo")
+    .argument("<project-id>")
+    .requiredOption("--title <title>")
+    .requiredOption("--path <path>")
+    .option("--branch <branch>")
+    .option("--remote-policy <policy>", "allowed, forbidden or no-remote-in-v1", "allowed")
+    .action(async function action(this: Command, projectId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        title: string;
+        path: string;
+        branch?: string;
+        remotePolicy: string;
+      };
+      await executeCliCommand(options, "project.register-repo", {
+        project_id: projectId,
+        title: local.title,
+        repository_path: local.path,
+        ...(local.branch ? { branch: local.branch } : {}),
+        remote_policy: local.remotePolicy,
+      });
+    });
+
+  domainCommands
+    .get("agentRun")
+    ?.command("handoff")
+    .requiredOption("--task <id>")
+    .requiredOption("--title <title>")
+    .requiredOption("--objective <text>")
+    .requiredOption("--summary <text>")
+    .option("--repository <id...>")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        task: string;
+        title: string;
+        objective: string;
+        summary: string;
+        repository?: string[];
+      };
+      await executeCliCommand(options, "handoff.create", {
+        task_id: local.task,
+        title: local.title,
+        objective: local.objective,
+        summary: local.summary,
+        repository_ids: local.repository ?? [],
+      });
     });
 
   const repo = program
@@ -844,14 +1014,7 @@ function addDomainCommand(program: Command, alias: string): Command {
         classification: local.classification as Classification,
         ...(local.summary ? { summary: local.summary } : {}),
       };
-      if (options.dryRun) {
-        print({ dryRun: true, entity: createEntity(input) }, options.json);
-        return;
-      }
-      const context = await createStudioContext(options.root);
-      const service = new EntityService(context);
-      const created = await service.create(input);
-      print(entityMutationResult("entity.create", created), options.json);
+      await executeCliCommand(options, "entity.create", input);
     });
   return domain;
 }

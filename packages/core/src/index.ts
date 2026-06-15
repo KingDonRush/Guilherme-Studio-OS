@@ -1028,6 +1028,7 @@ export async function rebuildProjection(root = process.cwd()): Promise<{
   return context.projection.rebuild(files, await context.events.list());
 }
 
+export { executeStudioCommand } from "./command-runtime.js";
 export {
   type CommandRequirement,
   classifyStudioError,
