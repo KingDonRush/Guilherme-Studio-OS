@@ -160,45 +160,59 @@ Each material decision records:
 - **Rationale:** renaming early creates path churn without architectural value.
 - **Authority:** migration design.
 
-## Recommended Decisions Awaiting Spikes
+## Accepted Technical Decisions
 
 ### STUDIO-016: TypeScript platform
 
-- **Status:** proposed
+- **Status:** accepted
+- **Date:** 2026-06-14
 - **Decision:** TypeScript, Node 24 LTS, npm workspaces, and Zod 4.
-- **Evidence required:** RP-001 spike and package/distribution proof.
-- **Fallback:** preserve language-independent contracts and choose another
-  runtime.
+- **Evidence:** reproducible workspace typecheck, test, lint and build pipeline.
+- **Authority:** implementation spike accepted by Guilherme's approved V1 plan.
 
 ### STUDIO-017: CLI parser
 
-- **Status:** proposed
+- **Status:** accepted
+- **Date:** 2026-06-14
 - **Decision:** Commander with an internal typed command registry rather than
   oclif or a custom parser.
-- **Evidence required:** RP-002 spike.
+- **Evidence:** nested commands, global options, machine output and isolated
+  handlers run in the current CLI.
+- **Authority:** implementation spike accepted by Guilherme's approved V1 plan.
 
 ### STUDIO-018: SQLite binding
 
-- **Status:** open
-- **Candidates:** Node `node:sqlite`, `better-sqlite3`.
-- **Evidence required:** Node 24 packaging, performance, rebuild, and upgrade
-  spike from RP-003.
+- **Status:** accepted
+- **Date:** 2026-06-14
+- **Decision:** use `better-sqlite3` for the V1 derived projection.
+- **Rationale:** the binding is stable on the pinned Node runtime and supports
+  deterministic transactional rebuilds without making SQLite canonical.
+- **Evidence:** projection creation, checksum inspection and rebuild tests.
+- **Authority:** implementation spike accepted by Guilherme's approved V1 plan.
 
 ### STUDIO-019: MCP SDK version
 
-- **Status:** proposed and time-sensitive
+- **Status:** accepted
+- **Date:** 2026-06-14
 - **Decision:** official TypeScript SDK v1.x for V1, isolated behind the MCP
   package.
-- **Evidence required:** MCP Inspector spike and v2 release recheck immediately
-  before implementation.
+- **Evidence:** stdio server exposes resources and governed tools without
+  leaking core implementation.
+- **Reconsideration trigger:** planned SDK v2 becomes stable and offers a
+  migration path with no contract regression.
+- **Authority:** implementation spike accepted by Guilherme's approved V1 plan.
 
 ### STUDIO-020: Large asset storage
 
-- **Status:** open
-- **Question:** keep in Git, use Git LFS, move private sources to encrypted
-  backup, or split by owner repository.
-- **Evidence required:** inventory of `docs/assets/`, distribution needs,
-  restore behavior, and repository cost.
+- **Status:** accepted
+- **Date:** 2026-06-14
+- **Decision:** source raster assets remain under ignored
+  `runtime/assets/sources`; approved optimized WebP and legitimate SVG may be
+  versioned with manifest evidence under their owning domain.
+- **Consequence:** no Git LFS dependency in V1.
+- **Reconsideration trigger:** approved production assets make repository size
+  or distribution cost operationally harmful.
+- **Authority:** Guilherme's approved asset policy and V1 plan.
 
 ## Explicit Non-Decisions
 

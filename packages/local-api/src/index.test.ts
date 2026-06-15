@@ -35,10 +35,14 @@ describe("local API", () => {
     });
     expect(created.statusCode).toBe(200);
     expect(created.json()).toMatchObject({
-      ok: true,
-      action: "entity.create",
-      data: { kind: "task" },
-      errors: [],
+      api_version: "studio.guilherme.dev/v1",
+      status: "ok",
+      result: {
+        action: "entity.create",
+        entity: { kind: "task" },
+      },
+      warnings: [],
+      required_actions: [],
     });
     const prospect = await app.inject({
       method: "POST",
@@ -46,7 +50,7 @@ describe("local API", () => {
       headers,
       payload: { kind: "prospect", title: "Qualified agency" },
     });
-    const prospectId = prospect.json().entity_id as string;
+    const prospectId = prospect.json().result.entity_id as string;
     const qualification = await app.inject({
       method: "POST",
       url: `/api/v1/prospects/${prospectId}/qualify`,
@@ -54,9 +58,11 @@ describe("local API", () => {
       payload: { rationale: "Needs Elementor implementation capacity", score: 88 },
     });
     expect(qualification.json()).toMatchObject({
-      ok: true,
-      action: "prospect.qualify",
-      entity_id: prospectId,
+      status: "ok",
+      result: {
+        action: "prospect.qualify",
+        entity_id: prospectId,
+      },
     });
 
     const prepared = await app.inject({
@@ -69,7 +75,7 @@ describe("local API", () => {
       },
     });
     const action = prepared.json();
-    expect(action.status).toBe("prepared");
+    expect(action.status).toBe("awaiting_confirmation");
 
     const confirmed = await app.inject({
       method: "POST",

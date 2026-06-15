@@ -67,6 +67,39 @@ export const ENTITY_PREFIX: Record<EntityKind, string> = {
 export const ClassificationSchema = z.enum(["public", "internal", "confidential", "secret"]);
 export type Classification = z.infer<typeof ClassificationSchema>;
 
+export const CapabilitySchema = z.enum([
+  "entity.read",
+  "entity.write",
+  "entity.transition",
+  "evidence.register",
+  "repository.inspect",
+  "repository.mutate",
+  "environment.inspect",
+  "environment.mutate",
+  "action.prepare",
+  "action.confirm",
+  "action.execute",
+  "action.reconcile",
+  "external.execute",
+  "destructive.execute",
+  "public.publish",
+  "finance.reconcile",
+]);
+export type Capability = z.infer<typeof CapabilitySchema>;
+
+export const ActorSchema = z
+  .object({
+    id: z.string().min(3),
+    type: z.enum(["human", "agent", "cli", "panel", "automation", "adapter"]),
+    capabilities: z.array(CapabilitySchema).default([]),
+    classification_ceiling: ClassificationSchema.default("internal"),
+    delegated_by: z.string().optional(),
+    delegated_at: z.string().datetime().optional(),
+    expires_at: z.string().datetime().optional(),
+  })
+  .strict();
+export type Actor = z.infer<typeof ActorSchema>;
+
 export const LifecycleStateSchema = z.enum([
   "draft",
   "active",
@@ -87,6 +120,7 @@ export const RelationSchema = z
     type: z.string().min(1),
     target_id: z.string().min(1),
     note: z.string().optional(),
+    metadata: z.record(z.string(), z.unknown()).optional(),
   })
   .strict();
 
@@ -219,9 +253,13 @@ export const EventSchema = z
       .default("studio.guilherme.dev/event-v1"),
     id: z.string().min(3),
     type: z.string().min(1),
+    request_id: z.string().optional(),
+    command_id: z.string().optional(),
+    correlation_id: z.string().optional(),
     entity_id: z.string().optional(),
     actor_id: z.string().optional(),
     created_at: z.string().datetime(),
+    classification: ClassificationSchema.default("internal"),
     data: z.record(z.string(), z.unknown()).default({}),
   })
   .strict();
@@ -229,12 +267,34 @@ export type StudioEvent = z.infer<typeof EventSchema>;
 
 export const GateDecisionSchema = z
   .object({
+    gate: z.string().default("general"),
     result: z.enum(["allow", "warn", "require_confirmation", "block"]),
     reason: z.string(),
+    capability_required: CapabilitySchema.optional(),
     evidence_required: z.array(z.string()).default([]),
+    confirmation_scope: z.string().optional(),
   })
   .strict();
 export type GateDecision = z.infer<typeof GateDecisionSchema>;
+
+export const CommandEnvelopeSchema = z
+  .object({
+    api_version: z
+      .literal("studio.guilherme.dev/command-v1")
+      .default("studio.guilherme.dev/command-v1"),
+    id: z.string().min(3),
+    request_id: z.string().min(3),
+    command: z.string().min(1),
+    actor: ActorSchema,
+    target_id: z.string().optional(),
+    expected_revision: z.number().int().min(1).optional(),
+    idempotency_key: z.string().min(8).max(200).optional(),
+    dry_run: z.boolean().default(false),
+    payload: z.record(z.string(), z.unknown()).default({}),
+    created_at: z.string().datetime(),
+  })
+  .strict();
+export type CommandEnvelope = z.infer<typeof CommandEnvelopeSchema>;
 
 export const PreparedActionSchema = z
   .object({
@@ -243,32 +303,118 @@ export const PreparedActionSchema = z
       .default("studio.guilherme.dev/prepared-action-v1"),
     id: z.string().min(3),
     action_type: z.string().min(1),
+    provider: z.string().optional(),
+    target: z.string().optional(),
     created_at: z.string().datetime(),
+    updated_at: z.string().datetime(),
     expires_at: z.string().datetime(),
     actor_id: z.string().optional(),
+    source_revisions: z.record(z.string(), z.number().int().min(1)).default({}),
     payload: z.record(z.string(), z.unknown()).default({}),
     payload_checksum: z.string().regex(/^[a-f0-9]{64}$/),
     status: z
-      .enum(["prepared", "confirmed", "executed", "expired", "cancelled"])
-      .default("prepared"),
+      .enum([
+        "draft",
+        "validated",
+        "awaiting_confirmation",
+        "confirmed",
+        "executing",
+        "executed",
+        "reconciled",
+        "failed",
+        "expired",
+        "cancelled",
+        "superseded",
+      ])
+      .default("awaiting_confirmation"),
+    confirmation_id: z.string().optional(),
     confirmed_at: z.string().datetime().optional(),
+    execution_started_at: z.string().datetime().optional(),
     executed_at: z.string().datetime().optional(),
+    reconciled_at: z.string().datetime().optional(),
+    failure: z.string().optional(),
     reconciliation: z.record(z.string(), z.unknown()).optional(),
   })
   .strict();
 export type PreparedAction = z.infer<typeof PreparedActionSchema>;
 
+export const EvidenceReferenceSchema = z
+  .object({
+    id: z.string().min(3),
+    claim: z.string().optional(),
+    reliability: z.enum(["observed", "verified", "reported", "inferred"]).default("observed"),
+    checksum: z
+      .string()
+      .regex(/^[a-f0-9]{64}$/)
+      .optional(),
+  })
+  .strict();
+export type EvidenceReference = z.infer<typeof EvidenceReferenceSchema>;
+
+export const ResultStatusSchema = z.enum([
+  "ok",
+  "warning",
+  "confirmation_required",
+  "blocked",
+  "conflict",
+  "error",
+]);
+export type ResultStatus = z.infer<typeof ResultStatusSchema>;
+
+export const StudioErrorSchema = z
+  .object({
+    code: z.string().min(1),
+    message: z.string().min(1),
+    details: z.record(z.string(), z.unknown()).default({}),
+  })
+  .strict();
+export type StudioError = z.infer<typeof StudioErrorSchema>;
+
 export const ResultEnvelopeSchema = z
   .object({
-    ok: z.boolean(),
-    action: z.string().min(1),
-    entity_id: z.string().optional(),
-    revision: z.number().int().min(1).optional(),
-    data: z.unknown().optional(),
-    errors: z.array(z.string()).default([]),
+    api_version: z.literal("studio.guilherme.dev/v1").default("studio.guilherme.dev/v1"),
+    request_id: z.string().min(3),
+    status: ResultStatusSchema,
+    result: z.unknown().nullable().default(null),
+    warnings: z.array(z.string()).default([]),
+    required_actions: z.array(z.string()).default([]),
+    evidence: z.array(EvidenceReferenceSchema).default([]),
+    projection_revision: z.number().int().min(0).default(0),
+    error: StudioErrorSchema.optional(),
   })
   .strict();
 export type ResultEnvelope = z.infer<typeof ResultEnvelopeSchema>;
+
+export const AdapterRequestSchema = z
+  .object({
+    api_version: z
+      .literal("studio.guilherme.dev/adapter-request-v1")
+      .default("studio.guilherme.dev/adapter-request-v1"),
+    request_id: z.string().min(3),
+    adapter: z.string().min(1),
+    operation: z.string().min(1),
+    actor: ActorSchema,
+    dry_run: z.boolean().default(false),
+    payload: z.record(z.string(), z.unknown()).default({}),
+  })
+  .strict();
+export type AdapterRequest = z.infer<typeof AdapterRequestSchema>;
+
+export const AdapterResultSchema = z
+  .object({
+    api_version: z
+      .literal("studio.guilherme.dev/adapter-result-v1")
+      .default("studio.guilherme.dev/adapter-result-v1"),
+    request_id: z.string().min(3),
+    adapter: z.string().min(1),
+    operation: z.string().min(1),
+    status: z.enum(["ok", "warning", "blocked", "error"]),
+    data: z.unknown().nullable().default(null),
+    evidence: z.array(EvidenceReferenceSchema).default([]),
+    error: StudioErrorSchema.optional(),
+  })
+  .strict();
+export type AdapterResult = z.infer<typeof AdapterResultSchema>;
 
 export function nowIso(): string {
   return new Date().toISOString();
@@ -287,7 +433,10 @@ export function createEntityId(kind: EntityKind, seed?: string, createdAt?: stri
   return `${prefix}_${stamp}_${slugify(seed)}`;
 }
 
-export function createRecordId(prefix: "act" | "cmd" | "evt", seed?: string): string {
+export function createRecordId(
+  prefix: "act" | "cmd" | "evt" | "req" | "cnf",
+  seed?: string,
+): string {
   const stamp = dateStamp();
   if (!seed) {
     return `${prefix}_${stamp}_${randomUUID().replaceAll("-", "").slice(0, 12)}`;
@@ -542,5 +691,74 @@ export const KIND_DIRECTORY: Record<EntityKind, string> = {
 };
 
 export function stableChecksum(value: unknown): string {
-  return createHash("sha256").update(JSON.stringify(value)).digest("hex");
+  return createHash("sha256").update(stableStringify(value)).digest("hex");
+}
+
+export function stableStringify(value: unknown): string {
+  if (Array.isArray(value)) {
+    return `[${value.map((item) => stableStringify(item)).join(",")}]`;
+  }
+  if (value && typeof value === "object") {
+    const entries = Object.entries(value as Record<string, unknown>)
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([key, item]) => `${JSON.stringify(key)}:${stableStringify(item)}`);
+    return `{${entries.join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
+export function createActor(input: Partial<Actor> & Pick<Actor, "id" | "type">): Actor {
+  return ActorSchema.parse({
+    capabilities: [],
+    classification_ceiling: "internal",
+    ...input,
+  });
+}
+
+export function createCommandEnvelope(input: {
+  command: string;
+  actor: Actor;
+  payload?: Record<string, unknown>;
+  targetId?: string;
+  expectedRevision?: number;
+  idempotencyKey?: string;
+  dryRun?: boolean;
+  requestId?: string;
+}): CommandEnvelope {
+  const createdAt = nowIso();
+  const requestId = input.requestId ?? createRecordId("req");
+  return CommandEnvelopeSchema.parse({
+    id: createRecordId("cmd", `${requestId}:${input.command}`),
+    request_id: requestId,
+    command: input.command,
+    actor: input.actor,
+    target_id: input.targetId,
+    expected_revision: input.expectedRevision,
+    idempotency_key: input.idempotencyKey,
+    dry_run: input.dryRun ?? false,
+    payload: input.payload ?? {},
+    created_at: createdAt,
+  });
+}
+
+export function createResultEnvelope(input: {
+  requestId?: string;
+  status?: ResultStatus;
+  result?: unknown;
+  warnings?: string[];
+  requiredActions?: string[];
+  evidence?: EvidenceReference[];
+  projectionRevision?: number;
+  error?: StudioError;
+}): ResultEnvelope {
+  return ResultEnvelopeSchema.parse({
+    request_id: input.requestId ?? createRecordId("req"),
+    status: input.status ?? "ok",
+    result: input.result ?? null,
+    warnings: input.warnings ?? [],
+    required_actions: input.requiredActions ?? [],
+    evidence: input.evidence ?? [],
+    projection_revision: input.projectionRevision ?? 0,
+    error: input.error,
+  });
 }

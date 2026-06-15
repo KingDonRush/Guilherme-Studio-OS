@@ -1,10 +1,16 @@
 import { mkdir, readdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import {
+  type Actor,
   assertNoSecrets,
+  type Capability,
+  type CommandEnvelope,
+  createActor,
+  createCommandEnvelope,
   createEntity,
   createEntityId,
   createRecordId,
+  createResultEnvelope,
   type EntityKind,
   EventSchema,
   entityId,
@@ -17,7 +23,6 @@ import {
   type PreparedAction,
   PreparedActionSchema,
   type ResultEnvelope,
-  ResultEnvelopeSchema,
   type StudioEntity,
   type StudioEvent,
   stableChecksum,
@@ -74,10 +79,19 @@ export class EntityService {
     return entity;
   }
 
-  async update(id: string, mutate: (entity: StudioEntity) => unknown): Promise<StudioEntity> {
+  async update(
+    id: string,
+    mutate: (entity: StudioEntity) => unknown,
+    expectedRevision?: number,
+  ): Promise<StudioEntity> {
     const current = await this.context.entities.get(id);
     if (!current) {
       throw new Error(`Entity not found: ${id}`);
+    }
+    if (expectedRevision !== undefined && entityRevision(current.entity) !== expectedRevision) {
+      throw new Error(
+        `Revision conflict for ${id}: expected ${expectedRevision}, got ${entityRevision(current.entity)}`,
+      );
     }
     const mutated = mutate(current.entity);
     if (!mutated || typeof mutated !== "object") {
@@ -138,13 +152,72 @@ export class EntityService {
 }
 
 export function entityMutationResult(action: string, entity: StudioEntity): ResultEnvelope {
-  return ResultEnvelopeSchema.parse({
-    ok: true,
-    action,
-    entity_id: entityId(entity),
-    revision: entityRevision(entity),
-    data: entity,
-    errors: [],
+  return createResultEnvelope({
+    result: {
+      action,
+      entity_id: entityId(entity),
+      revision: entityRevision(entity),
+      entity,
+    },
+  });
+}
+
+const CAPABILITY_LEVEL: Record<string, number> = {
+  public: 0,
+  internal: 1,
+  confidential: 2,
+  secret: 3,
+};
+
+export class AuthorityService {
+  assertCapability(actor: Actor, capability: Capability, classification = "internal"): void {
+    if (actor.expires_at && Date.parse(actor.expires_at) <= Date.now()) {
+      throw new Error(`Actor delegation expired: ${actor.id}`);
+    }
+    if (!actor.capabilities.includes(capability)) {
+      throw new Error(`Actor ${actor.id} lacks capability ${capability}`);
+    }
+    const ceiling = CAPABILITY_LEVEL[actor.classification_ceiling] ?? -1;
+    const requested = CAPABILITY_LEVEL[classification] ?? Number.POSITIVE_INFINITY;
+    if (requested > ceiling) {
+      throw new Error(`Actor ${actor.id} classification ceiling does not allow ${classification}`);
+    }
+  }
+}
+
+export function operatorActor(operatorId: string): Actor {
+  return createActor({
+    id: operatorId,
+    type: "human",
+    classification_ceiling: "confidential",
+    capabilities: [
+      "entity.read",
+      "entity.write",
+      "entity.transition",
+      "evidence.register",
+      "repository.inspect",
+      "repository.mutate",
+      "environment.inspect",
+      "environment.mutate",
+      "action.prepare",
+      "action.confirm",
+      "action.execute",
+      "action.reconcile",
+      "external.execute",
+      "destructive.execute",
+      "public.publish",
+      "finance.reconcile",
+    ],
+  });
+}
+
+export function createStudioCommand(
+  context: StudioContext,
+  input: Omit<Parameters<typeof createCommandEnvelope>[0], "actor"> & { actor?: Actor },
+): CommandEnvelope {
+  return createCommandEnvelope({
+    ...input,
+    actor: input.actor ?? operatorActor(context.config.operator_id),
   });
 }
 
@@ -233,6 +306,9 @@ export class PreparedActionService {
     payload: Record<string, unknown>;
     actorId?: string;
     ttlSeconds?: number;
+    provider?: string;
+    target?: string;
+    sourceRevisions?: Record<string, number>;
   }): Promise<PreparedAction> {
     assertNoSecrets(input.payload);
     const createdAt = nowIso();
@@ -243,12 +319,16 @@ export class PreparedActionService {
         `${input.actionType}:${createdAt}:${JSON.stringify(input.payload)}`,
       ),
       action_type: input.actionType,
+      provider: input.provider,
+      target: input.target,
       created_at: createdAt,
+      updated_at: createdAt,
       expires_at: new Date(Date.parse(createdAt) + (input.ttlSeconds ?? 900) * 1000).toISOString(),
       actor_id: input.actorId ?? this.context.config.operator_id,
+      source_revisions: input.sourceRevisions ?? {},
       payload: input.payload,
       payload_checksum: stableChecksum(input.payload),
-      status: "prepared",
+      status: "awaiting_confirmation",
     });
     await this.write(action);
     return action;
@@ -258,8 +338,15 @@ export class PreparedActionService {
     const action = PreparedActionSchema.parse(
       JSON.parse(await readFile(path.join(this.directory, `${id}.json`), "utf8")),
     );
-    if (action.status === "prepared" && Date.parse(action.expires_at) <= Date.now()) {
-      const expired = PreparedActionSchema.parse({ ...action, status: "expired" });
+    if (
+      ["draft", "validated", "awaiting_confirmation", "confirmed"].includes(action.status) &&
+      Date.parse(action.expires_at) <= Date.now()
+    ) {
+      const expired = PreparedActionSchema.parse({
+        ...action,
+        status: "expired",
+        updated_at: nowIso(),
+      });
       await this.write(expired);
       return expired;
     }
@@ -276,7 +363,7 @@ export class PreparedActionService {
 
   async confirm(id: string, payloadChecksum: string): Promise<PreparedAction> {
     const action = await this.get(id);
-    if (action.status !== "prepared") {
+    if (action.status !== "awaiting_confirmation") {
       throw new Error(`Prepared action cannot be confirmed from status ${action.status}`);
     }
     if (action.payload_checksum !== payloadChecksum) {
@@ -285,6 +372,8 @@ export class PreparedActionService {
     const confirmed = PreparedActionSchema.parse({
       ...action,
       status: "confirmed",
+      updated_at: nowIso(),
+      confirmation_id: createRecordId("cnf", `${id}:${payloadChecksum}:${nowIso()}`),
       confirmed_at: nowIso(),
     });
     await this.write(confirmed);
@@ -299,15 +388,72 @@ export class PreparedActionService {
     if (action.status !== "confirmed") {
       throw new Error(`Prepared action must be confirmed before execution: ${id}`);
     }
-    const reconciliation = await executor(action);
-    const executed = PreparedActionSchema.parse({
+    const executing = PreparedActionSchema.parse({
       ...action,
-      status: "executed",
-      executed_at: nowIso(),
-      reconciliation,
+      status: "executing",
+      updated_at: nowIso(),
+      execution_started_at: nowIso(),
     });
-    await this.write(executed);
-    return executed;
+    await this.write(executing);
+    try {
+      const execution = await executor(executing);
+      const executed = PreparedActionSchema.parse({
+        ...executing,
+        status: "executed",
+        updated_at: nowIso(),
+        executed_at: nowIso(),
+        reconciliation: execution,
+      });
+      await this.write(executed);
+      return executed;
+    } catch (error) {
+      const failed = PreparedActionSchema.parse({
+        ...executing,
+        status: "failed",
+        updated_at: nowIso(),
+        failure: error instanceof Error ? error.message : String(error),
+      });
+      await this.write(failed);
+      throw error;
+    }
+  }
+
+  async reconcile(id: string, result: Record<string, unknown>): Promise<PreparedAction> {
+    const action = await this.get(id);
+    if (action.status !== "executed") {
+      throw new Error(`Prepared action must be executed before reconciliation: ${id}`);
+    }
+    const reconciled = PreparedActionSchema.parse({
+      ...action,
+      status: "reconciled",
+      updated_at: nowIso(),
+      reconciled_at: nowIso(),
+      reconciliation: {
+        ...(action.reconciliation ?? {}),
+        ...result,
+      },
+    });
+    await this.write(reconciled);
+    return reconciled;
+  }
+
+  async revise(id: string, payload: Record<string, unknown>): Promise<PreparedAction> {
+    assertNoSecrets(payload);
+    const action = await this.get(id);
+    if (!["awaiting_confirmation", "confirmed"].includes(action.status)) {
+      throw new Error(`Prepared action cannot be revised from status ${action.status}`);
+    }
+    const revised = PreparedActionSchema.parse({
+      ...action,
+      payload,
+      payload_checksum: stableChecksum(payload),
+      status: "awaiting_confirmation",
+      confirmation_id: undefined,
+      confirmed_at: undefined,
+      updated_at: nowIso(),
+    });
+    await this.write(revised);
+    return revised;
   }
 
   private async write(action: PreparedAction): Promise<void> {
@@ -665,9 +811,29 @@ export class GateEngine {
     requiredEvidence?: string[];
     paymentStatus?: string;
     deliveryStatus?: string;
+    actor?: Actor;
+    capability?: Capability;
   }): GateDecision {
+    if (input.actor && input.capability) {
+      try {
+        new AuthorityService().assertCapability(
+          input.actor,
+          input.capability,
+          input.classification ?? "internal",
+        );
+      } catch (error) {
+        return {
+          gate: "authority",
+          result: "block",
+          reason: error instanceof Error ? error.message : String(error),
+          capability_required: input.capability,
+          evidence_required: [],
+        };
+      }
+    }
     if (input.classification === "secret") {
       return {
+        gate: "secret-data",
         result: "block",
         reason: "Secret material cannot be written to canonical Studio files.",
         evidence_required: [],
@@ -679,6 +845,7 @@ export class GateEngine {
       input.expectedRevision !== input.actualRevision
     ) {
       return {
+        gate: "stale-revision",
         result: "block",
         reason: "The entity changed after the command was prepared.",
         evidence_required: ["fresh entity revision"],
@@ -689,6 +856,7 @@ export class GateEngine {
     );
     if (missingEvidence.length > 0) {
       return {
+        gate: "missing-evidence",
         result: "block",
         reason: `Required evidence is missing: ${missingEvidence.join(", ")}`,
         evidence_required: missingEvidence,
@@ -696,6 +864,7 @@ export class GateEngine {
     }
     if (input.deliveryStatus === "done" && input.paymentStatus && input.paymentStatus !== "paid") {
       return {
+        gate: "payment-delivery",
         result: "warn",
         reason: "Delivery is complete while payment is still pending.",
         evidence_required: ["invoice status", "delivery acceptance"],
@@ -703,19 +872,24 @@ export class GateEngine {
     }
     if (input.external || input.destructive) {
       return {
+        gate: input.destructive ? "destructive" : "external",
         result: "require_confirmation",
         reason: "External or destructive actions must be prepared, confirmed and reconciled.",
         evidence_required: ["prepared action", "human confirmation", "reconciliation result"],
+        confirmation_scope: input.action,
       };
     }
     if (input.publicClaim || input.action.includes("publish") || input.action.includes("send")) {
       return {
+        gate: "public-claim",
         result: "require_confirmation",
         reason: "Public communication requires explicit confirmation.",
         evidence_required: ["final content", "target channel", "confirmation"],
+        confirmation_scope: input.action,
       };
     }
     return {
+      gate: "local-reversible",
       result: "allow",
       reason: "Local reversible action within canonical files.",
       evidence_required: [],

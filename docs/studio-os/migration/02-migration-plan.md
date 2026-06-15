@@ -1,6 +1,6 @@
 # Migration Plan to Guilherme Studio OS
 
-Status: planned, not authorized for execution
+Status: authorized and in progress on `codex/studio-os-v1`
 Migration type: in-place root transformation with staged ownership changes
 
 ## Objective
@@ -89,9 +89,8 @@ No mutation has occurred.
 1. Classify every modified and untracked root item.
 2. Commit coherent current work in its correct repository or create a local
    immutable checkpoint when not ready for commit.
-3. Configure a private remote for the coordinator, subject to separate
-   confirmation.
-4. Push approved coordinator checkpoints.
+3. Preserve a local immutable mirror for the coordinator.
+4. Keep the coordinator without a remote during V1.
 5. Checkpoint each owned plugin repository.
 6. Preserve and classify `elementor-mcp` local modifications.
 7. Back up WordPress database, uploads/volumes, and non-reproducible state.

@@ -1,14 +1,17 @@
 import { mkdtemp, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { createActor } from "@guilherme-studio/schemas";
 import { describe, expect, it } from "vitest";
 import YAML from "yaml";
 import {
+  AuthorityService,
   createStudioContext,
   createWorkflowFixtureEntities,
   DomainCommandService,
   EntityService,
   LifecycleEngine,
+  operatorActor,
   PreparedActionService,
   type StudioContext,
   verifyWorkflowCoverage,
@@ -45,6 +48,25 @@ describe("core governance", () => {
     const executed = await service.execute(prepared.id, async () => ({ message_id: "local-test" }));
     expect(executed.status).toBe("executed");
     expect(executed.reconciliation).toEqual({ message_id: "local-test" });
+
+    const reconciled = await service.reconcile(prepared.id, { delivered: true });
+    expect(reconciled.status).toBe("reconciled");
+    expect(reconciled.reconciliation).toMatchObject({
+      message_id: "local-test",
+      delivered: true,
+    });
+  });
+
+  it("uses default deny when an actor lacks a required capability", () => {
+    const actor = operatorActor("per_20260614_guilherme-silva");
+    const restricted = createActor({
+      ...actor,
+      capabilities: ["entity.read"],
+    });
+
+    expect(() => new AuthorityService().assertCapability(restricted, "external.execute")).toThrow(
+      /lacks capability/,
+    );
   });
 
   it("creates an engagement only from a won opportunity", async () => {
