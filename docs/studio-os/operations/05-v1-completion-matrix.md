@@ -10,14 +10,14 @@ verification, operator verification, documentation, and durable evidence exist.
 | Area | Owner | Status | Evidence | Verification command | Remaining gap |
 |---|---|---|---|---|---|
 | Entity and relation contracts | `packages/schemas` | in progress | schema tests, generated catalog and `evd_20260615_prd-gates-and-coverage-verification` | `npm run test -- packages/schemas/src/index.test.ts` | complete per-domain workflow fixtures and keep new PRD fields covered by fixtures |
-| Commands, results and events | `packages/schemas`, `packages/core` | in progress | command runtime tests; `evd_20260615_prd-semantic-command-slice-verification` | `npm run test -- packages/core/src/command-runtime.test.ts` | broaden CLI/API/MCP equivalence fixtures across all PRD workflows |
+| Commands, results and events | `packages/schemas`, `packages/core` | in progress | command runtime tests; `evd_20260615_prd-semantic-command-slice-verification`; `evd_20260615_executable-workflow-fixtures-verification` | `npm run test -- packages/core/src/command-runtime.test.ts` | broaden API/MCP equivalence fixtures across all PRD workflows |
 | Authority and gates | `packages/core` | in progress | gate catalog tests and `evd_20260615_prd-gates-and-coverage-verification` | `npm run test -- packages/core/src/index.test.ts` | connect every gate to executable workflow fixtures and acceptance report |
 | Prepared actions | `packages/core` | in progress | exact checksum confirmation tests | `npm run test -- packages/core/src/index.test.ts` | panel exact-payload review and stale payload UI flow |
 | Canonical transactions | `packages/storage` | in progress | storage transaction tests | `npm run test -- packages/storage/src/index.test.ts` | expand crash/recovery matrix and event replay evidence |
 | Derived projection | `packages/storage` | in progress | rebuild checksum verification | `npm run studio -- sync --rebuild --verify --json` | expose stale projection recovery in panel/API diagnostics |
 | Economic next actions | `packages/core` | in progress | economic resolver tests | `npm run test -- packages/core/src/economics.test.ts` | domain-specific obligation ranking and intake-aware gaps |
 | Domain lifecycles | `packages/core` | in progress | lifecycle preconditions and semantic command tests; `evd_20260615_prd-semantic-command-slice-verification` | `npm run test -- packages/core/src/index.test.ts` | complete remaining domain-specific preconditions and fixture coverage |
-| CLI | `packages/cli` | in progress | semantic command smoke; `evd_20260615_prd-semantic-command-slice-verification` | `npm run studio -- --help` | add stable exit tests for every semantic command |
+| CLI | `packages/cli` | in progress | semantic command smoke; CLI equivalence tests; `evd_20260615_executable-workflow-fixtures-verification` | `npm run test -- packages/cli/src/index.test.ts` | add stable exit tests for every semantic command |
 | MCP | `packages/mcp` | in progress | MCP semantic tools build; `evd_20260615_prd-semantic-command-slice-verification` | `npm run build -w @guilherme-studio/mcp` | add context-pack prompts and MCP Inspector smoke transcript |
 | Local API | `packages/local-api` | in progress | local API tests | `npm run test -- packages/local-api/src/index.test.ts` | cover every mutating route through command runtime |
 | Panel | `apps/panel` | in progress | build and Playwright smoke; exact-payload review; `evd_20260615_prd-semantic-command-slice-verification` | `npm run build -w @guilherme-studio/panel` | complete domain-specific views and intake workflows |
@@ -26,7 +26,7 @@ verification, operator verification, documentation, and durable evidence exist.
 | GitHub adapter | `packages/adapters` | in progress | disabled and fake provider contract tests; `evd_20260615_adapter-health-and-fake-provider-verification` | `npm run test -- packages/adapters/src/index.test.ts` | reconcile fake-provider actions through prepared-action records |
 | Communication adapter | `packages/adapters` | in progress | disabled and fake provider contract tests; `evd_20260615_adapter-health-and-fake-provider-verification` | `npm run test -- packages/adapters/src/index.test.ts` | reconcile fake-provider actions through prepared-action records |
 | Coordinated backup | `packages/adapters` | in progress | backup manifests | `npm run studio -- backup --json` | restore rehearsal that reports all registered components |
-| Eight journeys | `packages/testing`, `packages/core` | in progress | workflow fixture check | `npm run studio -- workflow --fixtures --json` | executable CLI/API/MCP journey fixtures, not only kind coverage |
+| Eight journeys | `packages/testing`, `packages/core` | in progress | executable workflow fixture report and `evd_20260615_executable-workflow-fixtures-verification` | `npm run studio -- workflow --fixtures --execute --json` | add API/MCP smoke coverage over the executable workflow report |
 | Physical migration | root coordinator | in progress | renamed root and repository status | `npm run studio -- doctor --json` | path drift check green after final commit |
 | PRD coverage and intake | `packages/core`, interfaces | intake_required | coverage command, intake packet and `evd_20260615_prd-gates-and-coverage-verification` | `npm run studio -- coverage --json` | canonical records for PRDs with real data, collected through intake; capability coverage is separated from data readiness |
 | Operational acceptance | cross-package | in progress | V1 acceptance evidence and reconciliation evidence | full final gate command set | every row complete or explicitly deferred by decision |
@@ -119,3 +119,20 @@ Delivered capacity:
 - Evidence validation checks public claims, file/screenshot/backup checksums,
   mutable source handling and subject mismatch.
 - Schema catalog was regenerated after the new PRD contract fields were added.
+
+## Executable Workflow Fixture Slice
+
+On 2026-06-15, `tsk_20260615_implement-executable-workflow-fixtures`
+was created and completed for executable PRD workflow fixtures.
+
+Evidence:
+
+- `evd_20260615_executable-workflow-fixtures-verification`.
+
+Delivered capacity:
+
+- `studio workflow --fixtures --execute --json` executes all eight normative
+  journeys in temporary Studio roots.
+- Each fixture uses real Studio command envelopes and produces entities, events
+  and prepared actions where the workflow requires them.
+- CLI tests compare dry-run output against the core command runtime envelope.

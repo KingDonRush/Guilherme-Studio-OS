@@ -1,0 +1,26 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T22:03:29.890Z
+  id: tsk_20260615_implement-executable-workflow-fixtures
+  labels:
+    - studio-os
+    - prd-completion
+  revision: 1
+  schema_version: 1
+  slug: implement-executable-workflow-fixtures
+  updated_at: 2026-06-15T22:03:29.890Z
+relations: []
+spec:
+  acceptance:
+    - all eight normative journeys execute deterministic command fixtures
+    - CLI exposes workflow fixture execution
+    - CLI dry-run envelope is equivalent to the core command runtime
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Turns workflow coverage fixtures into executable Studio command journeys in temporary roots without touching real business data.
+  title: Implement executable workflow fixtures

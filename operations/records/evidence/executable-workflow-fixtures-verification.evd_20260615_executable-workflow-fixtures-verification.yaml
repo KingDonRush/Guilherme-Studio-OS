@@ -1,0 +1,30 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T22:03:29.890Z
+  id: evd_20260615_executable-workflow-fixtures-verification
+  labels:
+    - studio-os
+    - prd-completion
+  revision: 1
+  schema_version: 1
+  slug: executable-workflow-fixtures-verification
+  updated_at: 2026-06-15T22:03:29.890Z
+relations:
+  - target_id: tsk_20260615_implement-executable-workflow-fixtures
+    type: supports
+spec:
+  claims:
+    - The eight normative workflows execute through real Studio command fixtures.
+    - The CLI exposes workflow fixture execution with --fixtures --execute.
+    - CLI dry-run envelopes are tested against the core command runtime.
+  command: npm run typecheck && npm run test -- packages/core/src/index.test.ts packages/cli/src/index.test.ts && npm run lint && npm run studio -- workflow --fixtures --execute --json
+  evidence_type: command
+  observed_at: 2026-06-15T22:03:29.890Z
+  source_mutability: operator-observed
+  status: active
+  title: Executable workflow fixtures verification
+  validated_at: 2026-06-15T22:03:29.890Z

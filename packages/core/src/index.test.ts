@@ -11,6 +11,7 @@ import {
   DomainCommandService,
   EntityService,
   EvidenceClaimService,
+  executeWorkflowFixtures,
   gateCatalogIds,
   LifecycleEngine,
   operatorActor,
@@ -107,6 +108,20 @@ describe("core governance", () => {
 
     expect(verification).toHaveLength(8);
     expect(verification.every((workflow) => workflow.ok)).toBe(true);
+  });
+
+  it("executes all eight normative journeys through Studio commands", async () => {
+    const report = await executeWorkflowFixtures();
+
+    expect(report).toMatchObject({
+      ok: true,
+      mode: "executed-fixtures",
+    });
+    expect(report.workflows).toHaveLength(8);
+    expect(report.workflows.every((workflow) => workflow.steps.length > 0)).toBe(true);
+    expect(
+      report.workflows.every((workflow) => workflow.event_count >= workflow.steps.length),
+    ).toBe(true);
   });
 
   it("creates cases, repository links and handoffs through semantic commands", async () => {

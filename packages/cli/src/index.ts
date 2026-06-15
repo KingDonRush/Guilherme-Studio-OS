@@ -23,6 +23,7 @@ import {
   type DomainCommandService,
   evaluatePrdCoverage,
   executeStudioCommand,
+  executeWorkflowFixtures,
   kindFromAlias,
   operatorActor,
   PreparedActionService,
@@ -414,14 +415,42 @@ export function createProgram(): Command {
     .command("workflow")
     .description("Verify cross-domain journey coverage")
     .option("--fixtures", "Verify the normative journeys against canonical fixtures")
+    .option("--execute", "Execute deterministic fixture workflows in temporary Studio roots")
+    .option("--workflow <id>", "Execute or verify one workflow id")
     .action(async function action(this: Command) {
       const options = globalOptions(this);
-      const local = this.opts() as { fixtures?: boolean };
+      const local = this.opts() as { fixtures?: boolean; execute?: boolean; workflow?: string };
+      if (local.execute) {
+        if (!local.fixtures) {
+          print(
+            createResultEnvelope({
+              status: "error",
+              error: {
+                code: "invalid_input",
+                message: "Use --fixtures with --execute.",
+                details: {},
+              },
+            }),
+            options.json,
+            options.quiet,
+          );
+          process.exitCode = 2;
+          return;
+        }
+        const result = await executeWorkflowFixtures({
+          ...(local.workflow ? { workflowId: local.workflow } : {}),
+        });
+        print(result, options.json, options.quiet);
+        process.exitCode = result.ok ? 0 : 2;
+        return;
+      }
       const context = await createStudioContext(options.root);
       const entities = local.fixtures
         ? createWorkflowFixtureEntities()
         : (await context.entities.scan()).map((file) => file.entity);
-      const workflows = verifyWorkflowCoverage(entities);
+      const workflows = verifyWorkflowCoverage(entities).filter(
+        (workflow) => !local.workflow || workflow.id === local.workflow,
+      );
       const ok = workflows.every((workflow) => workflow.ok);
       print({ ok, mode: local.fixtures ? "fixtures" : "canonical", workflows }, options.json);
       process.exitCode = ok ? 0 : 2;
