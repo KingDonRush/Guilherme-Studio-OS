@@ -19,34 +19,63 @@ export interface GitRepositoryHealth {
   id: string;
   title: string;
   cwd: string;
+  gitRoot: string | null;
+  rootMismatch: boolean;
   branch: string;
+  expectedBranch?: string;
+  expectedBranchViolation: boolean;
+  head: string;
   shortStatus: string;
   hasRemote: boolean;
   isDirty: boolean;
   remotePolicy: "forbidden" | "allowed";
   remotePolicyViolation: boolean;
+  nestedRepositories: string[];
+  packageManager?: string;
+  packageScripts: Record<string, string>;
 }
 
 export async function inspectGitRepository(
-  input: Pick<GitRepositoryHealth, "id" | "title" | "cwd" | "remotePolicy">,
+  input: Pick<GitRepositoryHealth, "id" | "title" | "cwd" | "remotePolicy"> & {
+    expectedBranch?: string;
+  },
 ): Promise<GitRepositoryHealth> {
   const { cwd } = input;
-  const [{ stdout: branch }, { stdout: status }, { stdout: remotes }] = await Promise.all([
-    execFileAsync("git", ["branch", "--show-current"], { cwd }),
-    execFileAsync("git", ["status", "--short"], { cwd }),
-    execFileAsync("git", ["remote"], { cwd }),
-  ]);
+  const [{ stdout: branch }, { stdout: status }, { stdout: remotes }, { stdout: gitRoot }] =
+    await Promise.all([
+      execFileAsync("git", ["branch", "--show-current"], { cwd }),
+      execFileAsync("git", ["status", "--short"], { cwd }),
+      execFileAsync("git", ["remote"], { cwd }),
+      execFileAsync("git", ["rev-parse", "--show-toplevel"], { cwd }),
+    ]);
+  const head = await gitOutput(cwd, ["rev-parse", "--short", "HEAD"]).catch(() => "");
+  const normalizedGitRoot = path.resolve(gitRoot.trim());
+  const packageInfo = await inspectPackageJson(cwd);
   return {
     id: input.id,
     title: input.title,
     cwd,
+    gitRoot: normalizedGitRoot,
+    rootMismatch: normalizedGitRoot !== path.resolve(cwd),
     branch: branch.trim(),
+    ...(input.expectedBranch ? { expectedBranch: input.expectedBranch } : {}),
+    expectedBranchViolation: Boolean(
+      input.expectedBranch && input.expectedBranch !== branch.trim(),
+    ),
+    head: head.trim(),
     shortStatus: status.trim(),
     hasRemote: remotes.trim().length > 0,
     isDirty: status.trim().length > 0,
     remotePolicy: input.remotePolicy,
     remotePolicyViolation: input.remotePolicy === "forbidden" && remotes.trim().length > 0,
+    nestedRepositories: await findNestedRepositories(cwd),
+    ...packageInfo,
   };
+}
+
+async function gitOutput(cwd: string, args: string[]): Promise<string> {
+  const { stdout } = await execFileAsync("git", args, { cwd });
+  return stdout;
 }
 
 export async function inspectStudioRepositories(
@@ -54,7 +83,9 @@ export async function inspectStudioRepositories(
 ): Promise<GitRepositoryHealth[]> {
   const candidates = new Map<
     string,
-    Pick<GitRepositoryHealth, "id" | "title" | "cwd" | "remotePolicy">
+    Pick<GitRepositoryHealth, "id" | "title" | "cwd" | "remotePolicy"> & {
+      expectedBranch?: string;
+    }
   >();
   candidates.set(context.paths.root, {
     id: "root",
@@ -66,12 +97,14 @@ export async function inspectStudioRepositories(
     const repositoryPath = Reflect.get(file.entity.spec, "path");
     if (file.entity.kind === "repository" && typeof repositoryPath === "string") {
       const remotePolicy = Reflect.get(file.entity.spec, "remote_policy");
+      const branch = Reflect.get(file.entity.spec, "branch");
       const cwd = path.resolve(context.paths.root, repositoryPath);
       candidates.set(cwd, {
         id: entityId(file.entity),
         title: entityTitle(file.entity),
         cwd,
         remotePolicy: remotePolicy === "no-remote-in-v1" ? "forbidden" : "allowed",
+        ...(typeof branch === "string" ? { expectedBranch: branch } : {}),
       });
     }
     const productRepositoryPath = Reflect.get(file.entity.spec, "repository_path");
@@ -95,6 +128,9 @@ export async function inspectStudioRepositories(
             title: `${entityTitle(file.entity)} WordPress`,
             cwd,
             remotePolicy: "allowed",
+            ...(typeof Reflect.get(repository, "branch") === "string"
+              ? { expectedBranch: Reflect.get(repository, "branch") as string }
+              : {}),
           });
         }
       }
@@ -107,15 +143,79 @@ export async function inspectStudioRepositories(
     } catch {
       health.push({
         ...candidate,
+        gitRoot: null,
+        rootMismatch: false,
         branch: "",
+        expectedBranchViolation: false,
+        head: "",
         shortStatus: "Repository unavailable or invalid",
         hasRemote: false,
         isDirty: true,
         remotePolicyViolation: false,
+        nestedRepositories: [],
+        packageScripts: {},
       });
     }
   }
   return health;
+}
+
+async function inspectPackageJson(
+  cwd: string,
+): Promise<{ packageManager?: string; packageScripts: Record<string, string> }> {
+  try {
+    const json = JSON.parse(await readFile(path.join(cwd, "package.json"), "utf8")) as {
+      packageManager?: unknown;
+      scripts?: unknown;
+    };
+    const scripts =
+      json.scripts && typeof json.scripts === "object" && !Array.isArray(json.scripts)
+        ? Object.fromEntries(
+            Object.entries(json.scripts).filter(
+              (entry): entry is [string, string] => typeof entry[1] === "string",
+            ),
+          )
+        : {};
+    return {
+      ...(typeof json.packageManager === "string" ? { packageManager: json.packageManager } : {}),
+      packageScripts: scripts,
+    };
+  } catch {
+    return { packageScripts: {} };
+  }
+}
+
+async function findNestedRepositories(cwd: string): Promise<string[]> {
+  const ignored = new Set([".git", "node_modules", "runtime", "dist", ".turbo", ".cache"]);
+  const found: string[] = [];
+
+  async function visit(directory: string, depth: number): Promise<void> {
+    if (depth > 5) {
+      return;
+    }
+    let entries: Array<{ isDirectory(): boolean; isFile(): boolean; name: string }>;
+    try {
+      entries = await readdir(directory, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    const isNestedGitRepository =
+      path.resolve(directory) !== path.resolve(cwd) &&
+      entries.some((entry) => entry.isDirectory() && entry.name === ".git");
+    if (isNestedGitRepository) {
+      found.push(path.relative(cwd, directory));
+      return;
+    }
+    for (const entry of entries) {
+      if (!entry.isDirectory() || ignored.has(entry.name)) {
+        continue;
+      }
+      await visit(path.join(directory, entry.name), depth + 1);
+    }
+  }
+
+  await visit(cwd, 0);
+  return found.sort((left, right) => left.localeCompare(right));
 }
 
 export function describeAdapterPolicy(): string {
@@ -546,6 +646,56 @@ export async function executeDisabledExternalAdapter(input: {
       },
     },
   });
+}
+
+export interface ExternalAdapterProvider {
+  name: "disabled" | "fake";
+  adapter: "github" | "communication";
+  enabled: boolean;
+  prepare(operation: string, payload?: Record<string, unknown>): Promise<AdapterResult>;
+}
+
+export function createExternalAdapterProvider(input: {
+  adapter: "github" | "communication";
+  provider?: "disabled" | "fake";
+  enabled?: boolean;
+}): ExternalAdapterProvider {
+  const provider = input.provider ?? "disabled";
+  return {
+    name: provider,
+    adapter: input.adapter,
+    enabled: input.enabled ?? false,
+    async prepare(operation: string, payload: Record<string, unknown> = {}) {
+      if (!this.enabled) {
+        return executeDisabledExternalAdapter({
+          adapter: this.adapter,
+          operation,
+          payload,
+          reason: `${this.adapter} ${this.name} provider is disabled by default.`,
+        });
+      }
+      return AdapterResultSchema.parse({
+        request_id: createRecordId(
+          "req",
+          `${this.adapter}:${this.name}:${operation}:${JSON.stringify(payload)}`,
+        ),
+        adapter: this.adapter,
+        operation,
+        status: "warning",
+        data: {
+          provider: this.name,
+          prepared: true,
+          external_send: false,
+          payload_keys: Object.keys(payload),
+        },
+        error: {
+          code: "fake_provider_no_send",
+          message: "Fake provider prepared the action locally; no external send was performed.",
+          details: {},
+        },
+      });
+    },
+  };
 }
 
 export async function fixWordPressRootOwnership(

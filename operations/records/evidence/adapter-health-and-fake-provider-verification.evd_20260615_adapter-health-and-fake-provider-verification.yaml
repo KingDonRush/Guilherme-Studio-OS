@@ -1,0 +1,24 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T20:19:34.608Z
+  id: evd_20260615_adapter-health-and-fake-provider-verification
+  labels: []
+  revision: 1
+  schema_version: 1
+  slug: adapter-health-and-fake-provider-verification
+  updated_at: 2026-06-15T20:19:34.608Z
+relations:
+  - target_id: tsk_20260615_implement-adapter-health-and-fake-provider-slice
+    type: supports
+spec:
+  command: npm run typecheck; npm run test; npm run lint; npm run build; npm run studio -- --json repo inspect; npm run
+    studio -- --json github prepare --operation issue.comment --provider fake; npm run studio -- --json github prepare
+    --operation issue.comment --provider fake --enable-fake
+  evidence_type: command
+  observed_at: 2026-06-15T20:19:34.608Z
+  status: active
+  title: Adapter health and fake provider verification

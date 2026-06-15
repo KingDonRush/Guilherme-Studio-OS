@@ -21,10 +21,10 @@ verification, operator verification, documentation, and durable evidence exist.
 | MCP | `packages/mcp` | in progress | MCP semantic tools build; `evd_20260615_prd-semantic-command-slice-verification` | `npm run build -w @guilherme-studio/mcp` | add context-pack prompts and MCP Inspector smoke transcript |
 | Local API | `packages/local-api` | in progress | local API tests | `npm run test -- packages/local-api/src/index.test.ts` | cover every mutating route through command runtime |
 | Panel | `apps/panel` | in progress | build and Playwright smoke; exact-payload review; `evd_20260615_prd-semantic-command-slice-verification` | `npm run build -w @guilherme-studio/panel` | complete domain-specific views and intake workflows |
-| Git adapter | `packages/adapters` | in progress | repository health inspection | `npm run studio -- repo inspect --json` | explicit root mismatch and package script evidence |
+| Git adapter | `packages/adapters` | in progress | repository health inspection; `evd_20260615_adapter-health-and-fake-provider-verification` | `npm run studio -- repo inspect --json` | policy decisions for registered nested WordPress/plugin repos |
 | WordPress adapter | `packages/adapters` | in progress | WordPress health/restore evidence | `npm run studio -- wordpress health --json` | alternate-path restore evidence and provision/register template |
-| GitHub adapter | `packages/adapters` | in progress | disabled adapter contract test | `npm run test -- packages/adapters/src/index.test.ts` | provider interface and fake prepare/confirm/reconcile flow |
-| Communication adapter | `packages/adapters` | in progress | disabled adapter contract test | `npm run test -- packages/adapters/src/index.test.ts` | provider interface and fake prepare/confirm/reconcile flow |
+| GitHub adapter | `packages/adapters` | in progress | disabled and fake provider contract tests; `evd_20260615_adapter-health-and-fake-provider-verification` | `npm run test -- packages/adapters/src/index.test.ts` | reconcile fake-provider actions through prepared-action records |
+| Communication adapter | `packages/adapters` | in progress | disabled and fake provider contract tests; `evd_20260615_adapter-health-and-fake-provider-verification` | `npm run test -- packages/adapters/src/index.test.ts` | reconcile fake-provider actions through prepared-action records |
 | Coordinated backup | `packages/adapters` | in progress | backup manifests | `npm run studio -- backup --json` | restore rehearsal that reports all registered components |
 | Eight journeys | `packages/testing`, `packages/core` | in progress | workflow fixture check | `npm run studio -- workflow --fixtures --json` | executable CLI/API/MCP journey fixtures, not only kind coverage |
 | Physical migration | root coordinator | in progress | renamed root and repository status | `npm run studio -- doctor --json` | path drift check green after final commit |
@@ -74,3 +74,24 @@ Delivered capacity:
   deliverable completion, content preparation and decision records.
 - Panel prepared-action review shows exact JSON payload and checksum before
   local confirmation.
+
+## Adapter Health and Fake Provider Slice
+
+On 2026-06-15,
+`tsk_20260615_implement-adapter-health-and-fake-provider-slice` was created and
+completed for adapter diagnostics and fake-provider behavior.
+
+Evidence:
+
+- `evd_20260615_adapter-health-and-fake-provider-verification`.
+
+Delivered capacity:
+
+- Git repository health now reports git root, root mismatch, expected branch,
+  expected branch violation, HEAD, nested repositories, package manager and
+  package scripts.
+- `studio doctor` treats root mismatch and expected branch violation as
+  repository health failures.
+- GitHub and communication adapters have an explicit fake provider interface.
+- Fake providers are blocked by default and, when explicitly enabled, report
+  local preparation with `external_send: false`.

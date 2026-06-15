@@ -1,6 +1,7 @@
 import {
   backupWordPressDatabase,
   backupWordPressUploads,
+  createExternalAdapterProvider,
   createStudioBackup,
   executeDisabledExternalAdapter,
   fixWordPressRootOwnership,
@@ -328,7 +329,9 @@ export function createProgram(): Command {
       const validation = await validateStudio(options.root);
       const { files } = await validateCanonicalFiles(context.paths.root);
       const repositories = await inspectStudioRepositories(context);
-      const dirty = repositories.filter((repo) => repo.isDirty);
+      const dirty = repositories.filter(
+        (repo) => repo.isDirty || repo.rootMismatch || repo.expectedBranchViolation,
+      );
       const unexpectedRemotes = repositories.filter((repo) => repo.remotePolicyViolation);
       const pendingTransactions = await context.entities.pendingTransactions();
       const projection = context.projection.inspect();
@@ -1279,14 +1282,32 @@ export function createProgram(): Command {
     .command("prepare")
     .requiredOption("--operation <operation>")
     .option("--payload <json>", "JSON payload", "{}")
+    .option("--provider <provider>", "disabled or fake", "disabled")
+    .option("--enable-fake", "Enable the local fake provider without external sends")
     .action(async function action(this: Command) {
       const options = globalOptions(this);
-      const local = this.opts() as { operation: string; payload: string };
+      const local = this.opts() as {
+        operation: string;
+        payload: string;
+        provider: "disabled" | "fake";
+        enableFake?: boolean;
+      };
+      const payload = JSON.parse(local.payload) as Record<string, unknown>;
+      if (local.provider === "fake") {
+        const provider = createExternalAdapterProvider({
+          adapter: "github",
+          provider: "fake",
+          enabled: local.enableFake ?? false,
+        });
+        print(await provider.prepare(local.operation, payload), options.json, options.quiet);
+        process.exitCode = provider.enabled ? 0 : 7;
+        return;
+      }
       print(
         await executeDisabledExternalAdapter({
           adapter: "github",
           operation: local.operation,
-          payload: JSON.parse(local.payload) as Record<string, unknown>,
+          payload,
         }),
         options.json,
         options.quiet,
@@ -1301,14 +1322,32 @@ export function createProgram(): Command {
     .command("prepare")
     .requiredOption("--operation <operation>")
     .option("--payload <json>", "JSON payload", "{}")
+    .option("--provider <provider>", "disabled or fake", "disabled")
+    .option("--enable-fake", "Enable the local fake provider without external sends")
     .action(async function action(this: Command) {
       const options = globalOptions(this);
-      const local = this.opts() as { operation: string; payload: string };
+      const local = this.opts() as {
+        operation: string;
+        payload: string;
+        provider: "disabled" | "fake";
+        enableFake?: boolean;
+      };
+      const payload = JSON.parse(local.payload) as Record<string, unknown>;
+      if (local.provider === "fake") {
+        const provider = createExternalAdapterProvider({
+          adapter: "communication",
+          provider: "fake",
+          enabled: local.enableFake ?? false,
+        });
+        print(await provider.prepare(local.operation, payload), options.json, options.quiet);
+        process.exitCode = provider.enabled ? 0 : 7;
+        return;
+      }
       print(
         await executeDisabledExternalAdapter({
           adapter: "communication",
           operation: local.operation,
-          payload: JSON.parse(local.payload) as Record<string, unknown>,
+          payload,
         }),
         options.json,
         options.quiet,
