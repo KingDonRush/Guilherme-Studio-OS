@@ -1,0 +1,30 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T22:45:00.000Z
+  id: tsk_20260615_launch-linkedin-career-pipeline
+  labels:
+    - studio-os
+    - career
+    - linkedin
+  revision: 1
+  schema_version: 1
+  slug: launch-linkedin-career-pipeline
+  updated_at: 2026-06-15T22:45:00.000Z
+relations:
+  - target_id: dec_20260615_linkedin-career-channel
+    type: governed_by
+spec:
+  acceptance:
+    - LinkedIn job posts are captured as jobApplication records only when Guilherme provides real role URLs or details
+    - each application has source URL, role title, organization when known, evidence bundle gaps and follow-up window
+    - no application, organization or result is fabricated
+    - prepared messages use exact-payload confirmation before any external send
+  blocked_by: []
+  priority: now
+  status: active
+  summary: Start the LinkedIn-driven international career pipeline from a truthful zero-application state.
+  title: Launch LinkedIn career pipeline

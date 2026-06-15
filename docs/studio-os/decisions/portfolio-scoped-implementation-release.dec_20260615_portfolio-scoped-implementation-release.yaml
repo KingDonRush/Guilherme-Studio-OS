@@ -1,0 +1,26 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: decision
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T22:45:00.000Z
+  id: dec_20260615_portfolio-scoped-implementation-release
+  labels:
+    - studio-os
+    - portfolio
+    - acceptance
+  revision: 1
+  schema_version: 1
+  slug: portfolio-scoped-implementation-release
+  updated_at: 2026-06-15T22:45:00.000Z
+relations:
+  - target_id: dec_20260615_portfolio-release-deferred
+    type: supersedes
+spec:
+  decision: Liberacao aprovada para liberar portfolio em escopo de implementacao controlado, com objetivo de terminar as promessas da estrutura agentica legada antes de publicacao.
+  rationale: The PRD capability gates, doctor, repository checks, backup evidence, panel smoke and MCP smoke passed. The remaining portfolio work should resume as scoped implementation, not as open-ended redesign.
+  reconsideration_trigger: Pause again if unsupported public claims, missing evidence, WordPress health failure, repository drift or publication-risk changes appear.
+  status: active
+  summary: Unfreezes portfolio implementation in a bounded scope while keeping public publication behind evidence and confirmation gates.
+  title: Portfolio release approved for scoped implementation

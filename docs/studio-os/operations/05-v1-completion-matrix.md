@@ -29,7 +29,7 @@ verification, operator verification, documentation, and durable evidence exist.
 | Eight journeys | `packages/testing`, `packages/core` | in progress | executable workflow fixture report and `evd_20260615_executable-workflow-fixtures-verification` | `npm run studio -- workflow --fixtures --execute --json` | add API/MCP smoke coverage over the executable workflow report |
 | Physical migration | root coordinator | in progress | renamed root and repository status | `npm run studio -- doctor --json` | path drift check green after final commit |
 | PRD coverage and intake | `packages/core`, interfaces | intake_required | coverage command, intake packet and `evd_20260615_prd-gates-and-coverage-verification` | `npm run studio -- coverage --json` | canonical records for PRDs with real data, collected through intake; capability coverage is separated from data readiness |
-| Operational acceptance | cross-package | in progress | V1 acceptance evidence, reconciliation evidence, final gate smoke and `evd_20260615_final-acceptance-gate-verification` | `npm run studio -- acceptance --panel-smoke-ok --mcp-smoke-ok --json` | portfolio remains frozen until explicit canonical release decision |
+| Operational acceptance | cross-package | in progress | V1 acceptance evidence, reconciliation evidence, final gate smoke, LinkedIn channel decision and portfolio scoped release decision | `npm run studio -- acceptance --panel-smoke-ok --mcp-smoke-ok --json` | public publication still requires evidence-backed claims and exact confirmation |
 
 ## Completion Rule
 
@@ -204,3 +204,27 @@ Delivered capacity:
 - MCP smoke used a real stdio client to verify resources/tools and execute a
   workflow fixture.
 - Portfolio remains frozen because no canonical approved release decision exists.
+
+## LinkedIn and Scoped Portfolio Resumption
+
+On 2026-06-15, Guilherme clarified that LinkedIn will be used to launch
+international job applications and that the portfolio must finish the promises
+from the earlier agentic structure.
+
+Decisions:
+
+- `dec_20260615_linkedin-career-channel`.
+- `dec_20260615_portfolio-scoped-implementation-release`.
+
+Active tasks:
+
+- `tsk_20260615_launch-linkedin-career-pipeline`.
+- `tsk_20260615_finish-legacy-agentic-portfolio-promises`.
+
+Operational meaning:
+
+- LinkedIn is now a first-class career channel, but real applications are only
+  created from real role URLs/details.
+- Portfolio implementation is unfrozen in a bounded scope: finish the legacy
+  evidence promises, do not invent claims, and keep public publication behind
+  evidence and confirmation gates.

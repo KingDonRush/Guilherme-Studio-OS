@@ -1,0 +1,37 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T22:47:00.000Z
+  id: evd_20260615_linkedin-portfolio-scope-registration
+  labels:
+    - studio-os
+    - career
+    - portfolio
+  revision: 1
+  schema_version: 1
+  slug: linkedin-portfolio-scope-registration
+  updated_at: 2026-06-15T22:47:00.000Z
+relations:
+  - target_id: dec_20260615_linkedin-career-channel
+    type: supports
+  - target_id: dec_20260615_portfolio-scoped-implementation-release
+    type: supports
+  - target_id: tsk_20260615_launch-linkedin-career-pipeline
+    type: supports
+  - target_id: tsk_20260615_finish-legacy-agentic-portfolio-promises
+    type: supports
+spec:
+  claims:
+    - LinkedIn was registered as an official career and acquisition channel.
+    - Portfolio implementation was unfrozen only for a bounded evidence-backed scope.
+    - Public portfolio publication remains behind evidence and exact confirmation gates.
+  command: npm run studio -- validate --json && npm run studio -- sync --rebuild --verify --json && npm run studio -- acceptance --panel-smoke-ok --mcp-smoke-ok --json
+  evidence_type: command
+  observed_at: 2026-06-15T22:47:00.000Z
+  source_mutability: operator-observed
+  status: active
+  title: LinkedIn and portfolio scope registration
+  validated_at: 2026-06-15T22:47:00.000Z
