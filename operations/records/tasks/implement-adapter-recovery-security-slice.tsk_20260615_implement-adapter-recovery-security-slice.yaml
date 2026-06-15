@@ -1,0 +1,28 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T22:21:00.000Z
+  id: tsk_20260615_implement-adapter-recovery-security-slice
+  labels:
+    - studio-os
+    - prd-completion
+  revision: 1
+  schema_version: 1
+  slug: implement-adapter-recovery-security-slice
+  updated_at: 2026-06-15T22:21:00.000Z
+relations: []
+spec:
+  acceptance:
+    - fake GitHub and communication providers create prepared-action records with external_send false
+    - fake reconciliation requires exact confirmation before execution
+    - WordPress provision dry-run validates root-contained site/template paths
+    - coordinated backup manifests root, canonical records, repos without remote and WordPress backup manifests
+    - Host/Origin rejection and stale prepared-action replay are covered by automated tests
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Expands adapter, backup and recovery/security behavior without enabling any real external send.
+  title: Implement adapter recovery and security slice

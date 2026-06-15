@@ -60,6 +60,26 @@ describe("core governance", () => {
     });
   });
 
+  it("rejects stale prepared action confirmation replay", async () => {
+    const runtime = await mkdtemp(path.join(os.tmpdir(), "studio-core-expired-action-"));
+    const context = {
+      config: { operator_id: "per_20260614_guilherme-silva" },
+      paths: { runtime },
+    } as StudioContext;
+    const service = new PreparedActionService(context);
+    const prepared = await service.prepare({
+      actionType: "communication.send",
+      payload: { channel: "email", message: "Expired" },
+      ttlSeconds: 1,
+    });
+
+    await new Promise((resolve) => setTimeout(resolve, 1100));
+
+    await expect(service.confirm(prepared.id, prepared.payload_checksum)).rejects.toThrow(
+      /status expired/,
+    );
+  });
+
   it("uses default deny when an actor lacks a required capability", () => {
     const actor = operatorActor("per_20260614_guilherme-silva");
     const restricted = createActor({

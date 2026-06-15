@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { access, mkdir, mkdtemp, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { promisify } from "node:util";
-import type { StudioContext } from "@guilherme-studio/core";
+import { PreparedActionService, type StudioContext } from "@guilherme-studio/core";
 import {
   type AdapterResult,
   AdapterResultSchema,
@@ -255,6 +255,13 @@ export interface WordPressUploadsBackupResult {
   manifestPath: string;
   checksum: string;
   sizeBytes: number;
+}
+
+export interface WordPressProvisionResult {
+  sitePath: string;
+  templatePath: string;
+  manifestPath: string;
+  dryRun: boolean;
 }
 
 async function wordpressRuntime(context: StudioContext): Promise<WordPressRuntimeDefinition> {
@@ -590,6 +597,35 @@ export async function createStudioBackup(context: StudioContext): Promise<Studio
     }
   }
   const repositories = await inspectStudioRepositories(context);
+  const environments = (await context.entities.scan())
+    .filter((file) => file.entity.kind === "environment")
+    .map((file) => ({
+      id: entityId(file.entity),
+      title: entityTitle(file.entity),
+      url: Reflect.get(file.entity.spec, "url") ?? null,
+      compose_files: Reflect.get(file.entity.spec, "compose_files") ?? [],
+      wordpress_git_repository: Reflect.get(file.entity.spec, "wordpress_git_repository") ?? null,
+    }));
+  const wordpressBackupManifests = await listBackupManifests(
+    path.join(context.paths.runtime, "backups", "wordpress"),
+  );
+  const components = {
+    root: context.paths.root,
+    canonical_records: files.length,
+    repositories_without_remote: repositories
+      .filter((repository) => !repository.hasRemote)
+      .map((repository) => ({
+        id: repository.id,
+        title: repository.title,
+        cwd: repository.cwd,
+        head: repository.head,
+        dirty: repository.isDirty,
+      })),
+    wordpress: {
+      environments,
+      backup_manifests: wordpressBackupManifests,
+    },
+  };
   await writeFile(
     manifestPath,
     `${JSON.stringify(
@@ -610,13 +646,36 @@ export async function createStudioBackup(context: StudioContext): Promise<Studio
           has_remote: repository.hasRemote,
           remote_policy: repository.remotePolicy,
         })),
+        components,
       },
       null,
       2,
     )}\n`,
     { mode: 0o600 },
   );
-  return { archivePath, manifestPath, checksum, repositories };
+  return { archivePath, manifestPath, checksum, repositories, components };
+}
+
+async function listBackupManifests(directory: string): Promise<string[]> {
+  const manifests: string[] = [];
+  async function visit(current: string): Promise<void> {
+    let entries: Array<{ isDirectory(): boolean; isFile(): boolean; name: string }>;
+    try {
+      entries = await readdir(current, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      const absolute = path.join(current, entry.name);
+      if (entry.isDirectory()) {
+        await visit(absolute);
+      } else if (entry.isFile() && entry.name.endsWith(".json")) {
+        manifests.push(absolute);
+      }
+    }
+  }
+  await visit(directory);
+  return manifests.sort((left, right) => left.localeCompare(right));
 }
 
 export async function executeDisabledExternalAdapter(input: {
@@ -653,6 +712,119 @@ export interface ExternalAdapterProvider {
   adapter: "github" | "communication";
   enabled: boolean;
   prepare(operation: string, payload?: Record<string, unknown>): Promise<AdapterResult>;
+}
+
+export async function prepareExternalAdapterAction(
+  context: StudioContext,
+  input: {
+    adapter: "github" | "communication";
+    operation: string;
+    payload?: Record<string, unknown>;
+    provider?: "disabled" | "fake";
+    enabled?: boolean;
+  },
+): Promise<AdapterResult> {
+  const provider = createExternalAdapterProvider({
+    adapter: input.adapter,
+    ...(input.provider ? { provider: input.provider } : {}),
+    ...(input.enabled !== undefined ? { enabled: input.enabled } : {}),
+  });
+  const result = await provider.prepare(input.operation, input.payload ?? {});
+  if (result.status === "blocked") {
+    return result;
+  }
+  const action = await new PreparedActionService(context).prepare({
+    actionType: `${input.adapter}.${input.operation}`,
+    provider: provider.name,
+    target: input.adapter,
+    payload: {
+      adapter: input.adapter,
+      provider: provider.name,
+      operation: input.operation,
+      external_send: false,
+      ...(input.payload ?? {}),
+    },
+  });
+  return AdapterResultSchema.parse({
+    ...result,
+    data: {
+      ...(result.data && typeof result.data === "object" ? result.data : {}),
+      prepared_action_id: action.id,
+      payload_checksum: action.payload_checksum,
+      prepared_action_status: action.status,
+    },
+  });
+}
+
+export async function reconcileFakeExternalAdapterAction(
+  context: StudioContext,
+  actionId: string,
+): Promise<{
+  action_id: string;
+  status: string;
+  reconciliation: Record<string, unknown> | undefined;
+}> {
+  const actions = new PreparedActionService(context);
+  const executed = await actions.execute(actionId, async (action) => ({
+    adapter: action.target ?? "unknown",
+    provider: action.provider ?? "fake",
+    external_send: false,
+    fake_execution: true,
+  }));
+  const reconciled = await actions.reconcile(executed.id, {
+    reconciled_locally: true,
+    external_send: false,
+  });
+  return {
+    action_id: reconciled.id,
+    status: reconciled.status,
+    reconciliation: reconciled.reconciliation,
+  };
+}
+
+export async function provisionWordPressSiteFromTemplate(
+  context: StudioContext,
+  input: {
+    sitePath: string;
+    templatePath?: string;
+    dryRun?: boolean;
+  },
+): Promise<WordPressProvisionResult> {
+  const root = path.resolve(context.paths.root);
+  const sitePath = path.resolve(root, input.sitePath);
+  const templatePath = path.resolve(root, input.templatePath ?? "wordpress");
+  if (sitePath !== root && !sitePath.startsWith(`${root}${path.sep}`)) {
+    throw new Error("WordPress site path must stay inside the Studio root.");
+  }
+  if (templatePath !== root && !templatePath.startsWith(`${root}${path.sep}`)) {
+    throw new Error("WordPress template path must stay inside the Studio root.");
+  }
+  const manifestPath = path.join(context.paths.runtime, "wordpress-provision", "manifest.json");
+  if (!input.dryRun) {
+    await mkdir(sitePath, { recursive: true });
+    await mkdir(path.dirname(manifestPath), { recursive: true });
+    await writeFile(
+      manifestPath,
+      `${JSON.stringify(
+        {
+          api_version: "studio.guilherme.dev/wordpress-provision-v1",
+          created_at: new Date().toISOString(),
+          site_path: sitePath,
+          template_path: templatePath,
+          registered: false,
+        },
+        null,
+        2,
+      )}\n`,
+      { mode: 0o600 },
+    );
+  }
+  return {
+    sitePath,
+    templatePath,
+    manifestPath,
+    dryRun: input.dryRun ?? false,
+  };
 }
 
 export function createExternalAdapterProvider(input: {

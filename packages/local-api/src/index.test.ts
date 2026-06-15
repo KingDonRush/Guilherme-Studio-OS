@@ -27,6 +27,22 @@ describe("local API", () => {
       "content-type": "application/json",
     };
 
+    const invalidHost = await app.inject({
+      method: "GET",
+      url: "/api/v1/summary",
+      headers: { ...headers, host: "evil.test" },
+    });
+    expect(invalidHost.statusCode).toBe(403);
+    expect(invalidHost.json()).toMatchObject({ error: "Invalid host" });
+
+    const invalidOrigin = await app.inject({
+      method: "GET",
+      url: "/api/v1/summary",
+      headers: { ...headers, origin: "http://evil.test" },
+    });
+    expect(invalidOrigin.statusCode).toBe(403);
+    expect(invalidOrigin.json()).toMatchObject({ error: "Invalid origin" });
+
     const created = await app.inject({
       method: "POST",
       url: "/api/v1/entities",

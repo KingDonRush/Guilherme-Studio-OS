@@ -12,8 +12,8 @@ verification, operator verification, documentation, and durable evidence exist.
 | Entity and relation contracts | `packages/schemas` | in progress | schema tests, generated catalog and `evd_20260615_prd-gates-and-coverage-verification` | `npm run test -- packages/schemas/src/index.test.ts` | complete per-domain workflow fixtures and keep new PRD fields covered by fixtures |
 | Commands, results and events | `packages/schemas`, `packages/core` | in progress | command runtime tests; `evd_20260615_prd-semantic-command-slice-verification`; `evd_20260615_executable-workflow-fixtures-verification` | `npm run test -- packages/core/src/command-runtime.test.ts` | broaden API/MCP equivalence fixtures across all PRD workflows |
 | Authority and gates | `packages/core` | in progress | gate catalog tests and `evd_20260615_prd-gates-and-coverage-verification` | `npm run test -- packages/core/src/index.test.ts` | connect every gate to executable workflow fixtures and acceptance report |
-| Prepared actions | `packages/core` | in progress | exact checksum confirmation tests | `npm run test -- packages/core/src/index.test.ts` | panel exact-payload review and stale payload UI flow |
-| Canonical transactions | `packages/storage` | in progress | storage transaction tests | `npm run test -- packages/storage/src/index.test.ts` | expand crash/recovery matrix and event replay evidence |
+| Prepared actions | `packages/core`, `packages/adapters` | in progress | exact checksum confirmation tests; fake-provider prepared-action tests; `evd_20260615_adapter-recovery-security-verification` | `npm run test -- packages/core/src/index.test.ts packages/adapters/src/index.test.ts` | final panel replay smoke on expired/confirmed prepared actions |
+| Canonical transactions | `packages/storage` | in progress | storage transaction tests; stale prepared-action replay test | `npm run test -- packages/storage/src/index.test.ts packages/core/src/index.test.ts` | expand crash/recovery matrix and event replay evidence |
 | Derived projection | `packages/storage` | in progress | rebuild checksum verification | `npm run studio -- sync --rebuild --verify --json` | expose stale projection recovery in panel/API diagnostics |
 | Economic next actions | `packages/core` | in progress | economic resolver tests | `npm run test -- packages/core/src/economics.test.ts` | domain-specific obligation ranking and intake-aware gaps |
 | Domain lifecycles | `packages/core` | in progress | lifecycle preconditions and semantic command tests; `evd_20260615_prd-semantic-command-slice-verification` | `npm run test -- packages/core/src/index.test.ts` | complete remaining domain-specific preconditions and fixture coverage |
@@ -23,9 +23,9 @@ verification, operator verification, documentation, and durable evidence exist.
 | Panel | `apps/panel` | in progress | build, domain views, exact-payload review and `evd_20260615_acceptance-surfaces-and-domain-panel-verification` | `npm run build -w @guilherme-studio/panel` | run final Playwright smoke on acceptance path |
 | Git adapter | `packages/adapters` | in progress | repository health inspection; `evd_20260615_adapter-health-and-fake-provider-verification` | `npm run studio -- repo inspect --json` | policy decisions for registered nested WordPress/plugin repos |
 | WordPress adapter | `packages/adapters` | in progress | WordPress health/restore evidence | `npm run studio -- wordpress health --json` | alternate-path restore evidence and provision/register template |
-| GitHub adapter | `packages/adapters` | in progress | disabled and fake provider contract tests; `evd_20260615_adapter-health-and-fake-provider-verification` | `npm run test -- packages/adapters/src/index.test.ts` | reconcile fake-provider actions through prepared-action records |
-| Communication adapter | `packages/adapters` | in progress | disabled and fake provider contract tests; `evd_20260615_adapter-health-and-fake-provider-verification` | `npm run test -- packages/adapters/src/index.test.ts` | reconcile fake-provider actions through prepared-action records |
-| Coordinated backup | `packages/adapters` | in progress | backup manifests | `npm run studio -- backup --json` | restore rehearsal that reports all registered components |
+| GitHub adapter | `packages/adapters` | in progress | disabled/fake provider tests, local prepared-action record and fake reconcile tests; `evd_20260615_adapter-recovery-security-verification` | `npm run test -- packages/adapters/src/index.test.ts` | real external provider remains deferred; keep blocked by default |
+| Communication adapter | `packages/adapters` | in progress | disabled/fake provider tests, local prepared-action record and fake reconcile tests; `evd_20260615_adapter-recovery-security-verification` | `npm run test -- packages/adapters/src/index.test.ts` | real external provider remains deferred; keep blocked by default |
+| Coordinated backup | `packages/adapters` | in progress | backup component manifest tests; `evd_20260615_adapter-recovery-security-verification` | `npm run test -- packages/adapters/src/index.test.ts && npm run studio -- backup --json` | restore rehearsal that reports all registered components |
 | Eight journeys | `packages/testing`, `packages/core` | in progress | executable workflow fixture report and `evd_20260615_executable-workflow-fixtures-verification` | `npm run studio -- workflow --fixtures --execute --json` | add API/MCP smoke coverage over the executable workflow report |
 | Physical migration | root coordinator | in progress | renamed root and repository status | `npm run studio -- doctor --json` | path drift check green after final commit |
 | PRD coverage and intake | `packages/core`, interfaces | intake_required | coverage command, intake packet and `evd_20260615_prd-gates-and-coverage-verification` | `npm run studio -- coverage --json` | canonical records for PRDs with real data, collected through intake; capability coverage is separated from data readiness |
@@ -158,3 +158,26 @@ Delivered capacity:
   `studio_execute_workflow_fixtures`.
 - Panel has domain views for economy, CRM, delivery, products, portfolio,
   career, finance, agents and diagnostics without a generic YAML editor.
+
+## Adapter Recovery and Security Slice
+
+On 2026-06-15,
+`tsk_20260615_implement-adapter-recovery-security-slice` was created and
+completed for adapter recovery, backup inventory and security controls.
+
+Evidence:
+
+- `evd_20260615_adapter-recovery-security-verification`.
+
+Delivered capacity:
+
+- Fake GitHub and communication providers now create local prepared-action
+  records with provider, target, checksum and `external_send: false`.
+- Fake adapter reconciliation is blocked until exact payload confirmation
+  exists, then records local-only execution/reconciliation.
+- `studio wordpress provision` supports dry-run/template registration and
+  rejects site/template paths outside the Studio root.
+- Studio backup manifests now include root, canonical record count,
+  repositories without remote and WordPress backup manifest inventory.
+- Local API Host/Origin rejection and expired prepared-action replay are covered
+  by automated tests.

@@ -408,11 +408,13 @@ export async function executeStudioCommand(
         }
         const provider = optionalString(payload, "provider");
         const target = optionalString(payload, "target");
+        const ttlSeconds = optionalNumber(payload, "ttl_seconds");
         const action = await actions.prepare({
           actionType: stringValue(payload, "action_type"),
           payload: actionPayload as Record<string, unknown>,
           ...(provider ? { provider } : {}),
           ...(target ? { target } : {}),
+          ...(ttlSeconds ? { ttlSeconds } : {}),
         });
         return createResultEnvelope({ requestId: command.request_id, result: action });
       }

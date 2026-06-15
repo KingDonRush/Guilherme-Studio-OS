@@ -1,11 +1,12 @@
 import {
   backupWordPressDatabase,
   backupWordPressUploads,
-  createExternalAdapterProvider,
   createStudioBackup,
-  executeDisabledExternalAdapter,
   fixWordPressRootOwnership,
   inspectStudioRepositories,
+  prepareExternalAdapterAction,
+  provisionWordPressSiteFromTemplate,
+  reconcileFakeExternalAdapterAction,
   restoreCheckWordPressDatabase,
   restoreCheckWordPressUploads,
   wordpressHealth,
@@ -1310,6 +1311,24 @@ export function createProgram(): Command {
     print(await backupWordPressUploads(context), options.json);
   });
   wordpress
+    .command("provision")
+    .requiredOption("--site-path <path>", "Site path, relative to Studio root or absolute")
+    .option("--template-path <path>", "Template path, relative to Studio root", "wordpress")
+    .description("Provision or register a WordPress site from a local template")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as { sitePath: string; templatePath: string };
+      const context = await createStudioContext(options.root);
+      print(
+        await provisionWordPressSiteFromTemplate(context, {
+          sitePath: local.sitePath,
+          templatePath: local.templatePath,
+          dryRun: options.dryRun ?? false,
+        }),
+        options.json,
+      );
+    });
+  wordpress
     .command("restore-check")
     .argument("<sql-path>", "SQL backup path inside the Studio root")
     .action(async function action(this: Command, sqlPath: string) {
@@ -1393,26 +1412,25 @@ export function createProgram(): Command {
         enableFake?: boolean;
       };
       const payload = JSON.parse(local.payload) as Record<string, unknown>;
-      if (local.provider === "fake") {
-        const provider = createExternalAdapterProvider({
-          adapter: "github",
-          provider: "fake",
-          enabled: local.enableFake ?? false,
-        });
-        print(await provider.prepare(local.operation, payload), options.json, options.quiet);
-        process.exitCode = provider.enabled ? 0 : 7;
-        return;
-      }
-      print(
-        await executeDisabledExternalAdapter({
-          adapter: "github",
-          operation: local.operation,
-          payload,
-        }),
-        options.json,
-        options.quiet,
-      );
-      process.exitCode = 7;
+      const context = await createStudioContext(options.root);
+      const result = await prepareExternalAdapterAction(context, {
+        adapter: "github",
+        operation: local.operation,
+        payload,
+        provider: local.provider,
+        enabled: local.provider === "fake" ? (local.enableFake ?? false) : false,
+      });
+      print(result, options.json, options.quiet);
+      process.exitCode = result.status === "blocked" ? 7 : 0;
+    });
+  github
+    .command("fake-reconcile")
+    .argument("<action-id>", "Confirmed prepared action id")
+    .description("Execute and reconcile a fake/local GitHub prepared action without external sends")
+    .action(async function action(this: Command, actionId: string) {
+      const options = globalOptions(this);
+      const context = await createStudioContext(options.root);
+      print(await reconcileFakeExternalAdapterAction(context, actionId), options.json);
     });
 
   const communication = program
@@ -1433,26 +1451,25 @@ export function createProgram(): Command {
         enableFake?: boolean;
       };
       const payload = JSON.parse(local.payload) as Record<string, unknown>;
-      if (local.provider === "fake") {
-        const provider = createExternalAdapterProvider({
-          adapter: "communication",
-          provider: "fake",
-          enabled: local.enableFake ?? false,
-        });
-        print(await provider.prepare(local.operation, payload), options.json, options.quiet);
-        process.exitCode = provider.enabled ? 0 : 7;
-        return;
-      }
-      print(
-        await executeDisabledExternalAdapter({
-          adapter: "communication",
-          operation: local.operation,
-          payload,
-        }),
-        options.json,
-        options.quiet,
-      );
-      process.exitCode = 7;
+      const context = await createStudioContext(options.root);
+      const result = await prepareExternalAdapterAction(context, {
+        adapter: "communication",
+        operation: local.operation,
+        payload,
+        provider: local.provider,
+        enabled: local.provider === "fake" ? (local.enableFake ?? false) : false,
+      });
+      print(result, options.json, options.quiet);
+      process.exitCode = result.status === "blocked" ? 7 : 0;
+    });
+  program
+    .command("communication-adapter-reconcile")
+    .argument("<action-id>", "Confirmed prepared action id")
+    .description("Execute and reconcile a fake/local communication prepared action without sends")
+    .action(async function action(this: Command, actionId: string) {
+      const options = globalOptions(this);
+      const context = await createStudioContext(options.root);
+      print(await reconcileFakeExternalAdapterAction(context, actionId), options.json);
     });
 
   return program;
