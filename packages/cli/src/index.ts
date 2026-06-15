@@ -26,6 +26,7 @@ import {
   evaluateStudioAcceptance,
   executeStudioCommand,
   executeWorkflowFixtures,
+  hasPortfolioReleaseDecision,
   kindFromAlias,
   operatorActor,
   PreparedActionService,
@@ -478,12 +479,23 @@ export function createProgram(): Command {
   program
     .command("acceptance")
     .description("Aggregate PRD completion, workflow, repository and release gates")
+    .option("--panel-smoke-ok", "Mark the final-path panel smoke as passed")
+    .option("--panel-smoke-failed", "Mark the final-path panel smoke as failed")
+    .option("--mcp-smoke-ok", "Mark the final-path MCP smoke as passed")
+    .option("--mcp-smoke-failed", "Mark the final-path MCP smoke as failed")
     .action(async function action(this: Command) {
       const options = globalOptions(this);
+      const local = this.opts() as {
+        panelSmokeOk?: boolean;
+        panelSmokeFailed?: boolean;
+        mcpSmokeOk?: boolean;
+        mcpSmokeFailed?: boolean;
+      };
       const context = await createStudioContext(options.root);
       const validation = await validateStudio(options.root);
       const { files } = await validateCanonicalFiles(context.paths.root);
-      const coverage = evaluatePrdCoverage(files.map((file) => file.entity));
+      const entities = files.map((file) => file.entity);
+      const coverage = evaluatePrdCoverage(entities);
       const workflows = await executeWorkflowFixtures();
       const repositories = await inspectStudioRepositories(context);
       const repositoryBlocks = repositories.filter(
@@ -518,7 +530,14 @@ export function createProgram(): Command {
         validationOk: validation.ok,
         repositoryOk: repositoryBlocks.length === 0,
         backupOk: backups.length > 0,
+        ...(local.panelSmokeOk || local.panelSmokeFailed
+          ? { panelSmokeOk: Boolean(local.panelSmokeOk && !local.panelSmokeFailed) }
+          : {}),
+        ...(local.mcpSmokeOk || local.mcpSmokeFailed
+          ? { mcpSmokeOk: Boolean(local.mcpSmokeOk && !local.mcpSmokeFailed) }
+          : {}),
         explicitDeferralsOk,
+        portfolioReleaseDecisionOk: hasPortfolioReleaseDecision(entities),
         detail: {
           repositories: repositoryBlocks,
           backup: { manifest_count: backups.length, latest: backups.sort().at(-1) ?? null },

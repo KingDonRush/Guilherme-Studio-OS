@@ -1,0 +1,45 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T22:27:00.000Z
+  id: evd_20260615_final-acceptance-gate-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - acceptance
+  revision: 1
+  schema_version: 1
+  slug: final-acceptance-gate-verification
+  updated_at: 2026-06-15T22:27:00.000Z
+relations:
+  - target_id: tsk_20260615_run-final-acceptance-gate
+    type: supports
+spec:
+  claims:
+    - Full verify, npm audit, gitleaks and git fsck passed on the final PRD implementation branch.
+    - Studio validate, doctor, sync rebuild and executable workflow fixtures passed.
+    - Panel smoke loaded the built panel on the final path, hit API endpoints with 200 responses and produced no console warnings or errors.
+    - MCP smoke used a real stdio client to list acceptance/prepared-action/repository resources and execute one workflow fixture.
+    - Portfolio release remains blocked because no canonical portfolio release decision exists.
+  command: >-
+    npm run verify &&
+    npm audit --audit-level=moderate &&
+    gitleaks git --no-banner &&
+    git fsck --strict --no-dangling &&
+    npm run studio -- validate --json &&
+    npm run studio -- doctor --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    npm run studio -- workflow --fixtures --execute --json &&
+    npm run studio -- coverage --json &&
+    panel smoke via Playwright at http://127.0.0.1:4177/#/control &&
+    MCP stdio smoke via @modelcontextprotocol/sdk client &&
+    npm run studio -- acceptance --panel-smoke-ok --mcp-smoke-ok --json
+  evidence_type: command
+  observed_at: 2026-06-15T22:27:00.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Final acceptance gate verification
+  validated_at: 2026-06-15T22:27:00.000Z

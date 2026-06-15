@@ -1,0 +1,28 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: decision
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T22:27:00.000Z
+  id: dec_20260615_portfolio-release-deferred
+  labels:
+    - studio-os
+    - acceptance
+    - portfolio-freeze
+  revision: 1
+  schema_version: 1
+  slug: portfolio-release-deferred
+  updated_at: 2026-06-15T22:27:00.000Z
+relations:
+  - target_id: tsk_20260615_run-final-acceptance-gate
+    type: governs
+  - target_id: evd_20260615_final-acceptance-gate-verification
+    type: supported_by
+spec:
+  decision: Portfolio release remains deferred; portfolio implementation stays frozen until a future canonical decision explicitly approves release after gates are re-run.
+  rationale: Capability gates and smokes are now implemented, but a release decision must be explicit and intentional before portfolio work resumes.
+  reconsideration_trigger: Re-run acceptance with panel and MCP smokes, verify repository and backup state, then record an explicit approved release decision.
+  status: active
+  summary: Keeps portfolio frozen after PRD gate implementation until a separate release decision is recorded.
+  title: Portfolio release deferred

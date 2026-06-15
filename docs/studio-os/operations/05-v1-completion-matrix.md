@@ -18,9 +18,9 @@ verification, operator verification, documentation, and durable evidence exist.
 | Economic next actions | `packages/core` | in progress | economic resolver tests | `npm run test -- packages/core/src/economics.test.ts` | domain-specific obligation ranking and intake-aware gaps |
 | Domain lifecycles | `packages/core` | in progress | lifecycle preconditions and semantic command tests; `evd_20260615_prd-semantic-command-slice-verification` | `npm run test -- packages/core/src/index.test.ts` | complete remaining domain-specific preconditions and fixture coverage |
 | CLI | `packages/cli` | in progress | semantic command smoke; CLI equivalence tests; `evd_20260615_executable-workflow-fixtures-verification` | `npm run test -- packages/cli/src/index.test.ts` | add stable exit tests for every semantic command |
-| MCP | `packages/mcp` | in progress | MCP semantic tools build; acceptance resources; `evd_20260615_acceptance-surfaces-and-domain-panel-verification` | `npm run build -w @guilherme-studio/mcp` | add MCP Inspector smoke transcript on final path |
+| MCP | `packages/mcp` | in progress | MCP semantic tools build; acceptance resources; stdio smoke; `evd_20260615_final-acceptance-gate-verification` | `npm run build -w @guilherme-studio/mcp` | MCP Inspector transcript can be added later; stdio client smoke passes |
 | Local API | `packages/local-api` | in progress | local API tests and `evd_20260615_acceptance-surfaces-and-domain-panel-verification` | `npm run test -- packages/local-api/src/index.test.ts` | add broader API/MCP equivalence fixtures |
-| Panel | `apps/panel` | in progress | build, domain views, exact-payload review and `evd_20260615_acceptance-surfaces-and-domain-panel-verification` | `npm run build -w @guilherme-studio/panel` | run final Playwright smoke on acceptance path |
+| Panel | `apps/panel` | in progress | build, domain views, exact-payload review, Playwright smoke and `evd_20260615_final-acceptance-gate-verification` | `npm run build -w @guilherme-studio/panel` | keep smoke evidence current before any portfolio release |
 | Git adapter | `packages/adapters` | in progress | repository health inspection; `evd_20260615_adapter-health-and-fake-provider-verification` | `npm run studio -- repo inspect --json` | policy decisions for registered nested WordPress/plugin repos |
 | WordPress adapter | `packages/adapters` | in progress | WordPress health/restore evidence | `npm run studio -- wordpress health --json` | alternate-path restore evidence and provision/register template |
 | GitHub adapter | `packages/adapters` | in progress | disabled/fake provider tests, local prepared-action record and fake reconcile tests; `evd_20260615_adapter-recovery-security-verification` | `npm run test -- packages/adapters/src/index.test.ts` | real external provider remains deferred; keep blocked by default |
@@ -29,7 +29,7 @@ verification, operator verification, documentation, and durable evidence exist.
 | Eight journeys | `packages/testing`, `packages/core` | in progress | executable workflow fixture report and `evd_20260615_executable-workflow-fixtures-verification` | `npm run studio -- workflow --fixtures --execute --json` | add API/MCP smoke coverage over the executable workflow report |
 | Physical migration | root coordinator | in progress | renamed root and repository status | `npm run studio -- doctor --json` | path drift check green after final commit |
 | PRD coverage and intake | `packages/core`, interfaces | intake_required | coverage command, intake packet and `evd_20260615_prd-gates-and-coverage-verification` | `npm run studio -- coverage --json` | canonical records for PRDs with real data, collected through intake; capability coverage is separated from data readiness |
-| Operational acceptance | cross-package | in progress | V1 acceptance evidence, reconciliation evidence and `evd_20260615_acceptance-surfaces-and-domain-panel-verification` | `npm run studio -- acceptance --json` | repo clean state plus panel/MCP smoke required before portfolio release |
+| Operational acceptance | cross-package | in progress | V1 acceptance evidence, reconciliation evidence, final gate smoke and `evd_20260615_final-acceptance-gate-verification` | `npm run studio -- acceptance --panel-smoke-ok --mcp-smoke-ok --json` | portfolio remains frozen until explicit canonical release decision |
 
 ## Completion Rule
 
@@ -181,3 +181,26 @@ Delivered capacity:
   repositories without remote and WordPress backup manifest inventory.
 - Local API Host/Origin rejection and expired prepared-action replay are covered
   by automated tests.
+
+## Final Gate Smoke and Portfolio Freeze
+
+On 2026-06-15, `tsk_20260615_run-final-acceptance-gate` was created and
+completed for final PRD gate execution.
+
+Evidence:
+
+- `evd_20260615_final-acceptance-gate-verification`.
+- `dec_20260615_portfolio-release-deferred`.
+
+Delivered capacity:
+
+- `studio acceptance` now accepts explicit panel/MCP smoke inputs.
+- Acceptance includes a portfolio release decision check, so passing technical
+  smokes does not accidentally unfreeze portfolio work.
+- Full verify, audit, Gitleaks, Git fsck, Studio validate, doctor, sync and
+  executable workflow fixtures passed.
+- Panel smoke loaded the built panel on the final local path with successful API
+  requests and no console warnings/errors.
+- MCP smoke used a real stdio client to verify resources/tools and execute a
+  workflow fixture.
+- Portfolio remains frozen because no canonical approved release decision exists.

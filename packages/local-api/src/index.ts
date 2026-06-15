@@ -11,6 +11,7 @@ import {
   evaluateStudioAcceptance,
   executeStudioCommand,
   executeWorkflowFixtures,
+  hasPortfolioReleaseDecision,
   kindFromAlias,
   operatorActor,
   PreparedActionService,
@@ -175,7 +176,8 @@ export async function createLocalApi(
   app.get("/api/v1/acceptance", async () => {
     const validation = await validateStudio(context.paths.root);
     const { files } = await validateCanonicalFiles(context.paths.root);
-    const coverage = evaluatePrdCoverage(files.map((file) => file.entity));
+    const entities = files.map((file) => file.entity);
+    const coverage = evaluatePrdCoverage(entities);
     const workflows = await executeWorkflowFixtures();
     const repositories = await inspectStudioRepositories(context);
     const repositoryBlocks = repositories.filter(
@@ -210,6 +212,7 @@ export async function createLocalApi(
       validationOk: validation.ok,
       repositoryOk: repositoryBlocks.length === 0,
       backupOk: backups.length > 0,
+      portfolioReleaseDecisionOk: hasPortfolioReleaseDecision(entities),
       explicitDeferralsOk,
       detail: {
         repositories: repositoryBlocks,

@@ -1,0 +1,29 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-15T22:27:00.000Z
+  id: tsk_20260615_run-final-acceptance-gate
+  labels:
+    - studio-os
+    - prd-completion
+    - acceptance
+  revision: 1
+  schema_version: 1
+  slug: run-final-acceptance-gate
+  updated_at: 2026-06-15T22:27:00.000Z
+relations: []
+spec:
+  acceptance:
+    - full verify, audit, gitleaks and git fsck pass
+    - studio validate, doctor, sync rebuild and workflow fixtures pass
+    - panel smoke passes on the final built panel path
+    - MCP smoke passes through a real stdio client
+    - acceptance keeps portfolio blocked without a canonical release decision
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Runs the final acceptance gate and records that portfolio remains frozen until an explicit release decision exists.
+  title: Run final acceptance gate

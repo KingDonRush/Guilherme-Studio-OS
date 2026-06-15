@@ -71,6 +71,30 @@ describe("Studio CLI", () => {
       workflows: [expect.objectContaining({ id: "agent-handoff", ok: true })],
     });
   });
+
+  it("passes explicit panel and MCP smoke results into acceptance", async () => {
+    const root = await createCliFixtureRoot("studio-cli-acceptance-");
+    const result = await runCliJson([
+      "--root",
+      root,
+      "--json",
+      "acceptance",
+      "--panel-smoke-ok",
+      "--mcp-smoke-ok",
+    ]);
+    const envelope = result as {
+      result: {
+        checks: Array<{ name: string; status: string }>;
+      };
+    };
+
+    expect(envelope.result.checks).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: "panel_smoke", status: "pass" }),
+        expect.objectContaining({ name: "mcp_smoke", status: "pass" }),
+      ]),
+    );
+  });
 });
 
 async function runCliJson(args: string[]): Promise<Record<string, unknown>> {

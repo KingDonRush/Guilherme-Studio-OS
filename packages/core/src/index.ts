@@ -2168,6 +2168,7 @@ export function evaluateStudioAcceptance(input: {
   backupOk: boolean;
   panelSmokeOk?: boolean;
   mcpSmokeOk?: boolean;
+  portfolioReleaseDecisionOk?: boolean;
   explicitDeferralsOk?: boolean;
   detail?: Record<string, unknown>;
 }): StudioAcceptanceReport {
@@ -2237,6 +2238,14 @@ export function evaluateStudioAcceptance(input: {
       remediation: "Run MCP smoke against the final Studio root.",
     },
     {
+      name: "portfolio_release_decision",
+      status: input.portfolioReleaseDecisionOk ? "pass" : "block",
+      summary: input.portfolioReleaseDecisionOk
+        ? "Canonical portfolio release decision is present."
+        : "Portfolio remains frozen without a canonical release decision.",
+      remediation: "Record an explicit canonical decision before unfreezing portfolio work.",
+    },
+    {
       name: "deferrals",
       status: input.explicitDeferralsOk ? "pass" : "warn",
       summary: input.explicitDeferralsOk
@@ -2266,6 +2275,32 @@ export function evaluateStudioAcceptance(input: {
       reasons: portfolioReasons,
     },
   };
+}
+
+export function hasPortfolioReleaseDecision(entities: StudioEntity[]): boolean {
+  return entities.some((entity) => {
+    if (entity.kind !== "decision") {
+      return false;
+    }
+    const decision = Reflect.get(entity.spec, "decision");
+    const title = entityTitle(entity);
+    const text = `${typeof title === "string" ? title : ""} ${
+      typeof decision === "string" ? decision : ""
+    }`;
+    const normalized = text
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .toLowerCase();
+    if (!normalized.includes("portfolio")) {
+      return false;
+    }
+    if (/(defer|diferid|freeze|frozen|congel|block|bloque)/i.test(normalized)) {
+      return false;
+    }
+    return /release approved|approved release|liberar portfolio|portfolio liberado|liberacao aprovada|descongelar portfolio|unfreeze portfolio/i.test(
+      normalized,
+    );
+  });
 }
 
 export async function validateStudio(root = process.cwd()): Promise<{

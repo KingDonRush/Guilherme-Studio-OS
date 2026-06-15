@@ -1,7 +1,7 @@
 import { mkdtemp, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { createActor } from "@guilherme-studio/schemas";
+import { createActor, createEntity } from "@guilherme-studio/schemas";
 import { describe, expect, it } from "vitest";
 import YAML from "yaml";
 import {
@@ -11,8 +11,11 @@ import {
   DomainCommandService,
   EntityService,
   EvidenceClaimService,
+  evaluatePrdCoverage,
+  evaluateStudioAcceptance,
   executeWorkflowFixtures,
   gateCatalogIds,
+  hasPortfolioReleaseDecision,
   LifecycleEngine,
   operatorActor,
   PreparedActionService,
@@ -352,6 +355,38 @@ describe("core governance", () => {
       ok: false,
       issues: [expect.objectContaining({ code: "missing-claim" })],
     });
+  });
+
+  it("keeps portfolio release gated by a canonical decision", () => {
+    const report = evaluateStudioAcceptance({
+      coverage: evaluatePrdCoverage([]),
+      workflowOk: true,
+      validationOk: true,
+      repositoryOk: true,
+      backupOk: true,
+      panelSmokeOk: true,
+      mcpSmokeOk: true,
+    });
+
+    expect(report.blockers).toContain("portfolio_release_decision");
+    expect(
+      hasPortfolioReleaseDecision([
+        createEntity({
+          kind: "decision",
+          title: "Portfolio release approved",
+          data: { decision: "Liberacao aprovada para liberar portfolio apos gates finais." },
+        }),
+      ]),
+    ).toBe(true);
+    expect(
+      hasPortfolioReleaseDecision([
+        createEntity({
+          kind: "decision",
+          title: "Portfolio release deferred",
+          data: { decision: "Portfolio release remains deferred; portfolio stays frozen." },
+        }),
+      ]),
+    ).toBe(false);
   });
 });
 
