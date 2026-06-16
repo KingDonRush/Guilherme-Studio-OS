@@ -25,8 +25,8 @@
 }
 
 body.gp-simple-budget-case-body {
+	height: var(--gp-viewport-height);
 	background: var(--sb-paper);
-	overflow-x: hidden;
 	overflow: hidden;
 }
 
@@ -63,8 +63,8 @@ body.gp-simple-budget-case-body .gp-site-footer {
 	display: grid;
 	grid-template-rows: var(--sb-contact-height) var(--sb-thesis-height) minmax(0, 1fr);
 	width: 100%;
-	height: 100svh;
-	min-height: 780px;
+	height: var(--gp-viewport-height);
+	min-height: 0;
 	overflow: hidden;
 	background:
 		linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), color-mix(in oklch, var(--sb-ink), transparent 88%) calc(100% - 1px)),
@@ -391,7 +391,7 @@ body.gp-simple-budget-case-body .gp-site-footer {
 	width: min(
 		100%,
 		calc(
-			(100svh - var(--sb-contact-height) - var(--sb-thesis-height) - var(--sb-board-padding-y))
+			(var(--gp-viewport-height) - var(--sb-contact-height) - var(--sb-thesis-height) - var(--sb-board-padding-y))
 			* var(--sb-evidence-ratio)
 		)
 	);
@@ -605,6 +605,241 @@ body.gp-simple-budget-case-body .gp-site-footer {
 
 	.sb-ownership-card {
 		padding: 15px 20px;
+	}
+}
+
+@media (min-width: 1341px) and (max-height: 720px) {
+	:root {
+		--sb-contact-height: 58px;
+		--sb-thesis-height: 138px;
+		--sb-board-padding-y: 34px;
+		--sb-rail-width: clamp(350px, 27vw, 410px);
+		--sb-board-gap: clamp(22px, 1.85vw, 30px);
+		--sb-grid-left: clamp(28px, 3.9vw, 58px);
+		--sb-grid-right: clamp(28px, 3.9vw, 58px);
+	}
+
+	.sb-contact-strip {
+		grid-template-columns: minmax(170px, .46fr) minmax(560px, 1.9fr) minmax(250px, auto);
+	}
+
+	.sb-contact-strip__identity {
+		gap: 6px;
+	}
+
+	.sb-contact-strip__name {
+		font-size: 1rem;
+	}
+
+	.sb-contact-strip__handle,
+	.sb-contact-item strong {
+		font-size: .78rem;
+	}
+
+	.sb-contact-item small {
+		font-size: .68rem;
+	}
+
+	.sb-contact-item {
+		grid-template-columns: 22px minmax(0, 1fr);
+		gap: 9px;
+	}
+
+	.sb-contact-item__icon {
+		width: 21px;
+		height: 21px;
+	}
+
+	.sb-contact-strip__actions {
+		gap: 10px;
+	}
+
+	.sb-button {
+		min-height: 38px;
+		padding-inline: 13px;
+		border-width: 2px;
+		box-shadow: 3px 3px 0 var(--sb-ink);
+		font-size: .78rem;
+	}
+
+	.sb-thesis {
+		padding-top: 16px;
+		padding-bottom: 10px;
+	}
+
+	.sb-overline {
+		margin-bottom: 7px;
+		font-size: .64rem;
+	}
+
+	.sb-overline span {
+		width: 8px;
+		height: 8px;
+	}
+
+	.sb-thesis h1 {
+		font-size: clamp(3.05rem, 3.75vw, 4rem);
+	}
+
+	.sb-feature-row {
+		gap: 10px 18px;
+		margin-top: 12px;
+	}
+
+	.sb-feature-row li {
+		min-height: 34px;
+		padding-inline: 10px;
+		box-shadow: 2px 2px 0 var(--sb-ink);
+	}
+
+	.sb-feature-row__icon {
+		width: 18px;
+		height: 18px;
+	}
+
+	.sb-feature-row span {
+		font-size: .78rem;
+	}
+
+	.sb-thesis__label {
+		margin-bottom: 6px !important;
+		font-size: .62rem;
+	}
+
+	.sb-thesis__copy h2 {
+		margin-bottom: 6px;
+		font-size: 1rem;
+	}
+
+	.sb-thesis__copy p {
+		display: -webkit-box;
+		overflow: hidden;
+		font-size: .82rem;
+		line-height: 1.28;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+	}
+
+	.sb-evidence-board {
+		padding-top: 16px;
+		padding-bottom: 18px;
+	}
+
+	.sb-editor-frame {
+		box-shadow: 6px 6px 0 var(--sb-orange), 0 22px 54px color-mix(in oklch, black, transparent 58%);
+	}
+
+	.sb-evidence-rail {
+		gap: 10px;
+	}
+
+	.sb-evidence-rail__tabs {
+		gap: 7px;
+	}
+
+	.sb-evidence-card {
+		grid-template-columns: 82px 26px minmax(0, 1fr);
+		min-height: 66px;
+		gap: 10px;
+		padding: 8px 12px;
+	}
+
+	.sb-evidence-card img {
+		width: 82px;
+	}
+
+	.sb-evidence-card__number {
+		font-size: .9rem;
+	}
+
+	.sb-evidence-card__text {
+		gap: 4px;
+	}
+
+	.sb-evidence-card__text strong {
+		font-size: .82rem;
+	}
+
+	.sb-evidence-card__text small {
+		font-size: .72rem;
+		line-height: 1.18;
+		-webkit-line-clamp: 1;
+	}
+
+	.sb-ownership-card {
+		gap: 5px;
+		padding: 11px 14px;
+	}
+
+	.sb-ownership-card p {
+		font-size: .78rem;
+		line-height: 1.12;
+	}
+}
+
+@media (min-width: 1341px) and (max-height: 610px) {
+	:root {
+		--sb-contact-height: 52px;
+		--sb-thesis-height: 116px;
+		--sb-board-padding-y: 26px;
+		--sb-rail-width: clamp(316px, 24vw, 360px);
+		--sb-board-gap: 20px;
+	}
+
+	.sb-contact-strip {
+		grid-template-columns: minmax(158px, .42fr) minmax(520px, 1.92fr) minmax(220px, auto);
+	}
+
+	.sb-contact-strip__links {
+		gap: 10px;
+	}
+
+	.sb-button {
+		min-height: 34px;
+		padding-inline: 10px;
+	}
+
+	.sb-thesis {
+		padding-top: 12px;
+		padding-bottom: 8px;
+	}
+
+	.sb-thesis h1 {
+		font-size: clamp(2.65rem, 3.2vw, 3.45rem);
+	}
+
+	.sb-feature-row {
+		margin-top: 9px;
+	}
+
+	.sb-feature-row li {
+		min-height: 30px;
+	}
+
+	.sb-thesis__copy h2 {
+		display: -webkit-box;
+		overflow: hidden;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 1;
+	}
+
+	.sb-evidence-board {
+		padding-top: 12px;
+		padding-bottom: 14px;
+	}
+
+	.sb-evidence-card {
+		grid-template-columns: 70px 24px minmax(0, 1fr);
+		min-height: 56px;
+		padding: 7px 10px;
+	}
+
+	.sb-evidence-card img {
+		width: 70px;
+	}
+
+	.sb-ownership-card {
+		padding: 9px 12px;
 	}
 }
 

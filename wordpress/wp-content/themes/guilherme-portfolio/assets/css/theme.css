@@ -16,10 +16,18 @@
 	--gp-radius-sm: 12px;
 	--gp-shadow: 0 28px 90px color-mix(in oklch, var(--gp-ink), transparent 86%);
 	--gp-ease: cubic-bezier(.19, 1, .22, 1);
+	--gp-admin-bar-height: 0px;
+	--gp-viewport-height: calc(100svh - var(--gp-admin-bar-height));
 }
 
 * {
 	box-sizing: border-box;
+}
+
+@supports (height: 100dvh) {
+	:root {
+		--gp-viewport-height: calc(100dvh - var(--gp-admin-bar-height));
+	}
 }
 
 html {
@@ -28,11 +36,28 @@ html {
 }
 
 body {
+	--gp-viewport-height: calc(100svh - var(--gp-admin-bar-height));
 	margin: 0;
 	font-family: "Geist", "Aptos", "Segoe UI", sans-serif;
 	color: var(--gp-ink);
 	background: var(--gp-paper);
 	text-rendering: geometricPrecision;
+}
+
+@supports (height: 100dvh) {
+	body {
+		--gp-viewport-height: calc(100dvh - var(--gp-admin-bar-height));
+	}
+}
+
+body.admin-bar {
+	--gp-admin-bar-height: 32px;
+}
+
+@media (max-width: 782px) {
+	body.admin-bar {
+		--gp-admin-bar-height: 46px;
+	}
 }
 
 img,
@@ -1645,9 +1670,14 @@ body.home .gp-site-footer {
 
 /* Lovable-derived portfolio home. The CCT supplies data; this owns the visual language. */
 body.home {
-	overflow-x: hidden;
-	overflow-y: auto;
+	height: var(--gp-viewport-height);
+	overflow: hidden;
 	background: oklch(98.7% 0.007 84);
+}
+
+html:has(body.home),
+html:has(body.gp-simple-budget-case-body) {
+	overflow: hidden;
 }
 
 .pf-page {
@@ -1660,7 +1690,8 @@ body.home {
 	--pf-yellow: oklch(92% 0.19 100);
 	--pf-cyan: oklch(71% 0.16 188);
 	width: 100%;
-	min-height: 100svh;
+	height: var(--gp-viewport-height);
+	min-height: 0;
 	overflow: clip;
 	background:
 		linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), color-mix(in oklch, var(--pf-ink), transparent 88%) calc(100% - 1px)),
@@ -1684,8 +1715,8 @@ body.home {
 	display: grid;
 	grid-template-columns: minmax(360px, 34vw) minmax(0, 1fr);
 	gap: var(--pf-divider-space);
-	height: max(760px, 100svh);
-	min-height: 100svh;
+	height: 100%;
+	min-height: 0;
 	padding: clamp(20px, 2.7vh, 28px) clamp(26px, 3.5vw, 64px);
 	overflow: hidden;
 }
@@ -2282,6 +2313,211 @@ body.home {
 
 	.pf-focus-copy h3 {
 		font-size: clamp(1.85rem, 2.25vw, 2.75rem);
+	}
+}
+
+@media (min-width: 981px) and (max-height: 700px) {
+	.pf-stage {
+		--pf-divider-space: clamp(20px, 1.65vw, 30px);
+		grid-template-columns: minmax(292px, 29vw) minmax(0, 1fr);
+		padding-block: 12px;
+	}
+
+	.pf-identity {
+		grid-template-rows: clamp(150px, 31vh, 218px) auto auto auto auto minmax(0, 1fr);
+	}
+
+	.pf-kicker,
+	.pf-section-head p,
+	.pf-number {
+		font-size: .62rem;
+		letter-spacing: .12em;
+	}
+
+	.pf-identity h1 {
+		font-size: clamp(2.25rem, 3.45vw, 3.55rem);
+	}
+
+	.pf-handle {
+		margin-top: 8px;
+		font-size: clamp(.86rem, .9vw, 1rem);
+	}
+
+	.pf-lead {
+		display: -webkit-box;
+		overflow: hidden;
+		margin-top: 10px;
+		font-size: clamp(.86rem, .95vw, 1.05rem);
+		line-height: 1.18;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+	}
+
+	.pf-specialties > div {
+		gap: 6px;
+		min-height: 44px;
+		padding-block: 6px;
+	}
+
+	.pf-specialties i,
+	.pf-socials i {
+		font-size: 1.05rem;
+	}
+
+	.pf-specialties span {
+		font-size: .64rem;
+		line-height: 1.05;
+	}
+
+	.pf-socials a {
+		min-height: 34px;
+	}
+
+	.pf-showcase {
+		gap: 10px;
+	}
+
+	.pf-section-head {
+		padding-bottom: 9px;
+	}
+
+	.pf-section-head h2 {
+		margin-top: 5px;
+		font-size: clamp(2.3rem, 3vw, 3.35rem);
+	}
+
+	.pf-primary {
+		min-height: 40px;
+		padding-inline: 16px;
+		box-shadow: 4px 4px 0 var(--pf-ink);
+		font-size: .86rem;
+	}
+
+	.pf-carousel {
+		gap: 9px;
+	}
+
+	.pf-focus {
+		grid-template-columns: minmax(0, 1.45fr) minmax(260px, .78fr);
+	}
+
+	.pf-focus-copy {
+		padding: 18px;
+	}
+
+	.pf-focus-copy h3 {
+		margin-block: 12px 8px;
+		font-size: clamp(1.55rem, 1.95vw, 2.25rem);
+	}
+
+	.pf-focus-copy > p {
+		display: -webkit-box;
+		overflow: hidden;
+		margin-bottom: 10px;
+		font-size: .86rem;
+		line-height: 1.24;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+	}
+
+	.pf-tags {
+		gap: 12px;
+	}
+
+	.pf-tags i {
+		font-size: 1.35rem;
+	}
+
+	.pf-project-link {
+		margin-top: 12px;
+		font-size: .86rem;
+	}
+
+	.pf-project-index {
+		gap: 8px;
+	}
+
+	.pf-project-tabs button {
+		min-height: 34px;
+		padding-inline: 12px;
+		font-size: .64rem;
+	}
+
+	.pf-index-controls button {
+		width: 34px;
+		height: 34px;
+	}
+
+	.pf-project-thumb {
+		gap: 5px;
+		font-size: .68rem;
+	}
+
+	.pf-thumb-image b {
+		width: 30px;
+		height: 30px;
+		font-size: .78rem;
+	}
+}
+
+@media (min-width: 981px) and (max-height: 610px) {
+	.pf-stage {
+		--pf-divider-space: clamp(18px, 1.4vw, 26px);
+		grid-template-columns: minmax(270px, 27vw) minmax(0, 1fr);
+		padding: 10px clamp(18px, 2.4vw, 44px);
+	}
+
+	.pf-identity {
+		grid-template-rows: clamp(132px, 27vh, 172px) auto auto auto auto minmax(0, 1fr);
+	}
+
+	.pf-availability {
+		right: -8px;
+		bottom: 10px;
+		padding: 6px 10px;
+		font-size: .6rem;
+	}
+
+	.pf-kicker {
+		margin-top: 8px;
+	}
+
+	.pf-identity h1 {
+		margin-top: 6px;
+		font-size: clamp(2rem, 3vw, 3rem);
+	}
+
+	.pf-lead {
+		margin-top: 8px;
+		-webkit-line-clamp: 1;
+	}
+
+	.pf-specialties > div {
+		min-height: 38px;
+	}
+
+	.pf-socials a {
+		min-height: 30px;
+	}
+
+	.pf-section-head h2 {
+		font-size: clamp(2rem, 2.55vw, 2.8rem);
+	}
+
+	.pf-focus-copy .pf-number {
+		display: none;
+	}
+
+	.pf-focus-copy h3 {
+		margin-top: 0;
+	}
+
+	.pf-project-tabs button {
+		min-height: 30px;
+	}
+
+	.pf-index-meta {
+		gap: 9px;
 	}
 }
 
