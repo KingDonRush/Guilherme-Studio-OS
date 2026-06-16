@@ -150,17 +150,14 @@ body.gp-simple-budget-case-body .gp-site-footer {
 	place-items: center;
 	width: 25px;
 	height: 25px;
-	border: 1px solid color-mix(in oklch, currentColor, transparent 34%);
-	border-radius: 6px;
-	background: var(--sb-ink);
-	color: var(--sb-paper);
-	font-size: 12px;
+	color: var(--sb-ink);
+	font-size: 15px;
 	line-height: 1;
 }
 
 .sb-contact-item__icon--email,
 .sb-contact-item__icon--github {
-	color: var(--sb-paper);
+	color: var(--sb-ink);
 }
 
 .sb-contact-item__icon--linkedin {
