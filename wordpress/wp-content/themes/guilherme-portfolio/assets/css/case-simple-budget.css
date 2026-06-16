@@ -185,7 +185,7 @@ body.gp-simple-budget-case-body .gp-site-footer {
 	min-height: 48px;
 	padding: 0 20px;
 	border: 3px solid var(--sb-ink);
-	border-radius: 7px;
+	border-radius: 0;
 	font-size: .92rem;
 	font-weight: 800;
 	line-height: 1;
@@ -322,7 +322,7 @@ body.gp-simple-budget-case-body .gp-site-footer {
 	min-height: 42px;
 	padding: 0 13px;
 	border: 2px solid var(--sb-ink);
-	border-radius: 7px;
+	border-radius: 0;
 	background: var(--sb-paper);
 	box-shadow: 3px 3px 0 var(--sb-ink);
 }
@@ -351,7 +351,7 @@ body.gp-simple-budget-case-body .gp-site-footer {
 	gap: var(--sb-board-gap);
 	min-height: 0;
 	padding: 24px var(--sb-grid-right) 34px var(--sb-grid-left);
-	border-top: 3px solid var(--sb-ink);
+	border-top: 0;
 	background:
 		linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), color-mix(in oklch, var(--sb-ink), transparent 88%) calc(100% - 1px)),
 		radial-gradient(circle at 5% 84%, color-mix(in oklch, var(--sb-orange), transparent 91%), transparent 22rem),
@@ -396,9 +396,9 @@ body.gp-simple-budget-case-body .gp-site-footer {
 	height: 100%;
 	min-height: 0;
 	border: 3px solid var(--sb-ink);
-	border-radius: 7px;
+	border-radius: 0;
 	background: var(--sb-paper-soft);
-	box-shadow: 9px 9px 0 var(--sb-orange), 0 28px 64px color-mix(in oklch, var(--sb-ink), transparent 84%);
+	box-shadow: 6px 6px 0 var(--sb-ink);
 	overflow: hidden;
 }
 
@@ -445,9 +445,9 @@ body.gp-simple-budget-case-body .gp-site-footer {
 	min-height: 0;
 	padding: clamp(20px, 2vw, 30px);
 	border: 3px solid var(--sb-ink);
-	border-radius: 7px;
+	border-radius: 0;
 	background: color-mix(in oklch, var(--sb-paper), var(--sb-cyan) 5%);
-	box-shadow: 7px 7px 0 var(--sb-ink);
+	box-shadow: 6px 6px 0 var(--sb-ink);
 }
 
 .sb-evidence-copy.is-active {
@@ -502,8 +502,8 @@ body.gp-simple-budget-case-body .gp-site-footer {
 	width: 100%;
 	min-height: 0;
 	padding: 9px 10px;
-	border: 2px solid color-mix(in oklch, var(--sb-ink), transparent 20%);
-	border-radius: 8px;
+	border: 2px solid var(--sb-ink);
+	border-radius: 0;
 	background: var(--sb-paper);
 	color: var(--sb-ink-soft);
 	font: inherit;
@@ -518,7 +518,7 @@ body.gp-simple-budget-case-body .gp-site-footer {
 .sb-evidence-card.is-active {
 	border-color: var(--sb-ink);
 	background: var(--sb-yellow);
-	box-shadow: 4px 4px 0 var(--sb-ink);
+	box-shadow: 3px 3px 0 var(--sb-ink);
 	color: var(--sb-ink);
 }
 
@@ -773,7 +773,7 @@ body.gp-simple-budget-case-body .gp-site-footer {
 	}
 
 	.sb-editor-frame {
-		box-shadow: 6px 6px 0 var(--sb-orange), 0 22px 54px color-mix(in oklch, black, transparent 58%);
+		box-shadow: 4px 4px 0 var(--sb-ink);
 	}
 
 	.sb-evidence-copy {
