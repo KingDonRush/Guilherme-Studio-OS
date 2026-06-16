@@ -66,24 +66,33 @@ $features = array(
 $evidence = array(
 	array(
 		'id'      => 'budget-listing',
-		'label'   => 'Budget Listing',
-		'copy'    => 'Display selected items with image, title and quantity controls.',
+		'label'   => 'Quote list',
+		'eyebrow' => 'Elementor widget',
+		'tab_tag' => 'Widget',
+		'title'   => 'Place the quote list inside the project layout.',
+		'copy'    => 'Renders selected items with image, title, quantity controls and empty state. Because it is a widget, the quote list can live in a section, service page, modal or custom template without forcing one plugin-owned page.',
 		'image'   => 'simple-budget-listing-editor-v1.webp',
 		'alt'     => 'Budget Listing widget shown in the Elementor editor.',
 		'loading' => 'eager',
 	),
 	array(
 		'id'      => 'budget-button',
-		'label'   => 'Budget Button',
-		'copy'    => 'Add to quote actions on any product, block or listing.',
+		'label'   => 'Add button',
+		'eyebrow' => 'Reusable action',
+		'tab_tag' => 'Action',
+		'title'   => 'Add items to the budget from any conversion point.',
+		'copy'    => 'The button can be attached to product cards, service blocks, custom loops or landing page sections. The site decides where the action appears; the plugin handles selection state and quantity behavior.',
 		'image'   => 'simple-budget-open-cart-button-editor-v1.webp',
 		'alt'     => 'Budget Button controls shown in the Elementor editor.',
 		'loading' => 'lazy',
 	),
 	array(
 		'id'      => 'cart-template',
-		'label'   => 'Cart template',
-		'copy'    => 'Fully editable cart template in Elementor Theme Builder.',
+		'label'   => 'Cart flow',
+		'eyebrow' => 'Theme Builder',
+		'tab_tag' => 'Template',
+		'title'   => 'Keep the final quote flow editable in Elementor.',
+		'copy'    => 'The cart is a template, not a hardcoded plugin screen. Copy, hierarchy, surrounding content and call to action stay project-owned while the plugin renders selected items and quantities.',
 		'image'   => 'simple-budget-cart-template-editor-v1.webp',
 		'alt'     => 'Simple Budget cart template shown in the Elementor editor.',
 		'loading' => 'lazy',
@@ -167,42 +176,52 @@ $evidence = array(
 						</article>
 					<?php endforeach; ?>
 				</div>
-			</div>
 
-			<aside class="sb-evidence-rail" aria-label="<?php esc_attr_e( 'Elementor evidence selector', 'guilherme-portfolio' ); ?>">
-				<div class="sb-evidence-rail__tabs" role="tablist" aria-label="<?php esc_attr_e( 'Simple Budget Elementor evidence', 'guilherme-portfolio' ); ?>">
+				<div class="sb-evidence-story" aria-live="polite">
 					<?php foreach ( $evidence as $index => $item ) : ?>
-						<button
-							type="button"
-							role="tab"
-							aria-selected="<?php echo 0 === $index ? 'true' : 'false'; ?>"
-							aria-controls="evidence-<?php echo esc_attr( $item['id'] ); ?>"
-							tabindex="<?php echo 0 === $index ? '0' : '-1'; ?>"
-							class="sb-evidence-card<?php echo 0 === $index ? ' is-active' : ''; ?>"
-							data-evidence-tab
+						<article
+							id="evidence-copy-<?php echo esc_attr( $item['id'] ); ?>"
+							class="sb-evidence-copy<?php echo 0 === $index ? ' is-active' : ''; ?>"
+							data-evidence-copy
+							aria-hidden="<?php echo 0 === $index ? 'false' : 'true'; ?>"
 						>
-							<img
-								src="<?php echo esc_url( gp_asset_url( 'assets/images/simple-budget-evidence/' . $item['image'] ) ); ?>"
-								alt=""
-								width="1320"
-								height="820"
-								loading="lazy"
-								decoding="async"
-							>
-							<span class="sb-evidence-card__number"><?php echo esc_html( sprintf( '%02d', $index + 1 ) ); ?></span>
-							<span class="sb-evidence-card__text">
-								<strong><?php echo esc_html( $item['label'] ); ?></strong>
-								<small><?php echo esc_html( $item['copy'] ); ?></small>
-							</span>
-						</button>
+							<span class="sb-evidence-copy__number"><?php echo esc_html( $item['eyebrow'] ); ?></span>
+							<h2><?php echo esc_html( $item['title'] ); ?></h2>
+							<p><?php echo esc_html( $item['copy'] ); ?></p>
+						</article>
 					<?php endforeach; ?>
-				</div>
 
-				<div class="sb-ownership-card">
-					<p><strong>Project owns:</strong> layout, content types, hierarchy.</p>
-					<p><strong>Plugin owns:</strong> selection, quantities, rendering.</p>
+					<div class="sb-evidence-rail__tabs" role="tablist" aria-label="<?php esc_attr_e( 'Simple Budget Elementor evidence', 'guilherme-portfolio' ); ?>">
+						<?php foreach ( $evidence as $index => $item ) : ?>
+							<button
+								type="button"
+								role="tab"
+								aria-selected="<?php echo 0 === $index ? 'true' : 'false'; ?>"
+								aria-controls="evidence-<?php echo esc_attr( $item['id'] ); ?>"
+								tabindex="<?php echo 0 === $index ? '0' : '-1'; ?>"
+								class="sb-evidence-card<?php echo 0 === $index ? ' is-active' : ''; ?>"
+								data-evidence-tab
+							>
+								<span class="sb-evidence-card__text">
+									<strong><?php echo esc_html( $item['label'] ); ?></strong>
+									<small><?php echo esc_html( $item['tab_tag'] ); ?></small>
+								</span>
+							</button>
+						<?php endforeach; ?>
+					</div>
+
+					<div class="sb-evidence-story__footer">
+						<div class="sb-evidence-controls" aria-label="<?php esc_attr_e( 'Browse Simple Budget evidence', 'guilherme-portfolio' ); ?>">
+							<button type="button" data-evidence-prev aria-label="<?php esc_attr_e( 'Previous evidence', 'guilherme-portfolio' ); ?>" title="<?php esc_attr_e( 'Previous evidence', 'guilherme-portfolio' ); ?>">
+								<i class="fas fa-arrow-left" aria-hidden="true"></i>
+							</button>
+							<button type="button" data-evidence-next aria-label="<?php esc_attr_e( 'Next evidence', 'guilherme-portfolio' ); ?>" title="<?php esc_attr_e( 'Next evidence', 'guilherme-portfolio' ); ?>">
+								<i class="fas fa-arrow-right" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
 				</div>
-			</aside>
+			</div>
 		</div>
 	</section>
 </main>

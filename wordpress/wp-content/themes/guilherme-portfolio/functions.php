@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GP_THEME_VERSION', '0.3.23' );
+define( 'GP_THEME_VERSION', '0.3.24' );
 define( 'GP_THEME_DIR', get_template_directory() );
 define( 'GP_THEME_URI', get_template_directory_uri() );
 
@@ -42,7 +42,7 @@ add_action(
 			null
 		);
 
-		if ( is_front_page() ) {
+		if ( is_front_page() || is_page( 'simple-budget-plugin' ) ) {
 			wp_enqueue_style(
 				'gp-font-awesome',
 				plugins_url( 'elementor/assets/lib/font-awesome/css/all.min.css' ),

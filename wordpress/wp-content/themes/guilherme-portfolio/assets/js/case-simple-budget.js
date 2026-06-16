@@ -10,6 +10,9 @@
 	if (carousel) {
 		const tabs = Array.from(carousel.querySelectorAll('[data-evidence-tab]'));
 		const slides = Array.from(carousel.querySelectorAll('[data-evidence-slide]'));
+		const copies = Array.from(carousel.querySelectorAll('[data-evidence-copy]'));
+		const previousButton = carousel.querySelector('[data-evidence-prev]');
+		const nextButton = carousel.querySelector('[data-evidence-next]');
 		let activeIndex = 0;
 
 		const activate = (index, focus = false) => {
@@ -26,6 +29,12 @@
 				const active = slideIndex === activeIndex;
 				slide.classList.toggle('is-active', active);
 				slide.setAttribute('aria-hidden', String(!active));
+			});
+
+			copies.forEach((copy, copyIndex) => {
+				const active = copyIndex === activeIndex;
+				copy.classList.toggle('is-active', active);
+				copy.setAttribute('aria-hidden', String(!active));
 			});
 
 			if (focus) {
@@ -47,6 +56,9 @@
 				}
 			});
 		});
+
+		previousButton?.addEventListener('click', () => activate(activeIndex - 1));
+		nextButton?.addEventListener('click', () => activate(activeIndex + 1));
 
 		activate(0);
 	}
