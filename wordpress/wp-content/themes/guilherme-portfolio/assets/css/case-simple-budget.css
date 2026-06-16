@@ -18,7 +18,8 @@
 	--sb-rail-width: clamp(410px, 28vw, 486px);
 	--sb-board-gap: clamp(34px, 3.1vw, 52px);
 	--sb-story-gap: 14px;
-	--sb-copy-height: clamp(380px, 50vh, 430px);
+	--sb-bottom-gap: 22px;
+	--sb-copy-height: clamp(330px, 44vh, 360px);
 	--sb-contact-height: 82px;
 	--sb-thesis-height: 214px;
 	--sb-board-padding-y: 58px;
@@ -352,7 +353,7 @@ body.gp-simple-budget-case-body .gp-site-footer {
 	grid-template-rows: minmax(0, 1fr);
 	gap: var(--sb-board-gap);
 	min-height: 0;
-	padding: 24px var(--sb-grid-right) var(--sb-story-gap) var(--sb-grid-left);
+	padding: 24px var(--sb-grid-right) var(--sb-bottom-gap) var(--sb-grid-left);
 	border-top: 0;
 	background:
 		linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), color-mix(in oklch, var(--sb-ink), transparent 88%) calc(100% - 1px)),
@@ -430,11 +431,11 @@ body.gp-simple-budget-case-body .gp-site-footer {
 	position: relative;
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) auto;
-	grid-template-rows: minmax(0, var(--sb-copy-height)) auto;
+	grid-template-rows: minmax(0, var(--sb-copy-height)) minmax(0, 1fr) auto;
 	grid-template-areas:
 		"copy copy"
+		". ."
 		"tabs controls";
-	align-content: end;
 	gap: var(--sb-story-gap) 12px;
 	min-width: 0;
 	min-height: 0;
@@ -603,7 +604,8 @@ body.gp-simple-budget-case-body .gp-site-footer {
 		--sb-rail-width: clamp(410px, 31vw, 470px);
 		--sb-board-gap: clamp(28px, 2.2vw, 36px);
 		--sb-story-gap: 12px;
-		--sb-copy-height: clamp(340px, 54vh, 420px);
+		--sb-bottom-gap: 18px;
+		--sb-copy-height: clamp(318px, 42vh, 340px);
 	}
 
 	.sb-case__viewport {
@@ -639,7 +641,7 @@ body.gp-simple-budget-case-body .gp-site-footer {
 
 	.sb-evidence-board {
 		padding-top: 18px;
-		padding-bottom: var(--sb-story-gap);
+		padding-bottom: var(--sb-bottom-gap);
 	}
 
 	.sb-evidence-copy {
@@ -668,7 +670,8 @@ body.gp-simple-budget-case-body .gp-site-footer {
 		--sb-rail-width: clamp(350px, 27vw, 410px);
 		--sb-board-gap: clamp(22px, 1.85vw, 30px);
 		--sb-story-gap: 10px;
-		--sb-copy-height: clamp(255px, 48vh, 330px);
+		--sb-bottom-gap: 16px;
+		--sb-copy-height: clamp(240px, 39vh, 278px);
 		--sb-grid-left: clamp(28px, 3.9vw, 58px);
 		--sb-grid-right: clamp(28px, 3.9vw, 58px);
 	}
@@ -776,7 +779,7 @@ body.gp-simple-budget-case-body .gp-site-footer {
 
 	.sb-evidence-board {
 		padding-top: 16px;
-		padding-bottom: var(--sb-story-gap);
+		padding-bottom: var(--sb-bottom-gap);
 	}
 
 	.sb-editor-frame {
@@ -842,7 +845,8 @@ body.gp-simple-budget-case-body .gp-site-footer {
 		--sb-rail-width: clamp(316px, 24vw, 360px);
 		--sb-board-gap: 20px;
 		--sb-story-gap: 8px;
-		--sb-copy-height: clamp(278px, 52vh, 312px);
+		--sb-bottom-gap: 14px;
+		--sb-copy-height: clamp(238px, 43vh, 264px);
 	}
 
 	.sb-contact-strip {
@@ -884,7 +888,7 @@ body.gp-simple-budget-case-body .gp-site-footer {
 
 	.sb-evidence-board {
 		padding-top: 12px;
-		padding-bottom: var(--sb-story-gap);
+		padding-bottom: var(--sb-bottom-gap);
 	}
 
 	.sb-evidence-card {
