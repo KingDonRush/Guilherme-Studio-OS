@@ -23,42 +23,46 @@ $linkedin_url = 'https://www.linkedin.com/in/guilherme-silva-dev/';
 
 $contact_items = array(
 	array(
-		'icon'  => 'email.svg',
-		'label' => 'Email',
-		'value' => 'hello@guilhermesilva.dev',
-		'url'   => $email_url,
+		'icon'      => 'far fa-envelope',
+		'icon_tone' => 'email',
+		'label'     => 'Email',
+		'value'     => 'hello@guilhermesilva.dev',
+		'url'       => $email_url,
 	),
 	array(
-		'icon'  => 'linkedin.svg',
-		'label' => 'LinkedIn',
-		'value' => '/in/guilherme-silva-dev',
-		'url'   => $linkedin_url,
+		'icon'      => 'fab fa-linkedin-in',
+		'icon_tone' => 'linkedin',
+		'label'     => 'LinkedIn',
+		'value'     => '/in/guilherme-silva-dev',
+		'url'       => $linkedin_url,
 	),
 	array(
-		'icon'  => 'github.svg',
-		'label' => 'GitHub',
-		'value' => '/kingdonrush',
-		'url'   => $profile_url,
+		'icon'      => 'fab fa-github',
+		'icon_tone' => 'github',
+		'label'     => 'GitHub',
+		'value'     => '/kingdonrush',
+		'url'       => $profile_url,
 	),
 	array(
-		'icon'  => 'whatsapp.svg',
-		'label' => 'Discuss a project',
-		'value' => 'Quick and direct',
-		'url'   => $email_url,
+		'icon'      => 'fab fa-whatsapp',
+		'icon_tone' => 'whatsapp',
+		'label'     => 'Discuss a project',
+		'value'     => 'Quick and direct',
+		'url'       => $email_url,
 	),
 );
 
 $features = array(
 	array(
-		'icon' => 'custom-solutions.svg',
+		'icon' => 'fas fa-puzzle-piece',
 		'text' => 'Flexible by design',
 	),
 	array(
-		'icon' => 'elementor.svg',
+		'icon' => 'fab fa-elementor',
 		'text' => 'Elementor native',
 	),
 	array(
-		'icon' => 'cart.svg',
+		'icon' => 'fas fa-shopping-cart',
 		'text' => 'Editable cart',
 	),
 );
@@ -105,7 +109,7 @@ $evidence = array(
 			<div class="sb-contact-strip__identity">
 				<a class="sb-contact-strip__name" href="<?php echo esc_url( home_url( '/' ) ); ?>">Guilherme Silva</a>
 				<a class="sb-contact-strip__handle" href="<?php echo esc_url( $profile_url ); ?>" aria-label="<?php esc_attr_e( 'kingdonrush on GitHub', 'guilherme-portfolio' ); ?>">
-					<?php echo gp_icon_img( 'github.svg', '', 'sb-icon sb-icon--github' ); ?>
+					<?php echo gp_font_icon( 'fab fa-github', 'sb-icon sb-icon--github' ); ?>
 					<span>kingdonrush</span>
 				</a>
 			</div>
@@ -113,7 +117,7 @@ $evidence = array(
 			<div class="sb-contact-strip__links">
 				<?php foreach ( $contact_items as $item ) : ?>
 					<a class="sb-contact-item" href="<?php echo esc_url( $item['url'] ); ?>">
-						<?php echo gp_icon_img( $item['icon'], '', 'sb-contact-item__icon' ); ?>
+						<?php echo gp_font_icon( $item['icon'], 'sb-contact-item__icon sb-contact-item__icon--' . sanitize_html_class( $item['icon_tone'] ) ); ?>
 						<span>
 							<strong><?php echo esc_html( $item['label'] ); ?></strong>
 							<small><?php echo esc_html( $item['value'] ); ?></small>
@@ -125,11 +129,11 @@ $evidence = array(
 			<div class="sb-contact-strip__actions" aria-label="<?php esc_attr_e( 'Case calls to action', 'guilherme-portfolio' ); ?>">
 				<a class="sb-button sb-button--primary" href="<?php echo esc_url( $demo_url ); ?>">
 					<span>Open demo</span>
-					<?php echo gp_icon_img( 'external-link.svg', '', 'sb-button__icon' ); ?>
+					<?php echo gp_font_icon( 'fas fa-external-link-alt', 'sb-button__icon' ); ?>
 				</a>
 				<a class="sb-button sb-button--secondary" href="<?php echo esc_url( $github_url ); ?>">
 					<span>Repository</span>
-					<?php echo gp_icon_img( 'external-link.svg', '', 'sb-button__icon' ); ?>
+					<?php echo gp_font_icon( 'fas fa-external-link-alt', 'sb-button__icon' ); ?>
 				</a>
 			</div>
 		</header>
@@ -141,7 +145,7 @@ $evidence = array(
 				<ul class="sb-feature-row" aria-label="<?php esc_attr_e( 'Simple Budget implementation traits', 'guilherme-portfolio' ); ?>">
 					<?php foreach ( $features as $feature ) : ?>
 						<li>
-							<?php echo gp_icon_img( $feature['icon'], '', 'sb-feature-row__icon' ); ?>
+							<?php echo gp_font_icon( $feature['icon'], 'sb-feature-row__icon' ); ?>
 							<span><?php echo esc_html( $feature['text'] ); ?></span>
 						</li>
 					<?php endforeach; ?>

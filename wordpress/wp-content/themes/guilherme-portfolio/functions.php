@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GP_THEME_VERSION', '0.3.29' );
+define( 'GP_THEME_VERSION', '0.3.30' );
 define( 'GP_THEME_DIR', get_template_directory() );
 define( 'GP_THEME_URI', get_template_directory_uri() );
 
@@ -115,6 +115,16 @@ function gp_icon_img( string $filename, string $alt = '', string $class = '' ): 
 		esc_attr( trim( 'gp-icon ' . $class ) ),
 		esc_url( $src ),
 		esc_attr( $alt )
+	);
+}
+
+/**
+ * Print a decorative icon from the locally bundled Elementor/Font Awesome library.
+ */
+function gp_font_icon( string $icon_class, string $class = '' ): string {
+	return sprintf(
+		'<i class="%1$s" aria-hidden="true"></i>',
+		esc_attr( trim( 'gp-font-icon ' . $class . ' ' . $icon_class ) )
 	);
 }
 
