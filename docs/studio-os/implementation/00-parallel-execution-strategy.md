@@ -29,10 +29,11 @@ sets. These original hot files are already reduced by Phase 0:
 - `packages/cli/src/index.ts`: resolved into a thin CLI entrypoint.
 - `packages/local-api/src/index.ts`: resolved into a thin local API barrel.
 - `packages/mcp/src/index.ts`: resolved into a thin MCP barrel.
+- `apps/panel/src/main.tsx`: resolved into a thin React render entrypoint.
 
-The remaining hot file is:
+The remaining shared coordination surface is:
 
-- `apps/panel/src/main.tsx`
+- `packages/core/src/coverage.ts`
 
 Any plan that lets many agents edit those files at once is expected to fail by
 merge conflict, behavior drift, or duplicated abstractions.
@@ -105,7 +106,7 @@ Owners:
 - CLI command registration extraction: implemented in `codex/phase-0-cli-commands`;
 - MCP resources/tools extraction: implemented in `codex/phase-0-api-mcp`;
 - local API route extraction: implemented in `codex/phase-0-api-mcp`;
-- panel view extraction.
+- panel view extraction: implemented in `codex/phase-0-panel-views`.
 
 No PRD agent starts until Wave 0 is green or explicitly waived by decision.
 

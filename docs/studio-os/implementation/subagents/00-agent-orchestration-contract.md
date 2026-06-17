@@ -110,6 +110,11 @@ MCP behavior belongs in `packages/mcp/src/resources.ts`,
 `packages/mcp/src/tools/**` and `packages/mcp/src/prompts.ts`, with mutating
 tool execution shared through `packages/mcp/src/command.ts`.
 
+Panel behavior belongs in `apps/panel/src/views/**`,
+`apps/panel/src/components/**`, `apps/panel/src/api/**` and
+`apps/panel/src/app/app.tsx`. The file `apps/panel/src/main.tsx` is only the
+React render entrypoint.
+
 ## Standard Agent Prompt
 
 Use this shape when starting a PRD agent:

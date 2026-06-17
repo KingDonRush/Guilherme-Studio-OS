@@ -1,0 +1,39 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-17T19:59:41.000Z
+  id: evd_20260617_phase-0-panel-view-extraction-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - phase-0
+  revision: 1
+  schema_version: 1
+  slug: phase-0-panel-view-extraction-verification
+  updated_at: 2026-06-17T19:59:41.000Z
+relations:
+  - target_id: tsk_20260617_phase-0-panel-view-extraction
+    type: supports
+spec:
+  claims:
+    - The panel main entrypoint is now a thin React render file.
+    - Panel data fetching and query client ownership are split into api modules.
+    - Panel shell, tables, count cards and prepared-action review are split into component modules.
+    - Panel domain views are split into views modules.
+    - Existing hash routes and visible view headings are preserved.
+    - Prepared action confirmation still posts payload_checksum to the governed local API route.
+    - Panel build passes after extraction.
+    - Repository typecheck passes after extraction.
+    - Panel source lint passes after extraction.
+    - Playwright smoke passes through the local API server with the built panel and real API endpoints.
+    - Canonical Studio records validate after the task and evidence records are added.
+  command: npm run build -w @guilherme-studio/panel && npm run build -w @guilherme-studio/local-api && npm run typecheck && ./node_modules/.bin/biome check apps/panel/src && Playwright smoke at http://127.0.0.1:4177 for /, #/crm, #/delivery, #/products, #/portfolio, #/career, #/finance, #/agents and #/control && npm run studio -- validate --json && npm run studio -- sync --rebuild --verify --json && git diff --check
+  evidence_type: command
+  observed_at: 2026-06-17T19:59:41.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Phase 0 panel view extraction verification
+  validated_at: 2026-06-17T19:59:41.000Z

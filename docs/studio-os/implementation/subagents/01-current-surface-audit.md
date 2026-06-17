@@ -1,6 +1,6 @@
 # Current Surface Audit For Subagents
 
-Status: updated after Phase 0A, 0B, 0C, 0D and 0E extraction
+Status: updated after Phase 0A, 0B, 0C, 0D, 0E and 0F extraction
 Purpose: preserve concrete conflict findings before implementation agents start.
 
 ## Audited Hot Files
@@ -17,7 +17,7 @@ Purpose: preserve concrete conflict findings before implementation agents start.
 | CLI | `packages/cli/src/index.ts` | resolved; 28-line entrypoint backed by `packages/cli/src/commands/**` and `packages/cli/src/runtime.ts` |
 | API | `packages/local-api/src/index.ts` | resolved; 2-line barrel backed by route, security and server modules |
 | MCP | `packages/mcp/src/index.ts` | resolved; 1-line barrel backed by resource, tool, prompt and server modules |
-| Panel | `apps/panel/src/main.tsx` | single panel entrypoint and view surface |
+| Panel | `apps/panel/src/main.tsx` | resolved; 14-line render entrypoint backed by app, api, component and view modules |
 
 ## Concrete Conflict Patterns
 
@@ -114,6 +114,21 @@ After 0E, API and MCP behavior is owned by:
 
 Mutating local API routes and mutating MCP tools continue to adapt payloads into
 `executeStudioCommand`.
+
+## Phase 0F Resulting Panel Ownership
+
+After 0F, panel behavior is owned by:
+
+- React render entrypoint: `apps/panel/src/main.tsx`
+- application shell and route registry: `apps/panel/src/app/app.tsx`
+- local API fetch helpers and query client: `apps/panel/src/api/**`
+- reusable layout/table/action-review components:
+  `apps/panel/src/components/**`
+- domain views: `apps/panel/src/views/**`
+- visual contract: `apps/panel/src/styles.css`
+
+Domain view work should land in `apps/panel/src/views/**` or shared components,
+not in `apps/panel/src/main.tsx`.
 
 ## Adapter Shortcut Inventory To Review
 

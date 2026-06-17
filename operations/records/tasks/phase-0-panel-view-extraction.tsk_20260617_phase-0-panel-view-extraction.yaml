@@ -1,0 +1,33 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-17T19:59:41.000Z
+  id: tsk_20260617_phase-0-panel-view-extraction
+  labels:
+    - studio-os
+    - prd-completion
+    - phase-0
+  revision: 1
+  schema_version: 1
+  slug: phase-0-panel-view-extraction
+  updated_at: 2026-06-17T19:59:41.000Z
+relations: []
+spec:
+  acceptance:
+    - panel public route paths and visible copy are preserved
+    - React render entrypoint becomes thin
+    - local API fetch/query behavior is split into api modules
+    - layout, table, count card and prepared-action review components are split into components
+    - existing domain views are split into views modules
+    - prepared action confirmation still posts exact checksum payloads to the local API
+    - panel build, typecheck, lint and Playwright smoke pass
+    - Studio validate and sync verification pass
+    - Phase 0 plans reflect the new panel surface ownership
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Extracts the local panel from a monolithic React entrypoint into app, api, component and domain view modules without changing the current UI behavior.
+  title: Phase 0 panel view extraction

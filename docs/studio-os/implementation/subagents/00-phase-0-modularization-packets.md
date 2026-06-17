@@ -1,7 +1,7 @@
 # Phase 0 Modularization Packets
 
-Status: Phase 0 in progress; 0A, 0B, 0C and 0D integrated, 0E implemented in
-`codex/phase-0-api-mcp`
+Status: Phase 0 in progress; 0A, 0B, 0C, 0D and 0E integrated, 0F implemented
+in `codex/phase-0-panel-views`
 Purpose: create disjoint write surfaces before PRD agents implement capability.
 
 ## Why Phase 0 Exists
@@ -19,11 +19,11 @@ Resolved by Phase 0:
 - `packages/cli/src/index.ts`: now a thin CLI program entrypoint.
 - `packages/local-api/src/index.ts`: now a thin local API barrel.
 - `packages/mcp/src/index.ts`: now a thin MCP barrel.
+- `apps/panel/src/main.tsx`: now a thin React render entrypoint.
 
 Remaining hot surfaces before full PRD parallelization:
 
 - `packages/core/src/coverage.ts`
-- `apps/panel/src/main.tsx`
 
 Phase 0 extracts registries and module folders without broadening PRD behavior.
 It is a behavior-preserving refactor.
@@ -185,7 +185,7 @@ Acceptance:
 ## Packet 0E: API And MCP Extraction
 
 Branch: `codex/phase-0-api-mcp`
-Result: implemented in this branch.
+Result: integrated into `codex/studio-os-v1`.
 
 Allowed writes:
 
@@ -223,6 +223,7 @@ Acceptance:
 ## Packet 0F: Panel View Extraction
 
 Branch: `codex/phase-0-panel-views`
+Result: implemented in this branch.
 
 Allowed writes:
 
@@ -231,10 +232,11 @@ Allowed writes:
 Target shape:
 
 ```text
+apps/panel/src/api/
 apps/panel/src/app/
 apps/panel/src/components/
 apps/panel/src/views/
-apps/panel/src/api/
+apps/panel/src/main.tsx
 apps/panel/src/styles.css
 ```
 
@@ -251,8 +253,8 @@ Acceptance:
 2. 0B core domains: integrated.
 3. 0C command and workflow registries: integrated.
 4. 0D CLI: integrated.
-5. 0E API/MCP: implemented in `codex/phase-0-api-mcp`.
-6. 0F panel.
+5. 0E API/MCP: integrated.
+6. 0F panel: implemented in `codex/phase-0-panel-views`.
 
 If branches overlap, prefer integrating the lower-numbered packet first and
 rebasing later packets onto it.
