@@ -102,6 +102,14 @@ Command behavior belongs in `packages/core/src/commands/handlers/**` plus
 CLI behavior belongs in `packages/cli/src/commands/**`, with shared command
 execution and output behavior in `packages/cli/src/runtime.ts`.
 
+Local API behavior belongs in `packages/local-api/src/routes/**`, with
+host/origin/session policy in `packages/local-api/src/security.ts` and command
+adaptation in `packages/local-api/src/command-runner.ts`.
+
+MCP behavior belongs in `packages/mcp/src/resources.ts`,
+`packages/mcp/src/tools/**` and `packages/mcp/src/prompts.ts`, with mutating
+tool execution shared through `packages/mcp/src/command.ts`.
+
 ## Standard Agent Prompt
 
 Use this shape when starting a PRD agent:

@@ -1,0 +1,41 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-17T06:50:15.000Z
+  id: evd_20260617_phase-0-api-mcp-extraction-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - phase-0
+  revision: 1
+  schema_version: 1
+  slug: phase-0-api-mcp-extraction-verification
+  updated_at: 2026-06-17T06:50:15.000Z
+relations:
+  - target_id: tsk_20260617_phase-0-api-mcp-extraction
+    type: supports
+spec:
+  claims:
+    - The local API index is now a thin package barrel.
+    - Local API security, read routes, mutation routes, acceptance and command execution are split into owned modules.
+    - Local API mutating routes still route through executeStudioCommand via createLocalCommandRunner.
+    - The MCP index is now a thin package barrel.
+    - MCP resources, read tools, mutating tools, prompts and server composition are split into owned modules.
+    - MCP mutating tools still route through executeStudioCommand via executeMcpCommand.
+    - MCP confirmed external execution remains blocked without an enabled adapter provider.
+    - API and MCP package builds pass after extraction.
+    - Repository typecheck passes after extraction.
+    - Focused local API and command runtime tests pass after extraction.
+    - Local API smoke passes with authenticated summary and dry-run command requests.
+    - MCP smoke passes through a real stdio client with resources, tools, prompts and studio_validate.
+    - Canonical Studio records validate after the task and evidence records are added.
+  command: npm run build -w @guilherme-studio/local-api && npm run build -w @guilherme-studio/mcp && npm run typecheck && npm test -- packages/local-api/src/index.test.ts packages/core/src/command-runtime.test.ts && ./node_modules/.bin/biome check packages/local-api/src packages/mcp/src && node --input-type=module -e 'API local smoke via createLocalApi app.inject for /api/v1/summary and /api/v1/commands/dry-run' && node --input-type=module -e 'MCP stdio smoke via @modelcontextprotocol/sdk Client listResources/listTools/listPrompts/callTool studio_validate' && npm run studio -- validate --json && npm run studio -- sync --rebuild --verify --json && git diff --check
+  evidence_type: command
+  observed_at: 2026-06-17T06:50:15.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Phase 0 API and MCP extraction verification
+  validated_at: 2026-06-17T06:50:15.000Z

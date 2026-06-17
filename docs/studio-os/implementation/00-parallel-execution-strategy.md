@@ -27,11 +27,11 @@ sets. These original hot files are already reduced by Phase 0:
 - `packages/core/src/command-runtime.ts`: resolved into a thin runtime.
 - `packages/core/src/workflows/fixtures.ts`: resolved into a thin barrel.
 - `packages/cli/src/index.ts`: resolved into a thin CLI entrypoint.
+- `packages/local-api/src/index.ts`: resolved into a thin local API barrel.
+- `packages/mcp/src/index.ts`: resolved into a thin MCP barrel.
 
-The remaining hot files are:
+The remaining hot file is:
 
-- `packages/mcp/src/index.ts`
-- `packages/local-api/src/index.ts`
 - `apps/panel/src/main.tsx`
 
 Any plan that lets many agents edit those files at once is expected to fail by
@@ -103,8 +103,8 @@ Owners:
 - core command registry and workflow fixture extraction: implemented in
   `codex/phase-0-command-registry`;
 - CLI command registration extraction: implemented in `codex/phase-0-cli-commands`;
-- MCP resources/tools extraction;
-- local API route extraction;
+- MCP resources/tools extraction: implemented in `codex/phase-0-api-mcp`;
+- local API route extraction: implemented in `codex/phase-0-api-mcp`;
 - panel view extraction.
 
 No PRD agent starts until Wave 0 is green or explicitly waived by decision.

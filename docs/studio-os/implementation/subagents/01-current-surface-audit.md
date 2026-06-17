@@ -1,6 +1,6 @@
 # Current Surface Audit For Subagents
 
-Status: updated after Phase 0A, 0B, 0C and 0D extraction
+Status: updated after Phase 0A, 0B, 0C, 0D and 0E extraction
 Purpose: preserve concrete conflict findings before implementation agents start.
 
 ## Audited Hot Files
@@ -15,8 +15,8 @@ Purpose: preserve concrete conflict findings before implementation agents start.
 | Economics | `packages/core/src/economics.ts` | moderate shared file; PRD 01, 07, 08 and 09 must coordinate reason taxonomy |
 | Command service | `packages/core/src/command-service.ts` | moderate shared file; authorization, expected revision, idempotency and event wrapper |
 | CLI | `packages/cli/src/index.ts` | resolved; 28-line entrypoint backed by `packages/cli/src/commands/**` and `packages/cli/src/runtime.ts` |
-| API | `packages/local-api/src/index.ts` | auth, read routes, diagnostics, acceptance and mutations |
-| MCP | `packages/mcp/src/index.ts` | resources, tools, prompts and acceptance in one file |
+| API | `packages/local-api/src/index.ts` | resolved; 2-line barrel backed by route, security and server modules |
+| MCP | `packages/mcp/src/index.ts` | resolved; 1-line barrel backed by resource, tool, prompt and server modules |
 | Panel | `apps/panel/src/main.tsx` | single panel entrypoint and view surface |
 
 ## Concrete Conflict Patterns
@@ -40,8 +40,9 @@ Purpose: preserve concrete conflict findings before implementation agents start.
   PRD 01 and consumed by PRDs 07, 08 and 09.
 - CLI adapter shortcuts can bypass the command runtime if Phase 0 does not
   classify them as read-only diagnostics or future command-runtime mutations.
-- MCP command execution repeats context and envelope creation in multiple
-  blocks; this should become one helper before adding PRD tools.
+- MCP mutating tools now share a command execution helper, so PRD agents should
+  add new tools through `packages/mcp/src/tools/**` instead of rebuilding local
+  command execution blocks.
 
 ## Phase 0B Resulting Core Ownership
 
@@ -91,6 +92,28 @@ After 0D, CLI behavior is owned by:
 
 Mutable canonical CLI commands continue to route through `executeCliCommand`,
 which wraps `executeStudioCommand`.
+
+## Phase 0E Resulting Interface Ownership
+
+After 0E, API and MCP behavior is owned by:
+
+- local API entrypoint: `packages/local-api/src/index.ts`
+- local API server composition: `packages/local-api/src/server.ts`
+- local API host/origin/session/error policy:
+  `packages/local-api/src/security.ts`
+- local API command adapter: `packages/local-api/src/command-runner.ts`
+- local API read routes: `packages/local-api/src/routes/read.ts`
+- local API mutating routes: `packages/local-api/src/routes/mutations.ts`
+- MCP entrypoint: `packages/mcp/src/index.ts`
+- MCP server composition: `packages/mcp/src/server.ts`
+- MCP resources: `packages/mcp/src/resources.ts`
+- MCP read-only tools: `packages/mcp/src/tools/read.ts`
+- MCP mutating tools: `packages/mcp/src/tools/mutations.ts`
+- MCP command execution helper: `packages/mcp/src/command.ts`
+- MCP prompts: `packages/mcp/src/prompts.ts`
+
+Mutating local API routes and mutating MCP tools continue to adapt payloads into
+`executeStudioCommand`.
 
 ## Adapter Shortcut Inventory To Review
 

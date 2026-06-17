@@ -1,7 +1,7 @@
 # Phase 0 Modularization Packets
 
-Status: Phase 0 in progress; 0A, 0B and 0C integrated, 0D implemented in
-`codex/phase-0-cli-commands`
+Status: Phase 0 in progress; 0A, 0B, 0C and 0D integrated, 0E implemented in
+`codex/phase-0-api-mcp`
 Purpose: create disjoint write surfaces before PRD agents implement capability.
 
 ## Why Phase 0 Exists
@@ -17,12 +17,12 @@ Resolved by Phase 0:
 - `packages/core/src/command-runtime.ts`: now a thin command runtime.
 - `packages/core/src/workflows/fixtures.ts`: now a thin workflow barrel.
 - `packages/cli/src/index.ts`: now a thin CLI program entrypoint.
+- `packages/local-api/src/index.ts`: now a thin local API barrel.
+- `packages/mcp/src/index.ts`: now a thin MCP barrel.
 
 Remaining hot surfaces before full PRD parallelization:
 
 - `packages/core/src/coverage.ts`
-- `packages/mcp/src/index.ts`
-- `packages/local-api/src/index.ts`
 - `apps/panel/src/main.tsx`
 
 Phase 0 extracts registries and module folders without broadening PRD behavior.
@@ -157,7 +157,7 @@ Acceptance:
 ## Packet 0D: CLI Command Extraction
 
 Branch: `codex/phase-0-cli-commands`
-Result: implemented in this branch.
+Result: integrated into `codex/studio-os-v1`.
 
 Allowed writes:
 
@@ -185,6 +185,7 @@ Acceptance:
 ## Packet 0E: API And MCP Extraction
 
 Branch: `codex/phase-0-api-mcp`
+Result: implemented in this branch.
 
 Allowed writes:
 
@@ -195,13 +196,19 @@ Allowed writes:
 Target shape:
 
 ```text
-packages/local-api/src/routes/
-packages/local-api/src/server/
-packages/local-api/src/security/
-packages/mcp/src/resources/
-packages/mcp/src/tools/
-packages/mcp/src/prompts/
-packages/mcp/src/server/
+packages/local-api/src/server.ts
+packages/local-api/src/security.ts
+packages/local-api/src/command-runner.ts
+packages/local-api/src/routes/read.ts
+packages/local-api/src/routes/mutations.ts
+packages/local-api/src/index.ts
+packages/mcp/src/server.ts
+packages/mcp/src/resources.ts
+packages/mcp/src/tools/read.ts
+packages/mcp/src/tools/mutations.ts
+packages/mcp/src/prompts.ts
+packages/mcp/src/command.ts
+packages/mcp/src/index.ts
 ```
 
 Acceptance:
@@ -243,8 +250,8 @@ Acceptance:
 1. 0A schemas: integrated.
 2. 0B core domains: integrated.
 3. 0C command and workflow registries: integrated.
-4. 0D CLI: implemented in `codex/phase-0-cli-commands`.
-5. 0E API/MCP.
+4. 0D CLI: integrated.
+5. 0E API/MCP: implemented in `codex/phase-0-api-mcp`.
 6. 0F panel.
 
 If branches overlap, prefer integrating the lower-numbered packet first and
