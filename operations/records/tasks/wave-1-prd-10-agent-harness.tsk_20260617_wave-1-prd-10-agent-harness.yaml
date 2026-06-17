@@ -1,0 +1,33 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-17T20:39:50.000Z
+  id: tsk_20260617_wave-1-prd-10-agent-harness
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-10
+  revision: 1
+  schema_version: 1
+  slug: wave-1-prd-10-agent-harness
+  updated_at: 2026-06-17T20:39:50.000Z
+relations: []
+spec:
+  acceptance:
+    - AgentRun schema includes harness state, context pack, authority, observations, actions, verification and handoff fields
+    - core exposes Agent Harness Loop commands for start, context, authorize, observe, record-action, record-evidence, verify, handoff and close
+    - CLI exposes studio agent as the fallback interface for the same command runtime
+    - material runs cannot close without context, observation, action or blocker, verification, evidence or gap and handoff
+    - context/handoff payloads reject secret-shaped values
+    - legacy handoff.create workflow fixtures remain compatible
+    - PRD 10 matrix reflects the implemented and remaining capability surfaces
+    - canonical Studio validation and sync verification pass
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Implements the first Wave 1 Agent Harness Loop slice so Studio OS can start, orient, authorize, observe, record, verify, hand off and close agent runs through core and CLI.
+  title: Wave 1 PRD 10 agent harness loop

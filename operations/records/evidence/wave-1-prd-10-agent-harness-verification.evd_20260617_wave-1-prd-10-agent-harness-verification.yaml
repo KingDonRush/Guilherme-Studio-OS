@@ -1,0 +1,45 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-17T20:39:50.000Z
+  id: evd_20260617_wave-1-prd-10-agent-harness-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-10
+  revision: 1
+  schema_version: 1
+  slug: wave-1-prd-10-agent-harness-verification
+  updated_at: 2026-06-17T20:42:01.000Z
+relations:
+  - target_id: tsk_20260617_wave-1-prd-10-agent-harness
+    type: supports
+spec:
+  claims:
+    - Agent Harness Loop commands execute through the normalized Studio command runtime.
+    - AgentRun records now carry context pack, state machine, authority, observation, action, verification, handoff and close-gate data.
+    - The CLI exposes the harness as studio agent commands with dry-run support through the global runtime.
+    - Focused core and CLI tests pass for lifecycle, close gate, redaction and CLI fallback.
+    - Full repository verify passes after the harness slice.
+    - The generated schema catalog includes the expanded AgentRun contract.
+    - The legacy agent-handoff workflow fixture still executes through handoff.create.
+    - A compiled CLI dry-run smoke for studio agent start passes.
+    - Canonical Studio validation and projection rebuild pass after task, evidence and matrix updates.
+  command: >-
+    npm run verify &&
+    npm run studio -- schemas export --json &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    npm run studio -- --json --dry-run agent start --objective "Wave 1 harness smoke" --allowed read_context run_tests --prohibited external_send &&
+    npm run studio -- workflow --fixtures --execute --workflow agent-handoff --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-17T20:39:50.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Wave 1 PRD 10 agent harness verification
+  validated_at: 2026-06-17T20:42:01.000Z

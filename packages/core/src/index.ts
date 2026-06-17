@@ -36,6 +36,18 @@ export {
   type StudioGateId,
 } from "./gates/catalog.js";
 export { GateEngine } from "./gates/engine.js";
+export {
+  AgentHarnessService,
+  type AuthorizeAgentRunInput,
+  type BuildContextPackInput,
+  type CloseAgentRunInput,
+  type CompleteVerificationInput,
+  type CreateRunHandoffInput,
+  type RecordAgentActionInput,
+  type RecordAgentEvidenceInput,
+  type RecordObservationInput,
+  type StartAgentRunInput,
+} from "./harness/index.js";
 export { IdempotencyStore } from "./idempotency.js";
 export { LifecycleEngine } from "./lifecycle.js";
 export {

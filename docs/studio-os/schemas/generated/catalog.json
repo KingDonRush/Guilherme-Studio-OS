@@ -572,6 +572,53 @@
                   "format": "date-time",
                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
                 },
+                "state": {
+                  "default": "draft",
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "oriented",
+                    "authorized",
+                    "in_progress",
+                    "verifying",
+                    "blocked",
+                    "handoff_ready",
+                    "closed"
+                  ]
+                },
+                "requested_by": {
+                  "type": "string"
+                },
+                "actor_id": {
+                  "type": "string"
+                },
+                "phase": {
+                  "default": "implementation",
+                  "type": "string",
+                  "enum": [
+                    "discovery",
+                    "planning",
+                    "implementation",
+                    "stabilization",
+                    "release",
+                    "migration",
+                    "recovery"
+                  ]
+                },
+                "risk": {
+                  "default": "normal",
+                  "type": "string",
+                  "enum": [
+                    "low",
+                    "normal",
+                    "high",
+                    "critical"
+                  ]
+                },
+                "material": {
+                  "default": true,
+                  "type": "boolean"
+                },
                 "result": {
                   "default": "running",
                   "type": "string",
@@ -581,6 +628,360 @@
                     "blocked",
                     "failed"
                   ]
+                },
+                "owning_entities": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "target_repositories": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "target_environments": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "authority": {
+                  "default": {
+                    "allowed": [],
+                    "confirmation_required": [],
+                    "prohibited": []
+                  },
+                  "type": "object",
+                  "properties": {
+                    "allowed": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "confirmation_required": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "prohibited": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "allowed",
+                    "confirmation_required",
+                    "prohibited"
+                  ],
+                  "additionalProperties": false
+                },
+                "context_pack": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 3
+                    },
+                    "generated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                    },
+                    "objective": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "source_revisions": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "entity_id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "kind": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "title": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "revision": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "entity_id",
+                          "kind",
+                          "title",
+                          "revision"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "included_entity_ids": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "target_repository_ids": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "target_environment_ids": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "sections": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "summary": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "entity_ids": {
+                            "default": [],
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "title",
+                          "summary",
+                          "entity_ids"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "redactions": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "gaps": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "forbidden_reopenings": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "next_valid_action": {
+                      "type": "string"
+                    },
+                    "checksum": {
+                      "type": "string",
+                      "minLength": 64,
+                      "maxLength": 64
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "generated_at",
+                    "objective",
+                    "source_revisions",
+                    "included_entity_ids",
+                    "target_repository_ids",
+                    "target_environment_ids",
+                    "sections",
+                    "redactions",
+                    "gaps",
+                    "forbidden_reopenings",
+                    "checksum"
+                  ],
+                  "additionalProperties": false
+                },
+                "observations": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "observed_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "git",
+                          "runtime",
+                          "user",
+                          "handoff",
+                          "docs",
+                          "code",
+                          "other"
+                        ]
+                      },
+                      "summary": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "repository_id": {
+                        "type": "string"
+                      },
+                      "contradictions": {
+                        "default": [],
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "observed_at",
+                      "source",
+                      "summary",
+                      "contradictions"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "actions": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "recorded_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                      },
+                      "action": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "status": {
+                        "default": "executed",
+                        "type": "string",
+                        "enum": [
+                          "planned",
+                          "executed",
+                          "blocked",
+                          "failed"
+                        ]
+                      },
+                      "command": {
+                        "type": "string"
+                      },
+                      "target_id": {
+                        "type": "string"
+                      },
+                      "result_summary": {
+                        "type": "string"
+                      },
+                      "evidence_ids": {
+                        "default": [],
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "recorded_at",
+                      "action",
+                      "status",
+                      "evidence_ids"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "verification": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "passed",
+                        "failed",
+                        "not_run"
+                      ]
+                    },
+                    "verified_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                    },
+                    "command": {
+                      "type": "string"
+                    },
+                    "result_summary": {
+                      "type": "string"
+                    },
+                    "artifact_path": {
+                      "type": "string"
+                    },
+                    "not_run_reason": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "verified_at"
+                  ],
+                  "additionalProperties": false
+                },
+                "open_questions": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "risks": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "next_valid_action": {
+                  "type": "string"
                 },
                 "evidence_ids": {
                   "default": [],
@@ -620,13 +1021,57 @@
                       "items": {
                         "type": "string"
                       }
+                    },
+                    "gaps": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "next_valid_action": {
+                      "type": "string"
+                    },
+                    "forbidden_reopenings": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "confirmation_required": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "evidence_ids": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "default": "ready",
+                      "type": "string",
+                      "enum": [
+                        "ready",
+                        "blocked"
+                      ]
                     }
                   },
                   "required": [
                     "summary",
                     "created_at",
                     "repository_ids",
-                    "omitted_sensitive_sections"
+                    "omitted_sensitive_sections",
+                    "gaps",
+                    "forbidden_reopenings",
+                    "confirmation_required",
+                    "evidence_ids",
+                    "status"
                   ],
                   "additionalProperties": false
                 }
@@ -636,7 +1081,19 @@
                 "status",
                 "objective",
                 "started_at",
+                "state",
+                "phase",
+                "risk",
+                "material",
                 "result",
+                "owning_entities",
+                "target_repositories",
+                "target_environments",
+                "authority",
+                "observations",
+                "actions",
+                "open_questions",
+                "risks",
                 "evidence_ids"
               ],
               "additionalProperties": {}

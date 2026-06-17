@@ -1,6 +1,109 @@
 import { z } from "zod";
 import { GenericSpecSchema } from "./base.js";
 
+export const AgentRunStateSchema = z.enum([
+  "draft",
+  "oriented",
+  "authorized",
+  "in_progress",
+  "verifying",
+  "blocked",
+  "handoff_ready",
+  "closed",
+]);
+export type AgentRunState = z.infer<typeof AgentRunStateSchema>;
+
+export const AgentRunPhaseSchema = z.enum([
+  "discovery",
+  "planning",
+  "implementation",
+  "stabilization",
+  "release",
+  "migration",
+  "recovery",
+]);
+export type AgentRunPhase = z.infer<typeof AgentRunPhaseSchema>;
+
+export const AgentRunRiskSchema = z.enum(["low", "normal", "high", "critical"]);
+export type AgentRunRisk = z.infer<typeof AgentRunRiskSchema>;
+
+export const AgentAuthoritySchema = z
+  .object({
+    allowed: z.array(z.string()).default([]),
+    confirmation_required: z.array(z.string()).default([]),
+    prohibited: z.array(z.string()).default([]),
+  })
+  .strict();
+
+export const ContextPackSourceRevisionSchema = z
+  .object({
+    entity_id: z.string().min(1),
+    kind: z.string().min(1),
+    title: z.string().min(1),
+    revision: z.number().int().min(1),
+  })
+  .strict();
+
+export const ContextPackSectionSchema = z
+  .object({
+    title: z.string().min(1),
+    summary: z.string().min(1),
+    entity_ids: z.array(z.string()).default([]),
+  })
+  .strict();
+
+export const ContextPackSchema = z
+  .object({
+    id: z.string().min(3),
+    generated_at: z.string().datetime(),
+    objective: z.string().min(1),
+    source_revisions: z.array(ContextPackSourceRevisionSchema).default([]),
+    included_entity_ids: z.array(z.string()).default([]),
+    target_repository_ids: z.array(z.string()).default([]),
+    target_environment_ids: z.array(z.string()).default([]),
+    sections: z.array(ContextPackSectionSchema).default([]),
+    redactions: z.array(z.string()).default([]),
+    gaps: z.array(z.string()).default([]),
+    forbidden_reopenings: z.array(z.string()).default([]),
+    next_valid_action: z.string().optional(),
+    checksum: z.string().length(64),
+  })
+  .strict();
+export type ContextPack = z.infer<typeof ContextPackSchema>;
+
+export const AgentObservationSchema = z
+  .object({
+    observed_at: z.string().datetime(),
+    source: z.enum(["git", "runtime", "user", "handoff", "docs", "code", "other"]),
+    summary: z.string().min(1),
+    repository_id: z.string().optional(),
+    contradictions: z.array(z.string()).default([]),
+  })
+  .strict();
+
+export const AgentActionSchema = z
+  .object({
+    recorded_at: z.string().datetime(),
+    action: z.string().min(1),
+    status: z.enum(["planned", "executed", "blocked", "failed"]).default("executed"),
+    command: z.string().optional(),
+    target_id: z.string().optional(),
+    result_summary: z.string().optional(),
+    evidence_ids: z.array(z.string()).default([]),
+  })
+  .strict();
+
+export const AgentVerificationSchema = z
+  .object({
+    status: z.enum(["passed", "failed", "not_run"]),
+    verified_at: z.string().datetime(),
+    command: z.string().optional(),
+    result_summary: z.string().optional(),
+    artifact_path: z.string().optional(),
+    not_run_reason: z.string().optional(),
+  })
+  .strict();
+
 export const EvidenceSpecSchema = GenericSpecSchema.extend({
   evidence_type: z.enum(["file", "url", "command", "screenshot", "backup", "decision", "manual"]),
   path: z.string().optional(),
@@ -25,7 +128,28 @@ export const AgentRunSpecSchema = GenericSpecSchema.extend({
   objective: z.string().min(1),
   started_at: z.string().datetime(),
   finished_at: z.string().datetime().optional(),
+  state: AgentRunStateSchema.default("draft"),
+  requested_by: z.string().optional(),
+  actor_id: z.string().optional(),
+  phase: AgentRunPhaseSchema.default("implementation"),
+  risk: AgentRunRiskSchema.default("normal"),
+  material: z.boolean().default(true),
   result: z.enum(["running", "complete", "blocked", "failed"]).default("running"),
+  owning_entities: z.array(z.string()).default([]),
+  target_repositories: z.array(z.string()).default([]),
+  target_environments: z.array(z.string()).default([]),
+  authority: AgentAuthoritySchema.default({
+    allowed: [],
+    confirmation_required: [],
+    prohibited: [],
+  }),
+  context_pack: ContextPackSchema.optional(),
+  observations: z.array(AgentObservationSchema).default([]),
+  actions: z.array(AgentActionSchema).default([]),
+  verification: AgentVerificationSchema.optional(),
+  open_questions: z.array(z.string()).default([]),
+  risks: z.array(z.string()).default([]),
+  next_valid_action: z.string().optional(),
   evidence_ids: z.array(z.string()).default([]),
   model: z.string().optional(),
 });
@@ -42,6 +166,12 @@ export const HandoffSpecSchema = z
     context_pack_id: z.string().optional(),
     repository_ids: z.array(z.string()).default([]),
     omitted_sensitive_sections: z.array(z.string()).default([]),
+    gaps: z.array(z.string()).default([]),
+    next_valid_action: z.string().optional(),
+    forbidden_reopenings: z.array(z.string()).default([]),
+    confirmation_required: z.array(z.string()).default([]),
+    evidence_ids: z.array(z.string()).default([]),
+    status: z.enum(["ready", "blocked"]).default("ready"),
   })
   .strict();
 export const AgentRunExtendedSpecSchema = AgentRunSpecSchema.extend({

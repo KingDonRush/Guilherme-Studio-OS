@@ -72,6 +72,38 @@ describe("Studio CLI", () => {
     });
   });
 
+  it("exposes the agent harness start command as a CLI fallback", async () => {
+    const root = await createCliFixtureRoot("studio-cli-agent-");
+    const result = await runCliJson([
+      "--root",
+      root,
+      "--json",
+      "--dry-run",
+      "agent",
+      "start",
+      "--objective",
+      "Run the harness loop from CLI.",
+      "--allowed",
+      "read_context",
+      "run_tests",
+      "--prohibited",
+      "external_send",
+    ]);
+
+    expect(result).toMatchObject({
+      status: "ok",
+      result: {
+        dry_run: true,
+        command: "agent.start",
+        payload: {
+          objective: "Run the harness loop from CLI.",
+          allowed: ["read_context", "run_tests"],
+          prohibited: ["external_send"],
+        },
+      },
+    });
+  });
+
   it("passes explicit panel and MCP smoke results into acceptance", async () => {
     const root = await createCliFixtureRoot("studio-cli-acceptance-");
     const result = await runCliJson([

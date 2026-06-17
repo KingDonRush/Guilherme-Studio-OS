@@ -2,11 +2,13 @@ import type { StudioData } from "../api/use-studio-data.js";
 import { EntityTable, entityRows } from "../components/entity-table.js";
 
 export function Agents({ data }: { data: StudioData }) {
+  const runRows = entityRows(data, ["agentRun"]);
   return (
     <>
+      <EntityTable title="Agent harness runs" rows={runRows} empty="Nenhum AgentRun registrado." />
       <EntityTable
-        title="Agent runs, decisões e handoffs"
-        rows={entityRows(data, ["agentRun", "task", "decision", "evidence"])}
+        title="Governança e evidência"
+        rows={entityRows(data, ["task", "decision", "evidence"])}
       />
       <EntityTable
         title="Workflow fixtures"

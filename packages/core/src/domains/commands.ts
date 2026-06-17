@@ -148,6 +148,60 @@ export class DomainCommandService extends DomainServiceBase {
     return this.agents.createHandoff(...args);
   }
 
+  startAgentRun(
+    ...args: Parameters<AgentsDomainService["startAgentRun"]>
+  ): ReturnType<AgentsDomainService["startAgentRun"]> {
+    return this.agents.startAgentRun(...args);
+  }
+
+  buildContextPack(
+    ...args: Parameters<AgentsDomainService["buildContextPack"]>
+  ): ReturnType<AgentsDomainService["buildContextPack"]> {
+    return this.agents.buildContextPack(...args);
+  }
+
+  authorizeAgentRun(
+    ...args: Parameters<AgentsDomainService["authorizeAgentRun"]>
+  ): ReturnType<AgentsDomainService["authorizeAgentRun"]> {
+    return this.agents.authorizeAgentRun(...args);
+  }
+
+  recordObservation(
+    ...args: Parameters<AgentsDomainService["recordObservation"]>
+  ): ReturnType<AgentsDomainService["recordObservation"]> {
+    return this.agents.recordObservation(...args);
+  }
+
+  recordAgentAction(
+    ...args: Parameters<AgentsDomainService["recordAgentAction"]>
+  ): ReturnType<AgentsDomainService["recordAgentAction"]> {
+    return this.agents.recordAgentAction(...args);
+  }
+
+  recordAgentEvidence(
+    ...args: Parameters<AgentsDomainService["recordAgentEvidence"]>
+  ): ReturnType<AgentsDomainService["recordAgentEvidence"]> {
+    return this.agents.recordAgentEvidence(...args);
+  }
+
+  completeVerification(
+    ...args: Parameters<AgentsDomainService["completeVerification"]>
+  ): ReturnType<AgentsDomainService["completeVerification"]> {
+    return this.agents.completeVerification(...args);
+  }
+
+  createRunHandoff(
+    ...args: Parameters<AgentsDomainService["createRunHandoff"]>
+  ): ReturnType<AgentsDomainService["createRunHandoff"]> {
+    return this.agents.createRunHandoff(...args);
+  }
+
+  closeAgentRun(
+    ...args: Parameters<AgentsDomainService["closeAgentRun"]>
+  ): ReturnType<AgentsDomainService["closeAgentRun"]> {
+    return this.agents.closeAgentRun(...args);
+  }
+
   prepareApplication(
     ...args: Parameters<CareerDomainService["prepareApplication"]>
   ): ReturnType<CareerDomainService["prepareApplication"]> {
