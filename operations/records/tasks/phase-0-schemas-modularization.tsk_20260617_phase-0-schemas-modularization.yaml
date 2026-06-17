@@ -1,0 +1,29 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-17T05:02:04.000Z
+  id: tsk_20260617_phase-0-schemas-modularization
+  labels:
+    - studio-os
+    - prd-completion
+    - phase-0
+  revision: 1
+  schema_version: 1
+  slug: phase-0-schemas-modularization
+  updated_at: 2026-06-17T05:02:04.000Z
+relations: []
+spec:
+  acceptance:
+    - schema public exports remain unchanged
+    - package build passes
+    - schema tests pass
+    - repository typecheck passes
+    - schema source is split into PRD-owned modules
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Extracts the schemas package from a monolithic index into module folders while keeping the public barrel contract stable.
+  title: Phase 0 schemas modularization
