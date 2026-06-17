@@ -28,9 +28,9 @@ spec:
     - Panel build passes after extraction.
     - Repository typecheck passes after extraction.
     - Panel source lint passes after extraction.
-    - Playwright smoke passes through the local API server with the built panel and real API endpoints.
+    - Playwright smoke passes through the local API bin with the built panel and real API endpoints on a path containing spaces and accents.
     - Canonical Studio records validate after the task and evidence records are added.
-  command: npm run build -w @guilherme-studio/panel && npm run build -w @guilherme-studio/local-api && npm run typecheck && ./node_modules/.bin/biome check apps/panel/src && Playwright smoke at http://127.0.0.1:4177 for /, #/crm, #/delivery, #/products, #/portfolio, #/career, #/finance, #/agents and #/control && npm run studio -- validate --json && npm run studio -- sync --rebuild --verify --json && git diff --check
+  command: npm run build -w @guilherme-studio/panel && npm run build -w @guilherme-studio/local-api && npm run typecheck && ./node_modules/.bin/biome check apps/panel/src packages/local-api/src/bin.ts && node packages/local-api/dist/bin.js && Playwright smoke at http://127.0.0.1:4177 for /, #/crm, #/delivery, #/products, #/portfolio, #/career, #/finance, #/agents and #/control && npm run studio -- validate --json && npm run studio -- sync --rebuild --verify --json && git diff --check
   evidence_type: command
   observed_at: 2026-06-17T19:59:41.000Z
   source_mutability: operator-observed
