@@ -16,13 +16,14 @@ release lifecycle, demo linkage and repository health.
 
 ## Allowed Write Set
 
-- `packages/schemas/src/entities/products/**`
-- `packages/core/src/domains/products/**`
-- `packages/core/src/domains/repositories/**`
-- `packages/core/src/commands/handlers/products/**`
-- `packages/adapters/src/git/**`
-- `packages/cli/src/commands/products/**`
-- `apps/panel/src/views/products/**`
+- `packages/schemas/src/entities/specs/products.ts`
+- `packages/core/src/domains/products.ts`
+- `packages/core/src/commands/handlers/products.ts`
+- `packages/core/src/commands/registry.ts` registration entries only
+- `packages/adapters/src/index.ts` Git/repository adapter slice only until adapter extraction exists
+- `packages/cli/src/commands/domains/products.ts`
+- `packages/cli/src/commands/operations.ts` repository command slice only
+- `apps/panel/src/views/products.tsx`
 
 ## Shared Contracts Owned
 
@@ -45,4 +46,3 @@ release lifecycle, demo linkage and repository health.
 - local Git adapter tests;
 - product release to portfolio case workflow segment;
 - `studio doctor --json` reports repository health details.
-

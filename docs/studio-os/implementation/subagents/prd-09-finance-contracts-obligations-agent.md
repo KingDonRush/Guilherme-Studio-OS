@@ -16,11 +16,12 @@ reconciliation, obligation and finance/delivery closure gates.
 
 ## Allowed Write Set
 
-- `packages/schemas/src/entities/finance/**`
-- `packages/core/src/domains/finance/**`
-- `packages/core/src/commands/handlers/finance/**`
-- `packages/cli/src/commands/finance/**`
-- `apps/panel/src/views/finance/**`
+- `packages/schemas/src/entities/specs/finance.ts`
+- `packages/core/src/domains/finance.ts`
+- `packages/core/src/commands/handlers/finance.ts`
+- `packages/core/src/commands/registry.ts` registration entries only
+- `packages/cli/src/commands/domains/finance.ts`
+- `apps/panel/src/views/finance.tsx`
 
 ## Shared Contracts Consumed
 
@@ -40,4 +41,3 @@ reconciliation, obligation and finance/delivery closure gates.
 - contract/invoice/payment lifecycle tests;
 - payment reconciliation requires finance capability;
 - no real finance data produces `intake_required` rows.
-

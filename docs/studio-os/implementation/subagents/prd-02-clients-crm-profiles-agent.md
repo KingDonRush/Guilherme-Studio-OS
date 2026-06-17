@@ -16,11 +16,12 @@ client, duplicate review and communication record behavior.
 
 ## Allowed Write Set
 
-- `packages/schemas/src/entities/crm/**`
-- `packages/core/src/domains/crm/**`
-- `packages/core/src/commands/handlers/crm/**`
-- `packages/cli/src/commands/crm/**`
-- `apps/panel/src/views/crm/**`
+- `packages/schemas/src/entities/specs/crm.ts`
+- `packages/core/src/domains/crm.ts`
+- `packages/core/src/commands/handlers/crm.ts`
+- `packages/core/src/commands/registry.ts` registration entries only
+- `packages/cli/src/commands/domains/crm.ts`
+- `apps/panel/src/views/crm.tsx`
 - `docs/studio-os/implementation/capability-matrices/prd-02-*.md`
 
 ## Shared Contracts Consumed
@@ -47,4 +48,3 @@ client, duplicate review and communication record behavior.
 - prospect-to-client workflow fixture segment;
 - CLI/API/MCP equivalent mutation for duplicate review or communication record;
 - intake report shows absent clients as `intake_required`.
-

@@ -60,11 +60,11 @@ Rules:
 Files under the agent's assigned domain module after Phase 0 extraction.
 Examples:
 
-- `packages/core/src/domains/crm/**`
+- `packages/core/src/domains/crm.ts`
 - `packages/core/src/harness/**`
-- `packages/cli/src/commands/career/**`
+- `packages/cli/src/commands/domains/career.ts`
 - `packages/mcp/src/resources/repository-health.ts`
-- `apps/panel/src/views/finance/**`
+- `apps/panel/src/views/finance.tsx`
 
 ### Yellow: Shared Registries
 
@@ -114,6 +114,12 @@ Panel behavior belongs in `apps/panel/src/views/**`,
 `apps/panel/src/components/**`, `apps/panel/src/api/**` and
 `apps/panel/src/app/app.tsx`. The file `apps/panel/src/main.tsx` is only the
 React render entrypoint.
+
+The remaining shared implementation files are `packages/core/src/coverage.ts`,
+`packages/adapters/src/index.ts` and `packages/storage/src/index.ts`. Treat
+them as yellow/red depending on scope: append-only registration or owned-row
+updates are acceptable with review; broad behavior changes need a dedicated
+owner lane or a prior extraction.
 
 ## Standard Agent Prompt
 

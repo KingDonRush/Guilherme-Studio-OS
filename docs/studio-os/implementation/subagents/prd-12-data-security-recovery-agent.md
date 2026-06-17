@@ -18,13 +18,15 @@ backup manifests, restore rehearsal and security gates.
 
 ## Allowed Write Set
 
-- `packages/schemas/src/security/**`
+- `packages/schemas/src/security.ts`
+- `packages/schemas/src/classification.ts`
 - `packages/storage/src/**`
 - `packages/core/src/recovery/**`
-- `packages/core/src/commands/handlers/recovery/**`
-- `packages/cli/src/commands/recovery/**`
-- `packages/local-api/src/security/**`
-- `apps/panel/src/views/diagnostics/**`
+- `packages/core/src/commands/handlers/governance.ts` recovery decision/handoff slice until recovery handlers are split
+- `packages/core/src/commands/registry.ts` registration entries only
+- `packages/cli/src/commands/operations.ts` backup/recovery command slice only
+- `packages/local-api/src/security.ts`
+- `apps/panel/src/views/control.tsx` diagnostics/recovery slice only
 
 ## Shared Contracts Owned
 
@@ -48,4 +50,3 @@ backup manifests, restore rehearsal and security gates.
 - recovery tests: crash write, stale lock, SQLite delete/rebuild, backup
   manifest, restore check;
 - `studio sync --rebuild --verify` passes.
-

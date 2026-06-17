@@ -18,6 +18,9 @@ Purpose: preserve concrete conflict findings before implementation agents start.
 | API | `packages/local-api/src/index.ts` | resolved; 2-line barrel backed by route, security and server modules |
 | MCP | `packages/mcp/src/index.ts` | resolved; 1-line barrel backed by resource, tool, prompt and server modules |
 | Panel | `apps/panel/src/main.tsx` | resolved; 14-line render entrypoint backed by app, api, component and view modules |
+| Adapters | `packages/adapters/src/index.ts` | unresolved; 911-line shared adapter file touched by PRD 03, 04 and 12 |
+| Storage | `packages/storage/src/index.ts` | unresolved; 1083-line storage/recovery surface owned by PRD 12 |
+| Assets | `packages/assets/src/index.ts` | moderate; PRD 05 owns asset governance and PRD 03/04/06 consume it |
 
 ## Concrete Conflict Patterns
 
@@ -43,6 +46,9 @@ Purpose: preserve concrete conflict findings before implementation agents start.
 - MCP mutating tools now share a command execution helper, so PRD agents should
   add new tools through `packages/mcp/src/tools/**` instead of rebuilding local
   command execution blocks.
+- Adapter and storage internals remain monolithic. Do not run PRD 03, 04 and 12
+  adapter/storage changes in parallel unless a dedicated extraction lane lands
+  first.
 
 ## Phase 0B Resulting Core Ownership
 

@@ -17,11 +17,12 @@ career claims.
 
 ## Allowed Write Set
 
-- `packages/schemas/src/entities/career/**`
-- `packages/core/src/domains/career/**`
-- `packages/core/src/commands/handlers/career/**`
-- `packages/cli/src/commands/career/**`
-- `apps/panel/src/views/career/**`
+- `packages/schemas/src/entities/specs/career.ts`
+- `packages/core/src/domains/career.ts`
+- `packages/core/src/commands/handlers/career.ts`
+- `packages/core/src/commands/registry.ts` registration entries only
+- `packages/cli/src/commands/domains/career.ts`
+- `apps/panel/src/views/career.tsx`
 
 ## Shared Contracts Consumed
 
@@ -42,4 +43,3 @@ career claims.
 - LinkedIn/job application fixture uses prepared actions only;
 - follow-up appears in economic next actions;
 - absent real applications appear as `intake_required`.
-

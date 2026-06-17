@@ -1,0 +1,33 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-17T20:12:20.000Z
+  id: evd_20260617_phase-0-prd-packet-realignment-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - phase-0
+  revision: 1
+  schema_version: 1
+  slug: phase-0-prd-packet-realignment-verification
+  updated_at: 2026-06-17T20:12:20.000Z
+relations:
+  - target_id: tsk_20260617_phase-0-prd-packet-realignment
+    type: supports
+spec:
+  claims:
+    - The twelve PRD agent packets now reference concrete post-Phase-0 module paths.
+    - API, MCP and panel entrypoints are no longer listed as broad implementation write surfaces.
+    - Remaining shared surfaces are documented as coverage, adapters and storage.
+    - Agent orchestration rules now distinguish owned modules, registries and remaining shared monoliths.
+    - Canonical Studio records validate after the packet realignment records are added.
+  command: rg for stale pre-Phase-0 paths in docs/studio-os/implementation/subagents && npm run studio -- validate --json && npm run studio -- sync --rebuild --verify --json && npm run verify && git diff --check
+  evidence_type: command
+  observed_at: 2026-06-17T20:12:20.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Phase 0 PRD packet realignment verification
+  validated_at: 2026-06-17T20:12:20.000Z

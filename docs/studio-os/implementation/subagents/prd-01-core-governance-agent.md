@@ -17,13 +17,18 @@ acceptance semantics, economic next actions and decision authority.
 
 ## Allowed Write Set
 
-- `packages/core/src/domains/governance/**`
+- `packages/schemas/src/gates.ts`
+- `packages/schemas/src/prepared-actions.ts`
+- `packages/core/src/domains/governance.ts`
 - `packages/core/src/gates/**`
-- `packages/core/src/lifecycle/**`
-- `packages/core/src/economics/**`
-- `packages/core/src/acceptance/**`
-- `packages/core/src/commands/**` registry entries for PRD 01 commands
-- `packages/cli/src/commands/core/**`
+- `packages/core/src/lifecycle.ts`
+- `packages/core/src/economics.ts`
+- `packages/core/src/acceptance.ts`
+- `packages/core/src/coverage.ts`
+- `packages/core/src/commands/handlers/governance.ts`
+- `packages/core/src/commands/registry.ts` registration entries only
+- `packages/cli/src/commands/core.ts`
+- `packages/cli/src/commands/domains/governance.ts`
 - PRD 01 matrix and evidence docs
 
 ## Shared Contracts Owned
@@ -45,4 +50,3 @@ acceptance semantics, economic next actions and decision authority.
 - unit tests for gate decisions and lifecycle preconditions;
 - `studio coverage --json` separates capability, intake and evidence;
 - `studio acceptance --json` reports blockers without fabricated data.
-

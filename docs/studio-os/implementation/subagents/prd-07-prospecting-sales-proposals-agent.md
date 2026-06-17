@@ -16,11 +16,12 @@ conversion, sales follow-up and evidence-backed outreach.
 
 ## Allowed Write Set
 
-- `packages/schemas/src/entities/sales/**`
-- `packages/core/src/domains/sales/**`
-- `packages/core/src/commands/handlers/sales/**`
-- `packages/cli/src/commands/sales/**`
-- `apps/panel/src/views/sales/**`
+- `packages/schemas/src/entities/specs/sales.ts`
+- `packages/core/src/domains/sales.ts`
+- `packages/core/src/commands/handlers/sales.ts`
+- `packages/core/src/commands/registry.ts` registration entries only
+- `packages/cli/src/commands/domains/sales.ts`
+- `apps/panel/src/views/crm.tsx` sales rows in CRM view only unless a dedicated sales view is created
 
 ## Shared Contracts Consumed
 
@@ -40,4 +41,3 @@ conversion, sales follow-up and evidence-backed outreach.
 - prospect-to-client-to-engagement workflow fixture;
 - expected revision/idempotency tests for conversion commands;
 - proposal prepared action has exact payload review.
-

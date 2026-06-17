@@ -31,9 +31,11 @@ sets. These original hot files are already reduced by Phase 0:
 - `packages/mcp/src/index.ts`: resolved into a thin MCP barrel.
 - `apps/panel/src/main.tsx`: resolved into a thin React render entrypoint.
 
-The remaining shared coordination surface is:
+The remaining shared coordination surfaces are:
 
 - `packages/core/src/coverage.ts`
+- `packages/adapters/src/index.ts`
+- `packages/storage/src/index.ts`
 
 Any plan that lets many agents edit those files at once is expected to fail by
 merge conflict, behavior drift, or duplicated abstractions.
@@ -108,7 +110,9 @@ Owners:
 - local API route extraction: implemented in `codex/phase-0-api-mcp`;
 - panel view extraction: implemented in `codex/phase-0-panel-views`.
 
-No PRD agent starts until Wave 0 is green or explicitly waived by decision.
+Wave 1 may start after Phase 0 is verified, but branches that need broad
+adapter or storage work must either own a narrow slice of the remaining
+monoliths or create an adapter/storage extraction lane first.
 
 ### Wave 1: Harness and System Invariants
 

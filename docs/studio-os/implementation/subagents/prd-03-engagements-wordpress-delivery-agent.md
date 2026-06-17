@@ -17,12 +17,14 @@ contracts.
 
 ## Allowed Write Set
 
-- `packages/schemas/src/entities/delivery/**`
-- `packages/core/src/domains/delivery/**`
-- `packages/core/src/commands/handlers/delivery/**`
-- `packages/adapters/src/wordpress/**`
-- `packages/cli/src/commands/delivery/**`
-- `apps/panel/src/views/delivery/**`
+- `packages/schemas/src/entities/specs/delivery.ts`
+- `packages/core/src/domains/delivery.ts`
+- `packages/core/src/commands/handlers/delivery.ts`
+- `packages/core/src/commands/registry.ts` registration entries only
+- `packages/adapters/src/index.ts` WordPress adapter slice only until adapter extraction exists
+- `packages/cli/src/commands/domains/delivery.ts`
+- `packages/cli/src/commands/operations.ts` WordPress command slice only
+- `apps/panel/src/views/delivery.tsx`
 
 ## Shared Contracts Consumed
 
@@ -43,4 +45,3 @@ contracts.
 - WordPress adapter local tests where available;
 - visual feedback to verified implementation workflow fixture;
 - restore-check path records evidence without overwriting live runtime.
-

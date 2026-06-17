@@ -16,11 +16,12 @@ campaigns, channel preparation, publication gates and evidence-backed copy.
 
 ## Allowed Write Set
 
-- `packages/schemas/src/entities/marketing/**`
-- `packages/core/src/domains/marketing/**`
-- `packages/core/src/commands/handlers/marketing/**`
-- `packages/cli/src/commands/marketing/**`
-- `apps/panel/src/views/marketing/**`
+- `packages/schemas/src/entities/specs/marketing.ts`
+- `packages/core/src/domains/marketing.ts`
+- `packages/core/src/commands/handlers/marketing.ts`
+- `packages/core/src/commands/registry.ts` registration entries only
+- `packages/cli/src/commands/domains/portfolio-marketing.ts` marketing command slice only
+- `apps/panel/src/views/portfolio-marketing.tsx` marketing view slice only
 
 ## Shared Contracts Consumed
 
@@ -40,4 +41,3 @@ campaigns, channel preparation, publication gates and evidence-backed copy.
 - publication prepared-action lifecycle tests;
 - product release to portfolio case to campaign workflow fixture;
 - absent campaign data appears as `intake_required`.
-

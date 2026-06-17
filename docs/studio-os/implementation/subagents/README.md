@@ -50,3 +50,11 @@ The target is 100% capability completion. Missing real clients, jobs,
 campaigns, applications or finance records are represented as
 `intake_required`; they are not fabricated and they do not block capability
 completion when the system can correctly show the gap.
+
+## Post-0F Write-Set Rule
+
+Use the concrete module paths in each packet. If a packet names a shared
+registry file, the agent may wire an owned module there but must not move broad
+business behavior into the registry. If an agent needs a new folder, it should
+create it inside its owned package surface and register the new module through
+the smallest existing registry.

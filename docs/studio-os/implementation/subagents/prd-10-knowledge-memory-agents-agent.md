@@ -18,12 +18,14 @@ handoff and close.
 
 ## Allowed Write Set
 
-- `packages/schemas/src/entities/agents/**`
+- `packages/schemas/src/entities/specs/governance.ts` agentRun and handoff fields
+- `packages/schemas/src/entities/specs/shared.ts` context/evidence references only
 - `packages/core/src/harness/**`
-- `packages/core/src/domains/knowledge/**`
-- `packages/core/src/commands/handlers/agents/**`
-- `packages/cli/src/commands/agents/**`
-- `apps/panel/src/views/agents/**`
+- `packages/core/src/domains/agents.ts`
+- `packages/core/src/commands/handlers/governance.ts` handoff command slice until agent handlers are split
+- `packages/core/src/commands/registry.ts` registration entries only
+- `packages/cli/src/commands/domains/governance.ts` handoff/run command slice until agent CLI is split
+- `apps/panel/src/views/agents.tsx`
 - `operations/agent-runs/**` fixtures and canonical examples
 
 ## Shared Contracts Owned
@@ -46,4 +48,3 @@ handoff and close.
 - context pack redaction tests;
 - CLI flow can start, observe, verify, hand off and close a run;
 - MCP/panel can read the same run state after PRD 11 integration.
-

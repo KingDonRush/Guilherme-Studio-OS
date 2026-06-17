@@ -1,7 +1,7 @@
 # Phase 0 Modularization Packets
 
-Status: Phase 0 in progress; 0A, 0B, 0C, 0D and 0E integrated, 0F implemented
-in `codex/phase-0-panel-views`
+Status: Phase 0 in progress; 0A through 0F integrated, PRD packets realigned in
+`codex/phase-0-prd-packets`
 Purpose: create disjoint write surfaces before PRD agents implement capability.
 
 ## Why Phase 0 Exists
@@ -24,6 +24,8 @@ Resolved by Phase 0:
 Remaining hot surfaces before full PRD parallelization:
 
 - `packages/core/src/coverage.ts`
+- `packages/adapters/src/index.ts`
+- `packages/storage/src/index.ts`
 
 Phase 0 extracts registries and module folders without broadening PRD behavior.
 It is a behavior-preserving refactor.
@@ -51,7 +53,6 @@ packages/schemas/src/entities/specs/marketing.ts
 packages/schemas/src/entities/specs/career.ts
 packages/schemas/src/entities/specs/finance.ts
 packages/schemas/src/entities/specs/governance.ts
-packages/schemas/src/entities/specs/agents.ts
 packages/schemas/src/entities/typed-entity.ts
 packages/schemas/src/envelopes/command.ts
 packages/schemas/src/envelopes/result.ts
@@ -254,10 +255,24 @@ Acceptance:
 3. 0C command and workflow registries: integrated.
 4. 0D CLI: integrated.
 5. 0E API/MCP: integrated.
-6. 0F panel: implemented in `codex/phase-0-panel-views`.
+6. 0F panel: integrated.
+7. PRD packet realignment: implemented in `codex/phase-0-prd-packets`.
 
 If branches overlap, prefer integrating the lower-numbered packet first and
 rebasing later packets onto it.
+
+## Remaining Shared Surfaces
+
+These are not entrypoint monoliths anymore, but they still require ownership
+discipline:
+
+- `packages/core/src/coverage.ts`: PRD 01 owns coverage semantics; PRD agents
+  may request rows or update their own row with review.
+- `packages/adapters/src/index.ts`: PRD 03, 04 and 12 must not broaden adapter
+  behavior concurrently. Split this file first if multiple adapter lanes run in
+  parallel.
+- `packages/storage/src/index.ts`: PRD 12 owns storage/recovery semantics.
+  Other PRDs should consume storage APIs rather than editing storage internals.
 
 ## Phase 0 Final Gate
 

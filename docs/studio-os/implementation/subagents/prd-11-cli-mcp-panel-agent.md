@@ -17,10 +17,22 @@ read surfaces, MCP resources/tools/prompts and operational panel views.
 
 ## Allowed Write Set
 
-- `packages/cli/src/**`
-- `packages/local-api/src/**`
-- `packages/mcp/src/**`
-- `apps/panel/src/**`
+- `packages/cli/src/runtime.ts`
+- `packages/cli/src/index.ts` registration only
+- `packages/cli/src/commands/**` interface wiring and shared options
+- `packages/local-api/src/routes/**`
+- `packages/local-api/src/server.ts`
+- `packages/local-api/src/types.ts`
+- `packages/local-api/src/command-runner.ts`
+- `packages/mcp/src/resources.ts`
+- `packages/mcp/src/tools/**`
+- `packages/mcp/src/prompts.ts`
+- `packages/mcp/src/server.ts` registration only
+- `packages/mcp/src/command.ts`
+- `apps/panel/src/app/app.tsx`
+- `apps/panel/src/api/**`
+- `apps/panel/src/components/**`
+- `apps/panel/src/views/**`
 
 ## Shared Contracts Consumed
 
@@ -42,4 +54,3 @@ read surfaces, MCP resources/tools/prompts and operational panel views.
 - panel smoke for operational views;
 - prepared action detail shows exact payload, checksum, expiry, source and
   reconciliation state.
-

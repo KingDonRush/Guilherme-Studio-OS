@@ -17,13 +17,17 @@ gate.
 
 ## Allowed Write Set
 
-- `packages/schemas/src/entities/portfolio/**`
+- `packages/schemas/src/entities/specs/portfolio.ts`
+- `packages/schemas/src/entities/specs/shared.ts` claim/evidence shared fields only
 - `packages/core/src/evidence/**`
-- `packages/core/src/domains/portfolio/**`
-- `packages/core/src/commands/handlers/portfolio/**`
-- `packages/assets/src/**`
-- `packages/cli/src/commands/portfolio/**`
-- `apps/panel/src/views/portfolio/**`
+- `packages/core/src/domains/portfolio.ts`
+- `packages/core/src/domains/evidence.ts`
+- `packages/core/src/commands/handlers/evidence.ts`
+- `packages/core/src/commands/handlers/governance.ts` case command slice only
+- `packages/core/src/commands/registry.ts` registration entries only
+- `packages/assets/src/index.ts` asset governance slice only until asset extraction exists
+- `packages/cli/src/commands/domains/portfolio-marketing.ts`
+- `apps/panel/src/views/portfolio-marketing.tsx`
 
 ## Shared Contracts Owned
 
@@ -50,4 +54,3 @@ gate.
 - claim-to-evidence tests;
 - asset manifest tests;
 - portfolio release gate remains blocked until final acceptance decision.
-
