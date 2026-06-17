@@ -102,6 +102,26 @@ inputs to migration. They do not override this specification.
 - [Visual feedback and implementation](./workflows/02-visual-reality-loop.md)
 - [Agent execution and handoff](./workflows/03-agent-execution-handoff.md)
 
+### Implementation Execution
+
+- [Parallel PRD execution strategy](./implementation/00-parallel-execution-strategy.md)
+- [Cross-PRD integration map](./implementation/01-cross-prd-integration-map.md)
+- [PRD subagent packets](./implementation/subagents/README.md)
+- [PRD 01 implementation plan](./implementation/prd-01-core-governance-plan.md)
+- [PRD 02 implementation plan](./implementation/prd-02-clients-crm-profiles-plan.md)
+- [PRD 03 implementation plan](./implementation/prd-03-engagements-wordpress-delivery-plan.md)
+- [PRD 04 implementation plan](./implementation/prd-04-products-plugins-repositories-plan.md)
+- [PRD 05 implementation plan](./implementation/prd-05-portfolio-cases-evidence-plan.md)
+- [PRD 06 implementation plan](./implementation/prd-06-marketing-content-campaigns-plan.md)
+- [PRD 07 implementation plan](./implementation/prd-07-prospecting-sales-proposals-plan.md)
+- [PRD 08 implementation plan](./implementation/prd-08-international-career-plan.md)
+- [PRD 09 implementation plan](./implementation/prd-09-finance-contracts-obligations-plan.md)
+- [PRD 10 implementation plan](./implementation/prd-10-knowledge-memory-agents-plan.md)
+- [PRD 11 implementation plan](./implementation/prd-11-cli-mcp-panel-plan.md)
+- [PRD 12 implementation plan](./implementation/prd-12-data-security-recovery-plan.md)
+- [Capability completion definition](./implementation/capability-matrices/00-capability-completion-definition.md)
+- [Capability matrices](./implementation/capability-matrices/README.md)
+
 ### Control
 
 - [Schema contracts](./schemas/01-core-contracts.md)

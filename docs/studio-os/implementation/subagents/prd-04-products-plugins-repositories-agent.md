@@ -1,0 +1,48 @@
+# PRD 04 Agent Packet: Products, Plugins And Repositories
+
+Wave: 3
+Branch: `codex/prd-04-products-repositories`
+
+## Objective
+
+Move PRD 04 to `capability_complete` for product records, plugin repos,
+release lifecycle, demo linkage and repository health.
+
+## Read First
+
+- `docs/studio-os/prds/04-products-plugins-repositories.md`
+- `docs/studio-os/implementation/prd-04-products-plugins-repositories-plan.md`
+- `docs/studio-os/implementation/capability-matrices/prd-04-products-plugins-repositories-matrix.md`
+
+## Allowed Write Set
+
+- `packages/schemas/src/entities/products/**`
+- `packages/core/src/domains/products/**`
+- `packages/core/src/domains/repositories/**`
+- `packages/core/src/commands/handlers/products/**`
+- `packages/adapters/src/git/**`
+- `packages/cli/src/commands/products/**`
+- `apps/panel/src/views/products/**`
+
+## Shared Contracts Owned
+
+- repository health contract: root mismatch, nested repo registry, dirty state,
+  expected branch, remote policy, package scripts and HEAD evidence.
+
+## Shared Contracts Consumed
+
+- PRD 05 claim-to-evidence;
+- PRD 12 backup/security for repositories;
+- PRD 10 agent run repository observations.
+
+## Must Not Do
+
+- Do not absorb nested product repositories into root Git.
+- Do not mark a release public without evidence and prepared publication gates.
+
+## Verification
+
+- local Git adapter tests;
+- product release to portfolio case workflow segment;
+- `studio doctor --json` reports repository health details.
+
