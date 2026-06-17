@@ -1,6 +1,6 @@
 # Current Surface Audit For Subagents
 
-Status: updated after Phase 0A schema extraction and Phase 0B core extraction
+Status: updated after Phase 0A, 0B and 0C extraction
 Purpose: preserve concrete conflict findings before implementation agents start.
 
 ## Audited Hot Files
@@ -9,8 +9,8 @@ Purpose: preserve concrete conflict findings before implementation agents start.
 |---|---|---|
 | Schemas | `packages/schemas/src/index.ts` | resolved; 31-line barrel after 0A |
 | Core barrel | `packages/core/src/index.ts` | resolved; 56-line barrel after 0B |
-| Core commands | `packages/core/src/command-runtime.ts` | about 443 lines; requirements plus one command switch for all mutable commands |
-| Core workflows | `packages/core/src/workflows/fixtures.ts` | about 574 lines; requirements, execution harness and all fixture executors in one file |
+| Core commands | `packages/core/src/command-runtime.ts` | resolved; 41-line runtime backed by `packages/core/src/commands/**` |
+| Core workflows | `packages/core/src/workflows/fixtures.ts` | resolved; 9-line barrel backed by `packages/core/src/workflows/**` |
 | Coverage | `packages/core/src/coverage.ts` | about 212 lines; every PRD agent will want to close its own rows here |
 | Economics | `packages/core/src/economics.ts` | moderate shared file; PRD 01, 07, 08 and 09 must coordinate reason taxonomy |
 | Command service | `packages/core/src/command-service.ts` | moderate shared file; authorization, expected revision, idempotency and event wrapper |
@@ -24,10 +24,10 @@ Purpose: preserve concrete conflict findings before implementation agents start.
 - A new kind no longer competes in a 1000-line schema index, but still requires
   coordinated updates across schema specs, kind directory, alias mapping,
   coverage and tests.
-- A new command still competes for the same requirement map and switch in
-  `packages/core/src/command-runtime.ts`.
-- A new workflow fixture still competes in
-  `packages/core/src/workflows/fixtures.ts`.
+- A new command now lands in `packages/core/src/commands/handlers/**` and the
+  command registry, instead of a monolithic runtime switch.
+- A new workflow fixture now lands in `packages/core/src/workflows/executors/**`
+  and the workflow executor map, instead of a shared fixture monolith.
 - Delivery, repository, portfolio and finance lifecycle behavior now has a
   smaller `LifecycleEngine`, but future preconditions still need an owned
   registry before several PRD agents edit it.
@@ -60,6 +60,20 @@ After 0B, domain command behavior is owned by:
 
 The facade `packages/core/src/domains/commands.ts` remains the stable internal
 entrypoint for `command-runtime.ts`.
+
+## Phase 0C Resulting Core Ownership
+
+After 0C, command behavior is owned by:
+
+- registry and shared payload parsing: `packages/core/src/commands/**`
+- command handlers by domain: `packages/core/src/commands/handlers/**`
+- workflow requirements: `packages/core/src/workflows/requirements.ts`
+- workflow execution harness: `packages/core/src/workflows/execution.ts`
+- workflow executors by journey: `packages/core/src/workflows/executors/**`
+
+`packages/core/src/command-runtime.ts` remains the public runtime entrypoint for
+mutations, and `packages/core/src/workflows/fixtures.ts` remains the public
+workflow compatibility barrel.
 
 ## Adapter Shortcut Inventory To Review
 

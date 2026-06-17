@@ -88,7 +88,6 @@ after Phase 0, except for registry wiring:
 
 - `packages/schemas/src/index.ts`
 - `packages/core/src/index.ts`
-- `packages/core/src/command-runtime.ts`
 - `packages/cli/src/index.ts`
 - `packages/mcp/src/index.ts`
 - `packages/local-api/src/index.ts`
@@ -96,6 +95,10 @@ after Phase 0, except for registry wiring:
 
 If an agent needs to change behavior there, it must first create a smaller
 owned module and wire it through the registry.
+
+Command behavior belongs in `packages/core/src/commands/handlers/**` plus
+`packages/core/src/commands/registry.ts`; workflow behavior belongs in
+`packages/core/src/workflows/executors/**` plus the executor map.
 
 ## Standard Agent Prompt
 
@@ -173,4 +176,3 @@ Do not merge a PRD branch until:
 - evidence or proof debt is recorded;
 - cross-PRD gaps are added to the integration map;
 - shared registry changes are reviewed by the integration owner.
-

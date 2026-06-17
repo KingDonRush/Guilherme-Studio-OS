@@ -1,7 +1,7 @@
 # Phase 0 Modularization Packets
 
-Status: Phase 0 in progress; 0A integrated, 0B implemented in
-`codex/phase-0-core-domains`
+Status: Phase 0 in progress; 0A and 0B integrated, 0C implemented in
+`codex/phase-0-command-registry`
 Purpose: create disjoint write surfaces before PRD agents implement capability.
 
 ## Why Phase 0 Exists
@@ -14,11 +14,11 @@ Resolved by Phase 0:
 
 - `packages/schemas/src/index.ts`: now a thin schema barrel.
 - `packages/core/src/index.ts`: now a thin core barrel.
+- `packages/core/src/command-runtime.ts`: now a thin command runtime.
+- `packages/core/src/workflows/fixtures.ts`: now a thin workflow barrel.
 
 Remaining hot surfaces before full PRD parallelization:
 
-- `packages/core/src/command-runtime.ts`
-- `packages/core/src/workflows/fixtures.ts`
 - `packages/core/src/coverage.ts`
 - `packages/cli/src/index.ts`
 - `packages/mcp/src/index.ts`
@@ -74,7 +74,7 @@ Acceptance:
 ## Packet 0B: Core Domain Extraction
 
 Branch: `codex/phase-0-core-domains`
-Result: implemented in this branch.
+Result: integrated into `codex/studio-os-v1`.
 
 Allowed writes:
 
@@ -121,6 +121,7 @@ Acceptance:
 ## Packet 0C: Core Command And Workflow Registry Extraction
 
 Branch: `codex/phase-0-command-registry`
+Result: implemented in this branch.
 
 Allowed writes:
 
@@ -138,7 +139,7 @@ packages/core/src/commands/handlers/
 packages/core/src/workflows/requirements.ts
 packages/core/src/workflows/execution.ts
 packages/core/src/workflows/executors/
-packages/core/src/workflows/index.ts
+packages/core/src/workflows/fixtures.ts
 ```
 
 Acceptance:
@@ -147,7 +148,7 @@ Acceptance:
 - dry-run behavior is unchanged;
 - requirement/capability mapping is testable without reading the runtime
   switch;
-- adding a PRD command no longer requires editing a large switch.
+- adding a PRD command no longer requires editing a large switch;
 - the current dynamic import cycle from `command-runtime.ts` back to `index.ts`
   is removed or isolated behind command handler factories.
 - adding or editing one workflow fixture no longer requires touching a 500+
@@ -240,8 +241,9 @@ Acceptance:
 ## Integration Order
 
 1. 0A schemas: integrated.
-2. 0B core domains: implemented in `codex/phase-0-core-domains`.
-3. 0C command and workflow registries.
+2. 0B core domains: integrated.
+3. 0C command and workflow registries: implemented in
+   `codex/phase-0-command-registry`.
 4. 0D CLI.
 5. 0E API/MCP.
 6. 0F panel.

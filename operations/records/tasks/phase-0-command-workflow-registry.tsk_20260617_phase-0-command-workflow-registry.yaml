@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-17T06:04:24.000Z
+  id: tsk_20260617_phase-0-command-workflow-registry
+  labels:
+    - studio-os
+    - prd-completion
+    - phase-0
+  revision: 1
+  schema_version: 1
+  slug: phase-0-command-workflow-registry
+  updated_at: 2026-06-17T06:04:24.000Z
+relations: []
+spec:
+  acceptance:
+    - command runtime remains the canonical mutation entrypoint
+    - command requirements move into a registry with domain handlers
+    - dry-run and unknown-command behavior remain unchanged
+    - workflow fixtures execute through per-journey executors
+    - core package build passes
+    - focused core tests pass
+    - workflow fixtures execute successfully
+    - Phase 0 plans reflect the new command and workflow surfaces
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Extracts command runtime behavior into a command registry with domain handlers and splits executable workflow fixtures into requirements, execution harness and per-journey executors.
+  title: Phase 0 command and workflow registry

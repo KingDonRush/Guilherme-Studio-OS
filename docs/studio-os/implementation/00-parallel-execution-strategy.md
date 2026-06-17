@@ -24,11 +24,11 @@ sets. These original hot files are already reduced by Phase 0:
 
 - `packages/schemas/src/index.ts`: resolved into a thin barrel.
 - `packages/core/src/index.ts`: resolved into a thin barrel.
+- `packages/core/src/command-runtime.ts`: resolved into a thin runtime.
+- `packages/core/src/workflows/fixtures.ts`: resolved into a thin barrel.
 
 The remaining hot files are:
 
-- `packages/core/src/command-runtime.ts`
-- `packages/core/src/workflows/fixtures.ts`
 - `packages/cli/src/index.ts`
 - `packages/mcp/src/index.ts`
 - `packages/local-api/src/index.ts`
@@ -100,7 +100,8 @@ Owners:
 
 - schemas extraction: done;
 - core domain extraction: implemented in `codex/phase-0-core-domains`;
-- core command registry and workflow fixture extraction;
+- core command registry and workflow fixture extraction: implemented in
+  `codex/phase-0-command-registry`;
 - CLI command registration extraction;
 - MCP resources/tools extraction;
 - local API route extraction;
