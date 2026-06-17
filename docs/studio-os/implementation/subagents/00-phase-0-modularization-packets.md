@@ -1,19 +1,25 @@
 # Phase 0 Modularization Packets
 
-Status: first execution lane
+Status: Phase 0 in progress; 0A integrated, 0B implemented in
+`codex/phase-0-core-domains`
 Purpose: create disjoint write surfaces before PRD agents implement capability.
 
 ## Why Phase 0 Exists
 
-Current implementation is intentionally compact but too centralized for twelve
-parallel implementation agents. These files are hot:
+The original implementation was intentionally compact but too centralized for
+twelve parallel implementation agents. Phase 0 now tracks resolved and remaining
+hot surfaces explicitly.
 
-- `packages/schemas/src/index.ts`
-- `packages/core/src/index.ts`
+Resolved by Phase 0:
+
+- `packages/schemas/src/index.ts`: now a thin schema barrel.
+- `packages/core/src/index.ts`: now a thin core barrel.
+
+Remaining hot surfaces before full PRD parallelization:
+
 - `packages/core/src/command-runtime.ts`
+- `packages/core/src/workflows/fixtures.ts`
 - `packages/core/src/coverage.ts`
-- `packages/core/src/economics.ts`
-- `packages/core/src/command-service.ts`
 - `packages/cli/src/index.ts`
 - `packages/mcp/src/index.ts`
 - `packages/local-api/src/index.ts`
@@ -25,6 +31,7 @@ It is a behavior-preserving refactor.
 ## Packet 0A: Schemas Extraction
 
 Branch: `codex/phase-0-schemas`
+Result: integrated into `codex/studio-os-v1`.
 
 Allowed writes:
 
@@ -67,6 +74,7 @@ Acceptance:
 ## Packet 0B: Core Domain Extraction
 
 Branch: `codex/phase-0-core-domains`
+Result: implemented in this branch.
 
 Allowed writes:
 
@@ -79,24 +87,26 @@ Target shape:
 packages/core/src/context.ts
 packages/core/src/entity-service.ts
 packages/core/src/authority.ts
-packages/core/src/lifecycle/
-packages/core/src/prepared-actions/
-packages/core/src/commands/
-packages/core/src/domains/crm/
-packages/core/src/domains/sales/
-packages/core/src/domains/delivery/
-packages/core/src/domains/products/
-packages/core/src/domains/portfolio/
-packages/core/src/domains/marketing/
-packages/core/src/domains/career/
-packages/core/src/domains/finance/
-packages/core/src/domains/governance/
-packages/core/src/domains/agents/
-packages/core/src/workflows/
-packages/core/src/gates/
-packages/core/src/evidence/
-packages/core/src/acceptance/
-packages/core/src/recovery/
+packages/core/src/lifecycle.ts
+packages/core/src/prepared-actions/service.ts
+packages/core/src/domains/base.ts
+packages/core/src/domains/commands.ts
+packages/core/src/domains/crm.ts
+packages/core/src/domains/sales.ts
+packages/core/src/domains/delivery.ts
+packages/core/src/domains/products.ts
+packages/core/src/domains/portfolio.ts
+packages/core/src/domains/marketing.ts
+packages/core/src/domains/career.ts
+packages/core/src/domains/finance.ts
+packages/core/src/domains/governance.ts
+packages/core/src/domains/agents.ts
+packages/core/src/workflows/fixtures.ts
+packages/core/src/gates/catalog.ts
+packages/core/src/gates/engine.ts
+packages/core/src/evidence/claims.ts
+packages/core/src/acceptance.ts
+packages/core/src/operations.ts
 packages/core/src/index.ts
 ```
 
@@ -105,10 +115,10 @@ Acceptance:
 - existing service tests pass;
 - `executeStudioCommand` remains the only mutation runtime entrypoint;
 - current command names and result envelopes are preserved;
-- domain logic moves out of monolithic files into owned modules.
+- domain logic moves out of monolithic files into owned modules;
 - imports from `@guilherme-studio/core` continue to work through the barrel.
 
-## Packet 0C: Command Registry Extraction
+## Packet 0C: Core Command And Workflow Registry Extraction
 
 Branch: `codex/phase-0-command-registry`
 
@@ -117,6 +127,7 @@ Allowed writes:
 - `packages/core/src/commands/**`
 - `packages/core/src/command-runtime.ts`
 - `packages/core/src/command-runtime.test.ts`
+- `packages/core/src/workflows/**`
 
 Target shape:
 
@@ -124,6 +135,10 @@ Target shape:
 packages/core/src/commands/registry.ts
 packages/core/src/commands/types.ts
 packages/core/src/commands/handlers/
+packages/core/src/workflows/requirements.ts
+packages/core/src/workflows/execution.ts
+packages/core/src/workflows/executors/
+packages/core/src/workflows/index.ts
 ```
 
 Acceptance:
@@ -135,6 +150,8 @@ Acceptance:
 - adding a PRD command no longer requires editing a large switch.
 - the current dynamic import cycle from `command-runtime.ts` back to `index.ts`
   is removed or isolated behind command handler factories.
+- adding or editing one workflow fixture no longer requires touching a 500+
+  line shared executor file.
 
 ## Packet 0D: CLI Command Extraction
 
@@ -222,9 +239,9 @@ Acceptance:
 
 ## Integration Order
 
-1. 0A schemas.
-2. 0B core domains.
-3. 0C command registry.
+1. 0A schemas: integrated.
+2. 0B core domains: implemented in `codex/phase-0-core-domains`.
+3. 0C command and workflow registries.
 4. 0D CLI.
 5. 0E API/MCP.
 6. 0F panel.

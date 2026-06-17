@@ -20,11 +20,15 @@ Do not spawn implementation agents directly from the current monolithic source
 shape.
 
 First create enough modular seams so agents can work in mostly disjoint write
-sets. The current hot files are:
+sets. These original hot files are already reduced by Phase 0:
 
-- `packages/schemas/src/index.ts`
-- `packages/core/src/index.ts`
+- `packages/schemas/src/index.ts`: resolved into a thin barrel.
+- `packages/core/src/index.ts`: resolved into a thin barrel.
+
+The remaining hot files are:
+
 - `packages/core/src/command-runtime.ts`
+- `packages/core/src/workflows/fixtures.ts`
 - `packages/cli/src/index.ts`
 - `packages/mcp/src/index.ts`
 - `packages/local-api/src/index.ts`
@@ -94,8 +98,9 @@ Rules:
 
 Owners:
 
-- schemas extraction;
-- core domains and command runtime extraction;
+- schemas extraction: done;
+- core domain extraction: implemented in `codex/phase-0-core-domains`;
+- core command registry and workflow fixture extraction;
 - CLI command registration extraction;
 - MCP resources/tools extraction;
 - local API route extraction;

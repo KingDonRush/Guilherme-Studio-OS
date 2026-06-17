@@ -1,0 +1,31 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-17T05:21:49.000Z
+  id: tsk_20260617_phase-0-core-modularization
+  labels:
+    - studio-os
+    - prd-completion
+    - phase-0
+  revision: 1
+  schema_version: 1
+  slug: phase-0-core-modularization
+  updated_at: 2026-06-17T05:21:49.000Z
+relations: []
+spec:
+  acceptance:
+    - core public barrel remains stable
+    - command runtime remains the canonical mutation entrypoint
+    - core package build passes
+    - focused core tests pass
+    - repository typecheck passes
+    - core source lint passes
+    - Phase 0 plans reflect the new module surface
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Extracts the core package from a monolithic index into owned modules for context, authority, entity service, lifecycle, domains, gates, evidence, workflows, acceptance, prepared actions and operations.
+  title: Phase 0 core modularization

@@ -6,8 +6,8 @@ import {
   type ResultEnvelope,
   type ResultStatus,
 } from "@guilherme-studio/schemas";
+import type { StudioContext } from "./context.js";
 import { IdempotencyStore } from "./idempotency.js";
-import type { StudioContext } from "./index.js";
 
 export interface CommandRequirement {
   capability: Capability;

@@ -1,0 +1,38 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-17T05:21:49.000Z
+  id: evd_20260617_phase-0-core-modularization-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - phase-0
+  revision: 1
+  schema_version: 1
+  slug: phase-0-core-modularization-verification
+  updated_at: 2026-06-17T05:21:49.000Z
+relations:
+  - target_id: tsk_20260617_phase-0-core-modularization
+    type: supports
+spec:
+  claims:
+    - The core package index is now a thin public barrel.
+    - Core domain command logic is split into owned modules.
+    - The command runtime remains the canonical mutation entrypoint.
+    - The core package builds after extraction.
+    - Focused core tests pass after extraction.
+    - The repository typecheck passes after extraction.
+    - Biome accepts the extracted core source tree.
+    - Canonical Studio records validate after the task and evidence records are added.
+    - Canonical SQLite projection rebuild and verification pass after extraction.
+    - Phase 0 planning documents were readapted to the new hot surfaces.
+  command: npm run build -w @guilherme-studio/core && npm test -- packages/core/src/index.test.ts packages/core/src/command-runtime.test.ts packages/core/src/command-service.test.ts packages/core/src/coverage.test.ts packages/core/src/economics.test.ts packages/core/src/idempotency.test.ts && npm run typecheck && ../Guilherme-Studio-OS/node_modules/.bin/biome check packages/core/src && npm run studio -- validate --json && npm run studio -- sync --rebuild --verify --json && git diff --check
+  evidence_type: command
+  observed_at: 2026-06-17T05:21:49.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Phase 0 core modularization verification
+  validated_at: 2026-06-17T05:21:49.000Z

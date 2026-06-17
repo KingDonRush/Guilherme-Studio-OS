@@ -1,18 +1,19 @@
 # Current Surface Audit For Subagents
 
-Status: planning audit captured from subagents
+Status: updated after Phase 0A schema extraction and Phase 0B core extraction
 Purpose: preserve concrete conflict findings before implementation agents start.
 
 ## Audited Hot Files
 
 | Area | File | Risk |
 |---|---|---|
-| Schemas | `packages/schemas/src/index.ts` | about 1014 lines; mixes kinds, specs, envelopes, prepared actions, events, helpers, secret scan and kind directory |
-| Core | `packages/core/src/index.ts` | about 2461 lines; mixes context, services, lifecycle, prepared actions, domains, workflows, gates, evidence and acceptance |
-| Core commands | `packages/core/src/command-runtime.ts` | requirements plus one command switch for all mutable commands |
-| Coverage | `packages/core/src/coverage.ts` | every PRD agent will want to close its own rows here |
-| Economics | `packages/core/src/economics.ts` | shared by PRD 01, PRD 07, PRD 08 and PRD 09 |
-| Command service | `packages/core/src/command-service.ts` | authorization, expected revision, idempotency and event wrapper |
+| Schemas | `packages/schemas/src/index.ts` | resolved; 31-line barrel after 0A |
+| Core barrel | `packages/core/src/index.ts` | resolved; 56-line barrel after 0B |
+| Core commands | `packages/core/src/command-runtime.ts` | about 443 lines; requirements plus one command switch for all mutable commands |
+| Core workflows | `packages/core/src/workflows/fixtures.ts` | about 574 lines; requirements, execution harness and all fixture executors in one file |
+| Coverage | `packages/core/src/coverage.ts` | about 212 lines; every PRD agent will want to close its own rows here |
+| Economics | `packages/core/src/economics.ts` | moderate shared file; PRD 01, 07, 08 and 09 must coordinate reason taxonomy |
+| Command service | `packages/core/src/command-service.ts` | moderate shared file; authorization, expected revision, idempotency and event wrapper |
 | CLI | `packages/cli/src/index.ts` | about 1587 lines; all commands, adapters, acceptance, WordPress and aliases |
 | API | `packages/local-api/src/index.ts` | auth, read routes, diagnostics, acceptance and mutations |
 | MCP | `packages/mcp/src/index.ts` | resources, tools, prompts and acceptance in one file |
@@ -20,12 +21,16 @@ Purpose: preserve concrete conflict findings before implementation agents start.
 
 ## Concrete Conflict Patterns
 
-- A new kind currently requires editing kind schema, prefix mapping, typed entity
-  schema, kind directory, alias mapping, coverage and tests.
-- A new command currently competes for the same requirement map and switch in
+- A new kind no longer competes in a 1000-line schema index, but still requires
+  coordinated updates across schema specs, kind directory, alias mapping,
+  coverage and tests.
+- A new command still competes for the same requirement map and switch in
   `packages/core/src/command-runtime.ts`.
-- Delivery, repository, portfolio and finance work will all compete in lifecycle
-  preconditions unless preconditions are domain-owned.
+- A new workflow fixture still competes in
+  `packages/core/src/workflows/fixtures.ts`.
+- Delivery, repository, portfolio and finance lifecycle behavior now has a
+  smaller `LifecycleEngine`, but future preconditions still need an owned
+  registry before several PRD agents edit it.
 - Portfolio, marketing, sales and career will all compete in claim-to-evidence
   policy unless PRD 05 owns the public claim contract.
 - Core governance, marketing, sales, career, finance and recovery will all
@@ -37,6 +42,24 @@ Purpose: preserve concrete conflict findings before implementation agents start.
   classify them as read-only diagnostics or future command-runtime mutations.
 - MCP command execution repeats context and envelope creation in multiple
   blocks; this should become one helper before adding PRD tools.
+
+## Phase 0B Resulting Core Ownership
+
+After 0B, domain command behavior is owned by:
+
+- CRM: `packages/core/src/domains/crm.ts`
+- sales/proposals: `packages/core/src/domains/sales.ts`
+- delivery: `packages/core/src/domains/delivery.ts`
+- products/repositories: `packages/core/src/domains/products.ts`
+- portfolio: `packages/core/src/domains/portfolio.ts`
+- marketing/content: `packages/core/src/domains/marketing.ts`
+- career: `packages/core/src/domains/career.ts`
+- finance: `packages/core/src/domains/finance.ts`
+- agent handoff: `packages/core/src/domains/agents.ts`
+- governance decisions: `packages/core/src/domains/governance.ts`
+
+The facade `packages/core/src/domains/commands.ts` remains the stable internal
+entrypoint for `command-runtime.ts`.
 
 ## Adapter Shortcut Inventory To Review
 
@@ -62,4 +85,3 @@ Interface packages may adapt payloads, validate request shape and format
 responses. They may not own canonical mutation behavior. Canonical mutations,
 events, prepared actions and revisions belong behind command envelopes executed
 by `executeStudioCommand`.
-

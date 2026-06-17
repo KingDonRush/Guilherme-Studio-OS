@@ -8,7 +8,7 @@ import {
   type ResultEnvelope,
 } from "@guilherme-studio/schemas";
 import { StudioCommandService } from "./command-service.js";
-import type { StudioContext } from "./index.js";
+import type { StudioContext } from "./context.js";
 
 interface CommandRequirement {
   capability: Capability;
