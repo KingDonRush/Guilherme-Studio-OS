@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-17T06:26:15.000Z
+  id: tsk_20260617_phase-0-cli-command-extraction
+  labels:
+    - studio-os
+    - prd-completion
+    - phase-0
+  revision: 1
+  schema_version: 1
+  slug: phase-0-cli-command-extraction
+  updated_at: 2026-06-17T06:26:15.000Z
+relations: []
+spec:
+  acceptance:
+    - CLI public program entrypoint remains stable
+    - current command names and help surface are preserved
+    - mutable canonical commands still call executeStudioCommand through executeCliCommand
+    - JSON dry-run output remains stable for mutable commands
+    - CLI tests pass
+    - repository typecheck passes
+    - Studio validate and sync verification pass
+    - Phase 0 plans reflect the new CLI command surface
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Extracts the CLI package from a monolithic program file into runtime helpers, core commands, entity/action commands, domain shortcut commands and operational adapter commands.
+  title: Phase 0 CLI command extraction

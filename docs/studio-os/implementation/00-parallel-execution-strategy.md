@@ -26,10 +26,10 @@ sets. These original hot files are already reduced by Phase 0:
 - `packages/core/src/index.ts`: resolved into a thin barrel.
 - `packages/core/src/command-runtime.ts`: resolved into a thin runtime.
 - `packages/core/src/workflows/fixtures.ts`: resolved into a thin barrel.
+- `packages/cli/src/index.ts`: resolved into a thin CLI entrypoint.
 
 The remaining hot files are:
 
-- `packages/cli/src/index.ts`
 - `packages/mcp/src/index.ts`
 - `packages/local-api/src/index.ts`
 - `apps/panel/src/main.tsx`
@@ -102,7 +102,7 @@ Owners:
 - core domain extraction: implemented in `codex/phase-0-core-domains`;
 - core command registry and workflow fixture extraction: implemented in
   `codex/phase-0-command-registry`;
-- CLI command registration extraction;
+- CLI command registration extraction: implemented in `codex/phase-0-cli-commands`;
 - MCP resources/tools extraction;
 - local API route extraction;
 - panel view extraction.

@@ -1,0 +1,36 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-17T06:26:15.000Z
+  id: evd_20260617_phase-0-cli-command-extraction-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - phase-0
+  revision: 1
+  schema_version: 1
+  slug: phase-0-cli-command-extraction-verification
+  updated_at: 2026-06-17T06:26:15.000Z
+relations:
+  - target_id: tsk_20260617_phase-0-cli-command-extraction
+    type: supports
+spec:
+  claims:
+    - The CLI index is now a thin program entrypoint.
+    - CLI command behavior is split into owned command modules.
+    - Domain shortcut commands are split by domain group.
+    - Mutable canonical CLI commands still route through executeCliCommand and executeStudioCommand.
+    - CLI build and tests pass after extraction.
+    - Repository typecheck passes after extraction.
+    - CLI validate, workflow fixture and dry-run smokes pass after extraction.
+    - Canonical Studio records validate after the task and evidence records are added.
+  command: npm run build && npm test -- packages/cli/src/index.test.ts packages/core/src/command-runtime.test.ts && npm run typecheck && ../Guilherme-Studio-OS/node_modules/.bin/biome check packages/cli/src && npm run studio -- validate --json && npm run studio -- workflow --fixtures --execute --workflow agent-handoff --json && npm run studio -- --json --dry-run entity create task --title "CLI refactor dry run" && npm run studio -- sync --rebuild --verify --json && git diff --check
+  evidence_type: command
+  observed_at: 2026-06-17T06:26:15.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Phase 0 CLI command extraction verification
+  validated_at: 2026-06-17T06:26:15.000Z

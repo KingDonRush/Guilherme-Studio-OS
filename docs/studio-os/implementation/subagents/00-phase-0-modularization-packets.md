@@ -1,7 +1,7 @@
 # Phase 0 Modularization Packets
 
-Status: Phase 0 in progress; 0A and 0B integrated, 0C implemented in
-`codex/phase-0-command-registry`
+Status: Phase 0 in progress; 0A, 0B and 0C integrated, 0D implemented in
+`codex/phase-0-cli-commands`
 Purpose: create disjoint write surfaces before PRD agents implement capability.
 
 ## Why Phase 0 Exists
@@ -16,11 +16,11 @@ Resolved by Phase 0:
 - `packages/core/src/index.ts`: now a thin core barrel.
 - `packages/core/src/command-runtime.ts`: now a thin command runtime.
 - `packages/core/src/workflows/fixtures.ts`: now a thin workflow barrel.
+- `packages/cli/src/index.ts`: now a thin CLI program entrypoint.
 
 Remaining hot surfaces before full PRD parallelization:
 
 - `packages/core/src/coverage.ts`
-- `packages/cli/src/index.ts`
 - `packages/mcp/src/index.ts`
 - `packages/local-api/src/index.ts`
 - `apps/panel/src/main.tsx`
@@ -121,7 +121,7 @@ Acceptance:
 ## Packet 0C: Core Command And Workflow Registry Extraction
 
 Branch: `codex/phase-0-command-registry`
-Result: implemented in this branch.
+Result: integrated into `codex/studio-os-v1`.
 
 Allowed writes:
 
@@ -157,6 +157,7 @@ Acceptance:
 ## Packet 0D: CLI Command Extraction
 
 Branch: `codex/phase-0-cli-commands`
+Result: implemented in this branch.
 
 Allowed writes:
 
@@ -168,8 +169,7 @@ Target shape:
 ```text
 packages/cli/src/commands/
 packages/cli/src/commands/domains/
-packages/cli/src/renderers/
-packages/cli/src/runtime/
+packages/cli/src/runtime.ts
 packages/cli/src/index.ts
 ```
 
@@ -178,7 +178,7 @@ Acceptance:
 - current CLI commands and exit codes are preserved;
 - command modules can be owned by PRD agents;
 - mutable commands still call `executeStudioCommand`;
-- `--json` output remains stable for existing commands.
+- `--json` output remains stable for existing commands;
 - current direct adapter shortcuts are explicitly classified as either
   read-only diagnostics or future command-runtime mutations.
 
@@ -242,9 +242,8 @@ Acceptance:
 
 1. 0A schemas: integrated.
 2. 0B core domains: integrated.
-3. 0C command and workflow registries: implemented in
-   `codex/phase-0-command-registry`.
-4. 0D CLI.
+3. 0C command and workflow registries: integrated.
+4. 0D CLI: implemented in `codex/phase-0-cli-commands`.
 5. 0E API/MCP.
 6. 0F panel.
 

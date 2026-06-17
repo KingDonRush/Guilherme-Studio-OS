@@ -1,6 +1,6 @@
 # Current Surface Audit For Subagents
 
-Status: updated after Phase 0A, 0B and 0C extraction
+Status: updated after Phase 0A, 0B, 0C and 0D extraction
 Purpose: preserve concrete conflict findings before implementation agents start.
 
 ## Audited Hot Files
@@ -14,7 +14,7 @@ Purpose: preserve concrete conflict findings before implementation agents start.
 | Coverage | `packages/core/src/coverage.ts` | about 212 lines; every PRD agent will want to close its own rows here |
 | Economics | `packages/core/src/economics.ts` | moderate shared file; PRD 01, 07, 08 and 09 must coordinate reason taxonomy |
 | Command service | `packages/core/src/command-service.ts` | moderate shared file; authorization, expected revision, idempotency and event wrapper |
-| CLI | `packages/cli/src/index.ts` | about 1587 lines; all commands, adapters, acceptance, WordPress and aliases |
+| CLI | `packages/cli/src/index.ts` | resolved; 28-line entrypoint backed by `packages/cli/src/commands/**` and `packages/cli/src/runtime.ts` |
 | API | `packages/local-api/src/index.ts` | auth, read routes, diagnostics, acceptance and mutations |
 | MCP | `packages/mcp/src/index.ts` | resources, tools, prompts and acceptance in one file |
 | Panel | `apps/panel/src/main.tsx` | single panel entrypoint and view surface |
@@ -74,6 +74,23 @@ After 0C, command behavior is owned by:
 `packages/core/src/command-runtime.ts` remains the public runtime entrypoint for
 mutations, and `packages/core/src/workflows/fixtures.ts` remains the public
 workflow compatibility barrel.
+
+## Phase 0D Resulting CLI Ownership
+
+After 0D, CLI behavior is owned by:
+
+- CLI program entrypoint: `packages/cli/src/index.ts`
+- global options, output, exit-code and command-envelope execution:
+  `packages/cli/src/runtime.ts`
+- canonical/status/workflow/acceptance commands:
+  `packages/cli/src/commands/core.ts`
+- entity and prepared-action commands: `packages/cli/src/commands/entities.ts`
+- domain shortcut commands: `packages/cli/src/commands/domains/**`
+- repo, dashboard, backup, WordPress, assets and fake adapter commands:
+  `packages/cli/src/commands/operations.ts`
+
+Mutable canonical CLI commands continue to route through `executeCliCommand`,
+which wraps `executeStudioCommand`.
 
 ## Adapter Shortcut Inventory To Review
 

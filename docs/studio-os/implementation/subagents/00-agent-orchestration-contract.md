@@ -88,7 +88,6 @@ after Phase 0, except for registry wiring:
 
 - `packages/schemas/src/index.ts`
 - `packages/core/src/index.ts`
-- `packages/cli/src/index.ts`
 - `packages/mcp/src/index.ts`
 - `packages/local-api/src/index.ts`
 - `apps/panel/src/main.tsx`
@@ -99,6 +98,9 @@ owned module and wire it through the registry.
 Command behavior belongs in `packages/core/src/commands/handlers/**` plus
 `packages/core/src/commands/registry.ts`; workflow behavior belongs in
 `packages/core/src/workflows/executors/**` plus the executor map.
+
+CLI behavior belongs in `packages/cli/src/commands/**`, with shared command
+execution and output behavior in `packages/cli/src/runtime.ts`.
 
 ## Standard Agent Prompt
 
