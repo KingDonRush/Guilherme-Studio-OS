@@ -34,6 +34,7 @@ export function registerAgentHarnessMutationTools(server: McpServer, root: strin
         ])
         .optional(),
       risk: z.enum(["low", "normal", "high", "critical"]).optional(),
+      classification: z.enum(["public", "internal", "confidential", "secret"]).optional(),
       allowed: z.array(z.string()).default([]),
       confirmation_required: z.array(z.string()).default([]),
       prohibited: z.array(z.string()).default([]),
@@ -50,6 +51,7 @@ export function registerAgentHarnessMutationTools(server: McpServer, root: strin
       target_environment_ids,
       phase,
       risk,
+      classification,
       allowed,
       confirmation_required,
       prohibited,
@@ -70,6 +72,7 @@ export function registerAgentHarnessMutationTools(server: McpServer, root: strin
             target_environment_ids,
             ...(phase ? { phase } : {}),
             ...(risk ? { risk } : {}),
+            ...(classification ? { classification } : {}),
             allowed,
             confirmation_required,
             prohibited,

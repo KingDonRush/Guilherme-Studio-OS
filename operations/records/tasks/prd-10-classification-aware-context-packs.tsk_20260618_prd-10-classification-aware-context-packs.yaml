@@ -1,0 +1,31 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T17:33:49.000Z
+  id: tsk_20260618_prd-10-classification-aware-context-packs
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-10
+    - agent-harness
+  revision: 1
+  schema_version: 1
+  slug: prd-10-classification-aware-context-packs
+  updated_at: 2026-06-18T17:33:49.000Z
+relations: []
+spec:
+  acceptance:
+    - agent runs can declare a context classification budget
+    - context packs omit referenced entities above the run classification budget
+    - omitted entities appear as explicit redactions and gaps instead of silent context loss
+    - CLI and MCP agent start surfaces pass the classification budget through the command runtime
+    - no secret or confidential canonical body is embedded in context packs
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Closes PRD 10 classification-aware context minimization for Agent Harness context packs.
+  title: PRD 10 classification-aware context packs

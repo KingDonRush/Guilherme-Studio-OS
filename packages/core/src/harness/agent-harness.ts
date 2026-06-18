@@ -5,6 +5,8 @@ import {
   AgentRunRiskSchema,
   type AgentRunState,
   AgentRunStateSchema,
+  type Classification,
+  ClassificationSchema,
   type ContextPack,
   entityId,
   entityRevision,
@@ -44,6 +46,7 @@ export interface StartAgentRunInput {
   phase?: AgentRunPhase | undefined;
   risk?: AgentRunRisk | undefined;
   model?: string | undefined;
+  classification?: Classification | undefined;
   taskId?: string | undefined;
   owningEntityIds?: string[] | undefined;
   targetRepositoryIds?: string[] | undefined;
@@ -149,6 +152,7 @@ export class AgentHarnessService {
     const run = await this.entities.create({
       kind: "agentRun",
       title: input.title ?? input.objective,
+      classification: input.classification ?? "internal",
       status: "active",
       relations,
       data: {
@@ -195,7 +199,17 @@ export class AgentHarnessService {
       ...run.relations.map((relation) => relation.target_id),
     ]);
     const entities = await this.getEntities(referencedIds);
-    const sourceRevisions = entities.map((entity) => ({
+    const classificationBudget = ClassificationSchema.parse(run.metadata.classification);
+    const visibleEntities = entities.filter(
+      (entity) =>
+        entityId(entity) === entityId(run) ||
+        classificationLevel(entity.metadata.classification) <=
+          classificationLevel(classificationBudget),
+    );
+    const redactedEntities = entities.filter(
+      (entity) => !visibleEntities.some((visible) => entityId(visible) === entityId(entity)),
+    );
+    const sourceRevisions = visibleEntities.map((entity) => ({
       entity_id: entityId(entity),
       kind: entity.kind,
       title: entityTitle(entity),
@@ -209,7 +223,7 @@ export class AgentHarnessService {
       generated_at: nowIso(),
       objective: spec.objective,
       source_revisions: sourceRevisions,
-      included_entity_ids: entities.map((entity) => entityId(entity)),
+      included_entity_ids: visibleEntities.map((entity) => entityId(entity)),
       target_repository_ids: spec.target_repositories,
       target_environment_ids: spec.target_environments,
       sections: [
@@ -226,18 +240,29 @@ export class AgentHarnessService {
         {
           title: "Entity references",
           summary:
-            entities
+            visibleEntities
               .filter((entity) => entityId(entity) !== entityId(run))
               .map(
                 (entity) =>
                   `${entity.kind} ${entityId(entity)} "${entityTitle(entity)}" is ${entityStatus(entity)} at revision ${entityRevision(entity)}`,
               )
               .join("; ") || "No explicit owning entities were linked.",
-          entity_ids: entities.map((entity) => entityId(entity)),
+          entity_ids: visibleEntities.map((entity) => entityId(entity)),
         },
       ],
-      redactions: ["Canonical entity bodies are summarized; full specs are not embedded."],
-      gaps: missingIds.map((id) => `Referenced entity not found: ${id}`),
+      redactions: [
+        "Canonical entity bodies are summarized; full specs are not embedded.",
+        ...redactedEntities.map(
+          (entity) =>
+            `Omitted ${entity.metadata.classification} ${entity.kind} ${entityId(entity)} because run classification budget is ${classificationBudget}.`,
+        ),
+      ],
+      gaps: [
+        ...missingIds.map((id) => `Referenced entity not found: ${id}`),
+        ...redactedEntities.map(
+          (entity) => `Referenced entity omitted by classification budget: ${entityId(entity)}`,
+        ),
+      ],
       forbidden_reopenings: input.forbiddenReopenings ?? [],
       ...(input.nextValidAction ? { next_valid_action: input.nextValidAction } : {}),
     };
@@ -655,6 +680,10 @@ function closeResult(
     return "blocked";
   }
   return "complete";
+}
+
+function classificationLevel(value: Classification): number {
+  return ["public", "internal", "confidential", "secret"].indexOf(value);
 }
 
 function summarizeAuthority(authority: {

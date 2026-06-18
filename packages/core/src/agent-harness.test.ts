@@ -2,6 +2,7 @@ import { mkdtemp, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import {
+  type ContextPack,
   entityId,
   type ResultEnvelope,
   type StudioEntity,
@@ -170,6 +171,38 @@ describe("Agent harness loop", () => {
 
     expect(result.status).toBe("blocked");
     expect(result.error?.message).toMatch(/Secret-like value/i);
+  });
+
+  it("omits referenced entities above the run classification budget", async () => {
+    const context = await createTestContext();
+    const confidentialTask = await createEntity(context, {
+      kind: "task",
+      title: "Confidential context task",
+      classification: "confidential",
+    });
+    const internalRun = await commandEntity(context, "agent.start", {
+      objective: "Build a minimized internal context pack.",
+      classification: "internal",
+      owning_entity_ids: [entityId(confidentialTask)],
+      allowed: ["read_context"],
+    });
+
+    const oriented = await commandEntity(
+      context,
+      "agent.context",
+      { next_valid_action: "Continue only with visible context." },
+      entityId(internalRun),
+    );
+
+    const contextPack = oriented.spec.context_pack as ContextPack;
+    expect(contextPack.included_entity_ids).not.toContain(entityId(confidentialTask));
+    expect(contextPack.source_revisions).not.toEqual(
+      expect.arrayContaining([expect.objectContaining({ entity_id: entityId(confidentialTask) })]),
+    );
+    expect(contextPack.redactions.join("\n")).toContain("Omitted confidential task");
+    expect(contextPack.gaps).toContain(
+      `Referenced entity omitted by classification budget: ${entityId(confidentialTask)}`,
+    );
   });
 });
 

@@ -23,6 +23,12 @@ export const governanceCommandDefinitions: Record<string, StudioCommandDefinitio
         ]),
         risk: optionalEnum(payload, "risk", ["low", "normal", "high", "critical"]),
         model: optionalString(payload, "model"),
+        classification: optionalEnum(payload, "classification", [
+          "public",
+          "internal",
+          "confidential",
+          "secret",
+        ]),
         taskId: optionalString(payload, "task_id"),
         owningEntityIds: stringArray(payload, "owning_entity_ids"),
         targetRepositoryIds: stringArray(payload, "target_repository_ids"),

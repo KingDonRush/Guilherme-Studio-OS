@@ -139,6 +139,7 @@ function registerAgentHarnessCommands(program: Command): void {
       "discovery, planning, implementation, stabilization, release, migration, recovery",
     )
     .option("--risk <risk>", "low, normal, high or critical")
+    .option("--classification <classification>", "public, internal, confidential or secret")
     .option("--allowed <item...>")
     .option("--confirmation-required <item...>")
     .option("--prohibited <item...>")
@@ -155,6 +156,7 @@ function registerAgentHarnessCommands(program: Command): void {
         environment?: string[];
         phase?: string;
         risk?: string;
+        classification?: string;
         allowed?: string[];
         confirmationRequired?: string[];
         prohibited?: string[];
@@ -170,6 +172,7 @@ function registerAgentHarnessCommands(program: Command): void {
         target_environment_ids: local.environment ?? [],
         ...(local.phase ? { phase: local.phase } : {}),
         ...(local.risk ? { risk: local.risk } : {}),
+        ...(local.classification ? { classification: local.classification } : {}),
         allowed: local.allowed ?? [],
         confirmation_required: local.confirmationRequired ?? [],
         prohibited: local.prohibited ?? [],
