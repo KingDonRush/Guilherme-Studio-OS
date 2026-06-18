@@ -11,7 +11,7 @@ Current estimate: 99%.
 | MCP resources | Constitution, policies, schemas, lifecycles, context packs, repo/env, workflows. | active policy, lifecycle, schema, workflow, Agent Harness, repo health, prepared action and coverage resources covered by in-memory MCP smoke | Add argument-level assertions for more templated resources as new domain resources appear. | MCP | build + smoke | Missing data in resource gaps. |
 | MCP tools | Query, health, prepare, low-risk mutate, validate, evidence, external actions, confirmation status. | agent harness read and lifecycle mutation tools complete; semantic command-runtime mutation tools support dry-run/idempotency and are covered by the equivalence matrix | Add naming/description polish only where MCP clients need clearer tool discovery. | MCP | MCP lifecycle smoke | External execution blocked. |
 | MCP prompts | Opportunity, engagement, implementation diagnosis, case, content, application, handoff. | capability_complete for normative prompt set with smoke coverage | Add argument-level prompt assertions where needed. | MCP | prompt smoke | Prompts do not mutate by themselves. |
-| Panel home | Revenue, obligations, engagements, sales/applications, next actions, repo health, external actions. | partial; built-panel smoke now covers the operational shell | Add finance/obligation and intake-aware empty states. | panel/API | Playwright smoke | Empty data shown honestly. |
+| Panel home | Revenue, obligations, engagements, sales/applications, next actions, repo health, external actions. | built-panel smoke covers the operational shell, finance counts, obligation/prepared-action state, next actions and intake-required PRD gaps | Add only deeper repo-health drilldowns if PRD 04/12 needs them on the home route instead of diagnostics. | panel/API | Playwright smoke | Empty data shown honestly. |
 | Panel domain views | Clients, sales, applications, products, portfolio, tasks/runs, diagnostics, backup. | agent runs/context/handoff operational view complete; CRM, Career, Delivery, Products, Portfolio/Marketing and Finance have structured forms; Product, Delivery and Finance include relationship pickers for existing canonical entities | Add remaining domain-specific transitions and relationship pickers as each semantic command reaches PRD completeness. | panel/API | build + API test + Playwright smoke | No YAML editor primary flow. |
 | Panel mutation | Forms call API; protected actions show exact impact and confirmation. | stale projection handling complete; prepared-action refresh complete; structured forms dry-run exact payload before execute across key domains; relationship-based Product release, Delivery repo and Finance invoice flows are covered | Add remaining exact-impact flows for semantic transitions not yet represented in the panel. | panel/API | panel mutation tests | No external sends. |
 | Runtime security | Loopback, token, origin checks, MCP separate process consuming same core. | Host rejection, invalid Origin rejection, missing/invalid token rejection, allowed local Origin, panel session cookie bootstrap and MCP separate-process smoke are covered | Add process-level bind smoke if the local API is exercised outside Fastify injection. | API/MCP | security tests | No public bind default. |
@@ -211,3 +211,15 @@ current generic entity CRUD.
 - Remaining PRD 11 work: tighten panel home/finance empty states and optionally
   add process-level bind/live WordPress helper smoke when the runtime is
   available.
+
+2026-06-18 panel home intake state update:
+
+- Added finance counts for contracts, invoices and payments to the Economy home.
+- Added a home table for revenue, obligations and prepared external actions,
+  explicitly showing intake pending when no real records exist.
+- Added a coverage-backed table for PRDs in `intake_required`, including the
+  missing canonical kinds.
+- Extended the Playwright panel smoke to open the home route and assert the new
+  sections render without horizontal overflow.
+- Remaining PRD 11 work: optionally add process-level bind/live WordPress helper
+  smoke when the runtime is available.

@@ -1,0 +1,30 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T16:27:20.000Z
+  id: tsk_20260618_prd-11-panel-home-intake-states
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - panel
+  revision: 1
+  schema_version: 1
+  slug: prd-11-panel-home-intake-states
+  updated_at: 2026-06-18T16:27:20.000Z
+relations: []
+spec:
+  acceptance:
+    - panel home shows contract, invoice and payment counts
+    - panel home shows finance/obligation/prepared-action state without inventing data
+    - panel home shows PRDs that require real intake and their missing canonical kinds
+    - panel smoke opens the home route and verifies the new operational sections render without horizontal overflow
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Adds finance, obligation and intake-aware empty states to the PRD 11 panel home.
+  title: PRD 11 panel home intake states

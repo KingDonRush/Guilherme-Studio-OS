@@ -63,6 +63,11 @@ async function main() {
     const baseUrl = `http://${host}:${port}`;
     const checks = [];
 
+    await page.goto(`${baseUrl}/#/`, { waitUntil: "networkidle", timeout: 45_000 });
+    checks.push(await waitForText(page, "Receita, obrigações e envio externo"));
+    checks.push(await waitForText(page, "Lacunas de intake canônico"));
+    await assertNoHorizontalOverflow(page);
+
     await page.goto(`${baseUrl}/#/agents`, { waitUntil: "networkidle", timeout: 45_000 });
     checks.push(await waitForText(page, "Guilherme Studio OS"));
     checks.push(await waitForText(page, "Agent harness loop"));
