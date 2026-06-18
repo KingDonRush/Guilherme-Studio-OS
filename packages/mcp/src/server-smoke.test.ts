@@ -1,4 +1,4 @@
-import { mkdtemp, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
@@ -32,8 +32,48 @@ describe("Studio MCP server", () => {
 
       const resources = await client.listResources();
       expect(resources.resources.map((resource) => resource.uri)).toEqual(
-        expect.arrayContaining(["studio://agents/harness", "studio://dashboard/prd-coverage"]),
+        expect.arrayContaining([
+          "studio://agents/harness",
+          "studio://dashboard/prd-coverage",
+          "studio://policies/active",
+          "studio://lifecycles",
+          "studio://schemas/task",
+          "studio://workflows/agent-execution-handoff",
+        ]),
       );
+
+      const resourceTemplates = await client.listResourceTemplates();
+      expect(resourceTemplates.resourceTemplates.map((template) => template.uriTemplate)).toEqual(
+        expect.arrayContaining(["studio://schemas/{kind}", "studio://workflows/{workflow_id}"]),
+      );
+
+      const policies = await client.readResource({ uri: "studio://policies/active" });
+      expect(JSON.parse(textFromContent(policies.contents[0]))).toMatchObject({
+        api_version: "studio.guilherme.dev/mcp-policies-v1",
+        sources: expect.arrayContaining([
+          expect.objectContaining({ id: "constitution" }),
+          expect.objectContaining({ id: "authority-evidence" }),
+        ]),
+        invariants: expect.arrayContaining([
+          "MCP must not expose raw secret stores.",
+          expect.stringContaining("prepare -> confirm -> execute -> reconcile"),
+        ]),
+      });
+
+      const lifecycles = await client.readResource({ uri: "studio://lifecycles" });
+      expect(textFromContent(lifecycles.contents[0])).toContain("Transition Contract");
+
+      const taskSchema = await client.readResource({ uri: "studio://schemas/task" });
+      expect(JSON.parse(textFromContent(taskSchema.contents[0]))).toMatchObject({
+        properties: {
+          kind: { const: "task" },
+        },
+      });
+
+      const workflow = await client.readResource({
+        uri: "studio://workflows/agent-execution-handoff",
+      });
+      expect(textFromContent(workflow.contents[0])).toContain("handoff");
 
       const harness = await client.readResource({ uri: "studio://agents/harness" });
       const harnessContent = harness.contents[0];
@@ -139,6 +179,47 @@ describe("Studio MCP server", () => {
 
 async function createConfiguredRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "studio-mcp-smoke-"));
+  await mkdir(path.join(root, "docs/studio-os/ontology"), { recursive: true });
+  await mkdir(path.join(root, "docs/studio-os/schemas/generated"), { recursive: true });
+  await mkdir(path.join(root, "docs/studio-os/workflows"), { recursive: true });
+  await writeFile(
+    path.join(root, "docs/studio-os/ontology/02-lifecycles.md"),
+    "# Entity Lifecycles\n\n## Transition Contract\n\nInvalid transitions fail closed.\n",
+  );
+  await writeFile(
+    path.join(root, "docs/studio-os/workflows/01-cross-domain-journeys.md"),
+    "# Cross-domain Journeys\n",
+  );
+  await writeFile(
+    path.join(root, "docs/studio-os/workflows/02-visual-reality-loop.md"),
+    "# Visual Reality Loop\n",
+  );
+  await writeFile(
+    path.join(root, "docs/studio-os/workflows/03-agent-execution-handoff.md"),
+    "# Agent Execution and Handoff\n\nCreate a governed handoff.\n",
+  );
+  await writeFile(
+    path.join(root, "docs/studio-os/schemas/generated/catalog.json"),
+    JSON.stringify(
+      {
+        api_version: "studio.guilherme.dev/schema-catalog-v1",
+        schemas: {
+          entity: {
+            oneOf: [
+              {
+                type: "object",
+                properties: {
+                  kind: { type: "string", const: "task" },
+                },
+              },
+            ],
+          },
+        },
+      },
+      null,
+      2,
+    ),
+  );
   await writeFile(
     path.join(root, "studio.config.yaml"),
     [

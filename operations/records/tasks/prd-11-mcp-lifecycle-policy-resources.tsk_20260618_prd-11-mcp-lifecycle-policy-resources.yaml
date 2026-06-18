@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T04:35:43.000Z
+  id: tsk_20260618_prd-11-mcp-lifecycle-policy-resources
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - mcp
+  revision: 1
+  schema_version: 1
+  slug: prd-11-mcp-lifecycle-policy-resources
+  updated_at: 2026-06-18T04:35:43.000Z
+relations: []
+spec:
+  acceptance:
+    - MCP exposes active policy context as a bounded resource
+    - MCP exposes the normative lifecycle contract as a bounded resource
+    - MCP exposes listable schema resources by kind
+    - MCP exposes listable workflow resources by workflow id
+    - MCP smoke reads the new resources through the SDK in-memory transport
+    - no generic filesystem, shell or secret-store resource is introduced
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Completes PRD 11 MCP lifecycle and active-policy resource coverage.
+  title: PRD 11 MCP lifecycle and policy resources

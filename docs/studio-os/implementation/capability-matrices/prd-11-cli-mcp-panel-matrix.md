@@ -1,14 +1,14 @@
 # PRD 11 Capability Matrix: CLI, MCP, and Local Panel
 
 Target: 100% capability complete without requiring MCP to be always running.
-Current estimate: 92%.
+Current estimate: 94%.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|
 | Shared rule | All mutations call Studio Core and produce same events/gates/errors. | AgentRun dry-run equivalence covered across core, CLI, local API and MCP command wrapper; broad semantic matrix partial | Expand equivalence tests to all semantic commands. | CLI/API/MCP | integration tests | Fixtures are deterministic. |
 | CLI command groups | Required domain command groups exist with meaningful verbs. | partial | Replace generic creates with semantic verbs per PRD. | CLI | CLI help/tests | Empty domains show intake. |
 | CLI machine behavior | JSON, dry-run, explicit IDs, exit codes, no prompts, idempotency, expected revision. | semantic command runtime complete; operational dry-run and fake-adapter contracts covered; live WordPress/docker command behavior partial | Keep live helper commands behind local environment checks and add smoke coverage when the WordPress runtime is available. | CLI | CLI test matrix | No real data required. |
-| MCP resources | Constitution, policies, schemas, lifecycles, context packs, repo/env, workflows. | agent harness surface complete; in-memory MCP smoke covers resources; broader lifecycle/policy resources partial | Add lifecycle contract and active policy resources. | MCP | build + smoke | Missing data in resource gaps. |
+| MCP resources | Constitution, policies, schemas, lifecycles, context packs, repo/env, workflows. | active policy, lifecycle, schema, workflow, Agent Harness, repo health, prepared action and coverage resources covered by in-memory MCP smoke | Add argument-level assertions for more templated resources as new domain resources appear. | MCP | build + smoke | Missing data in resource gaps. |
 | MCP tools | Query, health, prepare, low-risk mutate, validate, evidence, external actions, confirmation status. | agent harness read and lifecycle mutation tools complete; broader command-class annotations partial | Add tool annotations and coverage per command class. | MCP | MCP lifecycle smoke | External execution blocked. |
 | MCP prompts | Opportunity, engagement, implementation diagnosis, case, content, application, handoff. | capability_complete for normative prompt set with smoke coverage | Add argument-level prompt assertions where needed. | MCP | prompt smoke | Prompts do not mutate by themselves. |
 | Panel home | Revenue, obligations, engagements, sales/applications, next actions, repo health, external actions. | partial; built-panel smoke now covers the operational shell | Add finance/obligation and intake-aware empty states. | panel/API | Playwright smoke | Empty data shown honestly. |
@@ -101,6 +101,19 @@ current generic entity CRUD.
 - The tested path does not call Docker, WordPress runtime services, network
   providers or portfolio implementation code.
 - Remaining PRD 11 work: broaden CLI/API/MCP equivalence beyond AgentRun,
-  expose lifecycle/policy MCP resources, add optional environment-gated live
-  WordPress helper smoke and build richer domain mutation forms without
-  bypassing command runtime.
+  add optional environment-gated live WordPress helper smoke and build richer
+  domain mutation forms without bypassing command runtime.
+
+2026-06-18 MCP lifecycle/policy resource update:
+
+- Added `studio://policies/active` as the active policy manifest for MCP agents,
+  including source documents and hard operational invariants.
+- Added `studio://lifecycles` for the normative lifecycle contract.
+- Added listable resource templates for `studio://schemas/{kind}` and
+  `studio://workflows/{workflow_id}` so clients can discover focused schema and
+  workflow context without mirroring the filesystem.
+- Extended the in-memory MCP smoke to list/read active policies, lifecycles,
+  a focused schema and a focused workflow resource.
+- Remaining PRD 11 work: broaden CLI/API/MCP equivalence beyond AgentRun, add
+  optional environment-gated live WordPress helper smoke and build richer domain
+  mutation forms without bypassing command runtime.

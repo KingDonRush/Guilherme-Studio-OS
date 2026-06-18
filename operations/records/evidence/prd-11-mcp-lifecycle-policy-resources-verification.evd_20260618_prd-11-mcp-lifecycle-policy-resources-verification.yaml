@@ -1,0 +1,39 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T04:35:43.000Z
+  id: evd_20260618_prd-11-mcp-lifecycle-policy-resources-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - mcp
+  revision: 1
+  schema_version: 1
+  slug: prd-11-mcp-lifecycle-policy-resources-verification
+  updated_at: 2026-06-18T04:35:43.000Z
+relations:
+  - target_id: tsk_20260618_prd-11-mcp-lifecycle-policy-resources
+    type: supports
+spec:
+  claims:
+    - MCP now exposes an active policy manifest and normative lifecycle resource.
+    - MCP now exposes listable `studio://schemas/{kind}` and `studio://workflows/{workflow_id}` resource templates.
+    - The MCP smoke lists and reads the new policy, lifecycle, schema and workflow resources over the SDK in-memory transport.
+    - The implementation does not add arbitrary filesystem, shell or secret-store access.
+  command: >-
+    npm run verify &&
+    npm run test -- packages/mcp/src/server-smoke.test.ts &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T04:35:43.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 11 MCP lifecycle and policy resources verification
+  validated_at: 2026-06-18T04:35:43.000Z
