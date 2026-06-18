@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T02:39:03.000Z
+  id: tsk_20260618_prd-11-interface-equivalence-mcp-smoke
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+  revision: 1
+  schema_version: 1
+  slug: prd-11-interface-equivalence-mcp-smoke
+  updated_at: 2026-06-18T02:39:03.000Z
+relations: []
+spec:
+  acceptance:
+    - agent.start dry-run produces the same logical envelope through core, CLI, local API and MCP command wrapper
+    - local API equivalence path uses /api/v1/commands/dry-run so mutations still pass through command runtime
+    - MCP smoke runs the actual Studio MCP server over in-memory transport
+    - MCP smoke lists tools, resources and prompts required by PRD 11
+    - MCP smoke reads the Agent Harness resource, calls studio_validate and retrieves handoff_creation prompt content
+    - testing package excludes cross-package test files from build while vitest still executes them
+    - focused tests, typecheck and affected package builds pass
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Adds PRD 11 interface equivalence coverage and an in-memory MCP smoke for the Agent Harness surfaces.
+  title: PRD 11 interface equivalence and MCP smoke

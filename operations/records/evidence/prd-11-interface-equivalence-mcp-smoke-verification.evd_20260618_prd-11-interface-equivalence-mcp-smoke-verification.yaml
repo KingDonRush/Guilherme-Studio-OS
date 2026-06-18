@@ -1,0 +1,43 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T02:39:03.000Z
+  id: evd_20260618_prd-11-interface-equivalence-mcp-smoke-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+  revision: 1
+  schema_version: 1
+  slug: prd-11-interface-equivalence-mcp-smoke-verification
+  updated_at: 2026-06-18T02:39:03.000Z
+relations:
+  - target_id: tsk_20260618_prd-11-interface-equivalence-mcp-smoke
+    type: supports
+spec:
+  claims:
+    - AgentRun dry-run mutation envelopes remain logically equivalent across core, CLI, local API and MCP command wrapper.
+    - The local API equivalence path uses the command runtime endpoint instead of a route-specific mutation bypass.
+    - The Studio MCP server can be connected over the MCP SDK in-memory transport.
+    - MCP tools, resources and prompts required for the PRD 11 Agent Harness surface are listed and callable/readable.
+    - The Agent Harness MCP resource and handoff_creation prompt are smoke-tested without external processes or sends.
+    - Typecheck and affected MCP/testing workspace builds pass after adding the tests.
+  command: >-
+    npm run test -- packages/testing/src/interface-equivalence.test.ts packages/mcp/src/server-smoke.test.ts &&
+    npm run typecheck &&
+    npm run build -w @guilherme-studio/mcp &&
+    npm run build -w @guilherme-studio/testing &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    npm run verify &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T02:39:03.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 11 interface equivalence and MCP smoke verification
+  validated_at: 2026-06-18T02:39:03.000Z
