@@ -1,0 +1,39 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T16:07:41.000Z
+  id: evd_20260618_prd-11-panel-relationship-pickers-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - panel
+  revision: 1
+  schema_version: 1
+  slug: prd-11-panel-relationship-pickers-verification
+  updated_at: 2026-06-18T16:07:41.000Z
+relations:
+  - target_id: tsk_20260618_prd-11-panel-relationship-pickers
+    type: supports
+spec:
+  claims:
+    - Panel command forms now support select fields populated from canonical entities.
+    - Product release preparation, finance invoice creation and delivery repo registration no longer require manual relationship id entry when the target entity exists.
+    - The relationship flows still dry-run and show exact payloads before execution through the command runtime.
+    - The panel smoke covers the new relationship-based entrypoints without inventing real data.
+  command: >-
+    npm run verify &&
+    node operations/tools/panel-smoke.mjs &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T16:07:41.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 11 panel relationship pickers verification
+  validated_at: 2026-06-18T16:07:41.000Z

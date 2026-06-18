@@ -1,7 +1,7 @@
 # PRD 11 Capability Matrix: CLI, MCP, and Local Panel
 
 Target: 100% capability complete without requiring MCP to be always running.
-Current estimate: 98%.
+Current estimate: 99%.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|
@@ -12,8 +12,8 @@ Current estimate: 98%.
 | MCP tools | Query, health, prepare, low-risk mutate, validate, evidence, external actions, confirmation status. | agent harness read and lifecycle mutation tools complete; selected shared mutation tools support dry-run/idempotency; broader command-class annotations partial | Add tool annotations and coverage per command class. | MCP | MCP lifecycle smoke | External execution blocked. |
 | MCP prompts | Opportunity, engagement, implementation diagnosis, case, content, application, handoff. | capability_complete for normative prompt set with smoke coverage | Add argument-level prompt assertions where needed. | MCP | prompt smoke | Prompts do not mutate by themselves. |
 | Panel home | Revenue, obligations, engagements, sales/applications, next actions, repo health, external actions. | partial; built-panel smoke now covers the operational shell | Add finance/obligation and intake-aware empty states. | panel/API | Playwright smoke | Empty data shown honestly. |
-| Panel domain views | Clients, sales, applications, products, portfolio, tasks/runs, diagnostics, backup. | agent runs/context/handoff operational view complete; CRM, Career, Delivery, Products, Portfolio/Marketing and Finance have structured operational forms | Add deeper domain-specific transitions and relationship pickers. | panel/API | build + API test + Playwright smoke | No YAML editor primary flow. |
-| Panel mutation | Forms call API; protected actions show exact impact and confirmation. | stale projection handling complete; prepared-action refresh complete; structured forms dry-run exact payload before execute across key domains | Add more exact-impact flows for relationship-based transitions. | panel/API | panel mutation tests | No external sends. |
+| Panel domain views | Clients, sales, applications, products, portfolio, tasks/runs, diagnostics, backup. | agent runs/context/handoff operational view complete; CRM, Career, Delivery, Products, Portfolio/Marketing and Finance have structured forms; Product, Delivery and Finance include relationship pickers for existing canonical entities | Add remaining domain-specific transitions and relationship pickers as each semantic command reaches PRD completeness. | panel/API | build + API test + Playwright smoke | No YAML editor primary flow. |
+| Panel mutation | Forms call API; protected actions show exact impact and confirmation. | stale projection handling complete; prepared-action refresh complete; structured forms dry-run exact payload before execute across key domains; relationship-based Product release, Delivery repo and Finance invoice flows are covered | Add remaining exact-impact flows for semantic transitions not yet represented in the panel. | panel/API | panel mutation tests | No external sends. |
 | Runtime security | Loopback, token, origin checks, MCP separate process consuming same core. | partial | Keep Host/Origin tests and MCP smoke current. | API/MCP | security tests | No public bind default. |
 | CLI fallback | CLI remains fully useful when panel/MCP unavailable. | semantic command fallback complete across the registry; dry-run operational helpers and blocked/fake external adapter prepares covered; live WordPress/docker helpers partial | Add optional environment-gated smoke tests for live WordPress/docker helpers. | CLI | fallback tests | CLI is canonical fallback. |
 
@@ -156,3 +156,19 @@ current generic entity CRUD.
 - Remaining PRD 11 work: add relationship pickers/exact-impact transition
   flows, expand equivalence to the remaining semantic commands and optionally
   add live WordPress helper smoke.
+
+2026-06-18 panel relationship picker update:
+
+- Added canonical select-field support to the structured panel command review
+  component.
+- Product release preparation now selects an existing product before calling
+  `release.prepare`.
+- Finance invoice creation now selects an existing contract before calling
+  `invoice.create-for-contract`.
+- Delivery repository registration now selects an existing project and explicit
+  remote policy before calling `project.register-repo`.
+- Extended the Playwright panel smoke to assert the relationship-based
+  entrypoints render without horizontal overflow.
+- Remaining PRD 11 work: expand equivalence to the remaining semantic commands,
+  add remaining exact-impact panel transitions as commands mature and
+  optionally add live WordPress helper smoke.

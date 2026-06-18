@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T16:07:41.000Z
+  id: tsk_20260618_prd-11-panel-relationship-pickers
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - panel
+  revision: 1
+  schema_version: 1
+  slug: prd-11-panel-relationship-pickers
+  updated_at: 2026-06-18T16:07:41.000Z
+relations: []
+spec:
+  acceptance:
+    - panel command forms support canonical select fields
+    - Product release preparation selects an existing product instead of requiring a typed product id
+    - Finance invoice creation selects an existing contract instead of requiring a typed contract id
+    - Delivery repository registration selects an existing project and explicit remote policy
+    - Playwright smoke covers the relationship-based entrypoints
+    - no fabricated real data, external send or portfolio implementation is introduced
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Adds relationship pickers and exact-impact transition flows to PRD 11 panel commands.
+  title: PRD 11 panel relationship pickers

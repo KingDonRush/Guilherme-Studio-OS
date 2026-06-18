@@ -4,9 +4,12 @@ import {
   fieldValue,
   numberFieldValue,
 } from "../components/domain-command-panel.js";
+import { optionsForKind } from "../components/entity-options.js";
 import { EntityTable, entityRows } from "../components/entity-table.js";
 
 export function Finance({ data }: { data: StudioData }) {
+  const contractOptions = optionsForKind(data.entities.data, "contract");
+
   return (
     <>
       <DomainCommandPanel
@@ -17,7 +20,15 @@ export function Finance({ data }: { data: StudioData }) {
             "Cria uma invoice somente quando já existir contrato real. Valores são informados em centavos para evitar ambiguidade.",
           command: "invoice.create-for-contract",
           fields: [
-            { name: "contract_id", label: "Contract ID", required: true },
+            {
+              name: "contract_id",
+              label: "Contrato",
+              required: true,
+              type: "select",
+              options: contractOptions,
+              emptyOptionLabel:
+                contractOptions.length > 0 ? "Selecione um contrato" : "Nenhum contrato disponível",
+            },
             {
               name: "amount_minor",
               label: "Valor em centavos",

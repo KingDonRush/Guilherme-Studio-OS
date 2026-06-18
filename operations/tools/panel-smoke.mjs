@@ -88,10 +88,12 @@ async function main() {
 
     await page.goto(`${baseUrl}/#/delivery`, { waitUntil: "networkidle", timeout: 45_000 });
     checks.push(await waitForText(page, "Registrar projeto WordPress"));
+    checks.push(await waitForText(page, "Registrar repo do projeto"));
     await assertNoHorizontalOverflow(page);
 
     await page.goto(`${baseUrl}/#/products`, { waitUntil: "networkidle", timeout: 45_000 });
     checks.push(await waitForText(page, "Registrar produto"));
+    checks.push(await waitForText(page, "Preparar release"));
     await assertNoHorizontalOverflow(page);
 
     await page.goto(`${baseUrl}/#/portfolio`, { waitUntil: "networkidle", timeout: 45_000 });
@@ -100,6 +102,7 @@ async function main() {
 
     await page.goto(`${baseUrl}/#/finance`, { waitUntil: "networkidle", timeout: 45_000 });
     checks.push(await waitForText(page, "Criar invoice para contrato"));
+    checks.push(await waitForText(page, "Contrato"));
     await assertNoHorizontalOverflow(page);
 
     await page.goto(`${baseUrl}/#/control`, { waitUntil: "networkidle", timeout: 45_000 });

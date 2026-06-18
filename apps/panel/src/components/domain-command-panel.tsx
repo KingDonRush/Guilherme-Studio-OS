@@ -8,8 +8,10 @@ import type { ResultEnvelope } from "../api/types.js";
 export interface CommandField {
   name: string;
   label: string;
-  type?: "text" | "url" | "textarea" | "number";
+  type?: "text" | "url" | "textarea" | "number" | "select";
   defaultValue?: string;
+  options?: Array<{ value: string; label: string }>;
+  emptyOptionLabel?: string;
   placeholder?: string;
   required?: boolean;
 }
@@ -103,6 +105,22 @@ export function DomainCommandPanel({ definition }: { definition: DomainCommandDe
                   rows={3}
                   value={values[field.name] ?? ""}
                 />
+              ) : field.type === "select" ? (
+                <select
+                  id={fieldId}
+                  onChange={(event) => updateValue(field.name, event.currentTarget.value)}
+                  required={field.required}
+                  value={values[field.name] ?? ""}
+                >
+                  <option disabled value="">
+                    {field.emptyOptionLabel ?? "Selecione uma opção"}
+                  </option>
+                  {(field.options ?? []).map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               ) : (
                 <input
                   id={fieldId}

@@ -1,8 +1,11 @@
 import type { StudioData } from "../api/use-studio-data.js";
 import { DomainCommandPanel, fieldValue } from "../components/domain-command-panel.js";
+import { optionsForKind } from "../components/entity-options.js";
 import { EntityTable, entityRows } from "../components/entity-table.js";
 
 export function Products({ data }: { data: StudioData }) {
+  const productOptions = optionsForKind(data.entities.data, "product");
+
   return (
     <>
       <DomainCommandPanel
@@ -35,6 +38,36 @@ export function Products({ data }: { data: StudioData }) {
               ...(summary ? { summary } : {}),
             };
           },
+        }}
+      />
+      <DomainCommandPanel
+        definition={{
+          id: "product-release-prepare",
+          title: "Preparar release",
+          description:
+            "Prepara um release para produto existente, mantendo produto, versão e evidência separados antes de publicar qualquer claim.",
+          command: "release.prepare",
+          fields: [
+            {
+              name: "product_id",
+              label: "Produto",
+              required: true,
+              type: "select",
+              options: productOptions,
+              emptyOptionLabel:
+                productOptions.length > 0 ? "Selecione um produto" : "Nenhum produto disponível",
+            },
+            {
+              name: "version",
+              label: "Versão",
+              placeholder: "1.0.0",
+              required: true,
+            },
+          ],
+          buildPayload: (values) => ({
+            product_id: fieldValue(values, "product_id"),
+            version: fieldValue(values, "version"),
+          }),
         }}
       />
       <EntityTable
