@@ -11,7 +11,7 @@ export function PreparedActionReview({ actions }: { actions: PreparedAction[] })
         payload_checksum: action.payload_checksum,
       }),
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ["prepared-actions"] });
+      void queryClient.invalidateQueries();
     },
   });
 

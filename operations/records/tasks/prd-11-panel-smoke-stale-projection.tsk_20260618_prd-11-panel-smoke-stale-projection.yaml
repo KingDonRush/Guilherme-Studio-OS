@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T03:56:24.000Z
+  id: tsk_20260618_prd-11-panel-smoke-stale-projection
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - panel
+  revision: 1
+  schema_version: 1
+  slug: prd-11-panel-smoke-stale-projection
+  updated_at: 2026-06-18T03:56:24.000Z
+relations: []
+spec:
+  acceptance:
+    - built panel smoke starts the local API with apps/panel/dist in a temporary Studio root
+    - Playwright opens the real built panel through local Chrome and checks the Agent Harness and Control routes
+    - panel topbar shows projection revision and flags stale envelope revisions
+    - prepared action confirmation invalidates all panel queries so stale records refresh after mutation
+    - smoke fails on page errors, console errors or horizontal overflow
+    - no external adapter send or portfolio implementation is introduced
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Adds PRD 11 panel smoke coverage and stale projection visibility for the built local dashboard.
+  title: PRD 11 panel smoke and stale projection handling

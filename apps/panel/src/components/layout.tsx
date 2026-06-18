@@ -11,6 +11,7 @@ import {
   UserRoundSearch,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { queryClient } from "../api/query-client.js";
 import type { StudioData } from "../api/use-studio-data.js";
 
 const navigationItems: Array<{ to: string; label: string; icon: LucideIcon }> = [
@@ -30,7 +31,7 @@ export function Sidebar() {
     <aside className="sidebar">
       <div>
         <p className="eyebrow">Guilherme Studio OS</p>
-        <h1>Operação local-first para renda WordPress internacional.</h1>
+        <h1>Operação local-first para renda WordPress internacional</h1>
       </div>
       <nav>
         {navigationItems.map((item) => {
@@ -48,11 +49,17 @@ export function Sidebar() {
 
 export function Topbar({ data }: { data: StudioData }) {
   const acceptance = data.acceptance.data?.result;
+  const projection = getProjectionState(data);
   return (
     <header className="topbar">
       <Metric title="Status" value={data.summary.data?.ok ? "Operável" : "Pendente"} />
       <Metric title="Entidades" value={String(data.summary.data?.entityCount ?? "-")} />
       <Metric title="Acceptance" value={acceptance?.ok ? "Verde" : "Bloqueado"} />
+      <ProjectionNotice
+        currentRevision={projection.currentRevision}
+        isFetching={projection.isFetching}
+        staleLabels={projection.staleLabels}
+      />
     </header>
   );
 }
@@ -64,4 +71,73 @@ function Metric({ title, value }: { title: string; value: string }) {
       <span>{value}</span>
     </div>
   );
+}
+
+function ProjectionNotice({
+  currentRevision,
+  isFetching,
+  staleLabels,
+}: {
+  currentRevision: number | undefined;
+  isFetching: boolean;
+  staleLabels: string[];
+}) {
+  const isStale = staleLabels.length > 0;
+  const label = isStale
+    ? `Projeção atrasada: ${staleLabels.join(", ")}. Rev ${currentRevision}.`
+    : `Projeção rev ${currentRevision ?? "-"}`;
+
+  return (
+    <div className={`projection-notice${isStale ? " stale" : ""}`}>
+      <span>{label}</span>
+      <button
+        disabled={isFetching}
+        onClick={() => {
+          void queryClient.invalidateQueries();
+        }}
+        type="button"
+      >
+        {isFetching ? "Atualizando" : "Atualizar"}
+      </button>
+    </div>
+  );
+}
+
+function getProjectionState(data: StudioData): {
+  currentRevision: number | undefined;
+  isFetching: boolean;
+  staleLabels: string[];
+} {
+  const sources = [
+    { label: "Resumo", revision: data.summary.data?.projectionRevision },
+    { label: "Coverage", revision: data.coverage.data?.projection_revision },
+    { label: "Acceptance", revision: data.acceptance.data?.projection_revision },
+    { label: "Workflows", revision: data.workflows.data?.projection_revision },
+    { label: "Diagnósticos", revision: data.diagnostics.data?.projection_revision },
+    { label: "Agentes", revision: data.agentHarness.data?.projection_revision },
+  ].filter((source): source is { label: string; revision: number } =>
+    Number.isFinite(source.revision),
+  );
+
+  const currentRevision =
+    sources.length > 0 ? Math.max(...sources.map((source) => source.revision)) : undefined;
+  const staleLabels =
+    currentRevision === undefined
+      ? []
+      : sources.filter((source) => source.revision < currentRevision).map((source) => source.label);
+
+  return {
+    currentRevision,
+    isFetching:
+      data.summary.isFetching ||
+      data.coverage.isFetching ||
+      data.acceptance.isFetching ||
+      data.workflows.isFetching ||
+      data.diagnostics.isFetching ||
+      data.agentHarness.isFetching ||
+      data.entities.isFetching ||
+      data.repositories.isFetching ||
+      data.preparedActions.isFetching,
+    staleLabels,
+  };
 }

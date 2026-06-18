@@ -1,0 +1,41 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T03:56:24.000Z
+  id: evd_20260618_prd-11-panel-smoke-stale-projection-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - panel
+  revision: 1
+  schema_version: 1
+  slug: prd-11-panel-smoke-stale-projection-verification
+  updated_at: 2026-06-18T03:56:24.000Z
+relations:
+  - target_id: tsk_20260618_prd-11-panel-smoke-stale-projection
+    type: supports
+spec:
+  claims:
+    - The panel exposes the current projection revision and warns when loaded envelope data is behind the newest loaded revision.
+    - Prepared action confirmation now refreshes the full dashboard query set instead of only the prepared-action list.
+    - The panel smoke builds the workspace, serves the real local API and built panel, opens Chrome through Playwright and checks the Agent Harness and Control routes.
+    - The smoke records a screenshot under runtime/panel-smoke/panel-smoke.png and fails on console errors, page errors or horizontal overflow.
+    - No real customer data, external send or portfolio implementation was introduced.
+  command: >-
+    npm run verify &&
+    npm run smoke:panel &&
+    npm audit --audit-level=moderate &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T03:56:24.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 11 panel smoke and stale projection verification
+  validated_at: 2026-06-18T03:56:24.000Z

@@ -20,6 +20,7 @@
     "lint:fix": "biome check --write .",
     "studio": "node packages/cli/dist/bin.js",
     "dev:panel": "npm run dev -w @guilherme-studio/panel",
+    "smoke:panel": "npm run build && node operations/tools/panel-smoke.mjs",
     "verify": "npm run typecheck && npm run test && npm run lint && npm run build"
   },
   "devDependencies": {
@@ -27,6 +28,7 @@
     "@types/node": "24.10.1",
     "@vitest/coverage-v8": "4.1.8",
     "fast-check": "4.8.0",
+    "playwright-core": "^1.61.0",
     "tsx": "4.22.4",
     "typescript": "6.0.3",
     "vitest": "4.1.8"

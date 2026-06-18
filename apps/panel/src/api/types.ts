@@ -1,6 +1,7 @@
 export interface ResultEnvelope<T> {
   status: "ok" | "warning" | "confirmation_required" | "blocked" | "conflict" | "error";
   result: T;
+  projection_revision?: number;
   error?: { code: string; message: string };
 }
 
@@ -26,6 +27,7 @@ export interface StudioSummary {
   entityCount: number;
   operatorId: string;
   root: string;
+  projectionRevision: number;
   byKind: Record<string, number>;
   nextActions: NextAction[];
 }

@@ -1,7 +1,7 @@
 # PRD 11 Capability Matrix: CLI, MCP, and Local Panel
 
 Target: 100% capability complete without requiring MCP to be always running.
-Current estimate: 82%.
+Current estimate: 86%.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|
@@ -11,9 +11,9 @@ Current estimate: 82%.
 | MCP resources | Constitution, policies, schemas, lifecycles, context packs, repo/env, workflows. | agent harness surface complete; in-memory MCP smoke covers resources; broader lifecycle/policy resources partial | Add lifecycle contract and active policy resources. | MCP | build + smoke | Missing data in resource gaps. |
 | MCP tools | Query, health, prepare, low-risk mutate, validate, evidence, external actions, confirmation status. | agent harness read and lifecycle mutation tools complete; broader command-class annotations partial | Add tool annotations and coverage per command class. | MCP | MCP lifecycle smoke | External execution blocked. |
 | MCP prompts | Opportunity, engagement, implementation diagnosis, case, content, application, handoff. | capability_complete for normative prompt set with smoke coverage | Add argument-level prompt assertions where needed. | MCP | prompt smoke | Prompts do not mutate by themselves. |
-| Panel home | Revenue, obligations, engagements, sales/applications, next actions, repo health, external actions. | partial | Add finance/obligation and intake-aware empty states. | panel/API | Playwright smoke | Empty data shown honestly. |
-| Panel domain views | Clients, sales, applications, products, portfolio, tasks/runs, diagnostics, backup. | agent runs/context/handoff operational view complete; other domains partial | Expand remaining views from tables to operational flows. | panel/API | build + API test; Playwright pending | No YAML editor primary flow. |
-| Panel mutation | Forms call API; protected actions show exact impact and confirmation. | partial | Add domain mutation forms and stale projection handling. | panel/API | panel mutation tests | No external sends. |
+| Panel home | Revenue, obligations, engagements, sales/applications, next actions, repo health, external actions. | partial; built-panel smoke now covers the operational shell | Add finance/obligation and intake-aware empty states. | panel/API | Playwright smoke | Empty data shown honestly. |
+| Panel domain views | Clients, sales, applications, products, portfolio, tasks/runs, diagnostics, backup. | agent runs/context/handoff operational view complete; Playwright smoke covers Agent Harness and Control; other domains partial | Expand remaining views from tables to operational flows. | panel/API | build + API test + Playwright smoke | No YAML editor primary flow. |
+| Panel mutation | Forms call API; protected actions show exact impact and confirmation. | stale projection handling complete; prepared-action refresh complete; domain mutation forms partial | Add domain mutation forms and exact impact flows. | panel/API | panel mutation tests | No external sends. |
 | Runtime security | Loopback, token, origin checks, MCP separate process consuming same core. | partial | Keep Host/Origin tests and MCP smoke current. | API/MCP | security tests | No public bind default. |
 | CLI fallback | CLI remains fully useful when panel/MCP unavailable. | agent harness fallback complete; full command matrix partial | Complete stable exit/idempotency tests for every mutable command. | CLI | fallback tests | CLI is canonical fallback. |
 
@@ -57,3 +57,18 @@ current generic entity CRUD.
 - Remaining PRD 11 work: broaden equivalence across more semantic commands,
   add final panel Playwright smoke, finish stale projection handling and enrich
   mutation forms without bypassing command runtime.
+
+2026-06-18 panel smoke/stale projection update:
+
+- Added built-panel smoke coverage through Playwright and the system Chrome:
+  the smoke starts the local API against `apps/panel/dist`, opens the Agent
+  Harness and Control routes, checks key text, rejects console/page errors and
+  catches horizontal overflow.
+- Added projection revision visibility to the panel topbar and stale-envelope
+  detection across summary, coverage, acceptance, workflow, diagnostics and
+  Agent Harness queries.
+- Prepared action confirmation now invalidates the full query set so the
+  dashboard does not leave adjacent panels stale after a mutation.
+- Remaining PRD 11 work: broaden equivalence across more semantic commands,
+  add lifecycle/policy MCP resources, complete stable CLI mutation behavior and
+  build richer domain mutation forms without bypassing command runtime.
