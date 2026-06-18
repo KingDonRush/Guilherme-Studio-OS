@@ -5,6 +5,11 @@ import { z } from "zod";
 import { createMcpContext, executeMcpCommand } from "../command.js";
 import { jsonContent } from "../responses.js";
 
+const sharedCommandOptions = {
+  dry_run: z.boolean().default(false),
+  idempotency_key: z.string().optional(),
+};
+
 export function registerStudioMcpMutationTools(server: McpServer, root: string): void {
   registerAgentHarnessMutationTools(server, root);
 
@@ -39,8 +44,9 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
       title: z.string(),
       summary: z.string().optional(),
       classification: z.enum(["public", "internal", "confidential"]).default("internal"),
+      ...sharedCommandOptions,
     },
-    async ({ kind, title, summary, classification }) =>
+    async ({ kind, title, summary, classification, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "entity.create",
@@ -50,6 +56,8 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             classification,
             ...(summary ? { summary } : {}),
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
@@ -132,8 +140,25 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
       url: z.string().optional(),
       command: z.string().optional(),
       checksum: z.string().optional(),
+      claims: z.array(z.string()).default([]),
+      source_mutability: z
+        .enum(["immutable", "mutable", "operator-observed"])
+        .default("operator-observed"),
+      ...sharedCommandOptions,
     },
-    async ({ title, evidence_type, subject_id, path, url, command, checksum }) =>
+    async ({
+      title,
+      evidence_type,
+      subject_id,
+      path,
+      url,
+      command,
+      checksum,
+      claims,
+      source_mutability,
+      dry_run,
+      idempotency_key,
+    }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "evidence.register",
@@ -145,7 +170,11 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             ...(url ? { url } : {}),
             ...(command ? { command } : {}),
             ...(checksum ? { checksum } : {}),
+            claims,
+            source_mutability,
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
@@ -339,9 +368,31 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
       title: z.string(),
       decision: z.string(),
       rationale: z.string().optional(),
+      alternatives: z.array(z.string()).default([]),
+      impact: z.string().optional(),
+      reversibility: z.string().optional(),
+      authority_source: z.string().optional(),
+      authority_owner_id: z.string().optional(),
+      confirmation_required: z.boolean().optional(),
+      contradiction_ids: z.array(z.string()).default([]),
       evidence_ids: z.array(z.string()).default([]),
+      ...sharedCommandOptions,
     },
-    async ({ title, decision, rationale, evidence_ids }) =>
+    async ({
+      title,
+      decision,
+      rationale,
+      alternatives,
+      impact,
+      reversibility,
+      authority_source,
+      authority_owner_id,
+      confirmation_required,
+      contradiction_ids,
+      evidence_ids,
+      dry_run,
+      idempotency_key,
+    }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "decision.record",
@@ -349,8 +400,17 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             title,
             decision,
             ...(rationale ? { rationale } : {}),
+            alternatives,
+            ...(impact ? { impact } : {}),
+            ...(reversibility ? { reversibility } : {}),
+            ...(authority_source ? { authority_source } : {}),
+            ...(authority_owner_id ? { authority_owner_id } : {}),
+            ...(confirmation_required !== undefined ? { confirmation_required } : {}),
+            contradiction_ids,
             evidence_ids,
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );

@@ -20,9 +20,78 @@ describe("Studio interface equivalence", () => {
     vi.restoreAllMocks();
   });
 
-  it("keeps AgentRun dry-run mutation envelopes equivalent across core, CLI, API and MCP", async () => {
+  it("keeps shared dry-run mutation envelopes equivalent across core, CLI, API and MCP", async () => {
     const root = await createConfiguredRoot();
-    const payload = {
+    const context = await createStudioContext(root);
+    const { app, token } = await createLocalApi({ root });
+    const { client, close } = await connectMcp(root);
+
+    try {
+      for (const [index, entry] of INTERFACE_EQUIVALENCE_CASES.entries()) {
+        const core = await executeStudioCommand(
+          context,
+          createStudioCommand(context, {
+            command: entry.command,
+            payload: entry.payload,
+            dryRun: true,
+            idempotencyKey: `equivalence-core-${index}`,
+          }),
+        );
+        const cli = await runCliJson([
+          "--root",
+          root,
+          "--json",
+          "--dry-run",
+          "--idempotency-key",
+          `equivalence-cli-${index}`,
+          ...entry.cliArgs,
+        ]);
+        const apiResponse = await app.inject({
+          method: "POST",
+          url: "/api/v1/commands/dry-run",
+          headers: {
+            host: "127.0.0.1:47845",
+            authorization: `Bearer ${token}`,
+            "content-type": "application/json",
+          },
+          payload: {
+            command: entry.command,
+            idempotency_key: `equivalence-api-${index}`,
+            payload: entry.payload,
+          },
+        });
+        const api = apiResponse.json() as ResultEnvelope;
+        const mcp = await callMcpJson(client, entry.mcpTool, {
+          ...entry.mcpArgs,
+          dry_run: true,
+          idempotency_key: `equivalence-mcp-${index}`,
+        });
+
+        expect(normalizeDryRun(cli as ResultEnvelope), entry.command).toEqual(
+          normalizeDryRun(core),
+        );
+        expect(normalizeDryRun(api), entry.command).toEqual(normalizeDryRun(core));
+        expect(normalizeDryRun(mcp), entry.command).toEqual(normalizeDryRun(core));
+      }
+    } finally {
+      await close();
+      await app.close();
+    }
+  });
+});
+
+interface InterfaceEquivalenceCase {
+  command: string;
+  payload: Record<string, unknown>;
+  cliArgs: string[];
+  mcpTool: string;
+  mcpArgs: Record<string, unknown>;
+}
+
+const INTERFACE_EQUIVALENCE_CASES: InterfaceEquivalenceCase[] = [
+  {
+    command: "agent.start",
+    payload: {
       objective: "Prove PRD 11 interface equivalence for AgentRun start.",
       owning_entity_ids: [],
       target_repository_ids: [],
@@ -31,65 +100,122 @@ describe("Studio interface equivalence", () => {
       confirmation_required: ["external_send"],
       prohibited: ["destructive_execute"],
       material: true,
-    };
-    const context = await createStudioContext(root);
-    const core = await executeStudioCommand(
-      context,
-      createStudioCommand(context, {
-        command: "agent.start",
-        payload,
-        dryRun: true,
-        idempotencyKey: "equivalence-core",
-      }),
-    );
-    const cli = await runCliJson([
-      "--root",
-      root,
-      "--json",
-      "--dry-run",
-      "--idempotency-key",
-      "equivalence-cli",
+    },
+    cliArgs: [
       "agent",
       "start",
       "--objective",
-      payload.objective,
+      "Prove PRD 11 interface equivalence for AgentRun start.",
       "--allowed",
-      ...payload.allowed,
+      "read_context",
+      "run_tests",
       "--confirmation-required",
-      ...payload.confirmation_required,
+      "external_send",
       "--prohibited",
-      ...payload.prohibited,
-    ]);
-    const { app, token } = await createLocalApi({ root });
-    const apiResponse = await app.inject({
-      method: "POST",
-      url: "/api/v1/commands/dry-run",
-      headers: {
-        host: "127.0.0.1:47845",
-        authorization: `Bearer ${token}`,
-        "content-type": "application/json",
-      },
-      payload: {
-        command: "agent.start",
-        idempotency_key: "equivalence-api",
-        payload,
-      },
-    });
-    const api = apiResponse.json() as ResultEnvelope;
-    await app.close();
-    const { client, close } = await connectMcp(root);
-    const mcp = await callMcpJson(client, "studio_start_agent_run", {
-      ...payload,
-      dry_run: true,
-      idempotency_key: "equivalence-mcp",
-    });
-    await close();
-
-    expect(normalizeDryRun(core)).toEqual(normalizeDryRun(cli as ResultEnvelope));
-    expect(normalizeDryRun(api)).toEqual(normalizeDryRun(core));
-    expect(normalizeDryRun(mcp)).toEqual(normalizeDryRun(core));
-  });
-});
+      "destructive_execute",
+    ],
+    mcpTool: "studio_start_agent_run",
+    mcpArgs: {
+      objective: "Prove PRD 11 interface equivalence for AgentRun start.",
+      owning_entity_ids: [],
+      target_repository_ids: [],
+      target_environment_ids: [],
+      allowed: ["read_context", "run_tests"],
+      confirmation_required: ["external_send"],
+      prohibited: ["destructive_execute"],
+      material: true,
+    },
+  },
+  {
+    command: "entity.create",
+    payload: {
+      kind: "task",
+      title: "Equivalent task",
+      classification: "internal",
+      summary: "Created through all PRD 11 surfaces.",
+    },
+    cliArgs: [
+      "entity",
+      "create",
+      "task",
+      "--title",
+      "Equivalent task",
+      "--summary",
+      "Created through all PRD 11 surfaces.",
+      "--classification",
+      "internal",
+    ],
+    mcpTool: "studio_create_entity",
+    mcpArgs: {
+      kind: "task",
+      title: "Equivalent task",
+      classification: "internal",
+      summary: "Created through all PRD 11 surfaces.",
+    },
+  },
+  {
+    command: "evidence.register",
+    payload: {
+      title: "Equivalent verification evidence",
+      evidence_type: "command",
+      command: "npm run verify",
+      claims: ["Verification passed"],
+      source_mutability: "operator-observed",
+    },
+    cliArgs: [
+      "evidence",
+      "register",
+      "--title",
+      "Equivalent verification evidence",
+      "--type",
+      "command",
+      "--command",
+      "npm run verify",
+      "--claim",
+      "Verification passed",
+      "--source-mutability",
+      "operator-observed",
+    ],
+    mcpTool: "studio_register_evidence",
+    mcpArgs: {
+      title: "Equivalent verification evidence",
+      evidence_type: "command",
+      command: "npm run verify",
+      claims: ["Verification passed"],
+      source_mutability: "operator-observed",
+    },
+  },
+  {
+    command: "decision.record",
+    payload: {
+      title: "Equivalent interface decision",
+      decision: "Shared mutations stay behind Studio Core.",
+      rationale: "PRD 11 requires matching interface outcomes.",
+      alternatives: [],
+      contradiction_ids: [],
+      evidence_ids: [],
+    },
+    cliArgs: [
+      "decision",
+      "record",
+      "--title",
+      "Equivalent interface decision",
+      "--decision",
+      "Shared mutations stay behind Studio Core.",
+      "--rationale",
+      "PRD 11 requires matching interface outcomes.",
+    ],
+    mcpTool: "studio_record_decision",
+    mcpArgs: {
+      title: "Equivalent interface decision",
+      decision: "Shared mutations stay behind Studio Core.",
+      rationale: "PRD 11 requires matching interface outcomes.",
+      alternatives: [],
+      contradiction_ids: [],
+      evidence_ids: [],
+    },
+  },
+];
 
 async function createConfiguredRoot(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "studio-interface-equivalence-"));
@@ -115,17 +241,21 @@ async function createConfiguredRoot(): Promise<string> {
 
 async function runCliJson(args: string[]): Promise<Record<string, unknown>> {
   const logs: string[] = [];
-  vi.spyOn(console, "log").mockImplementation((value: unknown) => {
+  const log = vi.spyOn(console, "log").mockImplementation((value: unknown) => {
     logs.push(typeof value === "string" ? value : JSON.stringify(value));
   });
-  const program = createProgram();
-  program.exitOverride();
-  await program.parseAsync(["node", "studio", ...args], { from: "node" });
-  const last = logs.at(-1);
-  if (!last) {
-    throw new Error("CLI produced no JSON output.");
+  try {
+    const program = createProgram();
+    program.exitOverride();
+    await program.parseAsync(["node", "studio", ...args], { from: "node" });
+    const last = logs.at(-1);
+    if (!last) {
+      throw new Error("CLI produced no JSON output.");
+    }
+    return JSON.parse(last) as Record<string, unknown>;
+  } finally {
+    log.mockRestore();
   }
-  return JSON.parse(last) as Record<string, unknown>;
 }
 
 function normalizeDryRun(envelope: ResultEnvelope): unknown {

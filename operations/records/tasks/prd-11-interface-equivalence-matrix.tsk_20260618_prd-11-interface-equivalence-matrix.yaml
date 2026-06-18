@@ -1,0 +1,31 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T04:41:21.000Z
+  id: tsk_20260618_prd-11-interface-equivalence-matrix
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - interface-equivalence
+  revision: 1
+  schema_version: 1
+  slug: prd-11-interface-equivalence-matrix
+  updated_at: 2026-06-18T04:41:21.000Z
+relations: []
+spec:
+  acceptance:
+    - cross-interface dry-run equivalence covers more than AgentRun
+    - equivalence includes Studio Core, CLI, local API and MCP
+    - MCP shared mutation tools used by the matrix accept dry_run and idempotency_key
+    - equivalent cases cover agent, entity, evidence and governance command classes
+    - no external send, real data fabrication or portfolio implementation is introduced
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Broadens PRD 11 interface equivalence beyond AgentRun-only coverage.
+  title: PRD 11 interface equivalence matrix

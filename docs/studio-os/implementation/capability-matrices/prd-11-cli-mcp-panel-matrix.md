@@ -1,15 +1,15 @@
 # PRD 11 Capability Matrix: CLI, MCP, and Local Panel
 
 Target: 100% capability complete without requiring MCP to be always running.
-Current estimate: 94%.
+Current estimate: 96%.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|
-| Shared rule | All mutations call Studio Core and produce same events/gates/errors. | AgentRun dry-run equivalence covered across core, CLI, local API and MCP command wrapper; broad semantic matrix partial | Expand equivalence tests to all semantic commands. | CLI/API/MCP | integration tests | Fixtures are deterministic. |
+| Shared rule | All mutations call Studio Core and produce same events/gates/errors. | cross-interface dry-run matrix covers AgentRun, entity create, evidence register and decision record across core, CLI, API and MCP; full semantic matrix still partial | Expand equivalence tests to remaining semantic commands. | CLI/API/MCP | integration tests | Fixtures are deterministic. |
 | CLI command groups | Required domain command groups exist with meaningful verbs. | partial | Replace generic creates with semantic verbs per PRD. | CLI | CLI help/tests | Empty domains show intake. |
 | CLI machine behavior | JSON, dry-run, explicit IDs, exit codes, no prompts, idempotency, expected revision. | semantic command runtime complete; operational dry-run and fake-adapter contracts covered; live WordPress/docker command behavior partial | Keep live helper commands behind local environment checks and add smoke coverage when the WordPress runtime is available. | CLI | CLI test matrix | No real data required. |
 | MCP resources | Constitution, policies, schemas, lifecycles, context packs, repo/env, workflows. | active policy, lifecycle, schema, workflow, Agent Harness, repo health, prepared action and coverage resources covered by in-memory MCP smoke | Add argument-level assertions for more templated resources as new domain resources appear. | MCP | build + smoke | Missing data in resource gaps. |
-| MCP tools | Query, health, prepare, low-risk mutate, validate, evidence, external actions, confirmation status. | agent harness read and lifecycle mutation tools complete; broader command-class annotations partial | Add tool annotations and coverage per command class. | MCP | MCP lifecycle smoke | External execution blocked. |
+| MCP tools | Query, health, prepare, low-risk mutate, validate, evidence, external actions, confirmation status. | agent harness read and lifecycle mutation tools complete; selected shared mutation tools support dry-run/idempotency; broader command-class annotations partial | Add tool annotations and coverage per command class. | MCP | MCP lifecycle smoke | External execution blocked. |
 | MCP prompts | Opportunity, engagement, implementation diagnosis, case, content, application, handoff. | capability_complete for normative prompt set with smoke coverage | Add argument-level prompt assertions where needed. | MCP | prompt smoke | Prompts do not mutate by themselves. |
 | Panel home | Revenue, obligations, engagements, sales/applications, next actions, repo health, external actions. | partial; built-panel smoke now covers the operational shell | Add finance/obligation and intake-aware empty states. | panel/API | Playwright smoke | Empty data shown honestly. |
 | Panel domain views | Clients, sales, applications, products, portfolio, tasks/runs, diagnostics, backup. | agent runs/context/handoff operational view complete; Playwright smoke covers Agent Harness and Control; other domains partial | Expand remaining views from tables to operational flows. | panel/API | build + API test + Playwright smoke | No YAML editor primary flow. |
@@ -117,3 +117,16 @@ current generic entity CRUD.
 - Remaining PRD 11 work: broaden CLI/API/MCP equivalence beyond AgentRun, add
   optional environment-gated live WordPress helper smoke and build richer domain
   mutation forms without bypassing command runtime.
+
+2026-06-18 interface equivalence matrix update:
+
+- Expanded the cross-interface dry-run equivalence test from only `agent.start`
+  to a four-command matrix: `agent.start`, `entity.create`,
+  `evidence.register` and `decision.record`.
+- Added `dry_run` and `idempotency_key` support to the MCP shared mutation
+  tools used by that matrix.
+- The matrix proves the same logical dry-run envelope through Studio Core, CLI,
+  local API and MCP for agent, entity, evidence and governance command classes.
+- Remaining PRD 11 work: expand the matrix to the remaining semantic commands,
+  add optional environment-gated live WordPress helper smoke and build richer
+  domain mutation forms without bypassing command runtime.

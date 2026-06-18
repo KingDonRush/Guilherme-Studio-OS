@@ -1,0 +1,39 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T04:41:21.000Z
+  id: evd_20260618_prd-11-interface-equivalence-matrix-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - interface-equivalence
+  revision: 1
+  schema_version: 1
+  slug: prd-11-interface-equivalence-matrix-verification
+  updated_at: 2026-06-18T04:41:21.000Z
+relations:
+  - target_id: tsk_20260618_prd-11-interface-equivalence-matrix
+    type: supports
+spec:
+  claims:
+    - The interface equivalence test now covers AgentRun, entity creation, evidence registration and decision recording.
+    - The same dry-run command payload produces equivalent ResultEnvelope output through Studio Core, CLI, local API and MCP.
+    - MCP shared mutation tools used by the matrix now accept dry_run and idempotency_key inputs.
+    - The verification path does not send external actions, fabricate real data or implement portfolio work.
+  command: >-
+    npm run verify &&
+    npm run test -- packages/testing/src/interface-equivalence.test.ts packages/mcp/src/server-smoke.test.ts &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T04:41:21.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 11 interface equivalence matrix verification
+  validated_at: 2026-06-18T04:41:21.000Z
