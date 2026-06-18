@@ -109,6 +109,93 @@ describe("local API", () => {
       },
     });
 
+    const agentStart = await app.inject({
+      method: "POST",
+      url: "/api/v1/commands/execute",
+      headers,
+      payload: {
+        command: "agent.start",
+        idempotency_key: "api-agent-start",
+        payload: {
+          objective: "Expose AgentRun surfaces through the local API.",
+          allowed: ["read_context"],
+          prohibited: ["external_send"],
+        },
+      },
+    });
+    const runId = agentStart.json().result.entity_id as string;
+    await app.inject({
+      method: "POST",
+      url: "/api/v1/commands/execute",
+      headers,
+      payload: {
+        command: "agent.context",
+        target_id: runId,
+        idempotency_key: "api-agent-context",
+        payload: { next_valid_action: "Inspect the API harness report." },
+      },
+    });
+    await app.inject({
+      method: "POST",
+      url: "/api/v1/commands/execute",
+      headers,
+      payload: {
+        command: "agent.handoff",
+        target_id: runId,
+        idempotency_key: "api-agent-handoff",
+        payload: {
+          summary: "Local API exposes AgentRun handoff state.",
+          next_valid_action: "Use /api/v1/agent-runs before resuming.",
+        },
+      },
+    });
+    const agentHarness = await app.inject({
+      method: "GET",
+      url: "/api/v1/agent-runs",
+      headers,
+    });
+    expect(agentHarness.json()).toMatchObject({
+      status: "ok",
+      result: {
+        summary: {
+          total_runs: 1,
+          context_pack_count: 1,
+          handoff_count: 1,
+        },
+        runs: [
+          {
+            id: runId,
+            state: "handoff_ready",
+            context_pack: {
+              next_valid_action: "Inspect the API harness report.",
+            },
+            handoff: {
+              next_valid_action: "Use /api/v1/agent-runs before resuming.",
+            },
+          },
+        ],
+      },
+    });
+    const contextPack = await app.inject({
+      method: "GET",
+      url: `/api/v1/agent-runs/${runId}/context-pack`,
+      headers,
+    });
+    expect(contextPack.json().result).toMatchObject({
+      run_id: runId,
+      next_valid_action: "Inspect the API harness report.",
+    });
+    const handoff = await app.inject({
+      method: "GET",
+      url: `/api/v1/agent-runs/${runId}/handoff`,
+      headers,
+    });
+    expect(handoff.json().result).toMatchObject({
+      run_id: runId,
+      status: "ready",
+      next_valid_action: "Use /api/v1/agent-runs before resuming.",
+    });
+
     const acceptance = await app.inject({
       method: "GET",
       url: "/api/v1/acceptance",

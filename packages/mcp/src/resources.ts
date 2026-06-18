@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { inspectStudioRepositories } from "@guilherme-studio/adapters";
 import {
+  buildAgentHarnessReport,
   EconomicNextActionResolver,
   evaluatePrdCoverage,
   PreparedActionService,
@@ -119,6 +120,20 @@ export function registerStudioMcpResources(server: McpServer, root: string): voi
     };
   });
 
+  server.resource("agent-harness", "studio://agents/harness", async () => {
+    const context = await createMcpContext(root);
+    const { files } = await validateCanonicalFiles(context.paths.root);
+    return {
+      contents: [
+        {
+          uri: "studio://agents/harness",
+          mimeType: "application/json",
+          text: JSON.stringify(buildAgentHarnessReport(files.map((file) => file.entity)), null, 2),
+        },
+      ],
+    };
+  });
+
   server.resource(
     "entity-context",
     new ResourceTemplate("studio://entities/{id}/context", { list: undefined }),
@@ -146,6 +161,48 @@ export function registerStudioMcpResources(server: McpServer, root: string): voi
               null,
               2,
             ),
+          },
+        ],
+      };
+    },
+  );
+
+  server.resource(
+    "agent-context-pack",
+    new ResourceTemplate("studio://agents/{id}/context-pack", { list: undefined }),
+    async (uri, variables) => {
+      const id = String(resourceVariable(variables, "id"));
+      const context = await createMcpContext(root);
+      const { files } = await validateCanonicalFiles(context.paths.root);
+      const report = buildAgentHarnessReport(files.map((file) => file.entity));
+      const contextPack = report.context_packs.find((pack) => pack.run_id === id);
+      return {
+        contents: [
+          {
+            uri: uri.href,
+            mimeType: "application/json",
+            text: JSON.stringify(contextPack ?? { error: "context_pack_not_found", id }, null, 2),
+          },
+        ],
+      };
+    },
+  );
+
+  server.resource(
+    "agent-handoff",
+    new ResourceTemplate("studio://agents/{id}/handoff", { list: undefined }),
+    async (uri, variables) => {
+      const id = String(resourceVariable(variables, "id"));
+      const context = await createMcpContext(root);
+      const { files } = await validateCanonicalFiles(context.paths.root);
+      const report = buildAgentHarnessReport(files.map((file) => file.entity));
+      const handoff = report.handoffs.find((item) => item.run_id === id);
+      return {
+        contents: [
+          {
+            uri: uri.href,
+            mimeType: "application/json",
+            text: JSON.stringify(handoff ?? { error: "handoff_not_found", id }, null, 2),
           },
         ],
       };

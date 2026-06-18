@@ -1,5 +1,6 @@
 import { inspectStudioRepositories } from "@guilherme-studio/adapters";
 import {
+  buildAgentHarnessReport,
   createWorkflowFixtureEntities,
   EconomicNextActionResolver,
   evaluatePrdCoverage,
@@ -57,6 +58,36 @@ export function registerStudioMcpReadTools(server: McpServer, root: string): voi
   server.tool("studio_get_acceptance", {}, async () => {
     const context = await createMcpContext(root);
     return jsonContent(await buildMcpAcceptanceReport(root, context));
+  });
+
+  server.tool("studio_get_agent_harness", {}, async () => {
+    const context = await createMcpContext(root);
+    const { files } = await validateCanonicalFiles(context.paths.root);
+    return jsonContent(buildAgentHarnessReport(files.map((file) => file.entity)));
+  });
+
+  server.tool("studio_get_context_pack", { run_id: z.string() }, async ({ run_id }) => {
+    const context = await createMcpContext(root);
+    const { files } = await validateCanonicalFiles(context.paths.root);
+    const report = buildAgentHarnessReport(files.map((file) => file.entity));
+    return jsonContent(
+      report.context_packs.find((pack) => pack.run_id === run_id) ?? {
+        error: "context_pack_not_found",
+        run_id,
+      },
+    );
+  });
+
+  server.tool("studio_get_run_handoff", { run_id: z.string() }, async ({ run_id }) => {
+    const context = await createMcpContext(root);
+    const { files } = await validateCanonicalFiles(context.paths.root);
+    const report = buildAgentHarnessReport(files.map((file) => file.entity));
+    return jsonContent(
+      report.handoffs.find((handoff) => handoff.run_id === run_id) ?? {
+        error: "handoff_not_found",
+        run_id,
+      },
+    );
   });
 
   server.tool(

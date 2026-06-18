@@ -1,0 +1,45 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T00:58:20.000Z
+  id: evd_20260618_prd-11-agent-harness-surfaces-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+  revision: 1
+  schema_version: 1
+  slug: prd-11-agent-harness-surfaces-verification
+  updated_at: 2026-06-18T00:58:20.000Z
+relations:
+  - target_id: tsk_20260618_prd-11-agent-harness-surfaces
+    type: supports
+spec:
+  claims:
+    - Agent Harness surfaces are shared from core instead of being reinterpreted independently by API, MCP or panel.
+    - Local API AgentRun endpoints expose context pack and handoff details as read-only envelopes.
+    - MCP exposes agent harness resources and read tools for governed agent continuation.
+    - MCP prompts cover the PRD 11 normative workflow prompt set without mutating state by themselves.
+    - Panel Agents view consumes the local API AgentRun report and presents runs, context packs, handoffs and gaps.
+    - Focused API test covers AgentRun creation through the command runtime followed by read-only surface inspection.
+    - Affected core, local API, MCP and panel workspaces build.
+  command: >-
+    npm run test -- packages/local-api/src/index.test.ts &&
+    npm run build -w @guilherme-studio/core &&
+    npm run build -w @guilherme-studio/local-api &&
+    npm run build -w @guilherme-studio/mcp &&
+    npm run build -w @guilherme-studio/panel &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    npm run verify &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T00:58:20.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 11 agent harness surfaces verification
+  validated_at: 2026-06-18T00:58:20.000Z

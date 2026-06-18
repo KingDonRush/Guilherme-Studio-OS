@@ -1,5 +1,6 @@
 import { inspectStudioRepositories } from "@guilherme-studio/adapters";
 import {
+  buildAgentHarnessReport,
   EconomicNextActionResolver,
   evaluatePrdCoverage,
   executeWorkflowFixtures,
@@ -133,6 +134,63 @@ export function registerReadRoutes(app: FastifyInstance, context: LocalApiContex
   });
 
   app.get("/api/v1/prepared-actions", async () => new PreparedActionService(context).list());
+
+  app.get("/api/v1/agent-runs", async () => {
+    const { files } = await validateCanonicalFiles(context.paths.root);
+    return createResultEnvelope({
+      result: buildAgentHarnessReport(files.map((file) => file.entity)),
+      projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+    });
+  });
+
+  app.get<{ Params: { id: string } }>(
+    "/api/v1/agent-runs/:id/context-pack",
+    async (request, reply) => {
+      const { files } = await validateCanonicalFiles(context.paths.root);
+      const report = buildAgentHarnessReport(files.map((file) => file.entity));
+      const contextPack = report.context_packs.find((pack) => pack.run_id === request.params.id);
+      if (!contextPack) {
+        return reply.code(404).send(
+          createResultEnvelope({
+            status: "error",
+            error: {
+              code: "context_pack_not_found",
+              message: `Context pack not found for agent run: ${request.params.id}`,
+              details: {},
+            },
+            projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+          }),
+        );
+      }
+      return createResultEnvelope({
+        result: contextPack,
+        projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+      });
+    },
+  );
+
+  app.get<{ Params: { id: string } }>("/api/v1/agent-runs/:id/handoff", async (request, reply) => {
+    const { files } = await validateCanonicalFiles(context.paths.root);
+    const report = buildAgentHarnessReport(files.map((file) => file.entity));
+    const handoff = report.handoffs.find((item) => item.run_id === request.params.id);
+    if (!handoff) {
+      return reply.code(404).send(
+        createResultEnvelope({
+          status: "error",
+          error: {
+            code: "handoff_not_found",
+            message: `Handoff not found for agent run: ${request.params.id}`,
+            details: {},
+          },
+          projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+        }),
+      );
+    }
+    return createResultEnvelope({
+      result: handoff,
+      projectionRevision: context.projection.inspect().projectionRevision ?? 0,
+    });
+  });
 
   app.get("/api/v1/repositories", async () => inspectStudioRepositories(context));
 }

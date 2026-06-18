@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T00:58:20.000Z
+  id: tsk_20260618_prd-11-agent-harness-surfaces
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+  revision: 1
+  schema_version: 1
+  slug: prd-11-agent-harness-surfaces
+  updated_at: 2026-06-18T00:58:20.000Z
+relations: []
+spec:
+  acceptance:
+    - core exposes a shared Agent Harness read model for runs, context packs, handoffs and gaps
+    - local API exposes read-only AgentRun report, context pack and handoff endpoints
+    - MCP exposes AgentRun harness resource, context pack resource, handoff resource and equivalent read tools
+    - MCP exposes the normative PRD 11 prompt set for qualification, setup, diagnosis, case, content, application and handoff workflows
+    - panel Agents view consumes the same local API report and shows runs, context packs, handoffs and gaps without a YAML editor flow
+    - mutable local API behavior remains routed through the generic command runtime
+    - focused API tests and affected workspace builds pass
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Adds the PRD 11 agent harness surfaces across core read model, local API, MCP and panel.
+  title: PRD 11 agent harness surfaces

@@ -100,3 +100,83 @@ export interface DiagnosticsReport {
   pending_transactions: string[];
   locks: unknown[];
 }
+
+export interface AgentContextPackSummary {
+  run_id: string;
+  run_title: string;
+  context_pack_id: string;
+  generated_at: string;
+  checksum: string;
+  source_revision_count: number;
+  included_entity_count: number;
+  target_repository_ids: string[];
+  target_environment_ids: string[];
+  redactions: string[];
+  gaps: string[];
+  next_valid_action?: string;
+}
+
+export interface AgentHandoffSummary {
+  run_id: string;
+  run_title: string;
+  created_at: string;
+  status: "ready" | "blocked";
+  summary: string;
+  context_pack_id?: string;
+  repository_ids: string[];
+  omitted_sensitive_sections: string[];
+  gaps: string[];
+  confirmation_required: string[];
+  evidence_ids: string[];
+  forbidden_reopenings: string[];
+  next_valid_action?: string;
+}
+
+export interface AgentHarnessReport {
+  ok: boolean;
+  generated_at: string;
+  summary: {
+    total_runs: number;
+    open_runs: number;
+    blocked_runs: number;
+    handoff_ready_runs: number;
+    closed_runs: number;
+    context_pack_count: number;
+    handoff_count: number;
+    gap_count: number;
+  };
+  runs: Array<{
+    id: string;
+    title: string;
+    status: string;
+    revision: number;
+    state: string;
+    result: string;
+    phase: string;
+    risk: string;
+    objective: string;
+    started_at: string;
+    finished_at?: string;
+    next_valid_action?: string;
+    counts: {
+      observations: number;
+      actions: number;
+      evidence: number;
+      open_questions: number;
+      risks: number;
+    };
+    latest_observation?: string;
+    latest_action?: string;
+    context_pack?: AgentContextPackSummary;
+    handoff?: AgentHandoffSummary;
+    blockers: string[];
+  }>;
+  context_packs: AgentContextPackSummary[];
+  handoffs: AgentHandoffSummary[];
+  gaps: Array<{
+    run_id: string;
+    run_title: string;
+    source: "context_pack" | "handoff" | "open_question" | "risk" | "verification";
+    message: string;
+  }>;
+}

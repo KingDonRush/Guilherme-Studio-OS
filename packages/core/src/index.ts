@@ -5,6 +5,13 @@ export {
   hasPortfolioReleaseDecision,
   type StudioAcceptanceReport,
 } from "./acceptance.js";
+export {
+  type AgentContextPackSummary,
+  type AgentHandoffSummary,
+  type AgentHarnessReport,
+  type AgentRunSurface,
+  buildAgentHarnessReport,
+} from "./agent-surfaces.js";
 export { AuthorityService, createStudioCommand, operatorActor } from "./authority.js";
 export { executeStudioCommand } from "./command-runtime.js";
 export {

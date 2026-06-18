@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getJson } from "./client.js";
 import type {
   AcceptanceReport,
+  AgentHarnessReport,
   DiagnosticsReport,
   EntitySummary,
   PrdCoverageReport,
@@ -53,6 +54,11 @@ export function useStudioData() {
     queryFn: () => getJson<ResultEnvelope<DiagnosticsReport>>("/api/v1/diagnostics"),
     retry: false,
   });
+  const agentHarness = useQuery({
+    queryKey: ["agent-harness"],
+    queryFn: () => getJson<ResultEnvelope<AgentHarnessReport>>("/api/v1/agent-runs"),
+    retry: false,
+  });
   return {
     summary,
     entities,
@@ -62,6 +68,7 @@ export function useStudioData() {
     acceptance,
     workflows,
     diagnostics,
+    agentHarness,
   };
 }
 
