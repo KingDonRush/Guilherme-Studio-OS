@@ -68,8 +68,9 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
       action_type: z.string(),
       payload: z.record(z.string(), z.unknown()),
       ttl_seconds: z.number().int().positive().max(86400).default(900),
+      ...sharedCommandOptions,
     },
-    async ({ action_type, payload, ttl_seconds }) =>
+    async ({ action_type, payload, ttl_seconds, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "action.prepare",
@@ -78,6 +79,8 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             payload,
             ttl_seconds,
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
@@ -94,12 +97,14 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
 
   server.tool(
     "studio_confirm_prepared_action",
-    { action_id: z.string(), payload_checksum: z.string().length(64) },
-    async ({ action_id, payload_checksum }) =>
+    { action_id: z.string(), payload_checksum: z.string().length(64), ...sharedCommandOptions },
+    async ({ action_id, payload_checksum, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "action.confirm",
           payload: { action_id, payload_checksum },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
@@ -111,13 +116,16 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
       rationale: z.string().min(1),
       score: z.number().int().min(0).max(100),
       qualified: z.boolean().default(true),
+      ...sharedCommandOptions,
     },
-    async ({ prospect_id, rationale, score, qualified }) =>
+    async ({ prospect_id, rationale, score, qualified, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "prospect.qualify",
           targetId: prospect_id,
           payload: { rationale, score, qualified },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
@@ -181,8 +189,8 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
 
   server.tool(
     "studio_prepare_proposal",
-    { opportunity_id: z.string(), title: z.string().optional() },
-    async ({ opportunity_id, title }) =>
+    { opportunity_id: z.string(), title: z.string().optional(), ...sharedCommandOptions },
+    async ({ opportunity_id, title, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "proposal.prepare",
@@ -190,14 +198,16 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             opportunity_id,
             ...(title ? { title } : {}),
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
 
   server.tool(
     "studio_create_engagement_from_opportunity",
-    { opportunity_id: z.string(), title: z.string().optional() },
-    async ({ opportunity_id, title }) =>
+    { opportunity_id: z.string(), title: z.string().optional(), ...sharedCommandOptions },
+    async ({ opportunity_id, title, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "engagement.create-from-opportunity",
@@ -205,6 +215,8 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             opportunity_id,
             ...(title ? { title } : {}),
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
@@ -216,8 +228,9 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
       title: z.string().optional(),
       email: z.string().optional(),
       website: z.string().optional(),
+      ...sharedCommandOptions,
     },
-    async ({ kind, title, email, website }) =>
+    async ({ kind, title, email, website, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "crm.review-duplicates",
@@ -227,6 +240,8 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             ...(email ? { email } : {}),
             ...(website ? { website } : {}),
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
@@ -237,8 +252,9 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
       opportunity_id: z.string(),
       client_title: z.string().optional(),
       engagement_title: z.string().optional(),
+      ...sharedCommandOptions,
     },
-    async ({ opportunity_id, client_title, engagement_title }) =>
+    async ({ opportunity_id, client_title, engagement_title, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "opportunity.convert",
@@ -247,19 +263,27 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             ...(client_title ? { client_title } : {}),
             ...(engagement_title ? { engagement_title } : {}),
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
 
   server.tool(
     "studio_complete_deliverable",
-    { deliverable_id: z.string(), evidence_ids: z.array(z.string()).min(1) },
-    async ({ deliverable_id, evidence_ids }) =>
+    {
+      deliverable_id: z.string(),
+      evidence_ids: z.array(z.string()).min(1),
+      ...sharedCommandOptions,
+    },
+    async ({ deliverable_id, evidence_ids, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "deliverable.complete",
           targetId: deliverable_id,
           payload: { deliverable_id, evidence_ids },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
@@ -271,8 +295,9 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
       title: z.string().optional(),
       value_minor: z.number().int().min(0).optional(),
       currency: z.string().length(3).optional(),
+      ...sharedCommandOptions,
     },
-    async ({ engagement_id, title, value_minor, currency }) =>
+    async ({ engagement_id, title, value_minor, currency, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "contract.create-from-engagement",
@@ -282,6 +307,8 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             ...(value_minor !== undefined ? { value_minor } : {}),
             ...(currency ? { currency } : {}),
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
@@ -295,8 +322,18 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
       title: z.string().optional(),
       due_at: z.string().optional(),
       reference: z.string().optional(),
+      ...sharedCommandOptions,
     },
-    async ({ contract_id, amount_minor, currency, title, due_at, reference }) =>
+    async ({
+      contract_id,
+      amount_minor,
+      currency,
+      title,
+      due_at,
+      reference,
+      dry_run,
+      idempotency_key,
+    }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "invoice.create-for-contract",
@@ -308,6 +345,8 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             ...(due_at ? { due_at } : {}),
             ...(reference ? { reference } : {}),
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
@@ -320,8 +359,9 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
       currency: z.string().length(3),
       title: z.string().optional(),
       expected_at: z.string().optional(),
+      ...sharedCommandOptions,
     },
-    async ({ invoice_id, amount_minor, currency, title, expected_at }) =>
+    async ({ invoice_id, amount_minor, currency, title, expected_at, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "payment.record-for-invoice",
@@ -332,6 +372,8 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             ...(title ? { title } : {}),
             ...(expected_at ? { expected_at } : {}),
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
@@ -345,8 +387,18 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
       publish_at: z.string().optional(),
       public_claims: z.array(z.string()).default([]),
       evidence_ids: z.array(z.string()).default([]),
+      ...sharedCommandOptions,
     },
-    async ({ title, campaign_id, channel, publish_at, public_claims, evidence_ids }) =>
+    async ({
+      title,
+      campaign_id,
+      channel,
+      publish_at,
+      public_claims,
+      evidence_ids,
+      dry_run,
+      idempotency_key,
+    }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "content.prepare",
@@ -358,6 +410,8 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             public_claims,
             evidence_ids,
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
@@ -422,8 +476,9 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
       title: z.string(),
       summary: z.string().optional(),
       case_url: z.string().optional(),
+      ...sharedCommandOptions,
     },
-    async ({ evidence_id, title, summary, case_url }) =>
+    async ({ evidence_id, title, summary, case_url, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "case.create-from-evidence",
@@ -433,6 +488,8 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             ...(summary ? { summary } : {}),
             ...(case_url ? { case_url } : {}),
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
@@ -445,24 +502,29 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
       objective: z.string(),
       summary: z.string(),
       repository_ids: z.array(z.string()).default([]),
+      ...sharedCommandOptions,
     },
-    async ({ task_id, title, objective, summary, repository_ids }) =>
+    async ({ task_id, title, objective, summary, repository_ids, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "handoff.create",
           payload: { task_id, title, objective, summary, repository_ids },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
 
   server.tool(
     "studio_reconcile_prepared_action",
-    { action_id: z.string(), result: z.record(z.string(), z.unknown()) },
-    async ({ action_id, result }) =>
+    { action_id: z.string(), result: z.record(z.string(), z.unknown()), ...sharedCommandOptions },
+    async ({ action_id, result, dry_run, idempotency_key }) =>
       jsonContent(
         await executeMcpCommand(root, {
           command: "action.reconcile",
           payload: { action_id, result },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
       ),
   );
