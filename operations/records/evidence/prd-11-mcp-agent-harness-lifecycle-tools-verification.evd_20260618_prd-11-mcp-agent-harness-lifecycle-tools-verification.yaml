@@ -1,0 +1,43 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T03:03:11.000Z
+  id: evd_20260618_prd-11-mcp-agent-harness-lifecycle-tools-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+  revision: 1
+  schema_version: 1
+  slug: prd-11-mcp-agent-harness-lifecycle-tools-verification
+  updated_at: 2026-06-18T03:03:11.000Z
+relations:
+  - target_id: tsk_20260618_prd-11-mcp-agent-harness-lifecycle-tools
+    type: supports
+spec:
+  claims:
+    - MCP now exposes dedicated AgentRun lifecycle mutation tools.
+    - AgentRun MCP lifecycle tools route through executeMcpCommand and the normalized Studio command runtime.
+    - The MCP server smoke executes a start, context, authorize, observe, verify, handoff and close journey over the MCP SDK in-memory transport.
+    - The interface equivalence test compares core, CLI, local API and the real studio_start_agent_run MCP tool.
+    - No external send or provider execution is introduced.
+    - Canonical validation, projection rebuild, focused tests, typecheck and full verify pass.
+  command: >-
+    npm run test -- packages/testing/src/interface-equivalence.test.ts packages/mcp/src/server-smoke.test.ts &&
+    npm run typecheck &&
+    npm run build -w @guilherme-studio/mcp &&
+    npm run build -w @guilherme-studio/testing &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    npm run verify &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T03:03:11.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 11 MCP Agent Harness lifecycle tools verification
+  validated_at: 2026-06-18T03:03:11.000Z

@@ -2,6 +2,8 @@ import { mkdtemp, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import type { ResultEnvelope } from "@guilherme-studio/schemas";
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createProgram } from "../../cli/src/index.js";
 import {
@@ -10,7 +12,7 @@ import {
   executeStudioCommand,
 } from "../../core/src/index.js";
 import { createLocalApi } from "../../local-api/src/index.js";
-import { executeMcpCommand } from "../../mcp/src/command.js";
+import { createStudioMcpServer } from "../../mcp/src/server.js";
 
 describe("Studio interface equivalence", () => {
   afterEach(() => {
@@ -75,12 +77,13 @@ describe("Studio interface equivalence", () => {
     });
     const api = apiResponse.json() as ResultEnvelope;
     await app.close();
-    const mcp = (await executeMcpCommand(root, {
-      command: "agent.start",
-      payload,
-      dryRun: true,
-      idempotencyKey: "equivalence-mcp",
-    })) as ResultEnvelope;
+    const { client, close } = await connectMcp(root);
+    const mcp = await callMcpJson(client, "studio_start_agent_run", {
+      ...payload,
+      dry_run: true,
+      idempotency_key: "equivalence-mcp",
+    });
+    await close();
 
     expect(normalizeDryRun(core)).toEqual(normalizeDryRun(cli as ResultEnvelope));
     expect(normalizeDryRun(api)).toEqual(normalizeDryRun(core));
@@ -132,4 +135,35 @@ function normalizeDryRun(envelope: ResultEnvelope): unknown {
     warnings: envelope.warnings,
     required_actions: envelope.required_actions,
   };
+}
+
+async function connectMcp(root: string): Promise<{ client: Client; close: () => Promise<void> }> {
+  const server = await createStudioMcpServer(root);
+  const client = new Client({ name: "studio-equivalence-test", version: "1.0.0" });
+  const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
+  await Promise.all([server.connect(serverTransport), client.connect(clientTransport)]);
+  return {
+    client,
+    close: async () => {
+      await client.close();
+      await server.close();
+    },
+  };
+}
+
+async function callMcpJson(
+  client: Client,
+  name: string,
+  args: Record<string, unknown>,
+): Promise<ResultEnvelope> {
+  const result = await client.callTool({ name, arguments: args });
+  const content = Array.isArray(result.content) ? result.content[0] : undefined;
+  if (!content || typeof content !== "object" || !("text" in content)) {
+    throw new Error(`MCP tool ${name} did not return text content`);
+  }
+  const text = Reflect.get(content, "text");
+  if (typeof text !== "string") {
+    throw new Error(`MCP tool ${name} text content is invalid`);
+  }
+  return JSON.parse(text) as ResultEnvelope;
 }

@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T03:03:11.000Z
+  id: tsk_20260618_prd-11-mcp-agent-harness-lifecycle-tools
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+  revision: 1
+  schema_version: 1
+  slug: prd-11-mcp-agent-harness-lifecycle-tools
+  updated_at: 2026-06-18T03:03:11.000Z
+relations: []
+spec:
+  acceptance:
+    - MCP exposes dedicated AgentRun lifecycle tools for start, context, authorize, observe, record-action, record-evidence, verify, handoff and close
+    - every AgentRun MCP mutation delegates to executeMcpCommand and the Studio command runtime
+    - AgentRun MCP tools support dry_run and idempotency_key, and targeted tools support expected_revision
+    - MCP in-memory smoke executes a real AgentRun lifecycle through tools and closes the run
+    - cross-interface dry-run equivalence uses the real studio_start_agent_run MCP tool
+    - external sends remain blocked and no external provider is introduced
+    - focused MCP/equivalence tests, typecheck and affected builds pass
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Adds PRD 11 MCP mutation tools for operating the Agent Harness lifecycle through the governed command runtime.
+  title: PRD 11 MCP Agent Harness lifecycle tools

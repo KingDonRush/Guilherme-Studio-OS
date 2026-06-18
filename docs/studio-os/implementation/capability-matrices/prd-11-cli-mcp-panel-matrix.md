@@ -1,7 +1,7 @@
 # PRD 11 Capability Matrix: CLI, MCP, and Local Panel
 
 Target: 100% capability complete without requiring MCP to be always running.
-Current estimate: 72%.
+Current estimate: 82%.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|
@@ -9,7 +9,7 @@ Current estimate: 72%.
 | CLI command groups | Required domain command groups exist with meaningful verbs. | partial | Replace generic creates with semantic verbs per PRD. | CLI | CLI help/tests | Empty domains show intake. |
 | CLI machine behavior | JSON, dry-run, explicit IDs, exit codes, no prompts, idempotency, expected revision. | partial | Add stable exit tests for every mutable command. | CLI | CLI test matrix | No real data required. |
 | MCP resources | Constitution, policies, schemas, lifecycles, context packs, repo/env, workflows. | agent harness surface complete; in-memory MCP smoke covers resources; broader lifecycle/policy resources partial | Add lifecycle contract and active policy resources. | MCP | build + smoke | Missing data in resource gaps. |
-| MCP tools | Query, health, prepare, low-risk mutate, validate, evidence, external actions, confirmation status. | agent harness read tools complete; in-memory MCP smoke covers validation tool; broader command-class annotations partial | Add tool annotations and coverage per command class. | MCP | MCP tool tests | External execution blocked. |
+| MCP tools | Query, health, prepare, low-risk mutate, validate, evidence, external actions, confirmation status. | agent harness read and lifecycle mutation tools complete; broader command-class annotations partial | Add tool annotations and coverage per command class. | MCP | MCP lifecycle smoke | External execution blocked. |
 | MCP prompts | Opportunity, engagement, implementation diagnosis, case, content, application, handoff. | capability_complete for normative prompt set with smoke coverage | Add argument-level prompt assertions where needed. | MCP | prompt smoke | Prompts do not mutate by themselves. |
 | Panel home | Revenue, obligations, engagements, sales/applications, next actions, repo health, external actions. | partial | Add finance/obligation and intake-aware empty states. | panel/API | Playwright smoke | Empty data shown honestly. |
 | Panel domain views | Clients, sales, applications, products, portfolio, tasks/runs, diagnostics, backup. | agent runs/context/handoff operational view complete; other domains partial | Expand remaining views from tables to operational flows. | panel/API | build + API test; Playwright pending | No YAML editor primary flow. |
@@ -43,3 +43,17 @@ current generic entity CRUD.
 - Remaining PRD 11 work: expand equivalence beyond AgentRun, add MCP tools for
   AgentRun mutation lifecycle, add panel Playwright smoke and complete stale
   projection handling.
+
+2026-06-18 MCP Agent Harness update:
+
+- Added MCP tools for the AgentRun lifecycle: start, context pack, authorize,
+  observe, record action, record evidence, verify, create handoff and close.
+- Every new MCP AgentRun tool delegates to `executeMcpCommand`; no MCP-local
+  business logic was introduced.
+- MCP lifecycle smoke now executes an AgentRun journey over the SDK in-memory
+  transport and closes it through the same command runtime.
+- Cross-interface dry-run equivalence now uses the real MCP
+  `studio_start_agent_run` tool instead of only the internal command wrapper.
+- Remaining PRD 11 work: broaden equivalence across more semantic commands,
+  add final panel Playwright smoke, finish stale projection handling and enrich
+  mutation forms without bypassing command runtime.

@@ -17,7 +17,17 @@ describe("Studio MCP server", () => {
     try {
       const tools = await client.listTools();
       expect(tools.tools.map((tool) => tool.name)).toEqual(
-        expect.arrayContaining(["studio_validate", "studio_get_agent_harness"]),
+        expect.arrayContaining([
+          "studio_validate",
+          "studio_get_agent_harness",
+          "studio_start_agent_run",
+          "studio_build_context_pack",
+          "studio_authorize_agent_run",
+          "studio_record_agent_observation",
+          "studio_complete_agent_verification",
+          "studio_create_agent_handoff",
+          "studio_close_agent_run",
+        ]),
       );
 
       const resources = await client.listResources();
@@ -60,6 +70,66 @@ describe("Studio MCP server", () => {
         type: "text",
         text: expect.stringContaining("AgentRun: run_20260618_smoke"),
       });
+
+      const started = await callToolJson(client, "studio_start_agent_run", {
+        objective: "Run MCP Agent Harness lifecycle smoke.",
+        allowed: ["read_context"],
+        prohibited: ["external_send"],
+        material: false,
+        idempotency_key: "mcp-agent-start",
+      });
+      const runId = String(
+        (started.result as { entity_id?: unknown } | undefined)?.entity_id ?? "",
+      );
+      expect(runId).toMatch(/^run_/);
+
+      await callToolJson(client, "studio_build_context_pack", {
+        run_id: runId,
+        next_valid_action: "Authorize the smoke run.",
+        idempotency_key: "mcp-agent-context",
+      });
+      await callToolJson(client, "studio_authorize_agent_run", {
+        run_id: runId,
+        allowed: ["read_context"],
+        prohibited: ["external_send"],
+        idempotency_key: "mcp-agent-authorize",
+      });
+      await callToolJson(client, "studio_record_agent_observation", {
+        run_id: runId,
+        source: "runtime",
+        summary: "MCP in-memory transport is connected.",
+        idempotency_key: "mcp-agent-observe",
+      });
+      await callToolJson(client, "studio_complete_agent_verification", {
+        run_id: runId,
+        status: "not_run",
+        not_run_reason: "Smoke checks transport and command routing only.",
+        idempotency_key: "mcp-agent-verify",
+      });
+      await callToolJson(client, "studio_create_agent_handoff", {
+        run_id: runId,
+        summary: "MCP lifecycle smoke reached handoff.",
+        next_valid_action: "Continue with full PRD 11 lifecycle equivalence.",
+        gaps: ["Full cross-interface lifecycle event comparison remains pending."],
+        idempotency_key: "mcp-agent-handoff",
+      });
+      const closed = await callToolJson(client, "studio_close_agent_run", {
+        run_id: runId,
+        outcome: "Closed MCP smoke as blocked by explicit remaining lifecycle comparison.",
+        idempotency_key: "mcp-agent-close",
+      });
+      expect(closed).toMatchObject({
+        status: "ok",
+        result: {
+          action: "agent.close",
+          entity: {
+            spec: {
+              state: "closed",
+              result: "blocked",
+            },
+          },
+        },
+      });
     } finally {
       await client.close();
       await server.close();
@@ -87,6 +157,20 @@ async function createConfiguredRoot(): Promise<string> {
     ].join("\n"),
   );
   return root;
+}
+
+async function callToolJson(
+  client: Client,
+  name: string,
+  args: Record<string, unknown>,
+): Promise<ToolEnvelope> {
+  const result = await client.callTool({ name, arguments: args });
+  const content = Array.isArray(result.content) ? result.content[0] : undefined;
+  return JSON.parse(textFromContent(content)) as ToolEnvelope;
+}
+
+interface ToolEnvelope extends Record<string, unknown> {
+  result?: unknown;
 }
 
 function textFromContent(content: unknown): string {
