@@ -104,6 +104,36 @@ export const AgentVerificationSchema = z
   })
   .strict();
 
+export const KnowledgeRouteDestinationSchema = z.enum([
+  "constitution",
+  "prd",
+  "decision",
+  "entity",
+  "workflow",
+  "evidence",
+  "lesson",
+  "temporary_note",
+]);
+export type KnowledgeRouteDestination = z.infer<typeof KnowledgeRouteDestinationSchema>;
+
+export const LearningPromotionDestinationSchema = z.enum([
+  "workflow",
+  "schema",
+  "test",
+  "decision",
+  "constitution",
+  "repository_instruction",
+]);
+export type LearningPromotionDestination = z.infer<typeof LearningPromotionDestinationSchema>;
+
+export const DecisionAuthoritySchema = z
+  .object({
+    source: z.enum(["guilherme", "agent", "policy", "evidence"]).default("guilherme"),
+    owner_id: z.string().optional(),
+    confirmation_required: z.boolean().default(false),
+  })
+  .strict();
+
 export const EvidenceSpecSchema = GenericSpecSchema.extend({
   evidence_type: z.enum(["file", "url", "command", "screenshot", "backup", "decision", "manual"]),
   path: z.string().optional(),
@@ -154,9 +184,22 @@ export const AgentRunSpecSchema = GenericSpecSchema.extend({
   model: z.string().optional(),
 });
 export const DecisionSpecSchema = GenericSpecSchema.extend({
+  decision_type: z.enum(["decision", "knowledge_route", "learning_proposal"]).default("decision"),
   decision: z.string().optional(),
   rationale: z.string().optional(),
   decided_at: z.string().datetime().optional(),
+  alternatives: z.array(z.string()).default([]),
+  impact: z.string().optional(),
+  reversibility: z.enum(["reversible", "hard_to_reverse", "irreversible"]).optional(),
+  authority: DecisionAuthoritySchema.optional(),
+  amends_decision_id: z.string().optional(),
+  contradiction_ids: z.array(z.string()).default([]),
+  route_destination: KnowledgeRouteDestinationSchema.optional(),
+  route_target_id: z.string().optional(),
+  routed_content: z.string().optional(),
+  learning_failure_class: z.string().optional(),
+  learning_proposal: z.string().optional(),
+  learning_destination: LearningPromotionDestinationSchema.optional(),
   evidence_ids: z.array(z.string()).default([]),
 });
 export const HandoffSpecSchema = z

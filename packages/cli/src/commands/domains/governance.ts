@@ -9,6 +9,7 @@ export function registerGovernanceDomainCommands(
   domainCommands: DomainCommandMap,
 ): void {
   registerAgentHarnessCommands(program);
+  registerKnowledgeCommands(program);
 
   domainCommands
     .get("decision")
@@ -16,6 +17,13 @@ export function registerGovernanceDomainCommands(
     .requiredOption("--title <title>")
     .requiredOption("--decision <text>")
     .option("--rationale <text>")
+    .option("--alternative <text...>")
+    .option("--impact <text>")
+    .option("--reversibility <value>", "reversible, hard_to_reverse or irreversible")
+    .option("--authority-source <source>", "guilherme, agent, policy or evidence")
+    .option("--authority-owner <id>")
+    .option("--confirmation-required")
+    .option("--contradicts <id...>")
     .option("--evidence <id...>")
     .action(async function action(this: Command) {
       const options = globalOptions(this);
@@ -23,14 +31,69 @@ export function registerGovernanceDomainCommands(
         title: string;
         decision: string;
         rationale?: string;
+        alternative?: string[];
+        impact?: string;
+        reversibility?: string;
+        authoritySource?: string;
+        authorityOwner?: string;
+        confirmationRequired?: boolean;
+        contradicts?: string[];
         evidence?: string[];
       };
       await executeCliCommand(options, "decision.record", {
         title: local.title,
         decision: local.decision,
         ...(local.rationale ? { rationale: local.rationale } : {}),
+        alternatives: local.alternative ?? [],
+        ...(local.impact ? { impact: local.impact } : {}),
+        ...(local.reversibility ? { reversibility: local.reversibility } : {}),
+        ...(local.authoritySource ? { authority_source: local.authoritySource } : {}),
+        ...(local.authorityOwner ? { authority_owner_id: local.authorityOwner } : {}),
+        ...(local.confirmationRequired !== undefined
+          ? { confirmation_required: local.confirmationRequired }
+          : {}),
+        contradiction_ids: local.contradicts ?? [],
         evidence_ids: local.evidence ?? [],
       });
+    });
+
+  domainCommands
+    .get("decision")
+    ?.command("amend")
+    .argument("<decision-id>")
+    .requiredOption("--decision <text>")
+    .option("--title <title>")
+    .option("--rationale <text>")
+    .option("--alternative <text...>")
+    .option("--impact <text>")
+    .option("--reversibility <value>", "reversible, hard_to_reverse or irreversible")
+    .option("--evidence <id...>")
+    .action(async function action(this: Command, decisionId: string) {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        decision: string;
+        title?: string;
+        rationale?: string;
+        alternative?: string[];
+        impact?: string;
+        reversibility?: string;
+        evidence?: string[];
+      };
+      await executeCliCommand(
+        options,
+        "decision.amend",
+        {
+          decision_id: decisionId,
+          decision: local.decision,
+          ...(local.title ? { title: local.title } : {}),
+          ...(local.rationale ? { rationale: local.rationale } : {}),
+          alternatives: local.alternative ?? [],
+          ...(local.impact ? { impact: local.impact } : {}),
+          ...(local.reversibility ? { reversibility: local.reversibility } : {}),
+          evidence_ids: local.evidence ?? [],
+        },
+        decisionId,
+      );
     });
 
   domainCommands
@@ -373,5 +436,74 @@ function registerAgentHarnessCommands(program: Command): void {
         options.json,
         options.quiet,
       );
+    });
+
+  agent
+    .command("propose-learning")
+    .requiredOption("--title <title>")
+    .requiredOption("--failure-class <text>")
+    .requiredOption("--proposal <text>")
+    .requiredOption(
+      "--destination <destination>",
+      "workflow, schema, test, decision, constitution or repository_instruction",
+    )
+    .option("--rationale <text>")
+    .option("--run <id>")
+    .option("--evidence <id...>")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        title: string;
+        failureClass: string;
+        proposal: string;
+        destination: string;
+        rationale?: string;
+        run?: string;
+        evidence?: string[];
+      };
+      await executeCliCommand(options, "learning.propose", {
+        title: local.title,
+        failure_class: local.failureClass,
+        proposal: local.proposal,
+        destination: local.destination,
+        ...(local.rationale ? { rationale: local.rationale } : {}),
+        ...(local.run ? { run_id: local.run } : {}),
+        evidence_ids: local.evidence ?? [],
+      });
+    });
+}
+
+function registerKnowledgeCommands(program: Command): void {
+  const knowledge = program.command("knowledge").description("Route Studio OS knowledge records");
+
+  knowledge
+    .command("route")
+    .requiredOption("--title <title>")
+    .requiredOption("--content <text>")
+    .requiredOption(
+      "--destination <destination>",
+      "constitution, prd, decision, entity, workflow, evidence, lesson or temporary_note",
+    )
+    .option("--target <id>")
+    .option("--rationale <text>")
+    .option("--evidence <id...>")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        title: string;
+        content: string;
+        destination: string;
+        target?: string;
+        rationale?: string;
+        evidence?: string[];
+      };
+      await executeCliCommand(options, "knowledge.route", {
+        title: local.title,
+        content: local.content,
+        destination: local.destination,
+        ...(local.target ? { target_id: local.target } : {}),
+        ...(local.rationale ? { rationale: local.rationale } : {}),
+        evidence_ids: local.evidence ?? [],
+      });
     });
 }

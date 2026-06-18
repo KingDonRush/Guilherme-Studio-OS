@@ -143,6 +143,31 @@ export const governanceCommandDefinitions: Record<string, StudioCommandDefinitio
       return entityMutationResult(command.command, entity);
     },
   },
+  "knowledge.route": {
+    requirement: { capability: "entity.write" },
+    handler: async ({ context, command, payload }) => {
+      const rationale = optionalString(payload, "rationale");
+      const targetId = optionalString(payload, "target_id");
+      const entity = await new DomainCommandService(context).routeKnowledge({
+        title: stringValue(payload, "title"),
+        content: stringValue(payload, "content"),
+        destination: enumValue(payload, "destination", [
+          "constitution",
+          "prd",
+          "decision",
+          "entity",
+          "workflow",
+          "evidence",
+          "lesson",
+          "temporary_note",
+        ]),
+        ...(targetId ? { targetId } : {}),
+        ...(rationale ? { rationale } : {}),
+        evidenceIds: stringArray(payload, "evidence_ids"),
+      });
+      return entityMutationResult(command.command, entity);
+    },
+  },
   "case.create-from-evidence": {
     requirement: { capability: "entity.write" },
     handler: async ({ context, command, payload }) => {
@@ -160,12 +185,86 @@ export const governanceCommandDefinitions: Record<string, StudioCommandDefinitio
   "decision.record": {
     requirement: { capability: "entity.write" },
     handler: async ({ context, command, payload }) => {
+      const rationale = optionalString(payload, "rationale");
+      const impact = optionalString(payload, "impact");
+      const reversibility = optionalEnum(payload, "reversibility", [
+        "reversible",
+        "hard_to_reverse",
+        "irreversible",
+      ]);
+      const authoritySource = optionalEnum(payload, "authority_source", [
+        "guilherme",
+        "agent",
+        "policy",
+        "evidence",
+      ]);
+      const authorityOwner = optionalString(payload, "authority_owner_id");
+      const confirmationRequired = optionalBoolean(payload, "confirmation_required");
       const entity = await new DomainCommandService(context).recordDecision({
         title: stringValue(payload, "title"),
         decision: stringValue(payload, "decision"),
-        ...(optionalString(payload, "rationale")
-          ? { rationale: stringValue(payload, "rationale") }
+        ...(rationale ? { rationale } : {}),
+        alternatives: stringArray(payload, "alternatives"),
+        ...(impact ? { impact } : {}),
+        ...(reversibility ? { reversibility } : {}),
+        ...(authoritySource || authorityOwner || confirmationRequired !== undefined
+          ? {
+              authority: {
+                ...(authoritySource ? { source: authoritySource } : {}),
+                ...(authorityOwner ? { ownerId: authorityOwner } : {}),
+                ...(confirmationRequired !== undefined ? { confirmationRequired } : {}),
+              },
+            }
           : {}),
+        contradictionIds: stringArray(payload, "contradiction_ids"),
+        evidenceIds: stringArray(payload, "evidence_ids"),
+      });
+      return entityMutationResult(command.command, entity);
+    },
+  },
+  "decision.amend": {
+    requirement: { capability: "entity.write" },
+    handler: async ({ context, command, payload }) => {
+      const title = optionalString(payload, "title");
+      const rationale = optionalString(payload, "rationale");
+      const impact = optionalString(payload, "impact");
+      const reversibility = optionalEnum(payload, "reversibility", [
+        "reversible",
+        "hard_to_reverse",
+        "irreversible",
+      ]);
+      const entity = await new DomainCommandService(context).amendDecision({
+        decisionId: targetOrPayloadId(command.target_id, payload, "decision_id"),
+        ...(title ? { title } : {}),
+        decision: stringValue(payload, "decision"),
+        ...(rationale ? { rationale } : {}),
+        alternatives: stringArray(payload, "alternatives"),
+        ...(impact ? { impact } : {}),
+        ...(reversibility ? { reversibility } : {}),
+        evidenceIds: stringArray(payload, "evidence_ids"),
+      });
+      return entityMutationResult(command.command, entity);
+    },
+  },
+  "learning.propose": {
+    requirement: { capability: "entity.write" },
+    handler: async ({ context, command, payload }) => {
+      const rationale = optionalString(payload, "rationale");
+      const runIdValue = optionalString(payload, "run_id");
+      const entity = await new DomainCommandService(context).proposeLearningPromotion({
+        title: stringValue(payload, "title"),
+        failureClass: stringValue(payload, "failure_class"),
+        proposal: stringValue(payload, "proposal"),
+        destination: enumValue(payload, "destination", [
+          "workflow",
+          "schema",
+          "test",
+          "decision",
+          "constitution",
+          "repository_instruction",
+        ]),
+        ...(rationale ? { rationale } : {}),
+        ...(runIdValue ? { runId: runIdValue } : {}),
         evidenceIds: stringArray(payload, "evidence_ids"),
       });
       return entityMutationResult(command.command, entity);
@@ -192,6 +291,14 @@ export const governanceCommandDefinitions: Record<string, StudioCommandDefinitio
 
 function runId(targetId: string | undefined, payload: Record<string, unknown>): string {
   return targetId ?? stringValue(payload, "run_id");
+}
+
+function targetOrPayloadId(
+  targetId: string | undefined,
+  payload: Record<string, unknown>,
+  key: string,
+): string {
+  return targetId ?? stringValue(payload, key);
 }
 
 function optionalBoolean(payload: Record<string, unknown>, key: string): boolean | undefined {

@@ -104,6 +104,37 @@ describe("Studio CLI", () => {
     });
   });
 
+  it("exposes knowledge routing as a CLI fallback", async () => {
+    const root = await createCliFixtureRoot("studio-cli-knowledge-");
+    const result = await runCliJson([
+      "--root",
+      root,
+      "--json",
+      "--dry-run",
+      "knowledge",
+      "route",
+      "--title",
+      "CLI route",
+      "--content",
+      "Route this note to a temporary holding lane.",
+      "--destination",
+      "temporary_note",
+    ]);
+
+    expect(result).toMatchObject({
+      status: "ok",
+      result: {
+        dry_run: true,
+        command: "knowledge.route",
+        payload: {
+          title: "CLI route",
+          content: "Route this note to a temporary holding lane.",
+          destination: "temporary_note",
+        },
+      },
+    });
+  });
+
   it("passes explicit panel and MCP smoke results into acceptance", async () => {
     const root = await createCliFixtureRoot("studio-cli-acceptance-");
     const result = await runCliJson([

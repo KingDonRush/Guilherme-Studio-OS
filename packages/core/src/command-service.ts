@@ -27,6 +27,9 @@ export function classifyStudioError(error: unknown): {
   if (/revision conflict|changed after/i.test(message)) {
     return { status: "conflict", code: "revision_conflict", message };
   }
+  if (/contradictory active decision|contradiction/i.test(message)) {
+    return { status: "conflict", code: "decision_contradiction", message };
+  }
   if (/confirmation|must be confirmed|payload checksum/i.test(message)) {
     return { status: "confirmation_required", code: "confirmation_required", message };
   }

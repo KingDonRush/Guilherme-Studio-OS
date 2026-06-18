@@ -5281,6 +5281,15 @@
                 "summary": {
                   "type": "string"
                 },
+                "decision_type": {
+                  "default": "decision",
+                  "type": "string",
+                  "enum": [
+                    "decision",
+                    "knowledge_route",
+                    "learning_proposal"
+                  ]
+                },
                 "decision": {
                   "type": "string"
                 },
@@ -5291,6 +5300,97 @@
                   "type": "string",
                   "format": "date-time",
                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "alternatives": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "impact": {
+                  "type": "string"
+                },
+                "reversibility": {
+                  "type": "string",
+                  "enum": [
+                    "reversible",
+                    "hard_to_reverse",
+                    "irreversible"
+                  ]
+                },
+                "authority": {
+                  "type": "object",
+                  "properties": {
+                    "source": {
+                      "default": "guilherme",
+                      "type": "string",
+                      "enum": [
+                        "guilherme",
+                        "agent",
+                        "policy",
+                        "evidence"
+                      ]
+                    },
+                    "owner_id": {
+                      "type": "string"
+                    },
+                    "confirmation_required": {
+                      "default": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "source",
+                    "confirmation_required"
+                  ],
+                  "additionalProperties": false
+                },
+                "amends_decision_id": {
+                  "type": "string"
+                },
+                "contradiction_ids": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "route_destination": {
+                  "type": "string",
+                  "enum": [
+                    "constitution",
+                    "prd",
+                    "decision",
+                    "entity",
+                    "workflow",
+                    "evidence",
+                    "lesson",
+                    "temporary_note"
+                  ]
+                },
+                "route_target_id": {
+                  "type": "string"
+                },
+                "routed_content": {
+                  "type": "string"
+                },
+                "learning_failure_class": {
+                  "type": "string"
+                },
+                "learning_proposal": {
+                  "type": "string"
+                },
+                "learning_destination": {
+                  "type": "string",
+                  "enum": [
+                    "workflow",
+                    "schema",
+                    "test",
+                    "decision",
+                    "constitution",
+                    "repository_instruction"
+                  ]
                 },
                 "evidence_ids": {
                   "default": [],
@@ -5303,6 +5403,9 @@
               "required": [
                 "title",
                 "status",
+                "decision_type",
+                "alternatives",
+                "contradiction_ids",
                 "evidence_ids"
               ],
               "additionalProperties": {}

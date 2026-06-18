@@ -1,0 +1,33 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T00:47:23.000Z
+  id: tsk_20260618_prd-10-knowledge-routing-decision-learning
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-10
+  revision: 1
+  schema_version: 1
+  slug: prd-10-knowledge-routing-decision-learning
+  updated_at: 2026-06-18T00:47:23.000Z
+relations: []
+spec:
+  acceptance:
+    - knowledge.route requires an explicit destination and prevents unclassified note dumping
+    - knowledge.route can create evidence, attach entity knowledge notes or create governance route records
+    - decision records include alternatives, authority, impact, reversibility, amendments and contradiction references
+    - contradictory active same-title decisions are blocked unless amended or explicitly marked as contradiction
+    - decision.amend records the amendment relationship without silent override
+    - agent propose-learning records recurring failure promotion proposals
+    - generated schema catalog reflects the expanded decision contract
+    - canonical Studio validation and sync verification pass
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Completes the PRD 10 knowledge routing, decision memory and learning promotion slice in core and CLI.
+  title: PRD 10 knowledge routing, decision memory and learning promotion

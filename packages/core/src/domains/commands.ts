@@ -225,4 +225,22 @@ export class DomainCommandService extends DomainServiceBase {
   ): ReturnType<GovernanceDomainService["recordDecision"]> {
     return this.governance.recordDecision(...args);
   }
+
+  amendDecision(
+    ...args: Parameters<GovernanceDomainService["amendDecision"]>
+  ): ReturnType<GovernanceDomainService["amendDecision"]> {
+    return this.governance.amendDecision(...args);
+  }
+
+  routeKnowledge(
+    ...args: Parameters<GovernanceDomainService["routeKnowledge"]>
+  ): ReturnType<GovernanceDomainService["routeKnowledge"]> {
+    return this.governance.routeKnowledge(...args);
+  }
+
+  proposeLearningPromotion(
+    ...args: Parameters<GovernanceDomainService["proposeLearningPromotion"]>
+  ): ReturnType<GovernanceDomainService["proposeLearningPromotion"]> {
+    return this.governance.proposeLearningPromotion(...args);
+  }
 }
