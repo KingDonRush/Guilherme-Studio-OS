@@ -58,10 +58,88 @@ export class DomainCommandService extends DomainServiceBase {
     return this.crm.prepareCommunication(...args);
   }
 
+  recordIdealClientProfile(
+    ...args: Parameters<SalesDomainService["recordIdealClientProfile"]>
+  ): ReturnType<SalesDomainService["recordIdealClientProfile"]> {
+    return this.sales.recordIdealClientProfile(...args);
+  }
+
+  researchProspect(
+    ...args: Parameters<SalesDomainService["researchProspect"]>
+  ): ReturnType<SalesDomainService["researchProspect"]> {
+    return this.sales.researchProspect(...args);
+  }
+
+  reviewOutreach(
+    ...args: Parameters<SalesDomainService["reviewOutreach"]>
+  ): ReturnType<SalesDomainService["reviewOutreach"]> {
+    return this.sales.reviewOutreach(...args);
+  }
+
+  prepareSalesOutreach(
+    ...args: Parameters<SalesDomainService["prepareSalesOutreach"]>
+  ): ReturnType<SalesDomainService["prepareSalesOutreach"]> {
+    return this.sales.prepareSalesOutreach(...args);
+  }
+
+  recordOutreachResult(
+    ...args: Parameters<SalesDomainService["recordOutreachResult"]>
+  ): ReturnType<SalesDomainService["recordOutreachResult"]> {
+    return this.sales.recordOutreachResult(...args);
+  }
+
+  createOpportunity(
+    ...args: Parameters<SalesDomainService["createOpportunity"]>
+  ): ReturnType<SalesDomainService["createOpportunity"]> {
+    return this.sales.createOpportunity(...args);
+  }
+
+  recordOpportunityDiscovery(
+    ...args: Parameters<SalesDomainService["recordOpportunityDiscovery"]>
+  ): ReturnType<SalesDomainService["recordOpportunityDiscovery"]> {
+    return this.sales.recordOpportunityDiscovery(...args);
+  }
+
   prepareProposal(
     ...args: Parameters<SalesDomainService["prepareProposal"]>
   ): ReturnType<SalesDomainService["prepareProposal"]> {
     return this.sales.prepareProposal(...args);
+  }
+
+  markProposalReviewed(
+    ...args: Parameters<SalesDomainService["markProposalReviewed"]>
+  ): ReturnType<SalesDomainService["markProposalReviewed"]> {
+    return this.sales.markProposalReviewed(...args);
+  }
+
+  prepareProposalSend(
+    ...args: Parameters<SalesDomainService["prepareProposalSend"]>
+  ): ReturnType<SalesDomainService["prepareProposalSend"]> {
+    return this.sales.prepareProposalSend(...args);
+  }
+
+  markProposalSent(
+    ...args: Parameters<SalesDomainService["markProposalSent"]>
+  ): ReturnType<SalesDomainService["markProposalSent"]> {
+    return this.sales.markProposalSent(...args);
+  }
+
+  recordProposalResponse(
+    ...args: Parameters<SalesDomainService["recordProposalResponse"]>
+  ): ReturnType<SalesDomainService["recordProposalResponse"]> {
+    return this.sales.recordProposalResponse(...args);
+  }
+
+  recordNegotiation(
+    ...args: Parameters<SalesDomainService["recordNegotiation"]>
+  ): ReturnType<SalesDomainService["recordNegotiation"]> {
+    return this.sales.recordNegotiation(...args);
+  }
+
+  closeOpportunityLost(
+    ...args: Parameters<SalesDomainService["closeOpportunityLost"]>
+  ): ReturnType<SalesDomainService["closeOpportunityLost"]> {
+    return this.sales.closeOpportunityLost(...args);
   }
 
   convertOpportunity(

@@ -76,9 +76,16 @@ async function main() {
 
     await page.goto(`${baseUrl}/#/crm`, { waitUntil: "networkidle", timeout: 45_000 });
     checks.push(await waitForText(page, "Registrar prospect"));
+    checks.push(await waitForText(page, "Registrar pesquisa do prospect"));
+    checks.push(await waitForText(page, "Preparar outreach"));
+    checks.push(await waitForText(page, "Registrar oportunidade"));
+    checks.push(await waitForText(page, "Registrar discovery"));
+    checks.push(await waitForText(page, "Preparar proposta"));
+    checks.push(await waitForText(page, "Preparar envio da proposta"));
+    checks.push(await waitForText(page, "Registrar resposta da proposta"));
     await page.getByLabel("Nome do prospect").fill("Panel smoke prospect");
     await page.getByLabel("Contexto inicial").fill("Smoke test for governed panel mutation.");
-    await page.getByRole("button", { name: /Revisar comando/i }).click();
+    await page.getByRole("button", { name: /Revisar comando/i }).first().click();
     checks.push(await waitForText(page, "Payload exato"));
     checks.push(await waitForText(page, "entity.create"));
     await page.getByRole("button", { name: /Executar payload revisado/i }).click();

@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T19:45:06.000Z
+  id: tsk_20260618_prd-07-sales-proposals-closure
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-07
+    - sales
+    - proposals
+  revision: 1
+  schema_version: 1
+  slug: prd-07-sales-proposals-closure
+  updated_at: 2026-06-18T19:45:06.000Z
+relations: []
+spec:
+  acceptance:
+    - sales schemas expose central PRD 07 fields for ICP, research, outreach, opportunity discovery, proposal package, negotiation, acceptance and lost reasons
+    - semantic commands cover ICP, research, outreach prepare/result, opportunity discovery, proposal review/send/response, negotiation, close-lost and guarded conversion
+    - outbound sales and proposal send actions are fake/local prepared actions with exact payload review and no external adapter execution
+    - opportunity conversion requires accepted proposal and acceptance evidence before client and engagement creation
+    - PRD 07 matrix reports 100% capability complete without inventing prospects, proposals or clients
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Closes PRD 07 prospecting, sales and proposal capability gaps while preserving real-data intake boundaries.
+  title: PRD 07 sales proposals closure

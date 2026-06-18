@@ -12,7 +12,7 @@ import { registerSalesDomainCommands } from "./sales.js";
 export function registerDomainCommands(program: Command): void {
   const domainCommands = registerBaseDomainCommands(program);
   registerCrmDomainCommands(program, domainCommands);
-  registerSalesDomainCommands(domainCommands);
+  registerSalesDomainCommands(program, domainCommands);
   registerDeliveryDomainCommands(domainCommands);
   registerProductDomainCommands(domainCommands);
   registerPortfolioMarketingDomainCommands(domainCommands);

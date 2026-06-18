@@ -1690,6 +1690,120 @@
                   "type": "string",
                   "format": "date-time",
                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "research": {
+                  "type": "object",
+                  "properties": {
+                    "source": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "source_url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "observed_situation": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "likely_need": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "fit_evidence": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "decision_maker": {
+                      "type": "string"
+                    },
+                    "risks": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "reason_for_contact": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "confidence": {
+                      "default": "medium",
+                      "type": "string",
+                      "enum": [
+                        "low",
+                        "medium",
+                        "high"
+                      ]
+                    },
+                    "freshness": {
+                      "default": "fresh",
+                      "type": "string",
+                      "enum": [
+                        "fresh",
+                        "stale",
+                        "expired",
+                        "unknown"
+                      ]
+                    },
+                    "researched_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                    },
+                    "evidence_ids": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "source",
+                    "observed_situation",
+                    "likely_need",
+                    "fit_evidence",
+                    "risks",
+                    "reason_for_contact",
+                    "confidence",
+                    "freshness",
+                    "researched_at",
+                    "evidence_ids"
+                  ],
+                  "additionalProperties": false
+                },
+                "source_freshness": {
+                  "type": "string",
+                  "enum": [
+                    "fresh",
+                    "stale",
+                    "expired",
+                    "unknown"
+                  ]
+                },
+                "research_confidence": {
+                  "type": "string",
+                  "enum": [
+                    "low",
+                    "medium",
+                    "high"
+                  ]
+                },
+                "research_warning": {
+                  "type": "string"
+                },
+                "last_outreach_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "outreach_policy": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -2058,6 +2172,12 @@
                 "stage": {
                   "type": "string"
                 },
+                "prospect_id": {
+                  "type": "string"
+                },
+                "owner_id": {
+                  "type": "string"
+                },
                 "potential_value_minor": {
                   "type": "integer",
                   "minimum": 0,
@@ -2081,8 +2201,202 @@
                   "type": "string",
                   "format": "uri"
                 },
+                "source_ref": {
+                  "type": "string"
+                },
+                "source_freshness": {
+                  "type": "string",
+                  "enum": [
+                    "fresh",
+                    "stale",
+                    "expired",
+                    "unknown"
+                  ]
+                },
+                "discovery": {
+                  "type": "object",
+                  "properties": {
+                    "recorded_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                    },
+                    "source_ref": {
+                      "type": "string"
+                    },
+                    "summary": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "need": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "urgency": {
+                      "type": "string"
+                    },
+                    "budget_signal": {
+                      "type": "string"
+                    },
+                    "authority_signal": {
+                      "type": "string"
+                    },
+                    "competition": {
+                      "type": "string"
+                    },
+                    "next_action": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "owner_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "probability": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "probability_source": {
+                      "type": "string",
+                      "enum": [
+                        "explicit",
+                        "inferred",
+                        "operator-estimate"
+                      ]
+                    },
+                    "evidence_ids": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "recorded_at",
+                    "summary",
+                    "need",
+                    "next_action",
+                    "owner_id",
+                    "evidence_ids"
+                  ],
+                  "additionalProperties": false
+                },
+                "need": {
+                  "type": "string"
+                },
+                "urgency": {
+                  "type": "string"
+                },
+                "budget_signal": {
+                  "type": "string"
+                },
+                "authority_signal": {
+                  "type": "string"
+                },
+                "competition": {
+                  "type": "string"
+                },
+                "next_action": {
+                  "type": "string"
+                },
+                "probability": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "probability_source": {
+                  "type": "string",
+                  "enum": [
+                    "explicit",
+                    "inferred",
+                    "operator-estimate"
+                  ]
+                },
+                "evidence_ids": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "stale_research_warning": {
+                  "type": "string"
+                },
                 "proposal_id": {
                   "type": "string"
+                },
+                "accepted_proposal_id": {
+                  "type": "string"
+                },
+                "acceptance_evidence_id": {
+                  "type": "string"
+                },
+                "negotiation_history": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "requested_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                      },
+                      "requested_change": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "scope_impact": {
+                        "type": "string"
+                      },
+                      "price_impact": {
+                        "type": "string"
+                      },
+                      "risk_impact": {
+                        "type": "string"
+                      },
+                      "timing_impact": {
+                        "type": "string"
+                      },
+                      "decision": {
+                        "default": "pending",
+                        "type": "string",
+                        "enum": [
+                          "pending",
+                          "accepted",
+                          "rejected",
+                          "deferred"
+                        ]
+                      },
+                      "evidence_ids": {
+                        "default": [],
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "requested_at",
+                      "requested_change",
+                      "decision",
+                      "evidence_ids"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "lost_reason": {
+                  "type": "string"
+                },
+                "lost_lesson": {
+                  "type": "string"
+                },
+                "closed_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
                 },
                 "client_id": {
                   "type": "string"
@@ -2099,7 +2413,9 @@
               "required": [
                 "title",
                 "status",
-                "international_relevance"
+                "international_relevance",
+                "evidence_ids",
+                "negotiation_history"
               ],
               "additionalProperties": {}
             },
@@ -5031,6 +5347,62 @@
                 "stage": {
                   "type": "string"
                 },
+                "offer_ref": {
+                  "type": "string"
+                },
+                "scope": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "exclusions": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "schedule": {
+                  "type": "string"
+                },
+                "assumptions": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "price_logic": {
+                  "type": "string"
+                },
+                "payment_terms": {
+                  "type": "string"
+                },
+                "acceptance_criteria": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "review_required": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "review_status": {
+                  "default": "draft",
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "needs_review",
+                    "reviewed"
+                  ]
+                },
                 "value_minor": {
                   "type": "integer",
                   "minimum": 0,
@@ -5046,6 +5418,97 @@
                   "format": "date-time",
                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
                 },
+                "sent_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "sent_artifact_ref": {
+                  "type": "string"
+                },
+                "sent_artifact_checksum": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "sent_prepared_action_id": {
+                  "type": "string"
+                },
+                "immutable_from_revision": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "response": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "string",
+                      "enum": [
+                        "accepted",
+                        "rejected",
+                        "revision_requested",
+                        "no_response"
+                      ]
+                    },
+                    "recorded_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                    },
+                    "evidence_id": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "response",
+                    "recorded_at"
+                  ],
+                  "additionalProperties": false
+                },
+                "accepted_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "acceptance_evidence_id": {
+                  "type": "string"
+                },
+                "versions": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "version": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                      },
+                      "artifact_ref": {
+                        "type": "string"
+                      },
+                      "artifact_checksum": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "notes": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "version",
+                      "created_at"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
                 "evidence_ids": {
                   "default": [],
                   "type": "array",
@@ -5057,6 +5520,13 @@
               "required": [
                 "title",
                 "status",
+                "scope",
+                "exclusions",
+                "assumptions",
+                "acceptance_criteria",
+                "review_required",
+                "review_status",
+                "versions",
                 "evidence_ids"
               ],
               "additionalProperties": {}
@@ -6173,7 +6643,8 @@
                     "decision",
                     "knowledge_route",
                     "learning_proposal",
-                    "career_role_strategy"
+                    "career_role_strategy",
+                    "sales_icp_strategy"
                   ]
                 },
                 "decision": {
@@ -6278,6 +6749,92 @@
                     "repository_instruction"
                   ]
                 },
+                "business_types": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "needs": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "budget_logic": {
+                  "type": "string"
+                },
+                "geographies": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "technologies": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "delivery_fit": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "rejected_criteria": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "offer_evidence_map": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "profile": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "offer": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "proof_claims": {
+                        "default": [],
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "evidence_ids": {
+                        "default": [],
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "gap": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "profile",
+                      "offer",
+                      "proof_claims",
+                      "evidence_ids"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
                 "evidence_ids": {
                   "default": [],
                   "type": "array",
@@ -6292,6 +6849,13 @@
                 "decision_type",
                 "alternatives",
                 "contradiction_ids",
+                "business_types",
+                "needs",
+                "geographies",
+                "technologies",
+                "delivery_fit",
+                "rejected_criteria",
+                "offer_evidence_map",
                 "evidence_ids"
               ],
               "additionalProperties": {}
@@ -6664,6 +7228,9 @@
                     "outbound"
                   ]
                 },
+                "stage": {
+                  "type": "string"
+                },
                 "occurred_at": {
                   "type": "string",
                   "format": "date-time",
@@ -6675,20 +7242,52 @@
                 "message": {
                   "type": "string"
                 },
+                "recipient": {
+                  "type": "string"
+                },
+                "cta": {
+                  "type": "string"
+                },
+                "reason_for_contact": {
+                  "type": "string"
+                },
+                "evidence_ids": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "provider": {
                   "type": "string"
                 },
                 "target": {
                   "type": "string"
                 },
+                "payload_checksum": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
                 "external_send": {
                   "default": false,
                   "type": "boolean"
+                },
+                "outcome": {
+                  "type": "string"
+                },
+                "response_summary": {
+                  "type": "string"
+                },
+                "follow_up_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
                 }
               },
               "required": [
                 "title",
                 "status",
+                "evidence_ids",
                 "external_send"
               ],
               "additionalProperties": {}

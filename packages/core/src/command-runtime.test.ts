@@ -234,6 +234,398 @@ describe("Studio command runtime", () => {
     });
   });
 
+  it("runs governed sales from prospect research to accepted proposal conversion", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "studio-runtime-sales-governance-"));
+    await writeFile(
+      path.join(root, "studio.config.yaml"),
+      YAML.stringify({
+        api_version: "studio.guilherme.dev/config-v1",
+        root_name: "Runtime sales governance test",
+        operator_id: "per_20260614_guilherme-silva",
+        canonical_roots: ["data", "sales", "clients", "operations"],
+        runtime_path: "runtime",
+        panel: { host: "127.0.0.1", port: 47835 },
+        adapters: {},
+      }),
+    );
+    const context = await createStudioContext(root);
+    const actor = operatorActor(context.config.operator_id);
+    const prospect = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "entity.create",
+        actor,
+        payload: { kind: "prospect", title: "Governed agency prospect" },
+      }),
+    );
+    const prospectId = entityIdFromResult(prospect);
+    const evidence = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "evidence.register",
+        actor,
+        payload: {
+          title: "Prospect source evidence",
+          evidence_type: "manual",
+          claims: ["Prospect has a visible Elementor rebuild need"],
+        },
+      }),
+    );
+    const evidenceId = entityIdFromResult(evidence);
+    const icp = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "sales.record-icp",
+        actor,
+        payload: {
+          business_types: ["agency"],
+          needs: ["Elementor implementation support"],
+          budget_logic: "Fixed-scope implementation package",
+          technologies: ["WordPress", "Elementor"],
+          delivery_fit: ["async discovery", "bounded implementation"],
+          offer_evidence_map: [
+            {
+              profile: "agency",
+              offer: "WordPress implementation sprint",
+              proof_claims: ["Elementor quote flow evidence"],
+              evidence_ids: [evidenceId],
+            },
+          ],
+        },
+      }),
+    );
+    const researched = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "prospect.research",
+        actor,
+        targetId: prospectId,
+        payload: {
+          prospect_id: prospectId,
+          source: "manual research",
+          observed_situation: "Prospect shows public Elementor customization demand.",
+          likely_need: "Implementation support for bounded WordPress work.",
+          fit_evidence: ["Elementor", "WordPress"],
+          reason_for_contact: "Public site signals a concrete implementation need.",
+          evidence_ids: [evidenceId],
+        },
+      }),
+    );
+    const outreach = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "outreach.prepare",
+        actor,
+        payload: {
+          subject_id: prospectId,
+          recipient: "lead@example.com",
+          channel: "email",
+          message: "I noticed a concrete Elementor implementation need.",
+          cta: "Would a fixed-scope implementation sprint help?",
+          evidence_ids: [evidenceId],
+        },
+      }),
+    );
+    const outreachAction = preparedActionFromResult(outreach);
+    await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "action.confirm",
+        actor,
+        payload: {
+          action_id: outreachAction.id,
+          payload_checksum: outreachAction.payload_checksum,
+        },
+      }),
+    );
+    const communication = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "outreach.record-result",
+        actor,
+        payload: {
+          prepared_action_id: outreachAction.id,
+          outcome: "sent-manually",
+          response_summary: "Manual fixture send was recorded without external adapter execution.",
+        },
+      }),
+    );
+    const opportunity = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "opportunity.create",
+        actor,
+        payload: {
+          title: "Governed WordPress sprint",
+          prospect_id: prospectId,
+          owner_id: context.config.operator_id,
+          next_action: "Run discovery call",
+          potential_value_minor: 250_000,
+          currency: "USD",
+        },
+      }),
+    );
+    const opportunityId = entityIdFromResult(opportunity);
+    const discovery = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "opportunity.record-discovery",
+        actor,
+        targetId: opportunityId,
+        payload: {
+          opportunity_id: opportunityId,
+          summary: "Agency needs bounded Elementor implementation.",
+          need: "Build a fixed WordPress implementation package.",
+          urgency: "launch window in July",
+          budget_signal: "budget owner discussed fixed scope",
+          authority_signal: "owner is decision maker",
+          competition: "internal team backlog",
+          next_action: "Prepare proposal",
+          owner_id: context.config.operator_id,
+          probability: 60,
+          probability_source: "operator-estimate",
+          evidence_ids: [evidenceId],
+        },
+      }),
+    );
+    const proposal = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "proposal.prepare",
+        actor,
+        payload: {
+          opportunity_id: opportunityId,
+          title: "Governed implementation proposal",
+          offer_ref: "wordpress-implementation-sprint",
+          scope: ["Elementor implementation", "QA pass"],
+          exclusions: ["Unbounded brand redesign"],
+          schedule: "Two week sprint",
+          assumptions: ["Client provides copy and access"],
+          price_logic: "Fixed project fee",
+          payment_terms: "50% upfront, 50% on acceptance",
+          acceptance_criteria: ["Client accepts QA checklist"],
+          value_minor: 250_000,
+          currency: "USD",
+          evidence_ids: [evidenceId],
+        },
+      }),
+    );
+    const proposalId = entityIdFromResult(proposal);
+    const negotiation = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "opportunity.record-negotiation",
+        actor,
+        targetId: opportunityId,
+        payload: {
+          opportunity_id: opportunityId,
+          requested_change: "Add one extra landing section.",
+          scope_impact: "Adds one bounded section",
+          price_impact: "No price change in fixture",
+          risk_impact: "Low risk if copy is supplied",
+          timing_impact: "No schedule change",
+          decision: "accepted",
+          evidence_ids: [evidenceId],
+        },
+      }),
+    );
+    const reviewed = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "proposal.review",
+        actor,
+        targetId: proposalId,
+        payload: {
+          proposal_id: proposalId,
+          review_notes: "Claims, terms and attachments reviewed.",
+          evidence_ids: [evidenceId],
+        },
+      }),
+    );
+    const preparedSend = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "proposal.prepare-send",
+        actor,
+        targetId: proposalId,
+        payload: {
+          proposal_id: proposalId,
+          recipient: "lead@example.com",
+          channel: "email",
+          message: "Sending the reviewed implementation proposal.",
+          artifact_ref: "sales/proposals/governed-implementation-v1.pdf",
+          artifact_checksum: "b".repeat(64),
+        },
+      }),
+    );
+    const sendAction = preparedActionFromResult(preparedSend);
+    await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "action.confirm",
+        actor,
+        payload: {
+          action_id: sendAction.id,
+          payload_checksum: sendAction.payload_checksum,
+        },
+      }),
+    );
+    const sent = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "proposal.mark-sent",
+        actor,
+        targetId: proposalId,
+        payload: {
+          proposal_id: proposalId,
+          prepared_action_id: sendAction.id,
+        },
+      }),
+    );
+    const acceptance = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "evidence.register",
+        actor,
+        payload: {
+          title: "Proposal acceptance evidence",
+          evidence_type: "manual",
+          claims: ["Prospect accepted proposal terms"],
+        },
+      }),
+    );
+    const acceptanceId = entityIdFromResult(acceptance);
+    const accepted = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "proposal.record-response",
+        actor,
+        targetId: proposalId,
+        payload: {
+          proposal_id: proposalId,
+          response: "accepted",
+          evidence_id: acceptanceId,
+        },
+      }),
+    );
+    const converted = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "opportunity.convert",
+        actor,
+        payload: {
+          opportunity_id: opportunityId,
+          client_title: "Governed agency client",
+          engagement_title: "Governed WordPress sprint engagement",
+        },
+      }),
+    );
+    const lostOpportunity = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "opportunity.create",
+        actor,
+        payload: {
+          title: "Governed lost opportunity",
+          owner_id: context.config.operator_id,
+          next_action: "Close cleanly",
+        },
+      }),
+    );
+    const lostOpportunityId = entityIdFromResult(lostOpportunity);
+    const closedLost = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "opportunity.close-lost",
+        actor,
+        targetId: lostOpportunityId,
+        payload: {
+          opportunity_id: lostOpportunityId,
+          reason: "Budget mismatch",
+          lesson: "Qualify budget signal earlier.",
+        },
+      }),
+    );
+
+    expect(icp).toMatchObject({
+      status: "ok",
+      result: { entity: { spec: { decision_type: "sales_icp_strategy" } } },
+    });
+    expect(researched).toMatchObject({
+      status: "ok",
+      result: {
+        entity: {
+          spec: {
+            stage: "researched",
+            reason_for_contact: "Public site signals a concrete implementation need.",
+          },
+        },
+      },
+    });
+    expect(communication).toMatchObject({
+      status: "ok",
+      result: { entity: { kind: "communication", spec: { external_send: false } } },
+    });
+    expect(discovery).toMatchObject({
+      status: "ok",
+      result: { entity: { spec: { stage: "discovery_recorded", probability: 60 } } },
+    });
+    expect(negotiation).toMatchObject({
+      status: "ok",
+      result: { entity: { spec: { stage: "negotiation" } } },
+    });
+    expect(reviewed).toMatchObject({
+      status: "ok",
+      result: { entity: { spec: { review_status: "reviewed" } } },
+    });
+    expect(preparedSend).toMatchObject({
+      status: "ok",
+      result: {
+        action_type: "proposal.send",
+        status: "awaiting_confirmation",
+        provider: "fake-local",
+        source_revisions: { [proposalId]: expect.any(Number), [opportunityId]: expect.any(Number) },
+      },
+    });
+    expect(sent).toMatchObject({
+      status: "ok",
+      result: {
+        entity: {
+          spec: {
+            stage: "sent",
+            sent_artifact_checksum: "b".repeat(64),
+            immutable_from_revision: expect.any(Number),
+          },
+        },
+      },
+    });
+    expect(accepted).toMatchObject({
+      status: "ok",
+      result: {
+        entity: {
+          spec: {
+            stage: "accepted",
+            acceptance_evidence_id: acceptanceId,
+          },
+        },
+      },
+    });
+    expect(converted).toMatchObject({
+      status: "ok",
+      result: {
+        opportunity: { spec: { status: "won", accepted_proposal_id: proposalId } },
+        client: { kind: "client" },
+        engagement: { kind: "engagement", spec: { proposal_id: proposalId } },
+      },
+    });
+    expect(closedLost).toMatchObject({
+      status: "ok",
+      result: {
+        entity: { spec: { status: "lost", lost_reason: "Budget mismatch" } },
+      },
+    });
+  });
+
   it("keeps finance terms, obligations, reminders and payment evidence distinct", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "studio-runtime-finance-governance-"));
     await writeFile(

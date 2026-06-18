@@ -1,23 +1,22 @@
 # PRD 07 Capability Matrix: Prospecting, Sales, and Proposals
 
 Target: 100% capability complete without requiring active prospects.
-Current estimate: 35%.
+Current estimate: 100% capability_complete; canonical real prospect/client data remains intake_required.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|
-| Ideal client fit | Define ICP by need, budget logic, geography, technology and delivery fit. | missing | Add ICP/offer-fit records and commands. | CLI/API/panel | ICP tests | Missing ICP is intake gap. |
-| Evidence-to-offer map | Map offers and proof to each profile. | missing | Add offer/evidence relation validation. | CLI/panel | offer proof tests | No invented proof. |
-| Prospect research | Record source, situation, need, evidence, decision-maker, risk and reason to contact. | partial | Expand prospect research schema and command. | CLI/API/MCP/panel | research tests | Prospect requires real source/input. |
-| Research freshness | Classify confidence and freshness. | missing | Add freshness fields and stale research warning. | CLI/panel | freshness tests | Stale data warns, not deletes. |
-| Outreach preparation | Create personalized message with recipient, channel, exact copy, evidence and CTA. | partial | Expand communication.prepare for sales outreach. | CLI/API/MCP/panel | outreach tests | External send blocked. |
-| Duplicate outreach | Prevent duplicate outreach and excessive follow-up. | missing | Add active outreach lookup and follow-up policy. | CLI/API/panel | duplicate outreach tests | No fake communications. |
-| Opportunity facts | Capture discovery, need, urgency, budget, authority, competition, next action and probability source. | partial | Expand opportunity schema and discovery command. | CLI/API/panel | opportunity tests | Missing facts shown as gaps. |
-| Proposal generation | Generate proposal from offer, scope, exclusions, schedule, assumptions, price, terms and acceptance. | partial | Add proposal package and versioning. | CLI/API/MCP/panel | proposal fixture | No sent version without confirmation. |
-| Proposal immutability | Preserve exact sent version. | missing | Add sent artifact checksum and immutable state. | CLI/API/panel | immutability tests | Draft can change, sent cannot. |
-| Negotiation | Record requested changes and scope/price/risk/timing impact. | missing | Add negotiation/change-impact command. | CLI/API/panel | negotiation tests | No silent conversion. |
-| Conversion | Convert accepted opportunity into linked client and engagement. | partial | Harden transaction and identity merge behavior. | CLI/API/MCP | conversion tests | Real acceptance evidence required. |
-| Lost reasons | Preserve lost reason and lesson without active pollution. | missing | Add close lost command and inactive views. | CLI/API/panel | lost opportunity tests | Lost data remains explainable. |
+| Ideal client fit | Define ICP by need, budget logic, geography, technology and delivery fit. | capability_complete | `sales.record-icp` records sales ICP as canonical decision with typed strategy fields. | CLI/API/MCP | `command-runtime.test.ts`, CLI dry-run matrix, interface equivalence | Missing ICP is intake_required, not fabricated. |
+| Evidence-to-offer map | Map offers and proof to each profile. | capability_complete | ICP decision validates offer evidence map and evidence ids. | CLI/API/MCP | runtime sales test validates offer map evidence | No invented proof; missing proof stays as gap/map omission. |
+| Prospect research | Record source, situation, need, evidence, decision-maker, risk and reason to contact. | capability_complete | `prospect.research` writes typed research fields and evidence relations. | CLI/API/MCP/panel | runtime sales test, workflow fixture | Prospect requires a real source/input. |
+| Research freshness | Classify confidence and freshness. | capability_complete | Research stores `confidence`, `freshness` and warning for stale/expired sources. | CLI/API/MCP/panel | runtime sales test and schema validation | Stale data warns, not deletes. |
+| Outreach preparation | Create personalized message with recipient, channel, exact copy, evidence and CTA. | capability_complete | `outreach.prepare` creates fake/local prepared action with exact payload checksum, evidence, CTA and external-send block. | CLI/API/MCP/panel | runtime sales test, interface equivalence | External send remains blocked. |
+| Duplicate outreach | Prevent duplicate outreach and excessive follow-up. | capability_complete | `outreach.review` scans active prepared actions and recent outbound communications; prepare blocks duplicates/cooldown. | CLI/API/MCP/panel | runtime sales test and dry-run coverage | No fake communications are created. |
+| Opportunity facts | Capture discovery, need, urgency, budget, authority, competition, next action and probability source. | capability_complete | `opportunity.create` and `opportunity.record-discovery` enforce owner and next action with typed discovery facts. | CLI/API/MCP/panel | runtime sales test, workflow fixture | Missing facts are shown as gaps until recorded. |
+| Proposal generation | Generate proposal from offer, scope, exclusions, schedule, assumptions, price, terms and acceptance. | capability_complete | `proposal.prepare` requires discovery, offer, scope, payment terms, acceptance criteria and pricing logic/value. | CLI/API/MCP/panel | runtime sales test, interface equivalence | No sent version without confirmation. |
+| Proposal immutability | Preserve exact sent version. | capability_complete | `proposal.review`, `proposal.prepare-send` and `proposal.mark-sent` lock artifact ref/checksum and immutable revision after confirmation. | CLI/API/MCP/panel | runtime sales test, workflow fixture | Draft can change; sent content cannot be mutated by proposal content commands. |
+| Negotiation | Record requested changes and scope/price/risk/timing impact. | capability_complete | `opportunity.record-negotiation` appends typed change-impact records and evidence links. | CLI/API/MCP | runtime sales test, interface equivalence | No silent conversion from negotiation. |
+| Conversion | Convert accepted opportunity into linked client and engagement. | capability_complete | `opportunity.convert` now requires accepted proposal and acceptance evidence before creating client/engagement. | CLI/API/MCP | runtime sales test, domain test, workflow fixture | Real acceptance evidence is required. |
+| Lost reasons | Preserve lost reason and lesson without active pollution. | capability_complete | `opportunity.close-lost` stores reason, lesson and closed timestamp with `lost` status. | CLI/API/MCP | runtime sales test, interface equivalence | Lost opportunities remain explainable but out of active won flow. |
 
-Completion blocker: sales has useful slices, but research, outreach policy and
-proposal immutability are incomplete.
-
+Completion state: PRD 07 is capability_complete. Active sales data remains
+intake_required until Guilherme has real prospects, proposals or clients.

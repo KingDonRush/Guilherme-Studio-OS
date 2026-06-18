@@ -231,6 +231,51 @@ describe("core governance", () => {
       reasons: expect.arrayContaining(["website"]),
     });
 
+    const salesEvidence = await commands.registerEvidence({
+      title: "Acme acceptance source",
+      evidenceType: "manual",
+      claims: ["Acme accepted governed proposal"],
+    });
+    await commands.recordOpportunityDiscovery(opportunity.metadata.id, {
+      summary: "Acme needs a bounded WordPress build.",
+      need: "WordPress implementation",
+      nextAction: "Prepare proposal",
+      ownerId: context.config.operator_id,
+      evidenceIds: [salesEvidence.metadata.id],
+    });
+    const proposal = await commands.prepareProposal({
+      opportunityId: opportunity.metadata.id,
+      title: "Acme proposal",
+      offerRef: "wordpress-build",
+      scope: ["WordPress implementation"],
+      paymentTerms: "50% upfront, 50% on acceptance",
+      acceptanceCriteria: ["Acme accepts delivery checklist"],
+      valueMinor: 120_000,
+      currency: "USD",
+      evidenceIds: [salesEvidence.metadata.id],
+    });
+    await commands.markProposalReviewed({
+      proposalId: proposal.metadata.id,
+      evidenceIds: [salesEvidence.metadata.id],
+    });
+    const proposalSend = await commands.prepareProposalSend({
+      proposalId: proposal.metadata.id,
+      recipient: "acme@example.com",
+      channel: "email",
+      message: "Reviewed proposal for Acme.",
+      artifactRef: "sales/proposals/acme-v1.pdf",
+      artifactChecksum: "c".repeat(64),
+    });
+    await commands.actions.confirm(proposalSend.id, proposalSend.payload_checksum);
+    await commands.markProposalSent({
+      proposalId: proposal.metadata.id,
+      preparedActionId: proposalSend.id,
+    });
+    await commands.recordProposalResponse({
+      proposalId: proposal.metadata.id,
+      response: "accepted",
+      evidenceId: salesEvidence.metadata.id,
+    });
     const converted = await commands.convertOpportunity({
       opportunityId: opportunity.metadata.id,
       clientTitle: "Acme Studio",

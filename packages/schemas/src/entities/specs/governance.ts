@@ -126,6 +126,16 @@ export const LearningPromotionDestinationSchema = z.enum([
 ]);
 export type LearningPromotionDestination = z.infer<typeof LearningPromotionDestinationSchema>;
 
+const SalesOfferEvidenceMapSchema = z
+  .object({
+    profile: z.string().min(1),
+    offer: z.string().min(1),
+    proof_claims: z.array(z.string()).default([]),
+    evidence_ids: z.array(z.string()).default([]),
+    gap: z.string().optional(),
+  })
+  .strict();
+
 export const DecisionAuthoritySchema = z
   .object({
     source: z.enum(["guilherme", "agent", "policy", "evidence"]).default("guilherme"),
@@ -185,7 +195,13 @@ export const AgentRunSpecSchema = GenericSpecSchema.extend({
 });
 export const DecisionSpecSchema = GenericSpecSchema.extend({
   decision_type: z
-    .enum(["decision", "knowledge_route", "learning_proposal", "career_role_strategy"])
+    .enum([
+      "decision",
+      "knowledge_route",
+      "learning_proposal",
+      "career_role_strategy",
+      "sales_icp_strategy",
+    ])
     .default("decision"),
   decision: z.string().optional(),
   rationale: z.string().optional(),
@@ -202,6 +218,14 @@ export const DecisionSpecSchema = GenericSpecSchema.extend({
   learning_failure_class: z.string().optional(),
   learning_proposal: z.string().optional(),
   learning_destination: LearningPromotionDestinationSchema.optional(),
+  business_types: z.array(z.string()).default([]),
+  needs: z.array(z.string()).default([]),
+  budget_logic: z.string().optional(),
+  geographies: z.array(z.string()).default([]),
+  technologies: z.array(z.string()).default([]),
+  delivery_fit: z.array(z.string()).default([]),
+  rejected_criteria: z.array(z.string()).default([]),
+  offer_evidence_map: z.array(SalesOfferEvidenceMapSchema).default([]),
   evidence_ids: z.array(z.string()).default([]),
 });
 export const HandoffSpecSchema = z

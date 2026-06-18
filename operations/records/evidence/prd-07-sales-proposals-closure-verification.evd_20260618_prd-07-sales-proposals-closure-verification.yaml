@@ -1,0 +1,46 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T19:45:06.000Z
+  id: evd_20260618_prd-07-sales-proposals-closure-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-07
+    - sales
+    - proposals
+  revision: 1
+  schema_version: 1
+  slug: prd-07-sales-proposals-closure-verification
+  updated_at: 2026-06-18T19:45:06.000Z
+relations:
+  - target_id: tsk_20260618_prd-07-sales-proposals-closure
+    type: supports
+spec:
+  claims:
+    - Sales schemas now include PRD 07 central fields for ICP, prospect research, outreach payloads, opportunity discovery, proposal package/versioning, negotiation, acceptance and lost reasons.
+    - Core sales commands enforce researched outreach, duplicate/cooldown review, proposal review, exact send payload confirmation, immutable sent artifact checksum and accepted-proposal conversion.
+    - CLI/API/MCP dry-run equivalence covers the expanded sales command surface.
+    - The prospect-to-client workflow fixture now executes the governed sales path instead of only checking kind presence.
+    - Final verification, panel smoke, schema export, validation and sync rebuild passed after closing PRD 07.
+  command: >-
+    npx vitest run packages/core/src/command-runtime.test.ts packages/core/src/index.test.ts &&
+    npx vitest run packages/cli/src/index.test.ts packages/testing/src/interface-equivalence.test.ts &&
+    npm run studio -- workflow --fixtures --execute --workflow prospect-to-client --json &&
+    npm run verify &&
+    node operations/tools/panel-smoke.mjs &&
+    npm run studio -- schemas export --json &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    npm run studio -- coverage --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T19:45:06.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 07 sales proposals closure verification
+  validated_at: 2026-06-18T19:45:06.000Z

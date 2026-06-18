@@ -5,6 +5,7 @@ import { z } from "zod";
 import { createMcpContext, executeMcpCommand } from "../command.js";
 import { jsonContent } from "../responses.js";
 import { registerAgentHarnessMutationTools } from "./mutations/agent-harness-mutations.js";
+import { registerSalesMutationTools } from "./mutations/sales-mutations.js";
 
 const sharedCommandOptions = {
   dry_run: z.boolean().default(false),
@@ -51,6 +52,7 @@ const careerEvidenceMapInput = z.object({
 
 export function registerStudioMcpMutationTools(server: McpServer, root: string): void {
   registerAgentHarnessMutationTools(server, root);
+  registerSalesMutationTools(server, root);
 
   server.tool(
     "studio_prepare_entity_create",
@@ -308,40 +310,6 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
   );
 
   server.tool(
-    "studio_prepare_proposal",
-    { opportunity_id: z.string(), title: z.string().optional(), ...sharedCommandOptions },
-    async ({ opportunity_id, title, dry_run, idempotency_key }) =>
-      jsonContent(
-        await executeMcpCommand(root, {
-          command: "proposal.prepare",
-          payload: {
-            opportunity_id,
-            ...(title ? { title } : {}),
-          },
-          dryRun: dry_run,
-          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
-        }),
-      ),
-  );
-
-  server.tool(
-    "studio_create_engagement_from_opportunity",
-    { opportunity_id: z.string(), title: z.string().optional(), ...sharedCommandOptions },
-    async ({ opportunity_id, title, dry_run, idempotency_key }) =>
-      jsonContent(
-        await executeMcpCommand(root, {
-          command: "engagement.create-from-opportunity",
-          payload: {
-            opportunity_id,
-            ...(title ? { title } : {}),
-          },
-          dryRun: dry_run,
-          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
-        }),
-      ),
-  );
-
-  server.tool(
     "studio_review_duplicates",
     {
       kind: z.string().optional(),
@@ -359,29 +327,6 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             ...(title ? { title } : {}),
             ...(email ? { email } : {}),
             ...(website ? { website } : {}),
-          },
-          dryRun: dry_run,
-          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
-        }),
-      ),
-  );
-
-  server.tool(
-    "studio_convert_opportunity",
-    {
-      opportunity_id: z.string(),
-      client_title: z.string().optional(),
-      engagement_title: z.string().optional(),
-      ...sharedCommandOptions,
-    },
-    async ({ opportunity_id, client_title, engagement_title, dry_run, idempotency_key }) =>
-      jsonContent(
-        await executeMcpCommand(root, {
-          command: "opportunity.convert",
-          payload: {
-            opportunity_id,
-            ...(client_title ? { client_title } : {}),
-            ...(engagement_title ? { engagement_title } : {}),
           },
           dryRun: dry_run,
           ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
