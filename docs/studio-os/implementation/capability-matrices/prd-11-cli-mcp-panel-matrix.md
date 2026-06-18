@@ -1,7 +1,7 @@
 # PRD 11 Capability Matrix: CLI, MCP, and Local Panel
 
 Target: 100% capability complete without requiring MCP to be always running.
-Current estimate: 96%.
+Current estimate: 97%.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|
@@ -12,8 +12,8 @@ Current estimate: 96%.
 | MCP tools | Query, health, prepare, low-risk mutate, validate, evidence, external actions, confirmation status. | agent harness read and lifecycle mutation tools complete; selected shared mutation tools support dry-run/idempotency; broader command-class annotations partial | Add tool annotations and coverage per command class. | MCP | MCP lifecycle smoke | External execution blocked. |
 | MCP prompts | Opportunity, engagement, implementation diagnosis, case, content, application, handoff. | capability_complete for normative prompt set with smoke coverage | Add argument-level prompt assertions where needed. | MCP | prompt smoke | Prompts do not mutate by themselves. |
 | Panel home | Revenue, obligations, engagements, sales/applications, next actions, repo health, external actions. | partial; built-panel smoke now covers the operational shell | Add finance/obligation and intake-aware empty states. | panel/API | Playwright smoke | Empty data shown honestly. |
-| Panel domain views | Clients, sales, applications, products, portfolio, tasks/runs, diagnostics, backup. | agent runs/context/handoff operational view complete; Playwright smoke covers Agent Harness and Control; other domains partial | Expand remaining views from tables to operational flows. | panel/API | build + API test + Playwright smoke | No YAML editor primary flow. |
-| Panel mutation | Forms call API; protected actions show exact impact and confirmation. | stale projection handling complete; prepared-action refresh complete; domain mutation forms partial | Add domain mutation forms and exact impact flows. | panel/API | panel mutation tests | No external sends. |
+| Panel domain views | Clients, sales, applications, products, portfolio, tasks/runs, diagnostics, backup. | agent runs/context/handoff operational view complete; CRM and Career have structured intake mutation flows; other domains still table-first | Expand remaining domain views from tables to operational flows. | panel/API | build + API test + Playwright smoke | No YAML editor primary flow. |
+| Panel mutation | Forms call API; protected actions show exact impact and confirmation. | stale projection handling complete; prepared-action refresh complete; CRM/Career structured forms dry-run exact payload before execute | Add more domain mutation forms and exact impact flows. | panel/API | panel mutation tests | No external sends. |
 | Runtime security | Loopback, token, origin checks, MCP separate process consuming same core. | partial | Keep Host/Origin tests and MCP smoke current. | API/MCP | security tests | No public bind default. |
 | CLI fallback | CLI remains fully useful when panel/MCP unavailable. | semantic command fallback complete across the registry; dry-run operational helpers and blocked/fake external adapter prepares covered; live WordPress/docker helpers partial | Add optional environment-gated smoke tests for live WordPress/docker helpers. | CLI | fallback tests | CLI is canonical fallback. |
 
@@ -130,3 +130,17 @@ current generic entity CRUD.
 - Remaining PRD 11 work: expand the matrix to the remaining semantic commands,
   add optional environment-gated live WordPress helper smoke and build richer
   domain mutation forms without bypassing command runtime.
+
+2026-06-18 panel domain mutation update:
+
+- Added a structured panel command review component that posts to
+  `/api/v1/commands/dry-run`, shows the exact command payload and dry-run
+  envelope, then executes the same payload through `/api/v1/commands/execute`.
+- Added CRM prospect intake and LinkedIn application preparation flows without
+  exposing a YAML/editor-primary mutation path.
+- Extended the Playwright panel smoke to fill the CRM form, review exact
+  payload, execute through the local API and verify the created prospect appears
+  in the dashboard.
+- Remaining PRD 11 work: add more domain operational forms, expand the
+  equivalence matrix to the remaining semantic commands and optionally add
+  environment-gated live WordPress helper smoke.

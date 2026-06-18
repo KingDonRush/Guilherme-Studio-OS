@@ -1,0 +1,39 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T04:51:45.000Z
+  id: evd_20260618_prd-11-panel-domain-mutation-flows-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - panel
+  revision: 1
+  schema_version: 1
+  slug: prd-11-panel-domain-mutation-flows-verification
+  updated_at: 2026-06-18T04:51:45.000Z
+relations:
+  - target_id: tsk_20260618_prd-11-panel-domain-mutation-flows
+    type: supports
+spec:
+  claims:
+    - The panel has a reusable structured command review component for dry-run then execute flows.
+    - CRM prospect intake and LinkedIn application preparation are available as domain forms without a generic YAML editor.
+    - The panel smoke executes the CRM flow through the local API command runtime and verifies the created prospect appears.
+    - The verification path does not send external actions, fabricate real customer data or implement portfolio work.
+  command: >-
+    npm run verify &&
+    node operations/tools/panel-smoke.mjs &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T04:51:45.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 11 panel domain mutation flows verification
+  validated_at: 2026-06-18T04:51:45.000Z

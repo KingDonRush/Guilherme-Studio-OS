@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T04:51:45.000Z
+  id: tsk_20260618_prd-11-panel-domain-mutation-flows
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - panel
+  revision: 1
+  schema_version: 1
+  slug: prd-11-panel-domain-mutation-flows
+  updated_at: 2026-06-18T04:51:45.000Z
+relations: []
+spec:
+  acceptance:
+    - panel exposes structured CRM prospect intake without a YAML editor
+    - panel exposes structured LinkedIn application preparation without external submission
+    - panel dry-runs a command through the local API before execution
+    - panel shows exact command, payload, idempotency key and dry-run envelope before execution
+    - panel smoke fills, reviews and executes the CRM flow against a temporary Studio root
+    - no fabricated real data, external send or portfolio implementation is introduced
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Adds exact-payload review and execution flows for selected PRD 11 domain panel mutations.
+  title: PRD 11 panel domain mutation flows

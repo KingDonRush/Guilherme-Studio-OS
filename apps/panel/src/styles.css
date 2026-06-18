@@ -238,6 +238,130 @@ a {
   background: #050913;
 }
 
+.command-panel {
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+}
+
+.command-panel h3,
+.command-panel p {
+  margin: 0;
+}
+
+.command-panel h3 {
+  margin-top: 8px;
+}
+
+.command-panel-head {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.command-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+}
+
+.field span,
+.command-review-grid span,
+.review-columns span {
+  color: #3b4352;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  min-height: 40px;
+  padding: 10px 12px;
+  color: #080b12;
+  font: inherit;
+  background: #fffaf3;
+  border: 1px solid #111827;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.command-form button,
+.command-review-block button {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 14px;
+  color: #050913;
+  font-weight: 800;
+  background: #16e4e9;
+  border: 1px solid #111827;
+  cursor: pointer;
+}
+
+.command-form button:disabled,
+.command-review-block button:disabled {
+  color: #3b4352;
+  background: #d9d1c5;
+  cursor: not-allowed;
+}
+
+.command-review-block {
+  display: grid;
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid #d9d1c5;
+}
+
+.command-review-grid,
+.review-columns {
+  display: grid;
+  gap: 14px;
+}
+
+.command-review-grid {
+  grid-template-columns: 160px 160px minmax(0, 1fr);
+}
+
+.review-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.command-review-grid > div,
+.review-columns > div {
+  display: grid;
+  gap: 8px;
+}
+
+.command-review-grid code {
+  overflow: hidden;
+  color: #3b4352;
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+}
+
+.review-columns pre {
+  overflow: auto;
+  max-height: 260px;
+  margin: 0;
+  padding: 14px;
+  color: #f8fbff;
+  background: #050913;
+}
+
 .checksum code {
   overflow: hidden;
   color: #3b4352;
@@ -266,12 +390,19 @@ a {
 }
 
 .empty,
-.error {
+.error,
+.success {
   display: flex;
   gap: 8px;
   align-items: center;
   padding: 18px 24px;
   border-top: 1px solid #d9d1c5;
+}
+
+.success {
+  padding: 0;
+  color: #007d80;
+  border-top: 0;
 }
 
 @media (max-width: 980px) {
@@ -281,7 +412,10 @@ a {
   .grid.three,
   .row,
   .action-head,
-  .checksum {
+  .checksum,
+  .command-form,
+  .command-review-grid,
+  .review-columns {
     grid-template-columns: 1fr;
   }
 

@@ -69,6 +69,23 @@ async function main() {
     checks.push(await waitForText(page, "Projeção rev"));
     await assertNoHorizontalOverflow(page);
 
+    await page.goto(`${baseUrl}/#/crm`, { waitUntil: "networkidle", timeout: 45_000 });
+    checks.push(await waitForText(page, "Registrar prospect"));
+    await page.getByLabel("Nome do prospect").fill("Panel smoke prospect");
+    await page.getByLabel("Contexto inicial").fill("Smoke test for governed panel mutation.");
+    await page.getByRole("button", { name: /Revisar comando/i }).click();
+    checks.push(await waitForText(page, "Payload exato"));
+    checks.push(await waitForText(page, "entity.create"));
+    await page.getByRole("button", { name: /Executar payload revisado/i }).click();
+    checks.push(await waitForText(page, "Executado via command runtime"));
+    checks.push(await waitForText(page, "Panel smoke prospect"));
+    await assertNoHorizontalOverflow(page);
+
+    await page.goto(`${baseUrl}/#/career`, { waitUntil: "networkidle", timeout: 45_000 });
+    checks.push(await waitForText(page, "Preparar candidatura LinkedIn"));
+    checks.push(await waitForText(page, "URL LinkedIn"));
+    await assertNoHorizontalOverflow(page);
+
     await page.goto(`${baseUrl}/#/control`, { waitUntil: "networkidle", timeout: 45_000 });
     checks.push(await waitForText(page, "Acceptance"));
     checks.push(await waitForText(page, "Ações preparadas"));
