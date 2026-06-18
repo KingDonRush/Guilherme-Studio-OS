@@ -5,11 +5,11 @@ Current estimate: 99%.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|
-| Shared rule | All mutations call Studio Core and produce same events/gates/errors. | cross-interface dry-run matrix covers AgentRun, entity create, evidence, decisions, prepared actions, CRM, sales, delivery, finance, content, case and handoff commands across core, CLI, API and MCP; commands without dedicated MCP tools remain partial | Add MCP tools/equivalence for remaining semantic commands that still lack MCP coverage. | CLI/API/MCP | integration tests | Fixtures are deterministic. |
+| Shared rule | All mutations call Studio Core and produce same events/gates/errors. | cross-interface dry-run matrix covers semantic command classes across core, CLI, API and MCP; AgentRun lifecycle also has MCP lifecycle smoke coverage | Add final equivalence assertions for AgentRun lifecycle commands if strict full-registry matrix is required. | CLI/API/MCP | integration tests | Fixtures are deterministic. |
 | CLI command groups | Required domain command groups exist with meaningful verbs. | partial | Replace generic creates with semantic verbs per PRD. | CLI | CLI help/tests | Empty domains show intake. |
 | CLI machine behavior | JSON, dry-run, explicit IDs, exit codes, no prompts, idempotency, expected revision. | semantic command runtime complete; operational dry-run and fake-adapter contracts covered; live WordPress/docker command behavior partial | Keep live helper commands behind local environment checks and add smoke coverage when the WordPress runtime is available. | CLI | CLI test matrix | No real data required. |
 | MCP resources | Constitution, policies, schemas, lifecycles, context packs, repo/env, workflows. | active policy, lifecycle, schema, workflow, Agent Harness, repo health, prepared action and coverage resources covered by in-memory MCP smoke | Add argument-level assertions for more templated resources as new domain resources appear. | MCP | build + smoke | Missing data in resource gaps. |
-| MCP tools | Query, health, prepare, low-risk mutate, validate, evidence, external actions, confirmation status. | agent harness read and lifecycle mutation tools complete; existing command-runtime mutation tools covered by the semantic equivalence matrix support dry-run/idempotency; command classes without MCP tools remain partial | Add missing MCP tools for command classes not yet surfaced, especially release, application, payment reconcile, decision amend and learning. | MCP | MCP lifecycle smoke | External execution blocked. |
+| MCP tools | Query, health, prepare, low-risk mutate, validate, evidence, external actions, confirmation status. | agent harness read and lifecycle mutation tools complete; semantic command-runtime mutation tools support dry-run/idempotency and are covered by the equivalence matrix | Add naming/description polish only where MCP clients need clearer tool discovery. | MCP | MCP lifecycle smoke | External execution blocked. |
 | MCP prompts | Opportunity, engagement, implementation diagnosis, case, content, application, handoff. | capability_complete for normative prompt set with smoke coverage | Add argument-level prompt assertions where needed. | MCP | prompt smoke | Prompts do not mutate by themselves. |
 | Panel home | Revenue, obligations, engagements, sales/applications, next actions, repo health, external actions. | partial; built-panel smoke now covers the operational shell | Add finance/obligation and intake-aware empty states. | panel/API | Playwright smoke | Empty data shown honestly. |
 | Panel domain views | Clients, sales, applications, products, portfolio, tasks/runs, diagnostics, backup. | agent runs/context/handoff operational view complete; CRM, Career, Delivery, Products, Portfolio/Marketing and Finance have structured forms; Product, Delivery and Finance include relationship pickers for existing canonical entities | Add remaining domain-specific transitions and relationship pickers as each semantic command reaches PRD completeness. | panel/API | build + API test + Playwright smoke | No YAML editor primary flow. |
@@ -187,3 +187,17 @@ current generic entity CRUD.
   missing dedicated MCP tools, especially release, application, payment
   reconcile, decision amend and learning, plus optional live WordPress helper
   smoke.
+
+2026-06-18 missing MCP semantic tools update:
+
+- Added MCP tools for the remaining semantic command classes that lacked direct
+  MCP mutation surface: entity transition, communication prepare, project repo
+  registration, release prepare/publish, application prepare/follow-up/interview,
+  knowledge route, decision amend, learning propose and payment reconcile.
+- Each new tool delegates to `executeMcpCommand` and accepts `dry_run` plus
+  `idempotency_key`.
+- Expanded the cross-interface equivalence matrix again to cover those tools
+  against Studio Core, CLI and local API dry-run envelopes.
+- Remaining PRD 11 work: tighten panel home/finance empty states, keep Host and
+  Origin security smoke current and optionally add live WordPress helper smoke
+  when the runtime is available.

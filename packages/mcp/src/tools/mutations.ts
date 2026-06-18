@@ -4,6 +4,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { createMcpContext, executeMcpCommand } from "../command.js";
 import { jsonContent } from "../responses.js";
+import { registerAgentHarnessMutationTools } from "./mutations/agent-harness-mutations.js";
 
 const sharedCommandOptions = {
   dry_run: z.boolean().default(false),
@@ -56,6 +57,25 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             classification,
             ...(summary ? { summary } : {}),
           },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
+    "studio_transition_entity",
+    {
+      entity_id: z.string(),
+      status: z.string(),
+      ...sharedCommandOptions,
+    },
+    async ({ entity_id, status, dry_run, idempotency_key }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "entity.transition",
+          targetId: entity_id,
+          payload: { status },
           dryRun: dry_run,
           ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
@@ -124,6 +144,25 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
           command: "prospect.qualify",
           targetId: prospect_id,
           payload: { rationale, score, qualified },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
+    "studio_prepare_communication",
+    {
+      subject_id: z.string(),
+      channel: z.string(),
+      message: z.string(),
+      ...sharedCommandOptions,
+    },
+    async ({ subject_id, channel, message, dry_run, idempotency_key }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "communication.prepare",
+          payload: { subject_id, channel, message },
           dryRun: dry_run,
           ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
         }),
@@ -289,6 +328,41 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
   );
 
   server.tool(
+    "studio_register_project_repo",
+    {
+      project_id: z.string(),
+      title: z.string(),
+      repository_path: z.string(),
+      branch: z.string().optional(),
+      remote_policy: z.enum(["allowed", "forbidden", "no-remote-in-v1"]).default("allowed"),
+      ...sharedCommandOptions,
+    },
+    async ({
+      project_id,
+      title,
+      repository_path,
+      branch,
+      remote_policy,
+      dry_run,
+      idempotency_key,
+    }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "project.register-repo",
+          payload: {
+            project_id,
+            title,
+            repository_path,
+            ...(branch ? { branch } : {}),
+            remote_policy,
+          },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
     "studio_create_contract_from_engagement",
     {
       engagement_id: z.string(),
@@ -379,6 +453,67 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
   );
 
   server.tool(
+    "studio_reconcile_payment",
+    {
+      payment_id: z.string(),
+      reference: z.string(),
+      ...sharedCommandOptions,
+    },
+    async ({ payment_id, reference, dry_run, idempotency_key }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "payment.reconcile",
+          targetId: payment_id,
+          payload: { payment_id, reference },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
+    "studio_prepare_release",
+    {
+      product_id: z.string(),
+      version: z.string(),
+      ...sharedCommandOptions,
+    },
+    async ({ product_id, version, dry_run, idempotency_key }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "release.prepare",
+          payload: { product_id, version },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
+    "studio_publish_release",
+    {
+      release_id: z.string(),
+      evidence_ids: z.array(z.string()).min(1),
+      demo_url: z.string().optional(),
+      ...sharedCommandOptions,
+    },
+    async ({ release_id, evidence_ids, demo_url, dry_run, idempotency_key }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "release.publish",
+          targetId: release_id,
+          payload: {
+            release_id,
+            evidence_ids,
+            ...(demo_url ? { demo_url } : {}),
+          },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
     "studio_prepare_content",
     {
       title: z.string(),
@@ -408,6 +543,126 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             ...(channel ? { channel } : {}),
             ...(publish_at ? { publish_at } : {}),
             public_claims,
+            evidence_ids,
+          },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
+    "studio_prepare_application",
+    {
+      title: z.string(),
+      source_url: z.string(),
+      organization_id: z.string().optional(),
+      ...sharedCommandOptions,
+    },
+    async ({ title, source_url, organization_id, dry_run, idempotency_key }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "application.prepare",
+          payload: {
+            title,
+            source_url,
+            ...(organization_id ? { organization_id } : {}),
+          },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
+    "studio_schedule_application_follow_up",
+    {
+      application_id: z.string(),
+      follow_up_at: z.string(),
+      channel: z.string().optional(),
+      message: z.string().optional(),
+      ...sharedCommandOptions,
+    },
+    async ({ application_id, follow_up_at, channel, message, dry_run, idempotency_key }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "application.follow-up",
+          targetId: application_id,
+          payload: {
+            application_id,
+            follow_up_at,
+            ...(channel ? { channel } : {}),
+            ...(message ? { message } : {}),
+          },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
+    "studio_record_application_interview",
+    {
+      application_id: z.string(),
+      interview_at: z.string(),
+      notes: z.string().optional(),
+      ...sharedCommandOptions,
+    },
+    async ({ application_id, interview_at, notes, dry_run, idempotency_key }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "application.record-interview",
+          targetId: application_id,
+          payload: {
+            application_id,
+            interview_at,
+            ...(notes ? { notes } : {}),
+          },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
+    "studio_route_knowledge",
+    {
+      title: z.string(),
+      content: z.string(),
+      destination: z.enum([
+        "constitution",
+        "prd",
+        "decision",
+        "entity",
+        "workflow",
+        "evidence",
+        "lesson",
+        "temporary_note",
+      ]),
+      target_id: z.string().optional(),
+      rationale: z.string().optional(),
+      evidence_ids: z.array(z.string()).default([]),
+      ...sharedCommandOptions,
+    },
+    async ({
+      title,
+      content,
+      destination,
+      target_id,
+      rationale,
+      evidence_ids,
+      dry_run,
+      idempotency_key,
+    }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "knowledge.route",
+          payload: {
+            title,
+            content,
+            destination,
+            ...(target_id ? { target_id } : {}),
+            ...(rationale ? { rationale } : {}),
             evidence_ids,
           },
           dryRun: dry_run,
@@ -461,6 +716,99 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
             ...(authority_owner_id ? { authority_owner_id } : {}),
             ...(confirmation_required !== undefined ? { confirmation_required } : {}),
             contradiction_ids,
+            evidence_ids,
+          },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
+    "studio_amend_decision",
+    {
+      decision_id: z.string(),
+      decision: z.string(),
+      title: z.string().optional(),
+      rationale: z.string().optional(),
+      alternatives: z.array(z.string()).default([]),
+      impact: z.string().optional(),
+      reversibility: z.enum(["reversible", "hard_to_reverse", "irreversible"]).optional(),
+      evidence_ids: z.array(z.string()).default([]),
+      ...sharedCommandOptions,
+    },
+    async ({
+      decision_id,
+      decision,
+      title,
+      rationale,
+      alternatives,
+      impact,
+      reversibility,
+      evidence_ids,
+      dry_run,
+      idempotency_key,
+    }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "decision.amend",
+          targetId: decision_id,
+          payload: {
+            decision_id,
+            decision,
+            ...(title ? { title } : {}),
+            ...(rationale ? { rationale } : {}),
+            alternatives,
+            ...(impact ? { impact } : {}),
+            ...(reversibility ? { reversibility } : {}),
+            evidence_ids,
+          },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
+    "studio_propose_learning",
+    {
+      title: z.string(),
+      failure_class: z.string(),
+      proposal: z.string(),
+      destination: z.enum([
+        "workflow",
+        "schema",
+        "test",
+        "decision",
+        "constitution",
+        "repository_instruction",
+      ]),
+      rationale: z.string().optional(),
+      run_id: z.string().optional(),
+      evidence_ids: z.array(z.string()).default([]),
+      ...sharedCommandOptions,
+    },
+    async ({
+      title,
+      failure_class,
+      proposal,
+      destination,
+      rationale,
+      run_id,
+      evidence_ids,
+      dry_run,
+      idempotency_key,
+    }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "learning.propose",
+          payload: {
+            title,
+            failure_class,
+            proposal,
+            destination,
+            ...(rationale ? { rationale } : {}),
+            ...(run_id ? { run_id } : {}),
             evidence_ids,
           },
           dryRun: dry_run,
@@ -547,362 +895,5 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
         }),
       );
     },
-  );
-}
-
-function registerAgentHarnessMutationTools(server: McpServer, root: string): void {
-  const commandOptions = {
-    dry_run: z.boolean().default(false),
-    idempotency_key: z.string().optional(),
-  };
-  const targetedCommandOptions = {
-    ...commandOptions,
-    expected_revision: z.number().int().positive().optional(),
-  };
-
-  server.tool(
-    "studio_start_agent_run",
-    {
-      objective: z.string().min(1),
-      title: z.string().optional(),
-      task_id: z.string().optional(),
-      owning_entity_ids: z.array(z.string()).default([]),
-      target_repository_ids: z.array(z.string()).default([]),
-      target_environment_ids: z.array(z.string()).default([]),
-      phase: z
-        .enum([
-          "discovery",
-          "planning",
-          "implementation",
-          "stabilization",
-          "release",
-          "migration",
-          "recovery",
-        ])
-        .optional(),
-      risk: z.enum(["low", "normal", "high", "critical"]).optional(),
-      allowed: z.array(z.string()).default([]),
-      confirmation_required: z.array(z.string()).default([]),
-      prohibited: z.array(z.string()).default([]),
-      model: z.string().optional(),
-      material: z.boolean().default(true),
-      ...commandOptions,
-    },
-    async ({
-      objective,
-      title,
-      task_id,
-      owning_entity_ids,
-      target_repository_ids,
-      target_environment_ids,
-      phase,
-      risk,
-      allowed,
-      confirmation_required,
-      prohibited,
-      model,
-      material,
-      dry_run,
-      idempotency_key,
-    }) =>
-      jsonContent(
-        await executeMcpCommand(root, {
-          command: "agent.start",
-          payload: {
-            objective,
-            ...(title ? { title } : {}),
-            ...(task_id ? { task_id } : {}),
-            owning_entity_ids,
-            target_repository_ids,
-            target_environment_ids,
-            ...(phase ? { phase } : {}),
-            ...(risk ? { risk } : {}),
-            allowed,
-            confirmation_required,
-            prohibited,
-            ...(model ? { model } : {}),
-            material,
-          },
-          dryRun: dry_run,
-          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
-        }),
-      ),
-  );
-
-  server.tool(
-    "studio_build_context_pack",
-    {
-      run_id: z.string(),
-      next_valid_action: z.string().optional(),
-      forbidden_reopenings: z.array(z.string()).default([]),
-      ...targetedCommandOptions,
-    },
-    async ({
-      run_id,
-      next_valid_action,
-      forbidden_reopenings,
-      dry_run,
-      idempotency_key,
-      expected_revision,
-    }) =>
-      jsonContent(
-        await executeMcpCommand(root, {
-          command: "agent.context",
-          targetId: run_id,
-          payload: {
-            run_id,
-            ...(next_valid_action ? { next_valid_action } : {}),
-            forbidden_reopenings,
-          },
-          dryRun: dry_run,
-          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
-          ...(expected_revision !== undefined ? { expectedRevision: expected_revision } : {}),
-        }),
-      ),
-  );
-
-  server.tool(
-    "studio_authorize_agent_run",
-    {
-      run_id: z.string(),
-      allowed: z.array(z.string()).optional(),
-      confirmation_required: z.array(z.string()).optional(),
-      prohibited: z.array(z.string()).optional(),
-      ...targetedCommandOptions,
-    },
-    async ({
-      run_id,
-      allowed,
-      confirmation_required,
-      prohibited,
-      dry_run,
-      idempotency_key,
-      expected_revision,
-    }) =>
-      jsonContent(
-        await executeMcpCommand(root, {
-          command: "agent.authorize",
-          targetId: run_id,
-          payload: {
-            run_id,
-            ...(allowed ? { allowed } : {}),
-            ...(confirmation_required ? { confirmation_required } : {}),
-            ...(prohibited ? { prohibited } : {}),
-          },
-          dryRun: dry_run,
-          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
-          ...(expected_revision !== undefined ? { expectedRevision: expected_revision } : {}),
-        }),
-      ),
-  );
-
-  server.tool(
-    "studio_record_agent_observation",
-    {
-      run_id: z.string(),
-      source: z.enum(["git", "runtime", "user", "handoff", "docs", "code", "other"]),
-      summary: z.string().min(1),
-      repository_id: z.string().optional(),
-      contradictions: z.array(z.string()).default([]),
-      ...targetedCommandOptions,
-    },
-    async ({
-      run_id,
-      source,
-      summary,
-      repository_id,
-      contradictions,
-      dry_run,
-      idempotency_key,
-      expected_revision,
-    }) =>
-      jsonContent(
-        await executeMcpCommand(root, {
-          command: "agent.observe",
-          targetId: run_id,
-          payload: {
-            run_id,
-            source,
-            summary,
-            ...(repository_id ? { repository_id } : {}),
-            contradictions,
-          },
-          dryRun: dry_run,
-          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
-          ...(expected_revision !== undefined ? { expectedRevision: expected_revision } : {}),
-        }),
-      ),
-  );
-
-  server.tool(
-    "studio_record_agent_action",
-    {
-      run_id: z.string(),
-      action: z.string().min(1),
-      status: z.enum(["planned", "executed", "blocked", "failed"]).optional(),
-      command_text: z.string().optional(),
-      target_id: z.string().optional(),
-      result_summary: z.string().optional(),
-      evidence_ids: z.array(z.string()).default([]),
-      ...targetedCommandOptions,
-    },
-    async ({
-      run_id,
-      action,
-      status,
-      command_text,
-      target_id,
-      result_summary,
-      evidence_ids,
-      dry_run,
-      idempotency_key,
-      expected_revision,
-    }) =>
-      jsonContent(
-        await executeMcpCommand(root, {
-          command: "agent.record-action",
-          targetId: run_id,
-          payload: {
-            run_id,
-            action,
-            ...(status ? { status } : {}),
-            ...(command_text ? { command: command_text } : {}),
-            ...(target_id ? { target_id } : {}),
-            ...(result_summary ? { result_summary } : {}),
-            evidence_ids,
-          },
-          dryRun: dry_run,
-          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
-          ...(expected_revision !== undefined ? { expectedRevision: expected_revision } : {}),
-        }),
-      ),
-  );
-
-  server.tool(
-    "studio_record_agent_evidence",
-    {
-      run_id: z.string(),
-      evidence_ids: z.array(z.string()).min(1),
-      ...targetedCommandOptions,
-    },
-    async ({ run_id, evidence_ids, dry_run, idempotency_key, expected_revision }) =>
-      jsonContent(
-        await executeMcpCommand(root, {
-          command: "agent.record-evidence",
-          targetId: run_id,
-          payload: { run_id, evidence_ids },
-          dryRun: dry_run,
-          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
-          ...(expected_revision !== undefined ? { expectedRevision: expected_revision } : {}),
-        }),
-      ),
-  );
-
-  server.tool(
-    "studio_complete_agent_verification",
-    {
-      run_id: z.string(),
-      status: z.enum(["passed", "failed", "not_run"]),
-      command_text: z.string().optional(),
-      result_summary: z.string().optional(),
-      artifact_path: z.string().optional(),
-      not_run_reason: z.string().optional(),
-      ...targetedCommandOptions,
-    },
-    async ({
-      run_id,
-      status,
-      command_text,
-      result_summary,
-      artifact_path,
-      not_run_reason,
-      dry_run,
-      idempotency_key,
-      expected_revision,
-    }) =>
-      jsonContent(
-        await executeMcpCommand(root, {
-          command: "agent.verify",
-          targetId: run_id,
-          payload: {
-            run_id,
-            status,
-            ...(command_text ? { command: command_text } : {}),
-            ...(result_summary ? { result_summary } : {}),
-            ...(artifact_path ? { artifact_path } : {}),
-            ...(not_run_reason ? { not_run_reason } : {}),
-          },
-          dryRun: dry_run,
-          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
-          ...(expected_revision !== undefined ? { expectedRevision: expected_revision } : {}),
-        }),
-      ),
-  );
-
-  server.tool(
-    "studio_create_agent_handoff",
-    {
-      run_id: z.string(),
-      summary: z.string().min(1),
-      next_valid_action: z.string().min(1),
-      gaps: z.array(z.string()).default([]),
-      forbidden_reopenings: z.array(z.string()).default([]),
-      confirmation_required: z.array(z.string()).default([]),
-      evidence_ids: z.array(z.string()).default([]),
-      ...targetedCommandOptions,
-    },
-    async ({
-      run_id,
-      summary,
-      next_valid_action,
-      gaps,
-      forbidden_reopenings,
-      confirmation_required,
-      evidence_ids,
-      dry_run,
-      idempotency_key,
-      expected_revision,
-    }) =>
-      jsonContent(
-        await executeMcpCommand(root, {
-          command: "agent.handoff",
-          targetId: run_id,
-          payload: {
-            run_id,
-            summary,
-            next_valid_action,
-            gaps,
-            forbidden_reopenings,
-            confirmation_required,
-            evidence_ids,
-          },
-          dryRun: dry_run,
-          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
-          ...(expected_revision !== undefined ? { expectedRevision: expected_revision } : {}),
-        }),
-      ),
-  );
-
-  server.tool(
-    "studio_close_agent_run",
-    {
-      run_id: z.string(),
-      outcome: z.string().optional(),
-      ...targetedCommandOptions,
-    },
-    async ({ run_id, outcome, dry_run, idempotency_key, expected_revision }) =>
-      jsonContent(
-        await executeMcpCommand(root, {
-          command: "agent.close",
-          targetId: run_id,
-          payload: {
-            run_id,
-            ...(outcome ? { outcome } : {}),
-          },
-          dryRun: dry_run,
-          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
-          ...(expected_revision !== undefined ? { expectedRevision: expected_revision } : {}),
-        }),
-      ),
   );
 }
