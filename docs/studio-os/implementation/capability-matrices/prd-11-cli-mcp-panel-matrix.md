@@ -14,7 +14,7 @@ Current estimate: 99%.
 | Panel home | Revenue, obligations, engagements, sales/applications, next actions, repo health, external actions. | partial; built-panel smoke now covers the operational shell | Add finance/obligation and intake-aware empty states. | panel/API | Playwright smoke | Empty data shown honestly. |
 | Panel domain views | Clients, sales, applications, products, portfolio, tasks/runs, diagnostics, backup. | agent runs/context/handoff operational view complete; CRM, Career, Delivery, Products, Portfolio/Marketing and Finance have structured forms; Product, Delivery and Finance include relationship pickers for existing canonical entities | Add remaining domain-specific transitions and relationship pickers as each semantic command reaches PRD completeness. | panel/API | build + API test + Playwright smoke | No YAML editor primary flow. |
 | Panel mutation | Forms call API; protected actions show exact impact and confirmation. | stale projection handling complete; prepared-action refresh complete; structured forms dry-run exact payload before execute across key domains; relationship-based Product release, Delivery repo and Finance invoice flows are covered | Add remaining exact-impact flows for semantic transitions not yet represented in the panel. | panel/API | panel mutation tests | No external sends. |
-| Runtime security | Loopback, token, origin checks, MCP separate process consuming same core. | partial | Keep Host/Origin tests and MCP smoke current. | API/MCP | security tests | No public bind default. |
+| Runtime security | Loopback, token, origin checks, MCP separate process consuming same core. | Host rejection, invalid Origin rejection, missing/invalid token rejection, allowed local Origin, panel session cookie bootstrap and MCP separate-process smoke are covered | Add process-level bind smoke if the local API is exercised outside Fastify injection. | API/MCP | security tests | No public bind default. |
 | CLI fallback | CLI remains fully useful when panel/MCP unavailable. | semantic command fallback complete across the registry; dry-run operational helpers and blocked/fake external adapter prepares covered; live WordPress/docker helpers partial | Add optional environment-gated smoke tests for live WordPress/docker helpers. | CLI | fallback tests | CLI is canonical fallback. |
 
 Completion blocker: interface breadth must follow PRD capabilities, not just
@@ -201,3 +201,13 @@ current generic entity CRUD.
 - Remaining PRD 11 work: tighten panel home/finance empty states, keep Host and
   Origin security smoke current and optionally add live WordPress helper smoke
   when the runtime is available.
+
+2026-06-18 runtime security smoke update:
+
+- Added local API security smoke coverage for missing token rejection, invalid
+  bearer rejection, allowed local Origin acceptance, panel session cookie
+  bootstrap and cookie-authorized API reads.
+- Existing tests continue to cover invalid Host and invalid Origin rejection.
+- Remaining PRD 11 work: tighten panel home/finance empty states and optionally
+  add process-level bind/live WordPress helper smoke when the runtime is
+  available.

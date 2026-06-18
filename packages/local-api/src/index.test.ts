@@ -6,6 +6,72 @@ import YAML from "yaml";
 import { createLocalApi } from "./index.js";
 
 describe("local API", () => {
+  it("enforces local host, origin and session authentication", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "studio-api-security-test-"));
+    await writeFile(
+      path.join(root, "studio.config.yaml"),
+      YAML.stringify({
+        api_version: "studio.guilherme.dev/config-v1",
+        root_name: "Security Test Studio",
+        operator_id: "per_20260614_guilherme-silva",
+        canonical_roots: ["data", "operations"],
+        runtime_path: "runtime",
+        panel: { host: "127.0.0.1", port: 47832 },
+        adapters: {},
+      }),
+    );
+    const { app, token } = await createLocalApi({ root });
+    const headers = {
+      host: "127.0.0.1:47832",
+      "content-type": "application/json",
+    };
+
+    const missingToken = await app.inject({
+      method: "GET",
+      url: "/api/v1/summary",
+      headers,
+    });
+    expect(missingToken.statusCode).toBe(401);
+    expect(missingToken.json()).toMatchObject({ error: "Unauthorized" });
+
+    const invalidBearer = await app.inject({
+      method: "GET",
+      url: "/api/v1/summary",
+      headers: { ...headers, authorization: "Bearer wrong-token" },
+    });
+    expect(invalidBearer.statusCode).toBe(401);
+    expect(invalidBearer.json()).toMatchObject({ error: "Unauthorized" });
+
+    const validOrigin = await app.inject({
+      method: "GET",
+      url: "/api/v1/summary",
+      headers: {
+        ...headers,
+        authorization: `Bearer ${token}`,
+        origin: "http://127.0.0.1:47832",
+      },
+    });
+    expect(validOrigin.statusCode).toBe(200);
+
+    const panelBootstrap = await app.inject({
+      method: "GET",
+      url: "/",
+      headers,
+    });
+    const setCookie = panelBootstrap.headers["set-cookie"];
+    expect(String(setCookie)).toContain("studio_session=");
+    expect(String(setCookie)).toContain("HttpOnly");
+    expect(String(setCookie)).toContain("SameSite=Strict");
+
+    const cookieAuth = await app.inject({
+      method: "GET",
+      url: "/api/v1/summary",
+      headers: { ...headers, cookie: `studio_session=${token}` },
+    });
+    expect(cookieAuth.statusCode).toBe(200);
+    await app.close();
+  });
+
   it("uses the normalized core result and governed prepared actions", async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), "studio-api-test-"));
     await writeFile(

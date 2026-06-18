@@ -1,0 +1,39 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T16:24:03.000Z
+  id: evd_20260618_prd-11-runtime-security-smoke-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - security
+    - api
+  revision: 1
+  schema_version: 1
+  slug: prd-11-runtime-security-smoke-verification
+  updated_at: 2026-06-18T16:24:03.000Z
+relations:
+  - target_id: tsk_20260618_prd-11-runtime-security-smoke
+    type: supports
+spec:
+  claims:
+    - Local API tests now cover missing token rejection, invalid bearer rejection, allowed local Origin acceptance, panel session cookie bootstrap and cookie-authorized API reads.
+    - Existing Host and invalid Origin rejection tests remain covered in the same local API test suite.
+    - The verification path does not bind a public network interface or execute external sends.
+  command: >-
+    npx vitest run packages/local-api/src/index.test.ts &&
+    npm run verify &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T16:24:03.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 11 runtime security smoke verification
+  validated_at: 2026-06-18T16:24:03.000Z
