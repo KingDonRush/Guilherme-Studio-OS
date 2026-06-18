@@ -87,8 +87,12 @@ async function main() {
     await assertNoHorizontalOverflow(page);
 
     await page.goto(`${baseUrl}/#/career`, { waitUntil: "networkidle", timeout: 45_000 });
+    checks.push(await waitForText(page, "Registrar vaga LinkedIn"));
     checks.push(await waitForText(page, "Preparar candidatura LinkedIn"));
     checks.push(await waitForText(page, "URL LinkedIn"));
+    checks.push(await waitForText(page, "Validar candidatura"));
+    checks.push(await waitForText(page, "Preparar submissão"));
+    checks.push(await waitForText(page, "Registrar outcome"));
     await assertNoHorizontalOverflow(page);
 
     await page.goto(`${baseUrl}/#/delivery`, { waitUntil: "networkidle", timeout: 45_000 });

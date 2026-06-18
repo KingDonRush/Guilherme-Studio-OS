@@ -530,6 +530,280 @@ describe("Studio command runtime", () => {
       },
     });
   });
+
+  it("operates the LinkedIn career pipeline with evidence-backed submission gates", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "studio-runtime-career-governance-"));
+    await writeFile(
+      path.join(root, "studio.config.yaml"),
+      YAML.stringify({
+        api_version: "studio.guilherme.dev/config-v1",
+        root_name: "Runtime career governance test",
+        operator_id: "per_20260614_guilherme-silva",
+        canonical_roots: ["career", "data", "operations"],
+        runtime_path: "runtime",
+        panel: { host: "127.0.0.1", port: 47835 },
+        adapters: {},
+      }),
+    );
+    const context = await createStudioContext(root);
+    const actor = operatorActor(context.config.operator_id);
+    const organization = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "entity.create",
+        actor,
+        payload: { kind: "organization", title: "Remote Studio" },
+      }),
+    );
+    const organizationId = entityIdFromResult(organization);
+    const evidence = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "evidence.register",
+        actor,
+        payload: {
+          title: "Portfolio evidence",
+          evidence_type: "manual",
+          claims: ["Elementor implementation evidence exists"],
+        },
+      }),
+    );
+    const evidenceId = entityIdFromResult(evidence);
+    const strategy = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "career.record-strategy",
+        actor,
+        payload: {
+          role_families: ["WordPress Developer"],
+          employment_types: ["remote"],
+          geographies: ["US", "EU"],
+          timezone: "America/Sao_Paulo overlap",
+          unacceptable_constraints: ["unpaid tests"],
+          evidence_map: [
+            {
+              role_family: "WordPress Developer",
+              required_signal: "Elementor implementation",
+              evidence_ids: [evidenceId],
+            },
+          ],
+        },
+      }),
+    );
+    const opportunity = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "application.register-opportunity",
+        actor,
+        payload: {
+          title: "LinkedIn Elementor role",
+          source_url: "https://www.linkedin.com/jobs/view/123",
+          organization_id: organizationId,
+          role_family: "WordPress Developer",
+          requirements: [
+            { text: "Elementor implementation", type: "explicit" },
+            { text: "WordPress plugin development", type: "explicit" },
+          ],
+          deadline_at: "2026-07-01T12:00:00.000Z",
+        },
+      }),
+    );
+    const opportunityId = entityIdFromResult(opportunity);
+    const fit = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "application.analyze-fit",
+        actor,
+        targetId: opportunityId,
+        payload: {
+          application_id: opportunityId,
+          verified_signals: ["Elementor implementation", "WordPress plugin development"],
+          evidence_ids: [evidenceId],
+        },
+      }),
+    );
+    const application = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "application.prepare",
+        actor,
+        payload: {
+          title: "LinkedIn Elementor role application",
+          source_url: "https://www.linkedin.com/jobs/view/123",
+          organization_id: organizationId,
+          role_family: "WordPress Developer",
+          resume_ref: "career/materials/resume-wordpress.pdf",
+          cover_message: "Evidence-backed cover message.",
+          portfolio_links: ["https://portfolio.example/cases/elementor"],
+          evidence_ids: [evidenceId],
+        },
+      }),
+    );
+    const applicationId = entityIdFromResult(application);
+    const validated = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "application.validate",
+        actor,
+        targetId: applicationId,
+        payload: { application_id: applicationId },
+      }),
+    );
+    const preparedSubmission = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "application.prepare-submission",
+        actor,
+        targetId: applicationId,
+        payload: {
+          application_id: applicationId,
+          channel: "linkedin",
+        },
+      }),
+    );
+    const action = preparedActionFromResult(preparedSubmission);
+    const confirmedAction = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "action.confirm",
+        actor,
+        payload: {
+          action_id: action.id,
+          payload_checksum: action.payload_checksum,
+        },
+      }),
+    );
+    const submitted = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "application.record-submission",
+        actor,
+        targetId: applicationId,
+        payload: {
+          application_id: applicationId,
+          prepared_action_id: action.id,
+          reference: "manual-linkedin-submit",
+        },
+      }),
+    );
+    const interview = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "application.record-interview",
+        actor,
+        targetId: applicationId,
+        payload: {
+          application_id: applicationId,
+          interview_at: "2026-07-05T12:00:00.000Z",
+          notes: "Recruiter screen scheduled.",
+        },
+      }),
+    );
+    const contextRun = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "application.interview-context",
+        actor,
+        targetId: applicationId,
+        payload: {
+          application_id: applicationId,
+          next_action: "Prepare concise evidence-backed interview answers.",
+        },
+      }),
+    );
+    const outcome = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "application.record-outcome",
+        actor,
+        targetId: applicationId,
+        payload: {
+          application_id: applicationId,
+          outcome: "rejected",
+          reason: "Role required enterprise React depth.",
+          learning_notes: "Add React proof only after enough repeated signal.",
+          sample_size: 1,
+          evidence_ids: [evidenceId],
+        },
+      }),
+    );
+
+    expect(strategy).toMatchObject({
+      status: "ok",
+      result: { entity: { kind: "decision", spec: { decision_type: "career_role_strategy" } } },
+    });
+    expect(fit).toMatchObject({
+      status: "ok",
+      result: {
+        entity: {
+          spec: {
+            stage: "analyzed",
+            fit_analysis: { recommendation: "apply", gaps: [] },
+          },
+        },
+      },
+    });
+    expect(validated).toMatchObject({
+      status: "ok",
+      result: {
+        entity: {
+          spec: { stage: "validated", validation: { status: "valid", missing: [] } },
+        },
+      },
+    });
+    expect(preparedSubmission).toMatchObject({
+      status: "ok",
+      result: {
+        action_type: "career.application-submit.prepare",
+        provider: "fake/local",
+        target: applicationId,
+        status: "awaiting_confirmation",
+      },
+    });
+    expect(confirmedAction).toMatchObject({ status: "ok", result: { status: "confirmed" } });
+    expect(submitted).toMatchObject({
+      status: "ok",
+      result: {
+        entity: {
+          spec: {
+            stage: "submitted",
+            submission_prepared_action_id: action.id,
+            submission_payload_checksum: action.payload_checksum,
+          },
+        },
+      },
+    });
+    expect(interview).toMatchObject({
+      status: "ok",
+      result: { entity: { spec: { stage: "interview" } } },
+    });
+    expect(contextRun).toMatchObject({
+      status: "ok",
+      result: {
+        entity: {
+          kind: "agentRun",
+          spec: {
+            state: "oriented",
+            context_pack: {
+              included_entity_ids: expect.arrayContaining([applicationId]),
+            },
+          },
+        },
+      },
+    });
+    expect(outcome).toMatchObject({
+      status: "ok",
+      result: {
+        entity: {
+          spec: {
+            stage: "rejected",
+            outcome: "rejected",
+            sample_size_warning: expect.stringContaining("Tiny sample"),
+          },
+        },
+      },
+    });
+  });
 });
 
 function entityIdFromResult(result: { result?: unknown }): string {
@@ -538,4 +812,15 @@ function entityIdFromResult(result: { result?: unknown }): string {
     throw new Error(`Missing entity_id in result: ${JSON.stringify(result)}`);
   }
   return payload.entity_id;
+}
+
+function preparedActionFromResult(result: { result?: unknown }): {
+  id: string;
+  payload_checksum: string;
+} {
+  const payload = result.result as { id?: unknown; payload_checksum?: unknown };
+  if (typeof payload?.id !== "string" || typeof payload.payload_checksum !== "string") {
+    throw new Error(`Missing prepared action in result: ${JSON.stringify(result)}`);
+  }
+  return { id: payload.id, payload_checksum: payload.payload_checksum };
 }

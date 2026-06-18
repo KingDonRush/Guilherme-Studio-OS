@@ -16,7 +16,7 @@ export function registerDomainCommands(program: Command): void {
   registerDeliveryDomainCommands(domainCommands);
   registerProductDomainCommands(domainCommands);
   registerPortfolioMarketingDomainCommands(domainCommands);
-  registerCareerDomainCommands(domainCommands);
+  registerCareerDomainCommands(program, domainCommands);
   registerFinanceDomainCommands(program, domainCommands);
   registerGovernanceDomainCommands(program, domainCommands);
 }

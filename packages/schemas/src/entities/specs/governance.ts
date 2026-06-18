@@ -184,7 +184,9 @@ export const AgentRunSpecSchema = GenericSpecSchema.extend({
   model: z.string().optional(),
 });
 export const DecisionSpecSchema = GenericSpecSchema.extend({
-  decision_type: z.enum(["decision", "knowledge_route", "learning_proposal"]).default("decision"),
+  decision_type: z
+    .enum(["decision", "knowledge_route", "learning_proposal", "career_role_strategy"])
+    .default("decision"),
   decision: z.string().optional(),
   rationale: z.string().optional(),
   decided_at: z.string().datetime().optional(),

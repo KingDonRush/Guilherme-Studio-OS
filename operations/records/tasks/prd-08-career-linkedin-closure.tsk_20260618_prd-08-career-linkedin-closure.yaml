@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T19:18:56.000Z
+  id: tsk_20260618_prd-08-career-linkedin-closure
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-08
+    - career
+    - linkedin
+  revision: 1
+  schema_version: 1
+  slug: prd-08-career-linkedin-closure
+  updated_at: 2026-06-18T19:18:56.000Z
+relations: []
+spec:
+  acceptance:
+    - career schema exposes role discovery, fit analysis, application package, validation, submission, follow-up, interview context and outcome fields
+    - career semantic commands cover LinkedIn/job opportunity registration through outcome learning
+    - application submission requires valid validation and confirmed prepared action
+    - interview context uses Agent Harness context packs scoped to the application
+    - PRD 08 matrix reports 100% capability complete without inventing applications
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Closes PRD 08 international career and LinkedIn application capability gaps while preserving real-data intake boundaries.
+  title: PRD 08 career LinkedIn closure

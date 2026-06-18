@@ -268,6 +268,48 @@ export class DomainCommandService extends DomainServiceBase {
     return this.career.prepareApplication(...args);
   }
 
+  recordRoleStrategy(
+    ...args: Parameters<CareerDomainService["recordRoleStrategy"]>
+  ): ReturnType<CareerDomainService["recordRoleStrategy"]> {
+    return this.career.recordRoleStrategy(...args);
+  }
+
+  registerJobOpportunity(
+    ...args: Parameters<CareerDomainService["registerJobOpportunity"]>
+  ): ReturnType<CareerDomainService["registerJobOpportunity"]> {
+    return this.career.registerJobOpportunity(...args);
+  }
+
+  reviewRoleDuplicates(
+    ...args: Parameters<CareerDomainService["reviewRoleDuplicates"]>
+  ): ReturnType<CareerDomainService["reviewRoleDuplicates"]> {
+    return this.career.reviewRoleDuplicates(...args);
+  }
+
+  analyzeRoleFit(
+    ...args: Parameters<CareerDomainService["analyzeRoleFit"]>
+  ): ReturnType<CareerDomainService["analyzeRoleFit"]> {
+    return this.career.analyzeRoleFit(...args);
+  }
+
+  validateApplication(
+    ...args: Parameters<CareerDomainService["validateApplication"]>
+  ): ReturnType<CareerDomainService["validateApplication"]> {
+    return this.career.validateApplication(...args);
+  }
+
+  prepareApplicationSubmission(
+    ...args: Parameters<CareerDomainService["prepareSubmission"]>
+  ): ReturnType<CareerDomainService["prepareSubmission"]> {
+    return this.career.prepareSubmission(...args);
+  }
+
+  recordApplicationSubmission(
+    ...args: Parameters<CareerDomainService["recordSubmission"]>
+  ): ReturnType<CareerDomainService["recordSubmission"]> {
+    return this.career.recordSubmission(...args);
+  }
+
   scheduleApplicationFollowUp(
     ...args: Parameters<CareerDomainService["scheduleApplicationFollowUp"]>
   ): ReturnType<CareerDomainService["scheduleApplicationFollowUp"]> {
@@ -278,6 +320,24 @@ export class DomainCommandService extends DomainServiceBase {
     ...args: Parameters<CareerDomainService["recordApplicationInterview"]>
   ): ReturnType<CareerDomainService["recordApplicationInterview"]> {
     return this.career.recordApplicationInterview(...args);
+  }
+
+  buildInterviewContext(
+    ...args: Parameters<CareerDomainService["buildInterviewContext"]>
+  ): ReturnType<CareerDomainService["buildInterviewContext"]> {
+    return this.career.buildInterviewContext(...args);
+  }
+
+  recordApplicationOutcome(
+    ...args: Parameters<CareerDomainService["recordOutcome"]>
+  ): ReturnType<CareerDomainService["recordOutcome"]> {
+    return this.career.recordOutcome(...args);
+  }
+
+  resolveCareerNextActions(
+    ...args: Parameters<CareerDomainService["resolveCareerNextActions"]>
+  ): ReturnType<CareerDomainService["resolveCareerNextActions"]> {
+    return this.career.resolveCareerNextActions(...args);
   }
 
   recordDecision(

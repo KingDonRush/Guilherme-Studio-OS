@@ -666,12 +666,61 @@ const MUTABLE_CLI_DRY_RUN_CASES: Array<{ command: string; args: string[] }> = [
     ],
   },
   {
+    command: "career.record-strategy",
+    args: ["career", "record-strategy", "--role-family", "WordPress Developer"],
+  },
+  {
+    command: "career.next-actions",
+    args: ["career", "next-actions"],
+  },
+  {
+    command: "application.register-opportunity",
+    args: [
+      "application",
+      "register-opportunity",
+      "--title",
+      "LinkedIn role",
+      "--source",
+      "https://linkedin.com/jobs/view/1",
+      "--requirement",
+      "Elementor",
+    ],
+  },
+  {
+    command: "application.review-duplicates",
+    args: ["application", "review-duplicates", "--source", "https://linkedin.com/jobs/view/1"],
+  },
+  {
+    command: "application.analyze-fit",
+    args: ["application", "analyze-fit", "app_fake", "--signal", "Elementor"],
+  },
+  {
+    command: "application.validate",
+    args: ["application", "validate", "app_fake"],
+  },
+  {
+    command: "application.prepare-submission",
+    args: ["application", "prepare-submission", "app_fake", "--channel", "linkedin"],
+  },
+  {
+    command: "application.record-submission",
+    args: ["application", "record-submission", "app_fake", "--prepared-action", "act_fake"],
+  },
+  {
     command: "application.follow-up",
     args: ["application", "follow-up", "app_fake", "--at", FUTURE],
   },
   {
     command: "application.record-interview",
     args: ["application", "record-interview", "app_fake", "--at", FUTURE],
+  },
+  {
+    command: "application.interview-context",
+    args: ["application", "interview-context", "app_fake"],
+  },
+  {
+    command: "application.record-outcome",
+    args: ["application", "record-outcome", "app_fake", "--outcome", "rejected"],
   },
   {
     command: "contract.create-from-engagement",
