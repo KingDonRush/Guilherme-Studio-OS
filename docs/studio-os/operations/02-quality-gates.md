@@ -164,6 +164,19 @@ Architecture warnings:
 - mutable global state;
 - environment-specific hardcoding.
 
+Size and modularity triggers:
+
+- preferred authored module size is 200-320 lines;
+- 400+ lines requires an explicit split decision or exception;
+- 450+ lines blocks new feature work unless a split task or recorded exception
+  exists;
+- 800+ lines is an active architecture problem;
+- 1200+ lines is blocking debt for new UI, command, workflow or control
+  complexity.
+
+The number is a trigger. The fix must still identify responsibility,
+boundaries, public interface, dependencies and verification.
+
 ## WordPress Gate
 
 Checks:

@@ -214,6 +214,26 @@ Each material decision records:
   or distribution cost operationally harmful.
 - **Authority:** Guilherme's approved asset policy and V1 plan.
 
+### STUDIO-021: Praxis-informed development method
+
+- **Status:** accepted
+- **Date:** 2026-06-18
+- **Decision:** Studio OS development uses the Praxis-derived method in
+  `docs/studio-os/implementation/02-praxis-development-method.md`.
+- **Rationale:** "modular monolith" is not a sufficient development method.
+  Development work must pass through explicit method selection, system context,
+  contracts, architecture/decomposition, design/construction, V&V, security,
+  configuration, operations/recovery, documentation and evidence gates.
+- **Consequence:** PRD subagents and refactor lanes must load the Praxis
+  development method before editing code. Line-count thresholds are gate
+  triggers, not substitutes for responsibility, boundary and dependency
+  analysis.
+- **Reconsideration trigger:** the local Praxis method is superseded by a
+  stronger accepted Studio OS engineering method or the gates repeatedly add
+  cost without improving decisions.
+- **Authority:** Guilherme's 2026-06-18 instruction to treat development Praxis
+  methods as mandatory.
+
 ## Explicit Non-Decisions
 
 The following remain intentionally unresolved:

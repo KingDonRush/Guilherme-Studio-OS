@@ -19,6 +19,12 @@ fixtures, and a final integration lane.
 Do not spawn implementation agents directly from the current monolithic source
 shape.
 
+All implementation agents must use
+[`02-praxis-development-method.md`](./02-praxis-development-method.md). For
+development work, Praxis concerns are mandatory gates; only their depth is
+tailored by risk. "Modular monolith" is not accepted as a sufficient method
+statement.
+
 First create enough modular seams so agents can work in mostly disjoint write
 sets. These original hot files are already reduced by Phase 0:
 
