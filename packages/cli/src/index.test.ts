@@ -1,4 +1,4 @@
-import { mkdtemp, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import {
@@ -288,6 +288,205 @@ describe("Studio CLI", () => {
       output: { status: "error", error: { code: "invalid_input" } },
     });
   });
+
+  it("keeps bespoke operational dry-run commands safe and machine-readable", async () => {
+    const root = await createCliFixtureRoot("studio-cli-operational-dry-run-");
+
+    const cases: Array<{
+      name: string;
+      args: string[];
+      expected: Record<string, unknown>;
+    }> = [
+      {
+        name: "bootstrap-vertical",
+        args: ["--dry-run", "bootstrap-vertical"],
+        expected: { dryRun: true },
+      },
+      {
+        name: "backup",
+        args: ["--dry-run", "backup"],
+        expected: { dryRun: true, includes: expect.any(Array) },
+      },
+      {
+        name: "wordpress.fix-ownership",
+        args: ["--dry-run", "wordpress", "fix-ownership", "wordpress"],
+        expected: { dryRun: true },
+      },
+      {
+        name: "wordpress.backup-db",
+        args: ["--dry-run", "wordpress", "backup-db"],
+        expected: { dryRun: true, action: "wordpress.backup-db" },
+      },
+      {
+        name: "wordpress.backup-uploads",
+        args: ["--dry-run", "wordpress", "backup-uploads"],
+        expected: { dryRun: true, action: "wordpress.backup-uploads" },
+      },
+      {
+        name: "wordpress.provision",
+        args: [
+          "--dry-run",
+          "wordpress",
+          "provision",
+          "--site-path",
+          "wordpress-smoke",
+          "--template-path",
+          "wordpress",
+        ],
+        expected: {
+          dryRun: true,
+          sitePath: path.join(root, "wordpress-smoke"),
+          templatePath: path.join(root, "wordpress"),
+        },
+      },
+      {
+        name: "wordpress.restore-check",
+        args: ["--dry-run", "wordpress", "restore-check", "backups/database.sql"],
+        expected: {
+          dryRun: true,
+          action: "wordpress.restore-check",
+          sqlPath: "backups/database.sql",
+        },
+      },
+      {
+        name: "wordpress.restore-check-uploads",
+        args: ["--dry-run", "wordpress", "restore-check-uploads", "backups/uploads.tar.gz"],
+        expected: {
+          dryRun: true,
+          action: "wordpress.restore-check-uploads",
+          archivePath: "backups/uploads.tar.gz",
+        },
+      },
+      {
+        name: "asset.optimize",
+        args: [
+          "--dry-run",
+          "asset",
+          "optimize",
+          "--source",
+          "runtime/assets/sources",
+          "--output",
+          "docs/assets/generated",
+          "--manifest",
+          "docs/assets/generated/asset-manifest.json",
+        ],
+        expected: {
+          apiVersion: "studio.guilherme.dev/assets-v1",
+          quality: 82,
+          maxWidth: 2400,
+          assets: [],
+        },
+      },
+    ];
+
+    for (const entry of cases) {
+      const result = await runCliJsonWithExit(["--root", root, "--json", ...entry.args]);
+
+      expect(result.exitCode, entry.name).toBe(0);
+      expect(result.output, entry.name).toMatchObject(entry.expected);
+    }
+  });
+
+  it("keeps external adapter prepares blocked by default and fake-local without sends", async () => {
+    const root = await createCliFixtureRoot("studio-cli-external-adapters-");
+    const blockedGithub = await runCliJsonWithExit([
+      "--root",
+      root,
+      "--json",
+      "github",
+      "prepare",
+      "--operation",
+      "issue.create",
+      "--payload",
+      '{"title":"Blocked issue"}',
+    ]);
+    const blockedCommunication = await runCliJsonWithExit([
+      "--root",
+      root,
+      "--json",
+      "communication-adapter",
+      "prepare",
+      "--operation",
+      "message.send",
+      "--payload",
+      '{"body":"Blocked message"}',
+    ]);
+    const fakeGithub = await runCliJsonWithExit([
+      "--root",
+      root,
+      "--json",
+      "github",
+      "prepare",
+      "--provider",
+      "fake",
+      "--enable-fake",
+      "--operation",
+      "issue.create",
+      "--payload",
+      '{"title":"Local issue"}',
+    ]);
+    const fakeCommunication = await runCliJsonWithExit([
+      "--root",
+      root,
+      "--json",
+      "communication-adapter",
+      "prepare",
+      "--provider",
+      "fake",
+      "--enable-fake",
+      "--operation",
+      "message.send",
+      "--payload",
+      '{"body":"Local message"}',
+    ]);
+
+    expect(blockedGithub).toMatchObject({
+      exitCode: 7,
+      output: {
+        adapter: "github",
+        status: "blocked",
+        error: { code: "adapter_disabled" },
+        data: { enabled: false, payload_keys: ["title"] },
+      },
+    });
+    expect(blockedCommunication).toMatchObject({
+      exitCode: 7,
+      output: {
+        adapter: "communication",
+        status: "blocked",
+        error: { code: "adapter_disabled" },
+        data: { enabled: false, payload_keys: ["body"] },
+      },
+    });
+    expect(fakeGithub).toMatchObject({
+      exitCode: 0,
+      output: {
+        adapter: "github",
+        status: "warning",
+        data: {
+          provider: "fake",
+          external_send: false,
+          prepared_action_id: expect.any(String),
+          prepared_action_status: "awaiting_confirmation",
+          payload_checksum: expect.any(String),
+        },
+      },
+    });
+    expect(fakeCommunication).toMatchObject({
+      exitCode: 0,
+      output: {
+        adapter: "communication",
+        status: "warning",
+        data: {
+          provider: "fake",
+          external_send: false,
+          prepared_action_id: expect.any(String),
+          prepared_action_status: "awaiting_confirmation",
+          payload_checksum: expect.any(String),
+        },
+      },
+    });
+  });
 });
 
 async function runCliJson(args: string[]): Promise<Record<string, unknown>> {
@@ -558,6 +757,11 @@ const MUTABLE_CLI_DRY_RUN_CASES: Array<{ command: string; args: string[] }> = [
 
 async function createCliFixtureRoot(prefix: string): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), prefix));
+  await mkdir(path.join(root, "data"), { recursive: true });
+  await mkdir(path.join(root, "operations"), { recursive: true });
+  await mkdir(path.join(root, "wordpress"), { recursive: true });
+  await mkdir(path.join(root, "runtime", "assets", "sources"), { recursive: true });
+  await mkdir(path.join(root, "backups"), { recursive: true });
   await writeFile(
     path.join(root, "studio.config.yaml"),
     YAML.stringify({

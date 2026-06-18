@@ -1,0 +1,33 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T04:29:40.000Z
+  id: tsk_20260618_prd-11-operational-cli-contracts
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - cli
+    - adapters
+  revision: 1
+  schema_version: 1
+  slug: prd-11-operational-cli-contracts
+  updated_at: 2026-06-18T04:29:40.000Z
+relations: []
+spec:
+  acceptance:
+    - bespoke operational CLI helpers have dry-run JSON contract coverage
+    - WordPress helper coverage avoids Docker/runtime execution while checking dry-run output
+    - asset optimization dry-run returns a machine-readable manifest without writing assets
+    - GitHub and communication providers are blocked by default with stable exit code 7
+    - explicit fake providers create local prepared-action records with external_send false
+    - no real external send, customer data fabrication or portfolio implementation is introduced
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Hardens PRD 11 CLI fallback behavior for operational helper commands outside the semantic registry.
+  title: PRD 11 operational CLI contracts

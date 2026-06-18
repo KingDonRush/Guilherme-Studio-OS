@@ -1,0 +1,40 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T04:29:40.000Z
+  id: evd_20260618_prd-11-operational-cli-contracts-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - cli
+    - adapters
+  revision: 1
+  schema_version: 1
+  slug: prd-11-operational-cli-contracts-verification
+  updated_at: 2026-06-18T04:29:40.000Z
+relations:
+  - target_id: tsk_20260618_prd-11-operational-cli-contracts
+    type: supports
+spec:
+  claims:
+    - The CLI test suite now covers operational dry-run helpers for bootstrap, backup, WordPress local operations and asset optimization.
+    - Disabled GitHub and communication adapter prepares return blocked output with exit code 7 by default.
+    - Explicit fake GitHub and communication providers create local prepared actions with external_send false and awaiting_confirmation status.
+    - The verification path does not call Docker, WordPress runtime services, external providers, portfolio implementation code or fabricated real data.
+  command: >-
+    npm run verify &&
+    npm run test -- packages/cli/src/index.test.ts packages/adapters/src/index.test.ts packages/assets/src/index.test.ts &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T04:29:40.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 11 operational CLI contracts verification
+  validated_at: 2026-06-18T04:29:40.000Z

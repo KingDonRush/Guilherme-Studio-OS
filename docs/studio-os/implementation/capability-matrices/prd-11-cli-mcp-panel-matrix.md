@@ -1,13 +1,13 @@
 # PRD 11 Capability Matrix: CLI, MCP, and Local Panel
 
 Target: 100% capability complete without requiring MCP to be always running.
-Current estimate: 90%.
+Current estimate: 92%.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|
 | Shared rule | All mutations call Studio Core and produce same events/gates/errors. | AgentRun dry-run equivalence covered across core, CLI, local API and MCP command wrapper; broad semantic matrix partial | Expand equivalence tests to all semantic commands. | CLI/API/MCP | integration tests | Fixtures are deterministic. |
 | CLI command groups | Required domain command groups exist with meaningful verbs. | partial | Replace generic creates with semantic verbs per PRD. | CLI | CLI help/tests | Empty domains show intake. |
-| CLI machine behavior | JSON, dry-run, explicit IDs, exit codes, no prompts, idempotency, expected revision. | semantic command runtime complete; adapter/ops command matrix partial | Extend stable exit tests to bespoke operational adapter commands. | CLI | CLI test matrix | No real data required. |
+| CLI machine behavior | JSON, dry-run, explicit IDs, exit codes, no prompts, idempotency, expected revision. | semantic command runtime complete; operational dry-run and fake-adapter contracts covered; live WordPress/docker command behavior partial | Keep live helper commands behind local environment checks and add smoke coverage when the WordPress runtime is available. | CLI | CLI test matrix | No real data required. |
 | MCP resources | Constitution, policies, schemas, lifecycles, context packs, repo/env, workflows. | agent harness surface complete; in-memory MCP smoke covers resources; broader lifecycle/policy resources partial | Add lifecycle contract and active policy resources. | MCP | build + smoke | Missing data in resource gaps. |
 | MCP tools | Query, health, prepare, low-risk mutate, validate, evidence, external actions, confirmation status. | agent harness read and lifecycle mutation tools complete; broader command-class annotations partial | Add tool annotations and coverage per command class. | MCP | MCP lifecycle smoke | External execution blocked. |
 | MCP prompts | Opportunity, engagement, implementation diagnosis, case, content, application, handoff. | capability_complete for normative prompt set with smoke coverage | Add argument-level prompt assertions where needed. | MCP | prompt smoke | Prompts do not mutate by themselves. |
@@ -15,7 +15,7 @@ Current estimate: 90%.
 | Panel domain views | Clients, sales, applications, products, portfolio, tasks/runs, diagnostics, backup. | agent runs/context/handoff operational view complete; Playwright smoke covers Agent Harness and Control; other domains partial | Expand remaining views from tables to operational flows. | panel/API | build + API test + Playwright smoke | No YAML editor primary flow. |
 | Panel mutation | Forms call API; protected actions show exact impact and confirmation. | stale projection handling complete; prepared-action refresh complete; domain mutation forms partial | Add domain mutation forms and exact impact flows. | panel/API | panel mutation tests | No external sends. |
 | Runtime security | Loopback, token, origin checks, MCP separate process consuming same core. | partial | Keep Host/Origin tests and MCP smoke current. | API/MCP | security tests | No public bind default. |
-| CLI fallback | CLI remains fully useful when panel/MCP unavailable. | semantic command fallback complete across the registry; operational helper commands partial | Finish bespoke adapter/WordPress operation command contracts. | CLI | fallback tests | CLI is canonical fallback. |
+| CLI fallback | CLI remains fully useful when panel/MCP unavailable. | semantic command fallback complete across the registry; dry-run operational helpers and blocked/fake external adapter prepares covered; live WordPress/docker helpers partial | Add optional environment-gated smoke tests for live WordPress/docker helpers. | CLI | fallback tests | CLI is canonical fallback. |
 
 Completion blocker: interface breadth must follow PRD capabilities, not just
 current generic entity CRUD.
@@ -87,3 +87,20 @@ current generic entity CRUD.
 - Remaining PRD 11 work: broaden CLI/API/MCP equivalence beyond AgentRun,
   expose lifecycle/policy MCP resources and finish bespoke operational helper
   command contracts for adapter/WordPress commands.
+
+2026-06-18 operational CLI contracts update:
+
+- Added CLI contract coverage for bespoke operational helpers outside the
+  semantic command registry: bootstrap vertical, coordinated backup, WordPress
+  fix-ownership/backup/provision/restore-check dry-runs and asset optimization
+  dry-run.
+- Added CLI contract coverage for GitHub and communication adapter prepares:
+  disabled providers return blocked output with stable exit code 7, while
+  explicit fake providers create local prepared actions with
+  `external_send: false`.
+- The tested path does not call Docker, WordPress runtime services, network
+  providers or portfolio implementation code.
+- Remaining PRD 11 work: broaden CLI/API/MCP equivalence beyond AgentRun,
+  expose lifecycle/policy MCP resources, add optional environment-gated live
+  WordPress helper smoke and build richer domain mutation forms without
+  bypassing command runtime.
