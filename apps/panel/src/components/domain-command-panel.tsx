@@ -8,7 +8,8 @@ import type { ResultEnvelope } from "../api/types.js";
 export interface CommandField {
   name: string;
   label: string;
-  type?: "text" | "url" | "textarea";
+  type?: "text" | "url" | "textarea" | "number";
+  defaultValue?: string;
   placeholder?: string;
   required?: boolean;
 }
@@ -33,7 +34,8 @@ interface ReviewedCommand {
 
 export function DomainCommandPanel({ definition }: { definition: DomainCommandDefinition }) {
   const initialValues = useMemo(
-    () => Object.fromEntries(definition.fields.map((field) => [field.name, ""])),
+    () =>
+      Object.fromEntries(definition.fields.map((field) => [field.name, field.defaultValue ?? ""])),
     [definition.fields],
   );
   const [values, setValues] = useState<Record<string, string>>(initialValues);
@@ -164,4 +166,19 @@ export function DomainCommandPanel({ definition }: { definition: DomainCommandDe
       ) : null}
     </section>
   );
+}
+
+export function fieldValue(values: Record<string, string>, key: string): string {
+  return values[key] ?? "";
+}
+
+export function numberFieldValue(values: Record<string, string>, key: string): number {
+  return Number.parseInt(fieldValue(values, key), 10);
+}
+
+export function linesFieldValue(values: Record<string, string>, key: string): string[] {
+  return fieldValue(values, key)
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
 }

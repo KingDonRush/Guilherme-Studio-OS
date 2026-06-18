@@ -86,6 +86,22 @@ async function main() {
     checks.push(await waitForText(page, "URL LinkedIn"));
     await assertNoHorizontalOverflow(page);
 
+    await page.goto(`${baseUrl}/#/delivery`, { waitUntil: "networkidle", timeout: 45_000 });
+    checks.push(await waitForText(page, "Registrar projeto WordPress"));
+    await assertNoHorizontalOverflow(page);
+
+    await page.goto(`${baseUrl}/#/products`, { waitUntil: "networkidle", timeout: 45_000 });
+    checks.push(await waitForText(page, "Registrar produto"));
+    await assertNoHorizontalOverflow(page);
+
+    await page.goto(`${baseUrl}/#/portfolio`, { waitUntil: "networkidle", timeout: 45_000 });
+    checks.push(await waitForText(page, "Preparar conteúdo"));
+    await assertNoHorizontalOverflow(page);
+
+    await page.goto(`${baseUrl}/#/finance`, { waitUntil: "networkidle", timeout: 45_000 });
+    checks.push(await waitForText(page, "Criar invoice para contrato"));
+    await assertNoHorizontalOverflow(page);
+
     await page.goto(`${baseUrl}/#/control`, { waitUntil: "networkidle", timeout: 45_000 });
     checks.push(await waitForText(page, "Acceptance"));
     checks.push(await waitForText(page, "Ações preparadas"));

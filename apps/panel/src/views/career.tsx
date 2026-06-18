@@ -1,5 +1,5 @@
 import type { StudioData } from "../api/use-studio-data.js";
-import { DomainCommandPanel } from "../components/domain-command-panel.js";
+import { DomainCommandPanel, fieldValue } from "../components/domain-command-panel.js";
 import { EntityTable, entityRows } from "../components/entity-table.js";
 
 export function Career({ data }: { data: StudioData }) {
@@ -54,8 +54,4 @@ export function Career({ data }: { data: StudioData }) {
       />
     </>
   );
-}
-
-function fieldValue(values: Record<string, string>, key: string): string {
-  return values[key] ?? "";
 }
