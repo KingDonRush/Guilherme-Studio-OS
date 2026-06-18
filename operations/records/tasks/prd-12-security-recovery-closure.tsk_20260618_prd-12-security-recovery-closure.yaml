@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T17:42:28.000Z
+  id: tsk_20260618_prd-12-security-recovery-closure
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-12
+    - security
+    - recovery
+  revision: 1
+  schema_version: 1
+  slug: prd-12-security-recovery-closure
+  updated_at: 2026-06-18T17:42:28.000Z
+relations: []
+spec:
+  acceptance:
+    - secret-shaped canonical writes are rejected before files are created
+    - local secure references are allowed only as opaque secrets:// references
+    - Environment schema exposes secret_reference and backup policy fields
+    - studio security reports secret boundary, projection, transactions, stale locks, panel loopback, backup manifests and restore evidence
+    - PRD 12 matrix reports 100% capability complete without production secrets
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Closes PRD 12 security and recovery capability gaps for secret references, storage boundary and diagnostics.
+  title: PRD 12 security and recovery closure

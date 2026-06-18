@@ -25,7 +25,14 @@ export const ProjectSpecSchema = GenericSpecSchema.extend({
   environment_id: z.string().optional(),
 });
 export const EnvironmentSpecSchema = GenericSpecSchema.extend({
+  type: z.string().optional(),
+  local_path: z.string().optional(),
   url: z.string().url().optional(),
+  secret_reference: z
+    .string()
+    .regex(/^secrets:\/\/[a-z0-9][a-z0-9/_:.-]*$/i)
+    .optional(),
+  backup_policy: z.string().optional(),
   compose_files: z.array(z.string()).default([]),
   wordpress_git_repository: z
     .object({

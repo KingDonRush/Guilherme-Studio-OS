@@ -3259,9 +3259,22 @@
                 "summary": {
                   "type": "string"
                 },
+                "type": {
+                  "type": "string"
+                },
+                "local_path": {
+                  "type": "string"
+                },
                 "url": {
                   "type": "string",
                   "format": "uri"
+                },
+                "secret_reference": {
+                  "type": "string",
+                  "pattern": "^secrets:\\/\\/[a-z0-9][a-z0-9/_:.-]*$"
+                },
+                "backup_policy": {
+                  "type": "string"
                 },
                 "compose_files": {
                   "default": [],

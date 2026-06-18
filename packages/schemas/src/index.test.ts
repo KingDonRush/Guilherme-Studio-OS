@@ -37,6 +37,20 @@ describe("schemas", () => {
     expect(() => assertNoSecrets(payload)).toThrow(/Secret-like fields/);
   });
 
+  it("allows opaque local secret references but rejects inline reference values", () => {
+    const payload = {
+      spec: {
+        secret_reference: "secrets://github/kingdonrush",
+        credential_ref: "secrets://wordpress/local-admin",
+      },
+    };
+    const inline = { spec: { secret_reference: "token=abcdefghijklmnopqrstuvwxyz" } };
+
+    expect(findSecretLikePaths(payload)).toEqual([]);
+    expect(findSecretLikePaths(inline)).toEqual(["spec.secret_reference"]);
+    expect(() => assertNoSecrets(inline)).toThrow(/Secret-like fields/);
+  });
+
   it("creates versioned command and result envelopes", () => {
     const actor = createActor({
       id: "per_20260614_guilherme-silva",

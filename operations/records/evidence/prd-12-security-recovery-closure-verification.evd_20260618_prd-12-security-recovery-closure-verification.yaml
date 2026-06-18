@@ -1,0 +1,46 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T17:42:28.000Z
+  id: evd_20260618_prd-12-security-recovery-closure-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-12
+    - security
+    - recovery
+  revision: 1
+  schema_version: 1
+  slug: prd-12-security-recovery-closure-verification
+  updated_at: 2026-06-18T17:42:28.000Z
+relations:
+  - target_id: tsk_20260618_prd-12-security-recovery-closure
+    type: supports
+spec:
+  claims:
+    - Secret-shaped canonical writes are rejected by storage before files are created.
+    - Opaque secrets:// references are allowed only through reference-shaped keys; inline secret-like values remain rejected.
+    - The Environment schema now includes secret_reference and backup policy fields, and the generated schema catalog was refreshed.
+    - studio security --json passed on the current root, including backup manifest and restore evidence checks.
+    - Full repository verification, validation, sync rebuild verification, npm audit, gitleaks and git fsck passed.
+  command: >-
+    npx vitest run packages/schemas/src/index.test.ts packages/storage/src/index.test.ts &&
+    npm run verify &&
+    npm run studio -- schemas export --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    npm run studio -- security --json &&
+    npm audit --audit-level=moderate &&
+    gitleaks git --no-banner &&
+    git fsck --strict --no-dangling &&
+    npm run studio -- validate --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T17:42:28.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 12 security and recovery closure verification
+  validated_at: 2026-06-18T17:42:28.000Z

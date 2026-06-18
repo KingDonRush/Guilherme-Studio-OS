@@ -20,6 +20,19 @@ describe("storage", () => {
     await expect(resolveInsideRoot(root, "../escape.yaml")).rejects.toThrow(/Path traversal/);
   });
 
+  it("rejects secret-shaped canonical writes before creating files", async () => {
+    const root = await createTempStudioRoot();
+    const store = new EntityStore(root);
+    const entity = createEntity({
+      kind: "task",
+      title: "Secret fixture",
+      data: { apiKey: "should-not-be-here" },
+    });
+
+    await expect(store.put(entity)).rejects.toThrow(/Secret-like fields/);
+    expect(await store.scan()).toEqual([]);
+  });
+
   it("writes canonical YAML and rebuilds a derived SQLite projection", async () => {
     const root = await createTempStudioRoot();
     const store = new EntityStore(root);

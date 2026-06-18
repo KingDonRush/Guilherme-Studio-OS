@@ -277,6 +277,95 @@ export function registerCoreCommands(program: Command): void {
       process.exitCode = ok ? 0 : 2;
     });
 
+  program
+    .command("security")
+    .description("Report secret, boundary, projection, backup and recovery checks")
+    .action(async function action(this: Command) {
+      const options = globalOptions(this);
+      const context = await createStudioContext(options.root);
+      const validation = await validateStudio(options.root);
+      const { files } = await validateCanonicalFiles(context.paths.root);
+      const pendingTransactions = await context.entities.pendingTransactions();
+      const locks = await context.entities.inspectLocks();
+      const staleLocks = locks.filter((lock) => lock.stale);
+      const projection = context.projection.inspect();
+      const expectedChecksum = projectionChecksum(files);
+      const projectionStale = !projection.exists || projection.checksum !== expectedChecksum;
+      const backupManifests = await listBackupManifests(context.paths.runtime);
+      const backupEvidence = files.filter(
+        (file) => file.entity.kind === "evidence" && file.entity.spec.evidence_type === "backup",
+      );
+      const restoreEvidence = backupEvidence.filter((file) =>
+        [file.entity.metadata.slug, file.entity.spec.title].some((value) => /restore/i.test(value)),
+      );
+      const panelLoopback =
+        context.config.panel.host === "127.0.0.1" || context.config.panel.host === "localhost";
+      const checks = [
+        {
+          name: "canonical_secret_boundary",
+          ok: validation.ok,
+          detail: validation.errors,
+          remediation:
+            "Remove inline secret-shaped fields or replace them with secrets:// local references.",
+        },
+        {
+          name: "projection_rebuildable",
+          ok: !projectionStale,
+          detail: { expectedChecksum, actualChecksum: projection.checksum ?? null },
+          remediation: "Run studio sync --rebuild --verify.",
+        },
+        {
+          name: "pending_transactions",
+          ok: pendingTransactions.length === 0,
+          detail: pendingTransactions,
+          remediation: "Run studio recovery transactions after inspecting pending manifests.",
+        },
+        {
+          name: "stale_locks",
+          ok: staleLocks.length === 0,
+          detail: staleLocks,
+          remediation: "Inspect stale locks before removing them.",
+        },
+        {
+          name: "panel_loopback",
+          ok: panelLoopback,
+          detail: { host: context.config.panel.host, port: context.config.panel.port },
+          remediation: "Bind the local panel/API to 127.0.0.1 or localhost.",
+        },
+        {
+          name: "backup_manifest",
+          ok: backupManifests.length > 0,
+          detail: { latest: backupManifests[0] ?? null, count: backupManifests.length },
+          remediation: "Run studio backup and preserve the generated manifest.",
+        },
+        {
+          name: "restore_evidence",
+          ok: restoreEvidence.length > 0,
+          detail: restoreEvidence.map((file) => ({
+            id: file.entity.metadata.id,
+            title: file.entity.spec.title,
+            path: file.relativePath,
+          })),
+          remediation: "Run a restore rehearsal/check and register evidence.",
+        },
+      ];
+      const ok = checks.every((check) => check.ok);
+      print(
+        {
+          ok,
+          checks,
+          summary: {
+            entities: files.length,
+            backup_manifest_count: backupManifests.length,
+            restore_evidence_count: restoreEvidence.length,
+            panel_host: context.config.panel.host,
+          },
+        },
+        options.json,
+      );
+      process.exitCode = ok ? 0 : 2;
+    });
+
   const recovery = program
     .command("recovery")
     .description("Inspect and recover local transactions");
@@ -476,4 +565,16 @@ async function inspectPathDrift(root: string): Promise<Array<{ path: string; pat
     await visit(rootPath);
   }
   return results.sort((left, right) => left.path.localeCompare(right.path));
+}
+
+async function listBackupManifests(runtime: string): Promise<string[]> {
+  const { readdir } = await import("node:fs/promises");
+  const backupDir = pathJoin(runtime, "backups");
+  try {
+    return (await readdir(backupDir))
+      .filter((entry) => entry.endsWith(".manifest.json"))
+      .sort((a, b) => b.localeCompare(a));
+  } catch {
+    return [];
+  }
 }
