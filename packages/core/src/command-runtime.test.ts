@@ -123,6 +123,116 @@ describe("Studio command runtime", () => {
       },
     });
   });
+
+  it("prepares and publishes product releases with explicit evidence", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "studio-runtime-release-governance-"));
+    await writeFile(
+      path.join(root, "studio.config.yaml"),
+      YAML.stringify({
+        api_version: "studio.guilherme.dev/config-v1",
+        root_name: "Runtime release governance test",
+        operator_id: "per_20260614_guilherme-silva",
+        canonical_roots: ["products", "operations"],
+        runtime_path: "runtime",
+        panel: { host: "127.0.0.1", port: 47835 },
+        adapters: {},
+      }),
+    );
+    const context = await createStudioContext(root);
+    const actor = operatorActor(context.config.operator_id);
+    const product = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "entity.create",
+        actor,
+        payload: { kind: "product", title: "Governed product" },
+      }),
+    );
+    const productId = entityIdFromResult(product);
+    const prepared = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "release.prepare",
+        actor,
+        payload: {
+          product_id: productId,
+          version: "1.0.0",
+          changelog: "Initial release.",
+          compatibility_notes: "Compatible with the local WordPress fixture.",
+          migration_notes: "No migration required.",
+          public_api_notes: "No public API break.",
+          test_commands: ["npm run verify"],
+          asset_ids: ["ast_fixture"],
+          package_path: "products/governed/dist/plugin.zip",
+          roadmap_claims: ["Future marketplace automation"],
+          implemented_capabilities: ["Elementor widget"],
+        },
+      }),
+    );
+    const releaseId = entityIdFromResult(prepared);
+    const evidence = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "evidence.register",
+        actor,
+        payload: {
+          title: "Release verification",
+          evidence_type: "command",
+          command: "npm run verify",
+          claims: ["Release verified"],
+        },
+      }),
+    );
+    const evidenceId = entityIdFromResult(evidence);
+    const published = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "release.publish",
+        actor,
+        targetId: releaseId,
+        payload: {
+          release_id: releaseId,
+          evidence_ids: [evidenceId],
+          demo_url: "https://example.com/demo",
+        },
+      }),
+    );
+
+    expect(prepared).toMatchObject({
+      status: "ok",
+      result: {
+        action: "release.prepare",
+        entity: {
+          spec: {
+            version: "1.0.0",
+            stage: "prepared",
+            changelog: "Initial release.",
+            compatibility_notes: "Compatible with the local WordPress fixture.",
+            migration_notes: "No migration required.",
+            test_commands: ["npm run verify"],
+            asset_ids: ["ast_fixture"],
+            roadmap_claims: ["Future marketplace automation"],
+            implemented_capabilities: ["Elementor widget"],
+          },
+        },
+      },
+    });
+    expect(published).toMatchObject({
+      status: "ok",
+      result: {
+        action: "release.publish",
+        entity: {
+          spec: {
+            status: "published",
+            stage: "published",
+            evidence_ids: [evidenceId],
+            demo_url: "https://example.com/demo",
+          },
+          relations: expect.arrayContaining([{ type: "supported_by", target_id: evidenceId }]),
+        },
+      },
+    });
+  });
 });
 
 function entityIdFromResult(result: { result?: unknown }): string {

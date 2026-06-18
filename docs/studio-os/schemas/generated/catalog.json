@@ -3070,7 +3070,13 @@
                 "path": {
                   "type": "string"
                 },
+                "git_root": {
+                  "type": "string"
+                },
                 "branch": {
+                  "type": "string"
+                },
+                "default_branch": {
                   "type": "string"
                 },
                 "remote_policy": {
@@ -3083,11 +3089,38 @@
                 },
                 "expected_remote": {
                   "type": "string"
+                },
+                "visibility": {
+                  "type": "string",
+                  "enum": [
+                    "private",
+                    "public",
+                    "internal"
+                  ]
+                },
+                "release_model": {
+                  "type": "string"
+                },
+                "runtime_environment_id": {
+                  "type": "string"
+                },
+                "health_commands": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "architecture_debt_threshold_lines": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
                 }
               },
               "required": [
                 "title",
-                "status"
+                "status",
+                "health_commands"
               ],
               "additionalProperties": {}
             },
@@ -3480,16 +3513,90 @@
                 "repository_path": {
                   "type": "string"
                 },
+                "repository_id": {
+                  "type": "string"
+                },
                 "signal": {
+                  "type": "string"
+                },
+                "thesis": {
+                  "type": "string"
+                },
+                "target_user": {
+                  "type": "string"
+                },
+                "problem": {
+                  "type": "string"
+                },
+                "differentiation": {
+                  "type": "string"
+                },
+                "economic_role": {
                   "type": "string"
                 },
                 "current_version": {
                   "type": "string"
+                },
+                "package_paths": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "demo_environment_ids": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "case_ids": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "offer_ids": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "campaign_ids": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "roadmap_claims": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "implemented_capabilities": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               },
               "required": [
                 "title",
-                "status"
+                "status",
+                "package_paths",
+                "demo_environment_ids",
+                "case_ids",
+                "offer_ids",
+                "campaign_ids",
+                "roadmap_claims",
+                "implemented_capabilities"
               ],
               "additionalProperties": {}
             },
@@ -3670,7 +3777,68 @@
                 "stage": {
                   "type": "string"
                 },
+                "changelog": {
+                  "type": "string"
+                },
+                "compatibility_notes": {
+                  "type": "string"
+                },
+                "migration_notes": {
+                  "type": "string"
+                },
+                "public_api_notes": {
+                  "type": "string"
+                },
+                "test_commands": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "asset_ids": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "roadmap_claims": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "implemented_capabilities": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "package_path": {
+                  "type": "string"
+                },
+                "commit": {
+                  "type": "string"
+                },
+                "tag": {
+                  "type": "string"
+                },
+                "github_url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "publication_payload_checksum": {
+                  "type": "string"
+                },
                 "prepared_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "verified_at": {
                   "type": "string",
                   "format": "date-time",
                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
@@ -3695,6 +3863,10 @@
               "required": [
                 "title",
                 "status",
+                "test_commands",
+                "asset_ids",
+                "roadmap_claims",
+                "implemented_capabilities",
                 "evidence_ids"
               ],
               "additionalProperties": {}

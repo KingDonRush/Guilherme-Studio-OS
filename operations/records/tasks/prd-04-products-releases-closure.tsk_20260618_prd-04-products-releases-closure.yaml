@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T18:41:19.000Z
+  id: tsk_20260618_prd-04-products-releases-closure
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-04
+    - products
+    - releases
+  revision: 1
+  schema_version: 1
+  slug: prd-04-products-releases-closure
+  updated_at: 2026-06-18T18:41:19.000Z
+relations: []
+spec:
+  acceptance:
+    - product, repository and release schemas expose PRD 04 central fields
+    - release.prepare accepts release packet metadata through Core, CLI and MCP
+    - release.publish requires prepared state and evidence
+    - interface equivalence covers the richer release.prepare payload
+    - PRD 04 matrix reports 100% capability complete without inventing release data
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Closes PRD 04 product/repository/release capability gaps while preserving real-data intake boundaries.
+  title: PRD 04 product and release closure

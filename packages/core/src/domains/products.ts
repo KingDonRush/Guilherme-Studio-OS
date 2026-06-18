@@ -12,14 +12,40 @@ import { DomainServiceBase } from "./base.js";
 import { mergeRelations, uniqueStrings } from "./utils.js";
 
 export class ProductsDomainService extends DomainServiceBase {
-  async prepareRelease(productId: string, version: string): Promise<StudioEntity> {
-    const product = await this.requireKind(productId, "product");
+  async prepareRelease(input: {
+    productId: string;
+    version: string;
+    changelog?: string;
+    compatibilityNotes?: string;
+    migrationNotes?: string;
+    publicApiNotes?: string;
+    testCommands?: string[];
+    assetIds?: string[];
+    packagePath?: string;
+    roadmapClaims?: string[];
+    implementedCapabilities?: string[];
+  }): Promise<StudioEntity> {
+    const product = await this.requireKind(input.productId, "product");
     return this.entities.create({
       kind: "release",
-      title: `${entityTitle(product)} ${version}`,
+      title: `${entityTitle(product)} ${input.version}`,
       status: "draft",
-      relations: [{ type: "releases", target_id: productId }],
-      data: { version, stage: "prepared", prepared_at: nowIso() },
+      relations: [{ type: "releases", target_id: input.productId }],
+      data: {
+        product_id: input.productId,
+        version: input.version,
+        stage: "prepared",
+        prepared_at: nowIso(),
+        ...(input.changelog ? { changelog: input.changelog } : {}),
+        ...(input.compatibilityNotes ? { compatibility_notes: input.compatibilityNotes } : {}),
+        ...(input.migrationNotes ? { migration_notes: input.migrationNotes } : {}),
+        ...(input.publicApiNotes ? { public_api_notes: input.publicApiNotes } : {}),
+        ...(input.packagePath ? { package_path: input.packagePath } : {}),
+        test_commands: input.testCommands ?? [],
+        asset_ids: input.assetIds ?? [],
+        roadmap_claims: input.roadmapClaims ?? [],
+        implemented_capabilities: input.implementedCapabilities ?? [],
+      },
     });
   }
 
@@ -35,6 +61,9 @@ export class ProductsDomainService extends DomainServiceBase {
     return this.entities.update(input.releaseId, (entity) => {
       if (entity.kind !== "release") {
         throw new Error(`Expected release entity, got ${entity.kind}`);
+      }
+      if (entity.spec.stage !== "prepared" && entity.spec.stage !== "published") {
+        throw new Error("Release must be prepared before publication.");
       }
       const evidenceIds = uniqueStrings([
         ...recordStringArray(entity.spec as Record<string, unknown>, "evidence_ids"),

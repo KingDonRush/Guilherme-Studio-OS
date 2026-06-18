@@ -1,0 +1,43 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T18:41:19.000Z
+  id: evd_20260618_prd-04-products-releases-closure-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-04
+    - products
+    - releases
+  revision: 1
+  schema_version: 1
+  slug: prd-04-products-releases-closure-verification
+  updated_at: 2026-06-18T18:41:19.000Z
+relations:
+  - target_id: tsk_20260618_prd-04-products-releases-closure
+    type: supports
+spec:
+  claims:
+    - Product, repository and release schemas now include PRD 04 central fields.
+    - release.prepare carries changelog, compatibility, migration, public API notes, tests, assets, package path, roadmap claims and implemented capabilities through Core, CLI and MCP.
+    - release.publish requires prepared release state and evidence ids before publication.
+    - Interface equivalence and command-runtime tests passed for the richer release packet.
+    - Full verification, validation, sync rebuild and coverage passed after closing PRD 04.
+  command: >-
+    npx vitest run packages/core/src/command-runtime.test.ts packages/cli/src/index.test.ts packages/testing/src/interface-equivalence.test.ts packages/mcp/src/server-smoke.test.ts &&
+    npm run verify &&
+    npm run studio -- schemas export --json &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    npm run studio -- coverage --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T18:41:19.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 04 product and release closure verification
+  validated_at: 2026-06-18T18:41:19.000Z
