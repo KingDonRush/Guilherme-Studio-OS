@@ -1,0 +1,42 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T17:38:33.000Z
+  id: evd_20260618_prd-11-interface-closure-audit-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - interface
+  revision: 1
+  schema_version: 1
+  slug: prd-11-interface-closure-audit-verification
+  updated_at: 2026-06-18T17:38:33.000Z
+relations:
+  - target_id: tsk_20260618_prd-11-interface-closure-audit
+    type: supports
+spec:
+  claims:
+    - PRD 11 is reconciled as 100% capability complete without requiring MCP to remain running.
+    - The CLI exposes the required PRD command groups and every registered semantic command has JSON dry-run fallback coverage.
+    - The shared mutation contract is covered across Studio Core, CLI, local API and MCP.
+    - MCP resources, tools and prompts, panel smoke, exact-payload panel mutation review and local API security are evidenced by existing PRD 11 verification records.
+    - Environment-gated live WordPress/docker helper smoke remains a runtime acceptance check and is not treated as missing PRD 11 interface capacity.
+  command: >-
+    npm run studio -- --help &&
+    npx vitest run packages/cli/src/index.test.ts packages/testing/src/interface-equivalence.test.ts packages/mcp/src/server-smoke.test.ts packages/local-api/src/index.test.ts &&
+    npm run verify &&
+    node operations/tools/panel-smoke.mjs &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T17:38:33.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 11 interface closure audit verification
+  validated_at: 2026-06-18T17:38:33.000Z

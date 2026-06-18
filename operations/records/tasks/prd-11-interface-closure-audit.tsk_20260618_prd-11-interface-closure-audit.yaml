@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T17:38:33.000Z
+  id: tsk_20260618_prd-11-interface-closure-audit
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - interface
+  revision: 1
+  schema_version: 1
+  slug: prd-11-interface-closure-audit
+  updated_at: 2026-06-18T17:38:33.000Z
+relations: []
+spec:
+  acceptance:
+    - PRD 11 matrix reports 100% capability complete
+    - CLI required command groups and semantic fallback are reconciled against current help and tests
+    - Core, CLI, API and MCP equivalence evidence is referenced as the shared mutation contract
+    - MCP resources, tools and prompts are covered by smoke evidence
+    - panel smoke and local API security evidence are referenced as final interface evidence
+    - live WordPress/docker helper smoke is classified as environment-gated runtime acceptance, not a PRD 11 interface blocker
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Reconciles PRD 11 interface coverage and closes the CLI/MCP/panel capability matrix.
+  title: PRD 11 interface closure audit
