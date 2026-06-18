@@ -1,0 +1,40 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T04:18:46.000Z
+  id: evd_20260618_prd-11-cli-fallback-contract-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - cli
+  revision: 1
+  schema_version: 1
+  slug: prd-11-cli-fallback-contract-verification
+  updated_at: 2026-06-18T04:18:46.000Z
+relations:
+  - target_id: tsk_20260618_prd-11-cli-fallback-contract
+    type: supports
+spec:
+  claims:
+    - The CLI test suite now checks every command in the semantic Studio command registry against a dry-run JSON CLI fallback case.
+    - CLI runtime returns stable ResultEnvelope output for pre-command validation failures such as invalid expected revision input.
+    - Idempotency replay returns the same entity result and conflicting key reuse is classified as conflict with exit code 6.
+    - Expected revision success, stale revision conflict and invalid revision input are covered.
+    - The work does not add external sends, real customer records or portfolio implementation.
+  command: >-
+    npm run verify &&
+    npm run test -- packages/cli/src/index.test.ts packages/core/src/command-service.test.ts packages/core/src/idempotency.test.ts &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T04:18:46.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 11 CLI fallback contract verification
+  validated_at: 2026-06-18T04:18:46.000Z

@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T04:18:46.000Z
+  id: tsk_20260618_prd-11-cli-fallback-contract
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-11
+    - cli
+  revision: 1
+  schema_version: 1
+  slug: prd-11-cli-fallback-contract
+  updated_at: 2026-06-18T04:18:46.000Z
+relations: []
+spec:
+  acceptance:
+    - every registered semantic Studio command has a CLI dry-run JSON fallback test
+    - CLI dry-run matrix verifies stable exit code zero and command envelope shape
+    - CLI idempotency replay returns the same logical entity result
+    - conflicting idempotency key reuse returns a conflict envelope and exit code 6
+    - expected revision success, conflict and invalid input paths have stable exit codes
+    - CLI runtime wraps pre-command validation errors as ResultEnvelope output instead of uncaught exceptions
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Hardens PRD 11 CLI fallback behavior for semantic command runtime usage.
+  title: PRD 11 CLI fallback contract

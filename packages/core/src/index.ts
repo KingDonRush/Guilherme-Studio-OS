@@ -19,6 +19,7 @@ export {
   classifyStudioError,
   StudioCommandService,
 } from "./command-service.js";
+export { getStudioCommandDefinition, STUDIO_COMMAND_REGISTRY } from "./commands/registry.js";
 export { createStudioContext, type StudioContext } from "./context.js";
 export {
   coverageEntityIds,

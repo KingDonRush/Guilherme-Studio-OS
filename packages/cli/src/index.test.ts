@@ -8,6 +8,7 @@ import {
 } from "@guilherme-studio/core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import YAML from "yaml";
+import { STUDIO_COMMAND_REGISTRY } from "../../core/src/commands/registry.js";
 import { createProgram } from "./index.js";
 
 describe("Studio CLI", () => {
@@ -158,22 +159,402 @@ describe("Studio CLI", () => {
       ]),
     );
   });
+
+  it("keeps every registered semantic command available as a dry-run JSON CLI fallback", async () => {
+    const root = await createCliFixtureRoot("studio-cli-matrix-");
+    const coveredCommands = new Set(MUTABLE_CLI_DRY_RUN_CASES.map((entry) => entry.command));
+
+    expect([...coveredCommands].sort()).toEqual(Object.keys(STUDIO_COMMAND_REGISTRY).sort());
+
+    for (const [index, entry] of MUTABLE_CLI_DRY_RUN_CASES.entries()) {
+      const result = await runCliJsonWithExit([
+        "--root",
+        root,
+        "--json",
+        "--dry-run",
+        "--idempotency-key",
+        `cli-matrix-${index}-${entry.command}`,
+        ...entry.args,
+      ]);
+
+      expect(result.exitCode, entry.command).toBe(0);
+      expect(result.output, entry.command).toMatchObject({
+        status: "ok",
+        result: {
+          dry_run: true,
+          command: entry.command,
+        },
+      });
+    }
+  });
+
+  it("replays CLI idempotency keys and rejects conflicting reuse with a stable exit code", async () => {
+    const root = await createCliFixtureRoot("studio-cli-idempotency-");
+    const args = [
+      "--root",
+      root,
+      "--json",
+      "--idempotency-key",
+      "cli-idempotency-replay",
+      "entity",
+      "create",
+      "task",
+      "--title",
+      "Replayable task",
+    ];
+    const first = await runCliJsonWithExit(args);
+    const second = await runCliJsonWithExit(args);
+    const conflict = await runCliJsonWithExit([
+      "--root",
+      root,
+      "--json",
+      "--idempotency-key",
+      "cli-idempotency-replay",
+      "entity",
+      "create",
+      "task",
+      "--title",
+      "Different task",
+    ]);
+
+    expect(first.exitCode).toBe(0);
+    expect(second.exitCode).toBe(0);
+    expect(entityResultId(second.output)).toBe(entityResultId(first.output));
+    expect(conflict.exitCode).toBe(6);
+    expect(conflict.output).toMatchObject({
+      status: "conflict",
+      error: { code: "idempotency_conflict" },
+    });
+  });
+
+  it("enforces expected revision and invalid revision input with stable exit codes", async () => {
+    const root = await createCliFixtureRoot("studio-cli-expected-revision-");
+    const created = await runCliJsonWithExit([
+      "--root",
+      root,
+      "--json",
+      "entity",
+      "create",
+      "task",
+      "--title",
+      "Revision guarded task",
+    ]);
+    const entityId = entityResultId(created.output);
+    const updated = await runCliJsonWithExit([
+      "--root",
+      root,
+      "--json",
+      "--expected-revision",
+      "1",
+      "entity",
+      "transition",
+      entityId,
+      "waiting",
+    ]);
+    const conflict = await runCliJsonWithExit([
+      "--root",
+      root,
+      "--json",
+      "--expected-revision",
+      "1",
+      "entity",
+      "transition",
+      entityId,
+      "active",
+    ]);
+    const invalid = await runCliJsonWithExit([
+      "--root",
+      root,
+      "--json",
+      "--expected-revision",
+      "1.5",
+      "entity",
+      "transition",
+      entityId,
+      "active",
+    ]);
+
+    expect(created.exitCode).toBe(0);
+    expect(updated).toMatchObject({
+      exitCode: 0,
+      output: { status: "ok", result: { revision: 2 } },
+    });
+    expect(conflict).toMatchObject({
+      exitCode: 6,
+      output: { status: "conflict", error: { code: "revision_conflict" } },
+    });
+    expect(invalid).toMatchObject({
+      exitCode: 2,
+      output: { status: "error", error: { code: "invalid_input" } },
+    });
+  });
 });
 
 async function runCliJson(args: string[]): Promise<Record<string, unknown>> {
+  return (await runCliJsonWithExit(args)).output;
+}
+
+async function runCliJsonWithExit(args: string[]): Promise<{
+  output: Record<string, unknown>;
+  exitCode: number;
+}> {
+  process.exitCode = undefined;
   const logs: string[] = [];
-  vi.spyOn(console, "log").mockImplementation((value: unknown) => {
+  const log = vi.spyOn(console, "log").mockImplementation((value: unknown) => {
     logs.push(typeof value === "string" ? value : JSON.stringify(value));
   });
-  const program = createProgram();
-  program.exitOverride();
-  await program.parseAsync(["node", "studio", ...args], { from: "node" });
-  const last = logs.at(-1);
-  if (!last) {
-    throw new Error("CLI produced no JSON output.");
+  try {
+    const program = createProgram();
+    program.exitOverride();
+    await program.parseAsync(["node", "studio", ...args], { from: "node" });
+    const last = logs.at(-1);
+    if (!last) {
+      throw new Error("CLI produced no JSON output.");
+    }
+    return {
+      output: JSON.parse(last) as Record<string, unknown>,
+      exitCode: typeof process.exitCode === "number" ? process.exitCode : 0,
+    };
+  } finally {
+    log.mockRestore();
   }
-  return JSON.parse(last) as Record<string, unknown>;
 }
+
+function entityResultId(output: { result?: unknown }): string {
+  const result = output.result as { entity_id?: unknown };
+  if (typeof result.entity_id !== "string") {
+    throw new Error(`CLI result did not include entity_id: ${JSON.stringify(output)}`);
+  }
+  return result.entity_id;
+}
+
+const FUTURE = "2026-06-18T00:00:00.000Z";
+
+const MUTABLE_CLI_DRY_RUN_CASES: Array<{ command: string; args: string[] }> = [
+  { command: "crm.review-duplicates", args: ["crm", "review-duplicates", "--title", "Acme"] },
+  {
+    command: "prospect.qualify",
+    args: ["prospect", "qualify", "pro_fake", "--rationale", "Good fit", "--score", "80"],
+  },
+  {
+    command: "communication.prepare",
+    args: [
+      "communication",
+      "prepare",
+      "--subject",
+      "pro_fake",
+      "--channel",
+      "linkedin",
+      "--message",
+      "Hello",
+    ],
+  },
+  { command: "entity.create", args: ["entity", "create", "task", "--title", "Matrix task"] },
+  { command: "entity.transition", args: ["entity", "transition", "tsk_fake", "waiting"] },
+  { command: "proposal.prepare", args: ["proposal", "prepare", "opp_fake"] },
+  { command: "opportunity.convert", args: ["opportunity", "convert", "opp_fake"] },
+  {
+    command: "engagement.create-from-opportunity",
+    args: ["engagement", "create-from-opportunity", "opp_fake"],
+  },
+  {
+    command: "deliverable.complete",
+    args: ["deliverable", "complete", "del_fake", "--evidence", "evd_fake"],
+  },
+  {
+    command: "project.register-repo",
+    args: [
+      "project",
+      "register-repo",
+      "prj_fake",
+      "--title",
+      "Repository",
+      "--path",
+      "products/example",
+      "--branch",
+      "main",
+      "--remote-policy",
+      "no-remote-in-v1",
+    ],
+  },
+  {
+    command: "evidence.register",
+    args: [
+      "evidence",
+      "register",
+      "--title",
+      "Command evidence",
+      "--type",
+      "command",
+      "--command",
+      "npm test",
+      "--claim",
+      "Tests passed",
+    ],
+  },
+  {
+    command: "action.prepare",
+    args: ["action", "prepare", "external.test", "--payload", '{"ok":true}'],
+  },
+  {
+    command: "action.confirm",
+    args: ["action", "confirm", "act_fake", "--checksum", "a".repeat(64)],
+  },
+  {
+    command: "action.reconcile",
+    args: ["action", "reconcile", "act_fake", "--result", '{"ok":true}'],
+  },
+  {
+    command: "release.prepare",
+    args: ["product", "prepare-release", "prd_fake", "--version", "1.0.0"],
+  },
+  {
+    command: "release.publish",
+    args: ["release", "publish", "rel_fake", "--evidence", "evd_fake"],
+  },
+  {
+    command: "content.prepare",
+    args: ["campaign", "prepare-content", "cmp_fake", "--title", "Post", "--publish-at", FUTURE],
+  },
+  {
+    command: "application.prepare",
+    args: [
+      "application",
+      "prepare",
+      "--title",
+      "LinkedIn role",
+      "--source",
+      "https://linkedin.com/jobs/view/1",
+    ],
+  },
+  {
+    command: "application.follow-up",
+    args: ["application", "follow-up", "app_fake", "--at", FUTURE],
+  },
+  {
+    command: "application.record-interview",
+    args: ["application", "record-interview", "app_fake", "--at", FUTURE],
+  },
+  {
+    command: "contract.create-from-engagement",
+    args: [
+      "contract",
+      "create-from-engagement",
+      "eng_fake",
+      "--value-minor",
+      "10000",
+      "--currency",
+      "USD",
+    ],
+  },
+  {
+    command: "invoice.create-for-contract",
+    args: [
+      "invoice",
+      "create-for-contract",
+      "con_fake",
+      "--amount-minor",
+      "10000",
+      "--currency",
+      "USD",
+    ],
+  },
+  {
+    command: "payment.record-for-invoice",
+    args: [
+      "payment",
+      "record-for-invoice",
+      "inv_fake",
+      "--amount-minor",
+      "10000",
+      "--currency",
+      "USD",
+    ],
+  },
+  {
+    command: "payment.reconcile",
+    args: ["payment", "reconcile", "pay_fake", "--reference", "bank-ref"],
+  },
+  { command: "agent.start", args: ["agent", "start", "--objective", "Run matrix fallback"] },
+  { command: "agent.context", args: ["agent", "context", "run_fake", "--next-action", "Continue"] },
+  {
+    command: "agent.authorize",
+    args: ["agent", "authorize", "run_fake", "--allowed", "read_context"],
+  },
+  {
+    command: "agent.observe",
+    args: ["agent", "observe", "run_fake", "--source", "code", "--summary", "Observed"],
+  },
+  {
+    command: "agent.record-action",
+    args: ["agent", "record-action", "run_fake", "--action", "Run tests"],
+  },
+  {
+    command: "agent.record-evidence",
+    args: ["agent", "record-evidence", "run_fake", "--evidence", "evd_fake"],
+  },
+  { command: "agent.verify", args: ["agent", "verify", "run_fake", "--status", "passed"] },
+  {
+    command: "agent.handoff",
+    args: ["agent", "handoff", "run_fake", "--summary", "Ready", "--next-action", "Continue"],
+  },
+  { command: "agent.close", args: ["agent", "close", "run_fake"] },
+  {
+    command: "knowledge.route",
+    args: [
+      "knowledge",
+      "route",
+      "--title",
+      "Note",
+      "--content",
+      "Keep this.",
+      "--destination",
+      "temporary_note",
+    ],
+  },
+  {
+    command: "case.create-from-evidence",
+    args: ["case", "create-from-evidence", "--evidence", "evd_fake", "--title", "Case"],
+  },
+  {
+    command: "decision.record",
+    args: ["decision", "record", "--title", "Decision", "--decision", "Use the CLI fallback"],
+  },
+  {
+    command: "decision.amend",
+    args: ["decision", "amend", "dec_fake", "--decision", "Updated decision"],
+  },
+  {
+    command: "learning.propose",
+    args: [
+      "agent",
+      "propose-learning",
+      "--title",
+      "Learning",
+      "--failure-class",
+      "missed_context",
+      "--proposal",
+      "Add a checklist",
+      "--destination",
+      "workflow",
+    ],
+  },
+  {
+    command: "handoff.create",
+    args: [
+      "agentRun",
+      "handoff",
+      "--task",
+      "tsk_fake",
+      "--title",
+      "Handoff",
+      "--objective",
+      "Continue safely",
+      "--summary",
+      "Ready",
+    ],
+  },
+];
 
 async function createCliFixtureRoot(prefix: string): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), prefix));

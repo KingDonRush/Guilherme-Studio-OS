@@ -1,10 +1,11 @@
 import {
+  classifyStudioError,
   createStudioCommand,
   createStudioContext,
   executeStudioCommand,
   operatorActor,
 } from "@guilherme-studio/core";
-import { createActor, type ResultEnvelope } from "@guilherme-studio/schemas";
+import { createActor, createResultEnvelope, type ResultEnvelope } from "@guilherme-studio/schemas";
 import type { Command } from "commander";
 
 export interface GlobalOptions {
@@ -60,31 +61,54 @@ export async function executeCliCommand(
   payload: Record<string, unknown>,
   targetId?: string,
 ): Promise<ResultEnvelope> {
-  const context = await createStudioContext(options.root);
-  const actor =
-    !options.actor || options.actor === context.config.operator_id
-      ? operatorActor(context.config.operator_id)
-      : createActor({
-          id: options.actor,
-          type: "agent",
-          capabilities: ["entity.read", "repository.inspect", "environment.inspect"],
-          classification_ceiling: "internal",
-        });
-  const envelope = createStudioCommand(context, {
-    command,
-    actor,
-    payload,
-    ...(targetId ? { targetId } : {}),
-    ...(options.expectedRevision
-      ? { expectedRevision: Number.parseInt(options.expectedRevision, 10) }
-      : {}),
-    ...(options.idempotencyKey ? { idempotencyKey: options.idempotencyKey } : {}),
-    dryRun: options.dryRun ?? false,
-  });
-  const result = await executeStudioCommand(context, envelope);
-  process.exitCode = exitCodeForEnvelope(result);
-  print(result, options.json, options.quiet);
-  return result;
+  try {
+    const context = await createStudioContext(options.root);
+    const actor =
+      !options.actor || options.actor === context.config.operator_id
+        ? operatorActor(context.config.operator_id)
+        : createActor({
+            id: options.actor,
+            type: "agent",
+            capabilities: ["entity.read", "repository.inspect", "environment.inspect"],
+            classification_ceiling: "internal",
+          });
+    const envelope = createStudioCommand(context, {
+      command,
+      actor,
+      payload,
+      ...(targetId ? { targetId } : {}),
+      ...(options.expectedRevision
+        ? { expectedRevision: parseExpectedRevision(options.expectedRevision) }
+        : {}),
+      ...(options.idempotencyKey ? { idempotencyKey: options.idempotencyKey } : {}),
+      dryRun: options.dryRun ?? false,
+    });
+    const result = await executeStudioCommand(context, envelope);
+    process.exitCode = exitCodeForEnvelope(result);
+    print(result, options.json, options.quiet);
+    return result;
+  } catch (error) {
+    const classified = classifyStudioError(error);
+    const result = createResultEnvelope({
+      status: classified.status,
+      error: {
+        code: classified.code,
+        message: classified.message,
+        details: {},
+      },
+    });
+    process.exitCode = exitCodeForEnvelope(result);
+    print(result, options.json, options.quiet);
+    return result;
+  }
+}
+
+function parseExpectedRevision(value: string): number {
+  const revision = Number(value);
+  if (!Number.isInteger(revision) || revision < 1) {
+    throw new Error(`Invalid expected revision: ${value}. Expected a positive integer.`);
+  }
+  return revision;
 }
 
 export function pathJoin(root: string, relativeOrAbsolute: string): string {

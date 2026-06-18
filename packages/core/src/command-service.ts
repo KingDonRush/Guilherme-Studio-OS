@@ -27,6 +27,9 @@ export function classifyStudioError(error: unknown): {
   if (/revision conflict|changed after/i.test(message)) {
     return { status: "conflict", code: "revision_conflict", message };
   }
+  if (/idempotency key .*different command/i.test(message)) {
+    return { status: "conflict", code: "idempotency_conflict", message };
+  }
   if (/contradictory active decision|contradiction/i.test(message)) {
     return { status: "conflict", code: "decision_contradiction", message };
   }
