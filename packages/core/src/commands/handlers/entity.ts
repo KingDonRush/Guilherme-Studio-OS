@@ -28,4 +28,27 @@ export const entityCommandDefinitions: Record<string, StudioCommandDefinition> =
       return entityMutationResult(command.command, entity);
     },
   },
+  "entity.archive": {
+    requirement: { capability: "entity.write" },
+    handler: async ({ context, command, payload }) => {
+      const entity = await new EntityService(context).archive(
+        command.target_id ?? stringValue(payload, "id"),
+      );
+      return entityMutationResult(command.command, entity);
+    },
+  },
+  "entity.relate": {
+    requirement: { capability: "entity.write" },
+    handler: async ({ context, command, payload }) => {
+      const entity = await new EntityService(context).relate(
+        command.target_id ?? stringValue(payload, "id"),
+        {
+          type: stringValue(payload, "relation_type"),
+          target_id: stringValue(payload, "target_id"),
+          ...(optionalString(payload, "note") ? { note: optionalString(payload, "note") } : {}),
+        },
+      );
+      return entityMutationResult(command.command, entity);
+    },
+  },
 };

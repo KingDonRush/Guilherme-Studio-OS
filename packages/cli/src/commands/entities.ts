@@ -67,6 +67,38 @@ export function registerEntityCommands(program: Command): void {
       await executeCliCommand(options, "entity.transition", { status }, id);
     });
 
+  entity
+    .command("archive")
+    .argument("<id>", "Canonical entity id")
+    .action(async function action(this: Command, id: string) {
+      const options = globalOptions(this);
+      await executeCliCommand(options, "entity.archive", {}, id);
+    });
+
+  entity
+    .command("relate")
+    .argument("<id>", "Source canonical entity id")
+    .requiredOption("--type <type>", "Relation type")
+    .requiredOption("--target <id>", "Target canonical entity id")
+    .option("--note <note>", "Relation note")
+    .action(async function action(
+      this: Command & { opts(): { type: string; target: string; note?: string } },
+      id: string,
+    ) {
+      const options = globalOptions(this);
+      const local = this.opts() as { type: string; target: string; note?: string };
+      await executeCliCommand(
+        options,
+        "entity.relate",
+        {
+          relation_type: local.type,
+          target_id: local.target,
+          ...(local.note ? { note: local.note } : {}),
+        },
+        id,
+      );
+    });
+
   registerActionCommands(program);
   registerDomainCommands(program);
 }

@@ -83,6 +83,49 @@ export function registerStudioMcpMutationTools(server: McpServer, root: string):
   );
 
   server.tool(
+    "studio_archive_entity",
+    {
+      entity_id: z.string(),
+      ...sharedCommandOptions,
+    },
+    async ({ entity_id, dry_run, idempotency_key }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "entity.archive",
+          targetId: entity_id,
+          payload: {},
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
+    "studio_relate_entity",
+    {
+      entity_id: z.string(),
+      relation_type: z.string(),
+      target_id: z.string(),
+      note: z.string().optional(),
+      ...sharedCommandOptions,
+    },
+    async ({ entity_id, relation_type, target_id, note, dry_run, idempotency_key }) =>
+      jsonContent(
+        await executeMcpCommand(root, {
+          command: "entity.relate",
+          targetId: entity_id,
+          payload: {
+            relation_type,
+            target_id,
+            ...(note ? { note } : {}),
+          },
+          dryRun: dry_run,
+          ...(idempotency_key ? { idempotencyKey: idempotency_key } : {}),
+        }),
+      ),
+  );
+
+  server.tool(
     "studio_prepare_external_action",
     {
       action_type: z.string(),

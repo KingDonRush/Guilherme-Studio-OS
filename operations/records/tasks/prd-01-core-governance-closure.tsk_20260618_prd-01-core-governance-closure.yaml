@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T17:49:58.000Z
+  id: tsk_20260618_prd-01-core-governance-closure
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-01
+    - core
+    - governance
+  revision: 1
+  schema_version: 1
+  slug: prd-01-core-governance-closure
+  updated_at: 2026-06-18T17:49:58.000Z
+relations: []
+spec:
+  acceptance:
+    - entity archive and relation commands exist in the shared command runtime
+    - CLI and MCP expose archive and relation without bypassing Studio Core
+    - interface equivalence covers entity archive and relation dry-run envelopes
+    - command runtime test proves relation revision movement and archive metadata
+    - PRD 01 matrix reports 100% capability complete without real business data
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Closes PRD 01 core governance gaps for entity archive/relation surfaces and matrix reconciliation.
+  title: PRD 01 core governance closure

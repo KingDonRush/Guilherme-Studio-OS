@@ -8,9 +8,11 @@ import {
   entityTitle,
   type LifecycleState,
   nowIso,
+  RelationSchema,
   type ResultEnvelope,
   type StudioEntity,
   type StudioEvent,
+  type StudioRelation,
   TypedEntitySchema,
   updateEntityMetadata,
 } from "@guilherme-studio/schemas";
@@ -56,10 +58,16 @@ export class EntityService {
     if (!mutated || typeof mutated !== "object") {
       throw new Error(`Entity update must return an object for ${id}`);
     }
+    const candidate = TypedEntitySchema.parse(mutated);
     const next = TypedEntitySchema.parse({
-      ...mutated,
+      ...candidate,
       metadata: {
         ...current.entity.metadata,
+        ...candidate.metadata,
+        id: current.entity.metadata.id,
+        slug: current.entity.metadata.slug,
+        schema_version: current.entity.metadata.schema_version,
+        created_at: current.entity.metadata.created_at,
         revision: entityRevision(current.entity) + 1,
         updated_at: nowIso(),
       },
@@ -80,12 +88,39 @@ export class EntityService {
 
   async archive(id: string): Promise<StudioEntity> {
     return this.update(id, (entity) => {
-      const archived = TypedEntitySchema.parse({
-        ...entity,
+      const archivedAt = nowIso();
+      return TypedEntitySchema.parse({
+        ...updateEntityMetadata(entity, { archived_at: archivedAt }),
         spec: { ...entity.spec, status: "archived" },
       });
-      return updateEntityMetadata(archived, { archived_at: nowIso() });
     });
+  }
+
+  async relate(id: string, relation: StudioRelation): Promise<StudioEntity> {
+    const parsed = RelationSchema.parse(relation);
+    const target = await this.context.entities.get(parsed.target_id);
+    if (!target) {
+      throw new Error(`Relation target not found: ${parsed.target_id}`);
+    }
+    const current = await this.context.entities.get(id);
+    if (!current) {
+      throw new Error(`Entity not found: ${id}`);
+    }
+    const exists = current.entity.relations.some(
+      (entry) => entry.type === parsed.type && entry.target_id === parsed.target_id,
+    );
+    if (exists) {
+      return current.entity;
+    }
+    const next = await this.update(id, (entity) => ({
+      ...entity,
+      relations: [...entity.relations, parsed],
+    }));
+    await this.recordEvent("entity.related", entityId(next), {
+      relation_type: parsed.type,
+      target_id: parsed.target_id,
+    });
+    return next;
   }
 
   async recordEvent(

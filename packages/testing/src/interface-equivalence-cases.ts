@@ -86,6 +86,43 @@ export const INTERFACE_EQUIVALENCE_CASES: InterfaceEquivalenceCase[] = [
     },
   },
   {
+    command: "entity.archive",
+    targetId: "tsk_equivalent",
+    payload: {},
+    cliArgs: ["entity", "archive", "tsk_equivalent"],
+    mcpTool: "studio_archive_entity",
+    mcpArgs: {
+      entity_id: "tsk_equivalent",
+    },
+  },
+  {
+    command: "entity.relate",
+    targetId: "tsk_equivalent",
+    payload: {
+      relation_type: "supports",
+      target_id: "evd_equivalent",
+      note: "Equivalent relation",
+    },
+    cliArgs: [
+      "entity",
+      "relate",
+      "tsk_equivalent",
+      "--type",
+      "supports",
+      "--target",
+      "evd_equivalent",
+      "--note",
+      "Equivalent relation",
+    ],
+    mcpTool: "studio_relate_entity",
+    mcpArgs: {
+      entity_id: "tsk_equivalent",
+      relation_type: "supports",
+      target_id: "evd_equivalent",
+      note: "Equivalent relation",
+    },
+  },
+  {
     command: "evidence.register",
     payload: {
       title: "Equivalent verification evidence",

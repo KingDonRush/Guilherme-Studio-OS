@@ -1,0 +1,41 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T17:49:58.000Z
+  id: evd_20260618_prd-01-core-governance-closure-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-01
+    - core
+    - governance
+  revision: 1
+  schema_version: 1
+  slug: prd-01-core-governance-closure-verification
+  updated_at: 2026-06-18T17:49:58.000Z
+relations:
+  - target_id: tsk_20260618_prd-01-core-governance-closure
+    type: supports
+spec:
+  claims:
+    - Entity archive and relation mutations now run through the shared Studio command runtime.
+    - CLI and MCP expose archive and relation through the same command runtime, with dry-run and idempotency support.
+    - Interface equivalence covers entity archive and relation across Core, CLI, local API and MCP.
+    - Full verification, validation, sync rebuild and coverage passed after closing PRD 01.
+  command: >-
+    npx vitest run packages/core/src/command-runtime.test.ts packages/cli/src/index.test.ts packages/testing/src/interface-equivalence.test.ts packages/mcp/src/server-smoke.test.ts &&
+    npm run verify &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json &&
+    npm run studio -- coverage --json &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-06-18T17:49:58.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 01 core governance closure verification
+  validated_at: 2026-06-18T17:49:58.000Z

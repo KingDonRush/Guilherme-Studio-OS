@@ -550,6 +550,21 @@ const MUTABLE_CLI_DRY_RUN_CASES: Array<{ command: string; args: string[] }> = [
   },
   { command: "entity.create", args: ["entity", "create", "task", "--title", "Matrix task"] },
   { command: "entity.transition", args: ["entity", "transition", "tsk_fake", "waiting"] },
+  { command: "entity.archive", args: ["entity", "archive", "tsk_fake"] },
+  {
+    command: "entity.relate",
+    args: [
+      "entity",
+      "relate",
+      "tsk_fake",
+      "--type",
+      "supports",
+      "--target",
+      "evd_fake",
+      "--note",
+      "Matrix relation",
+    ],
+  },
   { command: "proposal.prepare", args: ["proposal", "prepare", "opp_fake"] },
   { command: "opportunity.convert", args: ["opportunity", "convert", "opp_fake"] },
   {
