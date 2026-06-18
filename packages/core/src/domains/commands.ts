@@ -130,16 +130,76 @@ export class DomainCommandService extends DomainServiceBase {
     return this.finance.createInvoiceForContract(...args);
   }
 
+  registerCommercialTerms(
+    ...args: Parameters<FinanceDomainService["registerCommercialTerms"]>
+  ): ReturnType<FinanceDomainService["registerCommercialTerms"]> {
+    return this.finance.registerCommercialTerms(...args);
+  }
+
+  registerContractDetails(
+    ...args: Parameters<FinanceDomainService["registerContractDetails"]>
+  ): ReturnType<FinanceDomainService["registerContractDetails"]> {
+    return this.finance.registerContractDetails(...args);
+  }
+
+  issueInvoice(
+    ...args: Parameters<FinanceDomainService["issueInvoice"]>
+  ): ReturnType<FinanceDomainService["issueInvoice"]> {
+    return this.finance.issueInvoice(...args);
+  }
+
+  updateInvoiceLifecycle(
+    ...args: Parameters<FinanceDomainService["updateInvoiceLifecycle"]>
+  ): ReturnType<FinanceDomainService["updateInvoiceLifecycle"]> {
+    return this.finance.updateInvoiceLifecycle(...args);
+  }
+
   recordPaymentForInvoice(
     ...args: Parameters<FinanceDomainService["recordPaymentForInvoice"]>
   ): ReturnType<FinanceDomainService["recordPaymentForInvoice"]> {
     return this.finance.recordPaymentForInvoice(...args);
   }
 
+  confirmPayment(
+    ...args: Parameters<FinanceDomainService["confirmPayment"]>
+  ): ReturnType<FinanceDomainService["confirmPayment"]> {
+    return this.finance.confirmPayment(...args);
+  }
+
   reconcilePayment(
     ...args: Parameters<FinanceDomainService["reconcilePayment"]>
   ): ReturnType<FinanceDomainService["reconcilePayment"]> {
     return this.finance.reconcilePayment(...args);
+  }
+
+  preparePaymentReminder(
+    ...args: Parameters<FinanceDomainService["preparePaymentReminder"]>
+  ): ReturnType<FinanceDomainService["preparePaymentReminder"]> {
+    return this.finance.preparePaymentReminder(...args);
+  }
+
+  resolveObligations(
+    ...args: Parameters<FinanceDomainService["resolveObligations"]>
+  ): ReturnType<FinanceDomainService["resolveObligations"]> {
+    return this.finance.resolveObligations(...args);
+  }
+
+  reconciliationReport(
+    ...args: Parameters<FinanceDomainService["reconciliationReport"]>
+  ): ReturnType<FinanceDomainService["reconciliationReport"]> {
+    return this.finance.reconciliationReport(...args);
+  }
+
+  obligationCalendar(
+    ...args: Parameters<FinanceDomainService["obligationCalendar"]>
+  ): ReturnType<FinanceDomainService["obligationCalendar"]> {
+    return this.finance.obligationCalendar(...args);
+  }
+
+  calculateEconomicView(
+    ...args: Parameters<FinanceDomainService["calculateEconomicView"]>
+  ): ReturnType<FinanceDomainService["calculateEconomicView"]> {
+    return this.finance.calculateEconomicView(...args);
   }
 
   createHandoff(

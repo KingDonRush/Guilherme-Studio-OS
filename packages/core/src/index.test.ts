@@ -255,10 +255,21 @@ describe("core governance", () => {
       amountMinor: 120_000,
       currency: "USD",
     });
+    const evidence = await commands.registerEvidence({
+      title: "Payment provider confirmation",
+      evidenceType: "manual",
+      claims: ["Payment confirmed by provider"],
+    });
+    const confirmed = await commands.confirmPayment(payment.metadata.id, {
+      providerEvidenceId: evidence.metadata.id,
+      provider: "manual",
+    });
     const reconciled = await commands.reconcilePayment(payment.metadata.id, {
       reference: "bank-confirmation-001",
     });
+    expect(confirmed.spec.stage).toBe("confirmed");
     expect(reconciled.spec.status).toBe("paid");
+    expect(reconciled.spec.stage).toBe("reconciled");
     expect(reconciled.spec.reconciliation_reference).toBe("bank-confirmation-001");
   });
 

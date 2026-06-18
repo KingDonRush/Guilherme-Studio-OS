@@ -686,6 +686,30 @@ const MUTABLE_CLI_DRY_RUN_CASES: Array<{ command: string; args: string[] }> = [
     ],
   },
   {
+    command: "contract.register-terms",
+    args: [
+      "contract",
+      "register-terms",
+      "con_fake",
+      "--total-minor",
+      "10000",
+      "--currency",
+      "USD",
+      "--installments-json",
+      '[{"title":"Milestone","amount_minor":10000}]',
+    ],
+  },
+  {
+    command: "contract.register-details",
+    args: [
+      "contract",
+      "register-details",
+      "con_fake",
+      "--obligations-json",
+      '[{"text":"Deliver package","source_ref":"contract.section.delivery"}]',
+    ],
+  },
+  {
     command: "invoice.create-for-contract",
     args: [
       "invoice",
@@ -695,6 +719,22 @@ const MUTABLE_CLI_DRY_RUN_CASES: Array<{ command: string; args: string[] }> = [
       "10000",
       "--currency",
       "USD",
+    ],
+  },
+  {
+    command: "invoice.issue",
+    args: ["invoice", "issue", "inv_fake", "--evidence", "evd_fake"],
+  },
+  {
+    command: "invoice.update-lifecycle",
+    args: [
+      "invoice",
+      "update-lifecycle",
+      "inv_fake",
+      "--stage",
+      "partially_paid",
+      "--paid-amount-minor",
+      "5000",
     ],
   },
   {
@@ -710,8 +750,32 @@ const MUTABLE_CLI_DRY_RUN_CASES: Array<{ command: string; args: string[] }> = [
     ],
   },
   {
+    command: "payment.confirm",
+    args: ["payment", "confirm", "pay_fake", "--evidence", "evd_fake"],
+  },
+  {
     command: "payment.reconcile",
-    args: ["payment", "reconcile", "pay_fake", "--reference", "bank-ref"],
+    args: ["payment", "reconcile", "pay_fake", "--reference", "bank-ref", "--evidence", "evd_fake"],
+  },
+  {
+    command: "payment.prepare-reminder",
+    args: ["payment", "prepare-reminder", "inv_fake", "--message", "Reminder"],
+  },
+  {
+    command: "finance.resolve-obligations",
+    args: ["finance", "resolve-obligations", "--contract", "con_fake"],
+  },
+  {
+    command: "finance.reconciliation-report",
+    args: ["finance", "reconciliation-report"],
+  },
+  {
+    command: "finance.obligation-calendar",
+    args: ["finance", "obligation-calendar"],
+  },
+  {
+    command: "finance.economic-view",
+    args: ["finance", "economic-view", "--include-note"],
   },
   { command: "agent.start", args: ["agent", "start", "--objective", "Run matrix fallback"] },
   { command: "agent.context", args: ["agent", "context", "run_fake", "--next-action", "Continue"] },

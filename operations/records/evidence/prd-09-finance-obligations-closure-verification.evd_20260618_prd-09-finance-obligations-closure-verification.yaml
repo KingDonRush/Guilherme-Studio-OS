@@ -1,0 +1,42 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T19:00:17.000Z
+  id: evd_20260618_prd-09-finance-obligations-closure-verification
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-09
+    - finance
+    - obligations
+  revision: 1
+  schema_version: 1
+  slug: prd-09-finance-obligations-closure-verification
+  updated_at: 2026-06-18T19:00:17.000Z
+relations:
+  - target_id: tsk_20260618_prd-09-finance-obligations-closure
+    type: supports
+spec:
+  claims:
+    - Finance schemas now include PRD 09 central fields for terms, contracts, obligations, invoices, payments and operational safety.
+    - Core finance commands cover terms, details, invoice issue/lifecycle, expected payment, payment confirmation, reconciliation, reminders, obligations, calendar, unmatched records and economic view.
+    - CLI/API/MCP dry-run equivalence covers the expanded finance command surface.
+    - Payment confirmation requires provider evidence before reconciliation can mark payment paid.
+    - Full verification, panel smoke, schema export, validation and sync rebuild passed after closing PRD 09.
+  command: >-
+    npx vitest run packages/core/src/command-runtime.test.ts packages/cli/src/index.test.ts packages/testing/src/interface-equivalence.test.ts packages/mcp/src/server-smoke.test.ts &&
+    npm run verify &&
+    node operations/tools/panel-smoke.mjs &&
+    npm run studio -- schemas export --json &&
+    npm run studio -- validate --json &&
+    npm run studio -- sync --rebuild --verify --json
+  evidence_type: command
+  observed_at: 2026-06-18T19:00:17.000Z
+  source_mutability: operator-observed
+  status: active
+  title: PRD 09 finance obligations closure verification
+  validated_at: 2026-06-18T19:00:17.000Z

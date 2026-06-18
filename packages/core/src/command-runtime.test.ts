@@ -233,6 +233,303 @@ describe("Studio command runtime", () => {
       },
     });
   });
+
+  it("keeps finance terms, obligations, reminders and payment evidence distinct", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "studio-runtime-finance-governance-"));
+    await writeFile(
+      path.join(root, "studio.config.yaml"),
+      YAML.stringify({
+        api_version: "studio.guilherme.dev/config-v1",
+        root_name: "Runtime finance governance test",
+        operator_id: "per_20260614_guilherme-silva",
+        canonical_roots: ["clients", "operations"],
+        runtime_path: "runtime",
+        panel: { host: "127.0.0.1", port: 47835 },
+        adapters: {},
+      }),
+    );
+    const context = await createStudioContext(root);
+    const actor = operatorActor(context.config.operator_id);
+    const engagement = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "entity.create",
+        actor,
+        payload: { kind: "engagement", title: "Governed engagement" },
+      }),
+    );
+    const engagementId = entityIdFromResult(engagement);
+    const contract = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "contract.create-from-engagement",
+        actor,
+        payload: {
+          engagement_id: engagementId,
+          title: "Governed contract",
+          value_minor: 120_000,
+          currency: "USD",
+        },
+      }),
+    );
+    const contractId = entityIdFromResult(contract);
+    const terms = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "contract.register-terms",
+        actor,
+        targetId: contractId,
+        payload: {
+          contract_id: contractId,
+          total_minor: 120_000,
+          currency: "USD",
+          deposit_minor: 40_000,
+          deposit_due_at: "2026-07-01T12:00:00.000Z",
+          installments: [
+            {
+              id: "milestone-1",
+              title: "Milestone 1",
+              amount_minor: 80_000,
+              due_at: "2026-08-01T12:00:00.000Z",
+            },
+          ],
+          warranty_ends_at: "2026-09-01T12:00:00.000Z",
+          acceptance_conditions: ["Client signs delivery acceptance"],
+        },
+      }),
+    );
+    const details = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "contract.register-details",
+        actor,
+        targetId: contractId,
+        payload: {
+          contract_id: contractId,
+          obligations: [
+            {
+              id: "obl-delivery",
+              text: "Deliver accepted website package.",
+              source_ref: "contract.section.delivery",
+              owner: "studio",
+              due_at: "2026-08-05T12:00:00.000Z",
+            },
+          ],
+          confidentiality_terms: "Keep client materials confidential.",
+          ip_terms: "Transfer implementation rights after settlement.",
+        },
+      }),
+    );
+    const invoice = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "invoice.create-for-contract",
+        actor,
+        payload: {
+          contract_id: contractId,
+          title: "Governed invoice",
+          amount_minor: 40_000,
+          currency: "USD",
+          due_at: "2026-07-01T12:00:00.000Z",
+          reference: "deposit",
+        },
+      }),
+    );
+    const invoiceId = entityIdFromResult(invoice);
+    const issued = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "invoice.issue",
+        actor,
+        targetId: invoiceId,
+        payload: { invoice_id: invoiceId },
+      }),
+    );
+    const expectedPayment = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "payment.record-for-invoice",
+        actor,
+        payload: {
+          invoice_id: invoiceId,
+          title: "Expected deposit",
+          amount_minor: 40_000,
+          currency: "USD",
+          expected_at: "2026-07-02T12:00:00.000Z",
+        },
+      }),
+    );
+    const paymentId = entityIdFromResult(expectedPayment);
+    const reminder = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "payment.prepare-reminder",
+        actor,
+        targetId: invoiceId,
+        payload: {
+          invoice_id: invoiceId,
+          channel: "email",
+          message: "Reminder text for exact-payload review.",
+        },
+      }),
+    );
+    const evidence = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "evidence.register",
+        actor,
+        payload: {
+          title: "Provider payment evidence",
+          evidence_type: "manual",
+          claims: ["Provider confirmed deposit payment"],
+        },
+      }),
+    );
+    const evidenceId = entityIdFromResult(evidence);
+    const confirmed = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "payment.confirm",
+        actor,
+        targetId: paymentId,
+        payload: {
+          payment_id: paymentId,
+          provider_evidence_id: evidenceId,
+          provider: "manual",
+          provider_reference: "provider-123",
+        },
+      }),
+    );
+    const reconciled = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "payment.reconcile",
+        actor,
+        targetId: paymentId,
+        payload: {
+          payment_id: paymentId,
+          reference: "bank-ledger-123",
+        },
+      }),
+    );
+    const obligations = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "finance.resolve-obligations",
+        actor,
+        payload: { contract_id: contractId },
+      }),
+    );
+    const report = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "finance.reconciliation-report",
+        actor,
+        payload: {},
+      }),
+    );
+    const economic = await executeStudioCommand(
+      context,
+      createCommandEnvelope({
+        command: "finance.economic-view",
+        actor,
+        payload: { include_legal_tax_note: true },
+      }),
+    );
+
+    expect(terms).toMatchObject({
+      status: "ok",
+      result: {
+        entity: {
+          spec: {
+            commercial_terms: {
+              total_minor: 120_000,
+              deposit_minor: 40_000,
+              acceptance_conditions: ["Client signs delivery acceptance"],
+            },
+          },
+        },
+      },
+    });
+    expect(details).toMatchObject({
+      status: "ok",
+      result: {
+        entity: {
+          spec: {
+            obligations: [
+              {
+                id: "obl-delivery",
+                authority: "contract-text",
+                status: "open",
+              },
+            ],
+          },
+        },
+      },
+    });
+    expect(issued).toMatchObject({
+      status: "ok",
+      result: { entity: { spec: { status: "active", stage: "issued" } } },
+    });
+    expect(reminder).toMatchObject({
+      status: "ok",
+      result: {
+        action_type: "finance.payment-reminder.prepare",
+        provider: "fake/local",
+        target: invoiceId,
+        status: "awaiting_confirmation",
+        source_revisions: { [invoiceId]: expect.any(Number), [contractId]: expect.any(Number) },
+      },
+    });
+    expect(confirmed).toMatchObject({
+      status: "ok",
+      result: {
+        entity: {
+          spec: {
+            status: "active",
+            stage: "confirmed",
+            provider_evidence_id: evidenceId,
+          },
+        },
+      },
+    });
+    expect(reconciled).toMatchObject({
+      status: "ok",
+      result: {
+        entity: {
+          spec: {
+            status: "paid",
+            stage: "reconciled",
+            reconciliation_reference: "bank-ledger-123",
+          },
+        },
+      },
+    });
+    expect(obligations).toMatchObject({
+      status: "ok",
+      result: {
+        obligations: expect.arrayContaining([
+          expect.objectContaining({ source_ref: "contract.section.delivery" }),
+          expect.objectContaining({ type: "invoice_due", source_id: invoiceId }),
+        ]),
+      },
+    });
+    expect(report).toMatchObject({
+      status: "ok",
+      result: {
+        unmatched_payments: [],
+        open_payments: [],
+      },
+    });
+    expect(economic).toMatchObject({
+      status: "ok",
+      result: {
+        active_contract_value_minor: 120_000,
+        reconciled_revenue_minor: 40_000,
+        note: "Operational record only; not legal, tax, accounting or banking advice.",
+      },
+    });
+  });
 });
 
 function entityIdFromResult(result: { result?: unknown }): string {

@@ -1,0 +1,32 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-18T19:00:17.000Z
+  id: tsk_20260618_prd-09-finance-obligations-closure
+  labels:
+    - studio-os
+    - prd-completion
+    - wave-1
+    - prd-09
+    - finance
+    - obligations
+  revision: 1
+  schema_version: 1
+  slug: prd-09-finance-obligations-closure
+  updated_at: 2026-06-18T19:00:17.000Z
+relations: []
+spec:
+  acceptance:
+    - finance schemas expose commercial terms, contract details, obligations, invoice lifecycle and payment evidence fields
+    - finance semantic commands cover terms, details, invoice issue/lifecycle, payment confirmation/reconciliation, reminders and reports
+    - payment confirmation requires provider evidence before reconciliation
+    - payment reminders create fake/local prepared actions with source revisions and exact payload review
+    - PRD 09 matrix reports 100% capability complete without inventing finance data
+  blocked_by: []
+  priority: now
+  status: done
+  summary: Closes PRD 09 finance, contracts and obligations capability gaps while preserving real-data intake boundaries.
+  title: PRD 09 finance obligations closure

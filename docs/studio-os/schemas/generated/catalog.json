@@ -4869,6 +4869,18 @@
                 "engagement_id": {
                   "type": "string"
                 },
+                "proposal_id": {
+                  "type": "string"
+                },
+                "proposal_version_ref": {
+                  "type": "string"
+                },
+                "contract_version_ref": {
+                  "type": "string"
+                },
+                "signed_artifact_ref": {
+                  "type": "string"
+                },
                 "value_minor": {
                   "type": "integer",
                   "minimum": 0,
@@ -4878,6 +4890,202 @@
                   "type": "string",
                   "minLength": 3,
                   "maxLength": 3
+                },
+                "parties": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "role": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "entity_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "role",
+                      "name"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "commercial_terms": {
+                  "type": "object",
+                  "properties": {
+                    "proposal_id": {
+                      "type": "string"
+                    },
+                    "proposal_version_ref": {
+                      "type": "string"
+                    },
+                    "contract_version_ref": {
+                      "type": "string"
+                    },
+                    "signed_artifact_ref": {
+                      "type": "string"
+                    },
+                    "price_basis": {
+                      "type": "string"
+                    },
+                    "total_minor": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "currency": {
+                      "type": "string",
+                      "minLength": 3,
+                      "maxLength": 3
+                    },
+                    "deposit_minor": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "deposit_due_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                    },
+                    "installments": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "amount_minor": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "due_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                          },
+                          "condition": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "title",
+                          "amount_minor"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "warranty_days": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "warranty_starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                    },
+                    "warranty_ends_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                    },
+                    "maintenance_terms": {
+                      "type": "string"
+                    },
+                    "expenses_policy": {
+                      "type": "string"
+                    },
+                    "acceptance_conditions": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "installments",
+                    "acceptance_conditions"
+                  ],
+                  "additionalProperties": false
+                },
+                "obligations": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "text": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "source_ref": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "owner": {
+                        "type": "string"
+                      },
+                      "due_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                      },
+                      "status": {
+                        "default": "open",
+                        "type": "string",
+                        "enum": [
+                          "open",
+                          "satisfied",
+                          "waived",
+                          "blocked"
+                        ]
+                      },
+                      "authority": {
+                        "default": "contract-text",
+                        "type": "string",
+                        "enum": [
+                          "operational-reminder",
+                          "contract-text",
+                          "external-professional"
+                        ]
+                      },
+                      "evidence_ids": {
+                        "default": [],
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "text",
+                      "source_ref",
+                      "status",
+                      "authority",
+                      "evidence_ids"
+                    ],
+                    "additionalProperties": false
+                  }
                 },
                 "signed_at": {
                   "type": "string",
@@ -4893,11 +5101,31 @@
                   "type": "string",
                   "format": "date-time",
                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "termination_terms": {
+                  "type": "string"
+                },
+                "confidentiality_terms": {
+                  "type": "string"
+                },
+                "ip_terms": {
+                  "type": "string"
+                },
+                "governing_reference": {
+                  "type": "string"
+                },
+                "legal_tax_note": {
+                  "default": "operational-record-only-not-legal-tax-accounting-advice",
+                  "type": "string",
+                  "const": "operational-record-only-not-legal-tax-accounting-advice"
                 }
               },
               "required": [
                 "title",
-                "status"
+                "status",
+                "parties",
+                "obligations",
+                "legal_tax_note"
               ],
               "additionalProperties": {}
             },
@@ -5072,6 +5300,16 @@
                 "contract_id": {
                   "type": "string"
                 },
+                "engagement_id": {
+                  "type": "string"
+                },
+                "deliverable_ids": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "amount_minor": {
                   "type": "integer",
                   "minimum": 0,
@@ -5082,18 +5320,74 @@
                   "minLength": 3,
                   "maxLength": 3
                 },
+                "stage": {
+                  "default": "draft",
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "issued",
+                    "viewed",
+                    "partially_paid",
+                    "overdue",
+                    "disputed",
+                    "settled",
+                    "void"
+                  ]
+                },
+                "issued_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
                 "due_at": {
                   "type": "string",
                   "format": "date-time",
                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
                 },
+                "paid_amount_minor": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "settled_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "disputed_reason": {
+                  "type": "string"
+                },
+                "void_reason": {
+                  "type": "string"
+                },
                 "reference": {
                   "type": "string"
+                },
+                "source_term_id": {
+                  "type": "string"
+                },
+                "reminder_prepared_action_ids": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "evidence_ids": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               },
               "required": [
                 "title",
-                "status"
+                "status",
+                "deliverable_ids",
+                "stage",
+                "reminder_prepared_action_ids",
+                "evidence_ids"
               ],
               "additionalProperties": {}
             },
@@ -5268,6 +5562,9 @@
                 "invoice_id": {
                   "type": "string"
                 },
+                "contract_id": {
+                  "type": "string"
+                },
                 "amount_minor": {
                   "type": "integer",
                   "minimum": 0,
@@ -5278,10 +5575,38 @@
                   "minLength": 3,
                   "maxLength": 3
                 },
+                "stage": {
+                  "default": "expected",
+                  "type": "string",
+                  "enum": [
+                    "expected",
+                    "pending",
+                    "confirmed",
+                    "reconciled",
+                    "failed",
+                    "refunded",
+                    "reversed",
+                    "disputed"
+                  ]
+                },
                 "expected_at": {
                   "type": "string",
                   "format": "date-time",
                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "confirmed_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "provider": {
+                  "type": "string"
+                },
+                "provider_reference": {
+                  "type": "string"
+                },
+                "provider_evidence_id": {
+                  "type": "string"
                 },
                 "reconciled_at": {
                   "type": "string",
@@ -5290,11 +5615,23 @@
                 },
                 "reconciliation_reference": {
                   "type": "string"
+                },
+                "correction_of_payment_id": {
+                  "type": "string"
+                },
+                "evidence_ids": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               },
               "required": [
                 "title",
-                "status"
+                "status",
+                "stage",
+                "evidence_ids"
               ],
               "additionalProperties": {}
             },
