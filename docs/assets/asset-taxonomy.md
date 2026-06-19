@@ -217,39 +217,37 @@ Before generating or using an asset, answer:
 Use this convention for new or migrated project-specific assets:
 
 ```text
-docs/assets/
-  INDEX.md
-  SYSTEM.md
-  packs/
-    <project-or-site>/
-      README.md
-      ASSET_MAP.md
-      prompts/
-      mockups/
-      sources/
-      production/
-      wordpress/
-      manifests/
-      deprecated/
-  shared/
-    identity/
-    icons/
-    textures/
-    backgrounds/
-  distribution/
-    github/<project>/
-    social/<campaign-or-project>/
-    opengraph/<project-or-page>/
-  sources/
-    imagegen/<project-or-date>/
-    screenshots/<project-or-date>/
-    chroma/<project-or-date>/
+portfolio/sites/multipaginados/<site>/
+  docs/
+    README.md
+    ASSET_MAP.md
+    MOCKUP_PROMPTS.md
+  assets/
+    mockups/
+    sources/
+    wordpress/
+    manifests/
+    deprecated/
+
+clients/<client>/projects/<project>/
+  docs/
+    README.md
+    ASSET_MAP.md
+  assets/
+    mockups/
+    sources/
+    wordpress/
+    manifests/
+
+products/<product>/
+  docs/
+  assets/
 ```
 
-`packs/<slug>/` is the human entrypoint. Legacy locations such as `portfolio/`,
-`simple-budget-demo/` and `sources/` may remain until a dedicated migration
-updates references and manifests. Do not move old assets only to satisfy this
-convention unless the move is part of a deliberate cleanup.
+The capsule README is the human entrypoint. `docs/assets` remains available for
+shared assets, distribution exports and legacy redirects, but it is not the
+default home for new project-specific work. Do not move old assets only to
+satisfy this convention unless the move is part of a deliberate cleanup.
 
 ## Required Manifest Fields
 

@@ -14,12 +14,12 @@ folder as the organized asset reference.
 Checksum manifest:
 
 ```text
-../../manifests/wordpress-webp-sha256.txt
+../manifests/wordpress-webp-sha256.txt
 ```
 
 Rules:
 
 - only optimized WebP or legitimate SVG belongs here;
-- raw PNG/imagegen sources belong in `../../sources/`;
-- full-page mockups belong in `../../mockups/`;
+- raw PNG/imagegen sources belong in `../sources/`;
+- full-page mockups belong in `../mockups/`;
 - update the checksum manifest after adding or replacing production assets.

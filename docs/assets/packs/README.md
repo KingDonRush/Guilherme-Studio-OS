@@ -1,6 +1,7 @@
 # Asset Packs
 
-This folder is the human navigation layer for project-specific visual assets.
+This folder is the legacy navigation layer for project-specific visual assets.
+New project-specific work should live inside the owning project capsule.
 
 Each pack should answer:
 
@@ -11,11 +12,11 @@ Each pack should answer:
 - what can be used now;
 - what still needs migration.
 
-Packs may initially point to legacy locations. That is intentional: the first
-goal is findability, not moving large files blindly.
+Packs may point to legacy locations or to the new capsule location. That is
+intentional: the first goal is findability, not moving large files blindly.
 
 ## Packs
 
 | Pack | Status |
 | --- | --- |
-| [`mina-forma`](mina-forma/README.md) | navigation hub created; physical migration pending |
+| [`mina-forma`](mina-forma/README.md) | moved to `portfolio/sites/multipaginados/mina-forma/`; redirect only |

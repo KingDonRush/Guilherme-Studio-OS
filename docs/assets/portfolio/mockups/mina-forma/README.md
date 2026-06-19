@@ -1,17 +1,18 @@
 # Mina Forma Moved
 
-Mina Forma assets were migrated to the pack-first structure.
+Mina Forma assets were migrated out of this legacy folder.
+The current source of truth is now the portfolio capsule.
 
 Open:
 
 ```text
-docs/assets/packs/mina-forma/README.md
+portfolio/sites/multipaginados/mina-forma/docs/README.md
 ```
 
 Map:
 
 ```text
-docs/assets/packs/mina-forma/ASSET_MAP.md
+portfolio/sites/multipaginados/mina-forma/docs/ASSET_MAP.md
 ```
 
 Do not add new Mina Forma files here.

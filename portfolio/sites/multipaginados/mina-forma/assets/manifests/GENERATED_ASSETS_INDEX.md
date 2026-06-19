@@ -10,11 +10,11 @@ to production folders as optimized WebP/SVG.
 
 | Batch | Scope | Files | Manifest |
 | --- | --- | ---: | --- |
-| `batch-1-core` | Core reusable photography | 14 | [`batch-1-core.md`](generation-manifests/batch-1-core.md) |
-| `batch-2-projects` | Fictional project universe | 24 | split across [`batch-2a-aurora-cafe.md`](generation-manifests/batch-2a-aurora-cafe.md), [`batch-2b-primary-projects.md`](generation-manifests/batch-2b-primary-projects.md), [`batch-2c-secondary-projects.md`](generation-manifests/batch-2c-secondary-projects.md) |
-| `batch-3-materials` | Material swatches and deliverables | 32 | [`batch-3-materials.md`](generation-manifests/batch-3-materials.md) |
-| `batch-4-sbp` | SBP public-flow visual assets | 14 | [`batch-4-sbp.md`](generation-manifests/batch-4-sbp.md) |
-| `batch-5-lineart` | Line-art, maps, blueprint overlays and SVG icon sets | 14 | [`batch-5-lineart.md`](generation-manifests/batch-5-lineart.md) |
+| `batch-1-core` | Core reusable photography | 14 | [`batch-1-core.md`](generation/batch-1-core.md) |
+| `batch-2-projects` | Fictional project universe | 24 | split across [`batch-2a-aurora-cafe.md`](generation/batch-2a-aurora-cafe.md), [`batch-2b-primary-projects.md`](generation/batch-2b-primary-projects.md), [`batch-2c-secondary-projects.md`](generation/batch-2c-secondary-projects.md) |
+| `batch-3-materials` | Material swatches and deliverables | 32 | [`batch-3-materials.md`](generation/batch-3-materials.md) |
+| `batch-4-sbp` | SBP public-flow visual assets | 14 | [`batch-4-sbp.md`](generation/batch-4-sbp.md) |
+| `batch-5-lineart` | Line-art, maps, blueprint overlays and SVG icon sets | 14 | [`batch-5-lineart.md`](generation/batch-5-lineart.md) |
 
 Total generated/runtime files: `98`.
 

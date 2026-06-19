@@ -1,4 +1,4 @@
-# Mina Forma Mockup Pack
+# Mina Forma Mockup Prompts
 
 Institutional demo site for the portfolio. This site proves the Simple Budget
 Plugin only through the public project-planning page. It does not absorb the
@@ -18,9 +18,9 @@ landing demo or the ecommerce demo.
 
 ## Generated Images
 
-Asset generation inventory: [`ASSET_INVENTORY.md`](ASSET_INVENTORY.md).
-Generated asset run index: [`GENERATED_ASSETS_INDEX.md`](GENERATED_ASSETS_INDEX.md).
-Generation manifests: [`batch-5-lineart.md`](generation-manifests/batch-5-lineart.md).
+Asset generation inventory: [`ASSET_INVENTORY.md`](../assets/manifests/ASSET_INVENTORY.md).
+Generated asset run index: [`GENERATED_ASSETS_INDEX.md`](../assets/manifests/GENERATED_ASSETS_INDEX.md).
+Generation manifests: [`batch-5-lineart.md`](../assets/manifests/generation/batch-5-lineart.md).
 
 | Asset | Role | Checksum |
 | --- | --- | --- |

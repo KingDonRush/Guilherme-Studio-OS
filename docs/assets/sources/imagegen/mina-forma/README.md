@@ -3,13 +3,13 @@
 Mina Forma source images were migrated to:
 
 ```text
-docs/assets/packs/mina-forma/sources/
+portfolio/sites/multipaginados/mina-forma/assets/sources/
 ```
 
-Open the pack hub first:
+Open the capsule hub first:
 
 ```text
-docs/assets/packs/mina-forma/README.md
+portfolio/sites/multipaginados/mina-forma/docs/README.md
 ```
 
 Do not add new Mina Forma source files here.

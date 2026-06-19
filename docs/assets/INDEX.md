@@ -1,17 +1,17 @@
 # Asset Index
 
-Open this file first when looking for project visuals.
+Open this file first when looking for cross-project or legacy visuals.
 
-The rule is simple: find the **pack**, then inspect mockups, prompts, sources,
-production exports and WordPress copies from there. Do not start by guessing
-whether an asset lives under `portfolio/`, `sources/`, `distribution/` or
-`wordpress/`.
+The rule is simple: find the **project capsule** first. Inside the capsule,
+inspect `docs/` for meaning and `assets/` for files. Use this folder for
+shared assets, distribution exports and legacy redirects, not as the default
+home for every project.
 
-## Active Packs
+## Active Capsules And Packs
 
-| Pack | What it is | Start here | Current asset locations | Status |
+| Capsule or pack | What it is | Start here | Current asset locations | Status |
 | --- | --- | --- | --- | --- |
-| Mina Forma | Institutional demo site; SBP appears only on the project-planning page. | [`packs/mina-forma/README.md`](packs/mina-forma/README.md) | `docs/assets/packs/mina-forma/`, runtime mirror at `wordpress/wp-content/themes/guilherme-portfolio/assets/images/mina-forma/` | migrated pack |
+| Mina Forma | Institutional demo site; SBP appears only on the project-planning page. | [`../../portfolio/sites/multipaginados/mina-forma/docs/README.md`](../../portfolio/sites/multipaginados/mina-forma/docs/README.md) | `portfolio/sites/multipaginados/mina-forma/`, runtime mirror at `wordpress/wp-content/themes/guilherme-portfolio/assets/images/mina-forma/` | migrated capsule |
 | Portfolio Home | Main Guilherme portfolio home/hero assets. | [`portfolio/README.md`](portfolio/README.md) | `docs/assets/portfolio/`, `docs/assets/distribution/lovable/portfolio-home-*` | active legacy pack |
 | Simple Budget Plugin | SBP plugin page and demo imagery. | [`simple-budget-demo/ASSET-MANIFEST.md`](simple-budget-demo/ASSET-MANIFEST.md) | `docs/assets/simple-budget-demo/` | active legacy pack |
 | Elementor Implementation Toolkit | Admin/product imagery for implementation tooling. | `implementation-toolkit/admin-v0.2/` | `docs/assets/implementation-toolkit/admin-v0.2/` | active legacy pack |
@@ -23,11 +23,11 @@ whether an asset lives under `portfolio/`, `sources/`, `distribution/` or
 
 ### Mina Forma
 
-- Pack hub: [`packs/mina-forma/README.md`](packs/mina-forma/README.md)
-- Full map: [`packs/mina-forma/ASSET_MAP.md`](packs/mina-forma/ASSET_MAP.md)
-- Mockups: `docs/assets/packs/mina-forma/mockups/`
-- Prompt/source images: `docs/assets/packs/mina-forma/prompts/` and `docs/assets/packs/mina-forma/sources/`
-- Production WebPs: `docs/assets/packs/mina-forma/production/wordpress/`
+- Capsule hub: [`../../portfolio/sites/multipaginados/mina-forma/docs/README.md`](../../portfolio/sites/multipaginados/mina-forma/docs/README.md)
+- Full map: [`../../portfolio/sites/multipaginados/mina-forma/docs/ASSET_MAP.md`](../../portfolio/sites/multipaginados/mina-forma/docs/ASSET_MAP.md)
+- Mockups: `portfolio/sites/multipaginados/mina-forma/assets/mockups/`
+- Prompt/source images: `portfolio/sites/multipaginados/mina-forma/docs/MOCKUP_PROMPTS.md` and `portfolio/sites/multipaginados/mina-forma/assets/sources/`
+- Production WebPs: `portfolio/sites/multipaginados/mina-forma/assets/wordpress/`
 - WordPress runtime mirror: `wordpress/wp-content/themes/guilherme-portfolio/assets/images/mina-forma/`
 
 ### Portfolio Home
@@ -47,12 +47,12 @@ whether an asset lives under `portfolio/`, `sources/`, `distribution/` or
 
 When adding or searching assets:
 
-1. Pick the pack first.
-2. Use the pack README to find current locations.
-3. Store new project-specific material under that pack unless a migration note says otherwise.
-4. Use `shared/` only for assets intentionally reused across packs.
+1. Pick the project capsule first.
+2. Use the capsule README to find current locations.
+3. Store new project-specific material under that capsule unless a migration note says otherwise.
+4. Use `shared/` only for assets intentionally reused across capsules or packs.
 5. Use `distribution/` only for channel-specific exports.
 6. Use `sources/` only for raw inputs that are not the human entrypoint.
 
 Legacy folders may remain while links/manifests depend on them. New work should
-prefer `packs/<slug>/` as the navigation home.
+prefer the relevant domain capsule as the navigation home.

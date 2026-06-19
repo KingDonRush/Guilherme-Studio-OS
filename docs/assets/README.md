@@ -2,14 +2,14 @@
 
 Start here:
 
-- [INDEX.md](INDEX.md): human navigation by project/asset pack.
+- [INDEX.md](INDEX.md): human navigation by project capsule or asset pack.
 - [SYSTEM.md](SYSTEM.md): operating rule for where assets belong.
 - [asset-taxonomy.md](asset-taxonomy.md): tags, lifecycle and metadata.
 
 If you are looking for Mina Forma, open
-[`packs/mina-forma/README.md`](packs/mina-forma/README.md) first. Mina Forma
-has been migrated to the pack-first structure; old locations now redirect back
-to the pack.
+[`../../portfolio/sites/multipaginados/mina-forma/docs/README.md`](../../portfolio/sites/multipaginados/mina-forma/docs/README.md)
+first. Mina Forma has been migrated to a portfolio capsule; old locations now
+redirect back to the capsule.
 
 ## Purpose
 
@@ -28,10 +28,10 @@ and reusable shared pieces.
 - `INDEX.md`
   - Human-first entrypoint. Use this before opening arbitrary folders.
 - `SYSTEM.md`
-  - Pack-first storage rules and migration policy.
+  - Capsule-first storage rules and migration policy.
 - `packs/`
-  - Human navigation hubs per project. Some packs currently point to legacy
-    locations until assets are migrated safely.
+  - Legacy redirect hubs per project. New project-specific work should move
+    into the owning domain capsule.
 - `asset-manifest.json`
   - Central registry for approved, active, or implementation-bound assets.
   - It is not required to list every exploratory draft.
@@ -41,7 +41,7 @@ and reusable shared pieces.
 - `portfolio/`
   - Assets for Guilherme's portfolio pages and case-study surfaces.
 - `simple-budget-demo/`, `implementation-toolkit/`, etc.
-  - Project-specific working packs.
+  - Legacy project-specific working folders.
 - `distribution/`
   - Channel-specific presentation assets, especially GitHub README media,
     Open Graph images, social crops, banners, and release visuals.
@@ -70,8 +70,8 @@ Use:
 - `sources/imagegen/` for raw imagegen outputs copied into the project;
 - `sources/screenshots/` for browser captures, QA screenshots, and visual
   comparisons;
-- project folders such as `portfolio/` or `simple-budget-demo/` for scoped
-  candidates and approved assets;
+- project capsules such as `portfolio/sites/multipaginados/mina-forma/` for
+  scoped candidates and approved assets;
 - `distribution/` for handoff packages and public channel crops.
 
 If a file is discovered in the root, move it first, then decide whether it is a
@@ -93,7 +93,8 @@ HTML/emoji artwork, improvised geometric code, and locally generated path data.
 
 When a needed icon is missing from the approved local sources, create it through
 the imagegen asset pipeline and store it under the relevant `docs/assets/`
-project folder before implementation.
+shared/distribution folder or under the relevant project capsule before
+implementation.
 
 ## Manifest Scope
 
@@ -105,5 +106,5 @@ The central manifest should include assets that are:
 - used in GitHub/README distribution;
 - implementation-bound even if still pending approval.
 
-Exploratory image generations may remain documented in a project pack or contact
-sheet until Guilherme approves or rejects them.
+Exploratory image generations may remain documented in a project capsule, legacy
+pack or contact sheet until Guilherme approves or rejects them.
