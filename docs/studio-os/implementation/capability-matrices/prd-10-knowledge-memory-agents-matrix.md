@@ -52,3 +52,11 @@ security/recovery hardening, not PRD 10 harness capability.
   extraction in storage.
 - Evidence:
   `evd_20260619_self-build-storage-transaction-lock-extraction-verification`.
+
+2026-06-19 third self-build execution update:
+
+- Closed `run_20260619_self-build-storage-entity-file-scanning-extraction`
+  using the same harness loop and development method lens.
+- Recorded action, verification, evidence and handoff for entity file scanning
+  extraction in storage.
+- Evidence: `evd_20260619_storage-file-scan-verification`.

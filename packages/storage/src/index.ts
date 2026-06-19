@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
-import { constants as fsConstants, statSync } from "node:fs";
-import { access, mkdir, readdir, readFile, rename, rm, writeFile } from "node:fs/promises";
+import { statSync } from "node:fs";
+import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import {
   assertNoSecrets,
@@ -12,8 +12,6 @@ import {
   entityStatus,
   entityTitle,
   entityUpdatedAt,
-  KIND_DIRECTORY,
-  LegacyEntitySchema,
   legacyToCanonical,
   normalizeSpecData,
   type StudioEntity,
@@ -22,6 +20,14 @@ import {
 } from "@guilherme-studio/schemas";
 import Database from "better-sqlite3";
 import YAML from "yaml";
+import {
+  entityRelativePath,
+  fileExists,
+  LegacyEntityStore,
+  type StudioFile,
+  scanCanonicalFilesLenient,
+  scanStudioFiles,
+} from "./files.js";
 import { resolveInsideRoot } from "./paths.js";
 import {
   EntityLockManager,
@@ -30,38 +36,18 @@ import {
 } from "./transactions.js";
 
 export {
+  entityRelativePath,
+  LegacyEntityStore,
+  type LegacyStudioFile,
+  type StudioFile,
+} from "./files.js";
+export {
   ensureStudioRuntime,
   loadStudioConfig,
   resolveInsideRoot,
   type StudioConfig,
   type StudioPaths,
 } from "./paths.js";
-
-export interface StudioFile {
-  absolutePath: string;
-  relativePath: string;
-  entity: StudioEntity;
-}
-
-export interface LegacyStudioFile {
-  absolutePath: string;
-  relativePath: string;
-  entity: ReturnType<typeof LegacyEntitySchema.parse>;
-}
-
-async function fileExists(filePath: string): Promise<boolean> {
-  try {
-    await access(filePath, fsConstants.F_OK);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-export function entityRelativePath(entity: StudioEntity): string {
-  const dir = KIND_DIRECTORY[entity.kind];
-  return path.posix.join(dir, `${entitySlug(entity)}.${entityId(entity)}.yaml`);
-}
 
 export class EntityStore {
   readonly root: string;
@@ -189,118 +175,8 @@ export class EntityStore {
   }
 
   async scan(): Promise<StudioFile[]> {
-    const roots = Object.values(KIND_DIRECTORY);
-    const uniqueRoots = [...new Set(roots)];
-    const files: StudioFile[] = [];
-    for (const dir of uniqueRoots) {
-      const absoluteDir = path.join(this.root, dir);
-      if (!(await fileExists(absoluteDir))) {
-        continue;
-      }
-      await this.walkYaml(absoluteDir, files);
-    }
-    return files.sort((a, b) => a.relativePath.localeCompare(b.relativePath));
+    return scanStudioFiles(this.root, (absolutePath) => this.readByPath(absolutePath));
   }
-
-  private async walkYaml(dir: string, out: StudioFile[]): Promise<void> {
-    const entries = await readdir(dir, { withFileTypes: true });
-    for (const entry of entries) {
-      const absolutePath = path.join(dir, entry.name);
-      if (entry.isDirectory()) {
-        await this.walkYaml(absolutePath, out);
-        continue;
-      }
-      if (!entry.isFile() || !entry.name.endsWith(".yaml")) {
-        continue;
-      }
-      const entity = await this.readByPath(absolutePath);
-      out.push({
-        absolutePath,
-        relativePath: path.relative(this.root, absolutePath),
-        entity,
-      });
-    }
-  }
-}
-
-export class LegacyEntityStore {
-  readonly root: string;
-
-  constructor(root: string) {
-    this.root = root;
-  }
-
-  async scan(): Promise<LegacyStudioFile[]> {
-    const roots = Object.values(KIND_DIRECTORY);
-    const uniqueRoots = [...new Set(roots)];
-    const files: LegacyStudioFile[] = [];
-    for (const dir of uniqueRoots) {
-      const absoluteDir = path.join(this.root, dir);
-      if (!(await fileExists(absoluteDir))) {
-        continue;
-      }
-      await this.walkYaml(absoluteDir, files);
-    }
-    return files.sort((a, b) => a.relativePath.localeCompare(b.relativePath));
-  }
-
-  private async walkYaml(dir: string, out: LegacyStudioFile[]): Promise<void> {
-    const entries = await readdir(dir, { withFileTypes: true });
-    for (const entry of entries) {
-      const absolutePath = path.join(dir, entry.name);
-      if (entry.isDirectory()) {
-        await this.walkYaml(absolutePath, out);
-        continue;
-      }
-      if (!entry.isFile() || !entry.name.endsWith(".yaml")) {
-        continue;
-      }
-      const parsed = YAML.parse(await readFile(absolutePath, "utf8"));
-      const legacy = LegacyEntitySchema.safeParse(parsed);
-      if (!legacy.success) {
-        continue;
-      }
-      assertNoSecrets(legacy.data);
-      out.push({
-        absolutePath,
-        relativePath: path.relative(this.root, absolutePath),
-        entity: legacy.data,
-      });
-    }
-  }
-}
-
-async function scanCanonicalFilesLenient(root: string): Promise<StudioFile[]> {
-  const files: StudioFile[] = [];
-  const walk = async (dir: string): Promise<void> => {
-    const entries = await readdir(dir, { withFileTypes: true });
-    for (const entry of entries) {
-      const absolutePath = path.join(dir, entry.name);
-      if (entry.isDirectory()) {
-        await walk(absolutePath);
-        continue;
-      }
-      if (!entry.isFile() || !entry.name.endsWith(".yaml")) {
-        continue;
-      }
-      const parsed = TypedEntitySchema.safeParse(YAML.parse(await readFile(absolutePath, "utf8")));
-      if (parsed.success) {
-        files.push({
-          absolutePath,
-          relativePath: path.relative(root, absolutePath),
-          entity: parsed.data,
-        });
-      }
-    }
-  };
-
-  for (const dir of [...new Set(Object.values(KIND_DIRECTORY))]) {
-    const absoluteDir = path.join(root, dir);
-    if (await fileExists(absoluteDir)) {
-      await walk(absoluteDir);
-    }
-  }
-  return files;
 }
 
 export class EventStore {

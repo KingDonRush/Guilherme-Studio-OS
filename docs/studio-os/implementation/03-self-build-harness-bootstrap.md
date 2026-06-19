@@ -502,6 +502,20 @@ Outcome:
   `evd_20260619_self-build-storage-transaction-lock-extraction-verification`;
 - produced a handoff with the next valid action.
 
+2026-06-19: the third self-build run closed as
+`run_20260619_self-build-storage-entity-file-scanning-extraction`.
+
+Outcome:
+
+- extracted Studio storage entity file scanning helpers into
+  `packages/storage/src/files.ts`;
+- kept storage public exports stable through `packages/storage/src/index.ts`;
+- preserved canonical scan ordering, legacy filtering, path calculation and
+  migration scan behavior;
+- passed `npm run verify`;
+- recorded evidence `evd_20260619_storage-file-scan-verification`;
+- produced a handoff with the next valid action.
+
 ## Gate To Resume PRD Waves
 
 Do not resume broad PRD subagents until:
