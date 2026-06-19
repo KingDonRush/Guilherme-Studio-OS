@@ -545,6 +545,21 @@ Outcome:
 - recorded evidence `evd_20260619_storage-projection-verification`;
 - produced a handoff with the next valid action.
 
+2026-06-19: the sixth self-build run closed as
+`run_20260619_self-build-storage-canonical-migration-extraction`.
+
+Outcome:
+
+- extracted Studio storage canonical validation and migration helpers into
+  `packages/storage/src/canonical.ts`;
+- kept `validateCanonicalFiles`, `migrateCanonicalV1` and canonical migration
+  types exported through `packages/storage/src/index.ts`;
+- preserved duplicate/path/relation validation, legacy alias mapping, YAML
+  serialization, canonical write behavior and relation reconciliation;
+- passed `npm run verify`;
+- recorded evidence `evd_20260619_storage-canonical-migration-verification`;
+- produced a handoff with the next valid action.
+
 ## Gate To Resume PRD Waves
 
 Do not resume broad PRD subagents until:

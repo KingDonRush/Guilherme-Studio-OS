@@ -76,3 +76,11 @@ security/recovery hardening, not PRD 10 harness capability.
 - Recorded action, verification, evidence and handoff for SQLite projection
   extraction in storage.
 - Evidence: `evd_20260619_storage-projection-verification`.
+
+2026-06-19 sixth self-build execution update:
+
+- Closed `run_20260619_self-build-storage-canonical-migration-extraction` using
+  the same harness loop and development method lens.
+- Recorded action, verification, evidence and handoff for canonical validation
+  and migration extraction in storage.
+- Evidence: `evd_20260619_storage-canonical-migration-verification`.
