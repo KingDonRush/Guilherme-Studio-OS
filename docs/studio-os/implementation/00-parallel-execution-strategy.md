@@ -19,10 +19,16 @@ fixtures, and a final integration lane.
 Do not spawn implementation agents directly from the current monolithic source
 shape.
 
-Use [Codebase North Star](./02-codebase-north-star.md) to decide whether a
+Use [Operating North Star](./02-codebase-north-star.md) to decide whether a
 large surface needs extraction. Line count alone is diagnostic; the decision
 comes from responsibility, boundary, public interface, dependency rule,
 verification and merge-conflict risk.
+
+Before broad PRD waves resume, complete the
+[Self-Build Harness Bootstrap](./03-self-build-harness-bootstrap.md). The Studio
+must be able to run at least one material Studio work task through its own
+`AgentRun`, context pack, authorization, action log, verification, evidence,
+handoff and close gates.
 
 First create enough modular seams so agents can work in mostly disjoint write
 sets. These original hot files are already reduced by Phase 0:
@@ -118,6 +124,25 @@ Owners:
 Wave 1 may start after Phase 0 is verified, but branches that need broad
 adapter or storage work must either own a narrow slice of the remaining
 monoliths or create an adapter/storage extraction lane first.
+
+### Wave 0.5: Self-Build Harness Bootstrap
+
+Owners:
+
+- PRD 10 primary: `AgentRun`, context packs, authorization, action log,
+  verification, handoff and close;
+- PRD 01 support: command runtime, gates and decisions;
+- PRD 11 support: CLI fallback first, MCP/panel visibility second;
+- PRD 12 support: redaction, secret safety, repository state and recovery.
+
+Acceptance:
+
+- one real Studio work task closes through Studio OS itself;
+- CLI fallback works without MCP;
+- MCP smoke exists or has a recorded blocker;
+- run evidence proves method lens, authorization, action log, verification and
+  handoff;
+- `npm run verify` and `studio validate --json` pass.
 
 ### Wave 1: Harness and System Invariants
 

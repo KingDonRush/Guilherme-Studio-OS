@@ -106,7 +106,8 @@ inputs to migration. They do not override this specification.
 
 - [Parallel PRD execution strategy](./implementation/00-parallel-execution-strategy.md)
 - [Cross-PRD integration map](./implementation/01-cross-prd-integration-map.md)
-- [Codebase north star](./implementation/02-codebase-north-star.md)
+- [Operating north star](./implementation/02-codebase-north-star.md)
+- [Self-build harness bootstrap](./implementation/03-self-build-harness-bootstrap.md)
 - [PRD subagent packets](./implementation/subagents/README.md)
 - [PRD 01 implementation plan](./implementation/prd-01-core-governance-plan.md)
 - [PRD 02 implementation plan](./implementation/prd-02-clients-crm-profiles-plan.md)

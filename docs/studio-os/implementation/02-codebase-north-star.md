@@ -1,8 +1,9 @@
-# Studio OS Codebase North Star
+# Studio OS Operating North Star
 
-Status: planning authority for Studio OS code direction
-Purpose: turn the Praxis knowledge reading into a concrete direction for the
-Studio OS codebase without importing the Praxis method as a project artifact.
+Status: planning authority for Studio OS operating direction
+Purpose: turn the Praxis knowledge reading into a concrete operating doctrine
+for all material Studio work without importing the Praxis method as a project
+artifact.
 
 ## Source Reading
 
@@ -30,16 +31,53 @@ they are not Studio OS source of truth.
 The useful conclusion is not "copy Praxis into Studio OS". The conclusion is:
 
 ```text
-knowledge + Studio context -> situated architecture and code direction
+knowledge + Studio context -> situated operating direction
 ```
 
-Praxis knowledge treats development as a system lifecycle problem, not just a
-code-style problem. Therefore the Studio OS codebase must be judged by system
+Praxis knowledge treats development and operation as lifecycle problems, not
+just code-style problems. Therefore Studio OS work must be judged by system
 role, boundaries, requirements, architecture, design, construction, tests,
 quality, security, delivery, operations, documentation and evidence.
 
 Praxis is used here as knowledge input. Studio OS PRDs, architecture contracts,
 decisions, evidence and operating guides remain the project authority.
+
+## Doctrine Scope
+
+This document is not only about file size, modularization, cognitive load or
+code. Those are downstream symptoms. The north star is the complete operating
+doctrine that must be burned into Studio OS before broad AI-driven work
+continues.
+
+For Studio OS, "Praxis-based" means every material Studio task is forced to
+carry the relevant parts of this lens:
+
+| Praxis knowledge area | Studio OS must force the agent to answer |
+|---|---|
+| Life cycle and systems context | What system, product, service, repository, environment or lifecycle stage is this change touching? What process depth is proportional to risk? |
+| Business analysis and value | What operational or economic outcome justifies the work? What value, cost of delay, stakeholder or business change is affected? |
+| Requirements and solution definition | What requirement, constraint, acceptance criterion, traceability link or validation need controls the change? |
+| Systems engineering | What is the system of interest, boundary, environment, interface, allocation and verification relationship? |
+| Software engineering | What architecture, design, construction, testing, configuration, maintenance, security, quality and economic concern is being changed? |
+| Product/project/delivery governance | What gate, backlog item, increment, readiness criterion, decision point or definition of done governs progress? |
+| Quality, risk and security | What quality attribute, risk, misuse case, control, assurance evidence, compliance or privacy issue must be addressed? |
+| Delivery, operations, support and retirement | How will the change be built, packaged, run, diagnosed, recovered, backed up, supported, rolled back or retired? |
+| Knowledge, documentation and lifecycle information | What becomes source of truth, decision record, operational memory, evidence, handoff or documentation map? |
+| Methods, models and practices | Which method, model, metric, evaluation, template or practice is selected, tailored, rejected or stopped for this context? |
+
+If a task is small and reversible, most answers can be short. If a task is
+material, public, cross-domain, data-bearing, security-sensitive, financial,
+portfolio-signaling or agent-coordinated, the answers must become explicit
+context-pack fields and gates.
+
+The important point: Studio OS should not rely on an agent remembering this
+doctrine. The harness should inject it into the run, request answers, block
+missing critical answers, and preserve the result as evidence or handoff.
+
+This applies to code, architecture, refactoring, WordPress work, portfolio
+assets, visual design, product releases, marketing content, sales/proposals,
+LinkedIn/career applications, finance records, backup/recovery, decisions,
+documentation, prepared external actions and panel/MCP operations.
 
 ## System Classification
 
@@ -73,7 +111,7 @@ responsibility, public interface, dependency rule and verification path.
 
 ## Operating Method
 
-For Studio OS code work, the usable method is:
+For material Studio OS work, the usable method is:
 
 ```text
 classify the system role
@@ -87,7 +125,9 @@ classify the system role
 Applied in practice:
 
 1. Classify the change: domain behavior, interface adapter, storage, external
-   adapter, projection, recovery, panel view, test fixture or documentation.
+   adapter, projection, recovery, panel view, test fixture, documentation,
+   asset, WordPress runtime, public claim, communication, finance, career,
+   portfolio or operational decision.
 2. Locate the owner: PRD, package, module, canonical record and command surface.
 3. Characterize current behavior before refactoring a shared file.
 4. Split only by responsibility, lifecycle or provider boundary.
@@ -101,6 +141,11 @@ This is intentionally stricter than "make a clean codebase" and lighter than
 importing a full external method. It is the Studio OS agent harness style:
 small enough to execute, structured enough to stop agents from improvising
 different systems.
+
+The operating method becomes executable in the
+[Self-Build Harness Bootstrap](./03-self-build-harness-bootstrap.md). That is
+the first "playable while installing" slice: build the part of Studio OS that
+lets agents use Studio OS to operate and build the rest under discipline.
 
 ## Architecture Direction
 
@@ -401,13 +446,16 @@ Split by evidence claim:
 
 Recommended next implementation order:
 
-1. Extract storage internals under PRD 12 ownership.
-2. Extract adapters by provider/capability before PRD 03/04/12 run in parallel.
-3. Extract MCP mutation registry by tool family.
-4. Split `core/domains/sales.ts` by lifecycle slices.
-5. Split finance, career and harness only when the next feature touches them.
-6. Split CLI and panel surfaces after core/interface contracts settle.
-7. Split large tests by evidence claim once behavior is stable.
+1. Complete the self-build harness bootstrap so future Studio work can run
+   through `AgentRun`, context pack, authorization, action log, evidence,
+   verification, handoff and close gates.
+2. Use that harness to extract storage internals under PRD 12 ownership.
+3. Extract adapters by provider/capability before PRD 03/04/12 run in parallel.
+4. Extract MCP mutation registry by tool family.
+5. Split `core/domains/sales.ts` by lifecycle slices.
+6. Split finance, career and harness only when the next feature touches them.
+7. Split CLI and panel surfaces after core/interface contracts settle.
+8. Split large tests by evidence claim once behavior is stable.
 
 This ordering follows the conflict risk, not the line-count ranking.
 
@@ -439,5 +487,5 @@ This document does not:
 - supersede PRD acceptance gates;
 - unblock portfolio release.
 
-It is a codebase direction document: use Praxis knowledge to make better Studio
-engineering decisions.
+It is an operating direction document: use Praxis knowledge to make better
+Studio work decisions.

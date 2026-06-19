@@ -33,6 +33,7 @@ Every PRD agent receives these files:
 - `docs/studio-os/implementation/00-parallel-execution-strategy.md`
 - `docs/studio-os/implementation/01-cross-prd-integration-map.md`
 - `docs/studio-os/implementation/02-codebase-north-star.md`
+- `docs/studio-os/implementation/03-self-build-harness-bootstrap.md`
 - this contract
 
 ## Branch And Worktree Rule
@@ -140,6 +141,7 @@ Read:
 - docs/studio-os/implementation/00-parallel-execution-strategy.md
 - docs/studio-os/implementation/01-cross-prd-integration-map.md
 - docs/studio-os/implementation/02-codebase-north-star.md
+- docs/studio-os/implementation/03-self-build-harness-bootstrap.md
 - docs/studio-os/implementation/subagents/00-agent-orchestration-contract.md
 - docs/studio-os/implementation/subagents/prd-XX-...-agent.md
 
@@ -155,6 +157,10 @@ source of truth and SQLite as derived.
 Work only inside the allowed write set unless the handoff packet names a shared
 registry. If you need a cross-PRD contract, register a gap instead of creating a
 parallel local version.
+
+If the self-build harness is available, use it for the run. If it is not yet
+available, produce the same fields manually in the handoff and do not pretend
+the harness enforced them.
 
 End with: changed files, verification commands, capability rows closed,
 remaining intake_required rows, cross-PRD gaps raised, and merge risks.

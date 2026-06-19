@@ -11,6 +11,11 @@ context, acts inside authority, records observations/actions/evidence, verifies
 work, creates a handoff, and cannot claim closure while required process
 remains unresolved.
 
+This PRD is the primary owner of the
+[Self-Build Harness Bootstrap](./03-self-build-harness-bootstrap.md). Before
+broad PRD implementation resumes, Studio OS must be able to run a material
+Studio OS work task through its own agent harness loop.
+
 ## Current Reality
 
 Exists:
@@ -36,6 +41,11 @@ Gaps:
 ```text
 start -> context -> authorize -> observe -> act -> verify -> evidence -> handoff -> close
 ```
+
+The context step must include the Praxis-derived method lens from the bootstrap:
+lifecycle, business value, requirements, systems boundary, software
+architecture/design/construction/testing, governance, quality/risk/security,
+delivery/operations, knowledge/documentation and method selection/tailoring.
 
 ## Required Commands
 
@@ -104,4 +114,6 @@ Close requires:
 - every material implementation can be reconstructed from run, evidence and
   events;
 - repeated failure can be promoted to policy/test/decision.
-
+- one scoped Studio OS work task has been executed using this harness
+  as the controlling process, proving the self-build loop works before the next
+  PRD wave.
