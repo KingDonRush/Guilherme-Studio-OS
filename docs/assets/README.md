@@ -1,4 +1,16 @@
-# Portfolio Asset Registry
+# Asset Registry
+
+Start here:
+
+- [INDEX.md](INDEX.md): human navigation by project/asset pack.
+- [SYSTEM.md](SYSTEM.md): operating rule for where assets belong.
+- [asset-taxonomy.md](asset-taxonomy.md): tags, lifecycle and metadata.
+
+If you are looking for Mina Forma, open
+[`packs/mina-forma/README.md`](packs/mina-forma/README.md) first. The current
+files are still in legacy locations, but the pack hub maps all of them.
+
+## Purpose
 
 This folder is the source of truth for visual assets used to build, present, and
 distribute Guilherme's portfolio work.
@@ -7,11 +19,18 @@ It stores design references, generated sources, approved production assets,
 WordPress-ready exports, GitHub presentation media, social/Open Graph assets,
 and reusable shared pieces.
 
-## Structure
+## Current Structure
 
 - `asset-taxonomy.md`
   - Defines the asset taxonomy, channel tags, lifecycle states, and generation
     decision rules.
+- `INDEX.md`
+  - Human-first entrypoint. Use this before opening arbitrary folders.
+- `SYSTEM.md`
+  - Pack-first storage rules and migration policy.
+- `packs/`
+  - Human navigation hubs per project. Some packs currently point to legacy
+    locations until assets are migrated safely.
 - `asset-manifest.json`
   - Central registry for approved, active, or implementation-bound assets.
   - It is not required to list every exploratory draft.

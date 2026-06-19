@@ -214,18 +214,28 @@ Before generating or using an asset, answer:
 
 ## Directory Convention
 
-Use this convention for new assets:
+Use this convention for new or migrated project-specific assets:
 
 ```text
 docs/assets/
+  INDEX.md
+  SYSTEM.md
+  packs/
+    <project-or-site>/
+      README.md
+      ASSET_MAP.md
+      prompts/
+      mockups/
+      sources/
+      production/
+      wordpress/
+      manifests/
+      deprecated/
   shared/
     identity/
     icons/
     textures/
     backgrounds/
-  portfolio/
-    <page-or-case>/
-  <project-pack>/
   distribution/
     github/<project>/
     social/<campaign-or-project>/
@@ -236,8 +246,10 @@ docs/assets/
     chroma/<project-or-date>/
 ```
 
-Do not move old assets only to satisfy this convention unless the move is part
-of a deliberate cleanup.
+`packs/<slug>/` is the human entrypoint. Legacy locations such as `portfolio/`,
+`simple-budget-demo/` and `sources/` may remain until a dedicated migration
+updates references and manifests. Do not move old assets only to satisfy this
+convention unless the move is part of a deliberate cleanup.
 
 ## Required Manifest Fields
 
