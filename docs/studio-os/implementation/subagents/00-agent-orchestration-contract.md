@@ -32,7 +32,6 @@ Every PRD agent receives these files:
 - owning matrix under `docs/studio-os/implementation/capability-matrices/`
 - `docs/studio-os/implementation/00-parallel-execution-strategy.md`
 - `docs/studio-os/implementation/01-cross-prd-integration-map.md`
-- `docs/studio-os/implementation/02-praxis-development-method.md`
 - this contract
 
 ## Branch And Worktree Rule
@@ -139,12 +138,8 @@ Read:
 - docs/studio-os/implementation/capability-matrices/prd-XX-...
 - docs/studio-os/implementation/00-parallel-execution-strategy.md
 - docs/studio-os/implementation/01-cross-prd-integration-map.md
-- docs/studio-os/implementation/02-praxis-development-method.md
 - docs/studio-os/implementation/subagents/00-agent-orchestration-contract.md
 - docs/studio-os/implementation/subagents/prd-XX-...-agent.md
-
-Declare the Praxis development mode and the mandatory dev gates for this
-increment before editing code.
 
 Do not invent real clients, jobs, applications, campaigns or finance records.
 Represent absent real data as intake_required.
