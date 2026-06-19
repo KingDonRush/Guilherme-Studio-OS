@@ -1,10 +1,10 @@
 # Praxis Development Method
 
-Status: normative method for Studio OS development work
+Status: Studio tailoring record for Praxis-sourced development method
 Purpose: prevent "modular monolith" from becoming a slogan instead of an
 engineering method.
 
-## Source
+## Source Authority
 
 This method was derived from the local Praxis project at
 `../AI/MCPS/praxis`, especially:
@@ -23,7 +23,19 @@ This method was derived from the local Praxis project at
 - `.praxis-knowledge/07-delivery-operations-support-retirement/07-delivery-operations-support-retirement.md`
 - `.praxis-knowledge/08-knowledge-documentation-lifecycle-information/08-knowledge-documentation-lifecycle-information.md`
 - `.praxis-knowledge/09-methods-models-and-practices/09-methods-models-and-practices.md`
+- `.praxis-knowledge/09-methods-models-and-practices/method-selection-tailoring-and-composition/method-selection.md`
+- `.praxis-knowledge/09-methods-models-and-practices/lifecycle-tailoring-and-method-engineering/tailoring.md`
+- `.praxis-knowledge/09-methods-models-and-practices/lifecycle-tailoring-and-method-engineering/tailoring-record.md`
+- `.praxis-knowledge/09-methods-models-and-practices/metric-and-measurement-models/measurement-information-need.md`
+- `.praxis-knowledge/09-methods-models-and-practices/metric-and-measurement-models/measurement-model.md`
+- `.praxis-knowledge/09-methods-models-and-practices/metric-and-measurement-models/metric-target.md`
+- `.praxis-knowledge/09-methods-models-and-practices/metric-and-measurement-models/metric-misuse.md`
+- `.praxis-knowledge/04-software-engineering/quality/software-quality-measurement.md`
 - `docs/knowledge/software-engineering/architecture/README.md`
+
+Praxis is the source of truth for method. This Studio document is a local
+tailoring/projection record for the Studio OS codebase. If this document
+conflicts with Praxis, Praxis wins and this document must be corrected.
 
 The Praxis rule adopted here is:
 
@@ -200,7 +212,30 @@ Rules:
 
 ## Size And Modularity Thresholds
 
-Line count is a signal, not the architecture.
+Line count is not a quality measure. Praxis explicitly treats software quality
+measurement as valid only when the measure is tied to a decision and interpreted
+in context; it also names "measuring lines of code as quality" as a common
+confusion.
+
+The Studio OS line thresholds below are therefore not the source method. They
+are a local metric target and trigger model subordinated to Praxis measurement,
+metric-misuse and tailoring rules.
+
+Measurement model:
+
+- information need: detect authored source files likely to hide multiple
+  responsibilities, unclear boundaries, high review cost or unsafe agent edits;
+- observed object: authored source module or orchestrator;
+- base measure: non-generated line count;
+- supported decision: require architecture/decomposition review before adding
+  more feature behavior;
+- forbidden interpretation: "more lines equals lower quality";
+- metrics in tension: cohesion, dependency clarity, public interface size,
+  churn, test coverage, behavioral criticality and cost of ceremony;
+- misuse risk: agents optimizing file count or line count while worsening
+  boundaries, navigation or behavior preservation;
+- review trigger: repeated false positives, missed architecture debt, or Praxis
+  source update.
 
 Authored source files use these thresholds:
 
@@ -223,6 +258,9 @@ Exceptions:
 - narrow lookup tables where splitting would reduce clarity.
 
 An exception must name the owner, reason, review trigger and verification.
+
+When line count and architecture judgement disagree, architecture judgement
+wins, but the exception must be recorded.
 
 ## Subagent Application
 
@@ -252,4 +290,3 @@ A development increment is complete only when:
 - docs or decisions were updated when they govern future work;
 - residual risks are explicit;
 - Git status is understood.
-
