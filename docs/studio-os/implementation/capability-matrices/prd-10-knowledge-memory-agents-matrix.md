@@ -34,3 +34,12 @@ security/recovery hardening, not PRD 10 harness capability.
 - Over-budget referenced entities are recorded as explicit redactions and gaps.
 - Added focused Agent Harness coverage for confidential entity omission from an
   internal context pack.
+
+2026-06-19 self-build execution update:
+
+- Closed `run_20260619_self-build-storage-config-path-extraction` as the first
+  real Studio OS self-build run using the development method lens.
+- Recorded action, verification, evidence and handoff for a scoped storage
+  config/path extraction.
+- Evidence:
+  `evd_20260619_self-build-storage-config-path-extraction-verification`.

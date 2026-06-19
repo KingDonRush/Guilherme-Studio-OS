@@ -471,6 +471,22 @@ This is deliberately chosen because storage is a shared PRD 12 surface and
 future parallel agents depend on it. The success criterion is not file size. It
 is that the harness makes the work disciplined, recoverable and reviewable.
 
+## First Self-Build Execution
+
+2026-06-19: the first real self-build run closed as
+`run_20260619_self-build-storage-config-path-extraction`.
+
+Outcome:
+
+- extracted Studio storage config/path helpers into
+  `packages/storage/src/paths.ts`;
+- kept `packages/storage/src/index.ts` as the public storage facade;
+- preserved root path safety checks and runtime path behavior;
+- passed `npm run verify`;
+- recorded evidence
+  `evd_20260619_self-build-storage-config-path-extraction-verification`;
+- produced a handoff with the next valid action.
+
 ## Gate To Resume PRD Waves
 
 Do not resume broad PRD subagents until:
