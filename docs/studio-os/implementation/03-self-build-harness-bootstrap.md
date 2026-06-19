@@ -560,6 +560,20 @@ Outcome:
 - recorded evidence `evd_20260619_storage-canonical-migration-verification`;
 - produced a handoff with the next valid action.
 
+2026-06-19: the seventh self-build run closed as
+`run_20260619_self-build-storage-entity-store-extraction`.
+
+Outcome:
+
+- extracted Studio storage `EntityStore` into
+  `packages/storage/src/entity-store.ts`;
+- kept `EntityStore` exported through `packages/storage/src/index.ts`;
+- preserved constructor defaults, secret checks, revision conflicts, lock
+  delegation, transaction delegation, `readByPath`, `get` and scan behavior;
+- passed `npm run verify`;
+- recorded evidence `evd_20260619_storage-entitystore-verification`;
+- produced a handoff with the next valid action.
+
 ## Gate To Resume PRD Waves
 
 Do not resume broad PRD subagents until:

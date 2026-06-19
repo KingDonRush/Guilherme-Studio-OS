@@ -84,3 +84,11 @@ security/recovery hardening, not PRD 10 harness capability.
 - Recorded action, verification, evidence and handoff for canonical validation
   and migration extraction in storage.
 - Evidence: `evd_20260619_storage-canonical-migration-verification`.
+
+2026-06-19 seventh self-build execution update:
+
+- Closed `run_20260619_self-build-storage-entity-store-extraction` using the
+  same harness loop and development method lens.
+- Recorded action, verification, evidence and handoff for `EntityStore`
+  extraction in storage.
+- Evidence: `evd_20260619_storage-entitystore-verification`.
