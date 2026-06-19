@@ -68,3 +68,11 @@ security/recovery hardening, not PRD 10 harness capability.
 - Recorded action, verification, evidence and handoff for EventStore extraction
   in storage.
 - Evidence: `evd_20260619_storage-event-verification`.
+
+2026-06-19 fifth self-build execution update:
+
+- Closed `run_20260619_self-build-storage-projection-extraction` using the same
+  harness loop and development method lens.
+- Recorded action, verification, evidence and handoff for SQLite projection
+  extraction in storage.
+- Evidence: `evd_20260619_storage-projection-verification`.

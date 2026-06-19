@@ -530,6 +530,21 @@ Outcome:
 - recorded evidence `evd_20260619_storage-event-verification`;
 - produced a handoff with the next valid action.
 
+2026-06-19: the fifth self-build run closed as
+`run_20260619_self-build-storage-projection-extraction`.
+
+Outcome:
+
+- extracted Studio storage SQLite projection and checksum helpers into
+  `packages/storage/src/projection.ts`;
+- kept `SQLiteProjection` and `projectionChecksum` exported through
+  `packages/storage/src/index.ts`;
+- preserved table schema, inserts, projection metadata, inspect behavior and
+  next-action query ordering;
+- passed `npm run verify`;
+- recorded evidence `evd_20260619_storage-projection-verification`;
+- produced a handoff with the next valid action.
+
 ## Gate To Resume PRD Waves
 
 Do not resume broad PRD subagents until:

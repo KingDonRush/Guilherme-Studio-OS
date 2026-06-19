@@ -1,0 +1,27 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-19T04:12:52.828Z
+  id: evd_20260619_storage-projection-verification
+  labels: []
+  revision: 1
+  schema_version: 1
+  slug: storage-projection-verification
+  updated_at: 2026-06-19T04:12:52.828Z
+relations: []
+spec:
+  claims:
+    - Self-build AgentRun executed a scoped storage SQLite projection extraction
+    - SQLiteProjection rebuild, inspect, next-action query and projection checksum now live behind a focused storage
+      projection module while storage public exports remain stable
+    - Storage projection behavior, typecheck, tests, lint and build passed after extraction
+  command: npm run verify
+  evidence_type: command
+  observed_at: 2026-06-19T04:12:52.828Z
+  source_mutability: operator-observed
+  status: active
+  title: Storage projection verification
+  validated_at: 2026-06-19T04:12:52.828Z
