@@ -1,0 +1,220 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: agentRun
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-19T19:16:50.531Z
+  id: run_20260619_self-build-mcp-delivery-product-mutation-extraction
+  labels: []
+  revision: 9
+  schema_version: 1
+  slug: self-build-mcp-delivery-product-mutation-extraction
+  updated_at: 2026-06-19T19:21:19.706Z
+relations:
+  - target_id: repo_20260614_root-coordinator
+    type: uses_repository
+  - target_id: evd_20260619_mcp-delivery-product-mutation-verification
+    type: verified_by
+spec:
+  actions:
+    - action: Extract MCP delivery/product mutation tools
+      command: npm run build --workspace @guilherme-studio/mcp; npm run verify
+      evidence_ids:
+        - evd_20260619_mcp-delivery-product-mutation-verification
+      recorded_at: 2026-06-19T19:20:49.268Z
+      result_summary: Delivery, project, release, content and case MCP mutation tools moved into
+        packages/mcp/src/tools/mutations/delivery-product-mutations.ts while registerStudioMcpMutationTools remained the
+        facade.
+      status: executed
+  actor_id: per_20260614_guilherme-silva
+  authority:
+    allowed:
+      - read_context
+      - edit_mcp
+      - run_tests
+      - update_matrix
+      - record_evidence
+    confirmation_required:
+      - external_send
+      - destructive_execute
+    prohibited:
+      - portfolio_release
+      - external_send
+      - destructive_execute
+  context_pack:
+    checksum: 90ca192c8f48b87434e48e64bffddf32993d6f42680bf1fbebe964ae25e536c2
+    forbidden_reopenings:
+      - Do not resume portfolio work in this slice.
+      - Do not change MCP tool names, schemas, command names, target IDs or payload shapes.
+    gaps: []
+    generated_at: 2026-06-19T19:17:04.314Z
+    id: ctx_20260619_self-build-mcp-delivery-product-mutation-extraction_1781896624314
+    included_entity_ids:
+      - run_20260619_self-build-mcp-delivery-product-mutation-extraction
+      - repo_20260614_root-coordinator
+    method_lens:
+      areas:
+        business_value:
+          answer: Reduces MCP mutation facade size and isolates delivery/product/content/case tools before broader PRD
+            implementation and parallel agents.
+          prompt: What Studio outcome justifies doing this now, and what cost, risk or future work does it reduce?
+          required: true
+          status: answered
+        delivery_operations:
+          answer: Entrypoints are @guilherme-studio/mcp build, package typecheck and npm run verify; rollback is the git diff for
+            this scoped extraction.
+          prompt: How will this be built, run, diagnosed, recovered, rolled back, supported or retired?
+          required: true
+          status: answered
+        governance:
+          answer: AgentRun close gate, allowed write set, git status, MCP typecheck/build and npm run verify govern completion.
+          prompt: Which gate, decision point, definition of done, owner and authority boundary govern progress?
+          required: true
+          status: answered
+        knowledge_documentation:
+          answer: AgentRun, evidence record, bootstrap/matrix note and final handoff become operational memory for future MCP
+            extraction lanes.
+          prompt: What becomes source of truth, evidence, decision record, documentation update or handoff?
+          required: true
+          status: answered
+        lifecycle:
+          answer: Implementation-stage Studio OS MCP refactor in root coordinator repository; normal rigor with typecheck, lint
+            and full verify.
+          prompt: What system, repository, environment and lifecycle stage does this development work touch, and what rigor is
+            proportional?
+          required: true
+          status: answered
+        methods_models_practices:
+          answer: Use behavior-preserving refactor with existing build/typecheck tests as characterization; stop after one
+            coherent MCP delivery/product mutation slice, not a broad MCP redesign.
+          prompt: Which method, model, metric, practice, tailoring reason and stop criteria are being used?
+          required: true
+          status: answered
+        quality_risk_security:
+          answer: Primary risks are missing tool registration, schema drift, payload drift, command bypass or broken MCP import
+            path; evidence is typecheck, lint and full verify.
+          prompt: Which quality attributes, risks, misuse cases, security controls and assurance evidence matter?
+          required: true
+          status: answered
+        requirements_solution:
+          answer: Self-Build Harness Bootstrap, PRD 3 delivery, PRD 4 products, PRD 5 portfolio evidence, PRD 6 marketing, PRD 10
+            harness and PRD 11 MCP interface requirements control acceptance.
+          prompt: Which PRD, acceptance criteria, constraints and traceability links control this change?
+          required: true
+          status: answered
+        software:
+          answer: Extract delivery/product MCP mutation registrations while preserving shared dry-run/idempotency behavior, Zod
+            schemas, tool names, command names, target IDs and payload construction.
+          prompt: What architecture, design, construction, testing, configuration and maintenance concerns are changed?
+          required: true
+          status: answered
+        systems:
+          answer: System of interest is the local-first Studio OS coordinator; boundary is MCP mutation registration for delivery,
+            project, release, content and case tools.
+          prompt: What is the system of interest, boundary, affected interfaces and external environment?
+          required: true
+          status: answered
+      generated_at: 2026-06-19T19:17:04.314Z
+      missing_required: []
+      source: studio-operating-north-star
+      work_type: development
+    next_valid_action: Extract delivery, project, release, content and case MCP mutation tools from
+      packages/mcp/src/tools/mutations.ts into packages/mcp/src/tools/mutations/delivery-product-mutations.ts, register
+      the module from the facade, then run MCP/build verification.
+    objective: Extract Studio MCP delivery, product, content and case mutation tools into a focused module through the
+      self-build development harness while preserving tool behavior.
+    redactions:
+      - Canonical entity bodies are summarized; full specs are not embedded.
+    sections:
+      - entity_ids:
+          - run_20260619_self-build-mcp-delivery-product-mutation-extraction
+        summary: Extract Studio MCP delivery, product, content and case mutation tools into a focused module through the
+          self-build development harness while preserving tool behavior.
+        title: Objective
+      - entity_ids:
+          - run_20260619_self-build-mcp-delivery-product-mutation-extraction
+        summary: "Allowed: read_context, edit_mcp, run_tests, update_matrix, record_evidence. Confirmation required:
+          external_send, destructive_execute. Prohibited: portfolio_release, external_send, destructive_execute"
+        title: Authority
+      - entity_ids:
+          - run_20260619_self-build-mcp-delivery-product-mutation-extraction
+          - repo_20260614_root-coordinator
+        summary: repository repo_20260614_root-coordinator "Root Coordinator Repository" is active at revision 1
+        title: Entity references
+    source_revisions:
+      - entity_id: run_20260619_self-build-mcp-delivery-product-mutation-extraction
+        kind: agentRun
+        revision: 1
+        title: Self-build MCP delivery/product mutation extraction
+      - entity_id: repo_20260614_root-coordinator
+        kind: repository
+        revision: 1
+        title: Root Coordinator Repository
+    target_environment_ids: []
+    target_repository_ids:
+      - repo_20260614_root-coordinator
+  evidence_ids:
+    - evd_20260619_mcp-delivery-product-mutation-verification
+  finished_at: 2026-06-19T19:21:19.706Z
+  handoff:
+    confirmation_required: []
+    context_pack_id: ctx_20260619_self-build-mcp-delivery-product-mutation-extraction_1781896624314
+    created_at: 2026-06-19T19:21:10.483Z
+    evidence_ids:
+      - evd_20260619_mcp-delivery-product-mutation-verification
+    forbidden_reopenings:
+      - Do not resume portfolio work in this slice.
+      - Do not change MCP tool names, schemas, command names, target IDs or payload shapes.
+    gaps: []
+    next_valid_action: Use the same self-build harness to extract the remaining MCP CRM/communication/evidence tools, or
+      stop and review this commit first.
+    omitted_sensitive_sections:
+      - Canonical entity bodies are summarized; full specs are not embedded.
+    repository_ids:
+      - repo_20260614_root-coordinator
+    status: ready
+    summary: Completed twelfth self-build extraction. Delivery, project, release, content and case MCP mutation tools moved
+      to packages/mcp/src/tools/mutations/delivery-product-mutations.ts; registerStudioMcpMutationTools remains the
+      facade and full verify passed.
+  material: true
+  next_valid_action: Use the same self-build harness to extract the remaining MCP CRM/communication/evidence tools, or
+    stop and review this commit first.
+  objective: Extract Studio MCP delivery, product, content and case mutation tools into a focused module through the
+    self-build development harness while preserving tool behavior.
+  observations:
+    - contradictions: []
+      observed_at: 2026-06-19T19:17:17.507Z
+      repository_id: repo_20260614_root-coordinator
+      source: git
+      summary: Git status before code mutation has only pre-existing untracked portfolio/WordPress asset directories plus this
+        new AgentRun record; tracked source files are otherwise clean for the scoped MCP delivery/product mutation
+        extraction.
+    - contradictions: []
+      observed_at: 2026-06-19T19:17:23.972Z
+      repository_id: repo_20260614_root-coordinator
+      source: code
+      summary: packages/mcp/src/tools/mutations.ts still owns deliverable.complete, project.register-repo, release
+        prepare/publish, content.prepare and case.create-from-evidence MCP tool registrations; this extraction will move
+        those registrations to mutations/delivery-product-mutations.ts while keeping registerStudioMcpMutationTools as
+        the public MCP mutation facade.
+  open_questions: []
+  owning_entities: []
+  phase: implementation
+  result: complete
+  risk: normal
+  risks: []
+  started_at: 2026-06-19T19:16:50.531Z
+  state: closed
+  status: done
+  summary: Closed self-build MCP delivery/product mutation extraction with verification evidence and handoff.
+  target_environments: []
+  target_repositories:
+    - repo_20260614_root-coordinator
+  title: Self-build MCP delivery/product mutation extraction
+  verification:
+    command: npm run typecheck; npm run lint; npm run build --workspace @guilherme-studio/mcp; npm run verify
+    result_summary: 16 test files passed, 64 tests passed, lint passed and all workspaces built after MCP delivery/product
+      mutation extraction.
+    status: passed
+    verified_at: 2026-06-19T19:20:59.376Z
