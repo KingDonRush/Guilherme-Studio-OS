@@ -249,3 +249,14 @@ gap.
   and payload construction.
 - Verification: `npm run verify`; evidence
   `evd_20260619_mcp-finance-mutation-verification`.
+
+2026-06-19 MCP career mutation modularity update:
+
+- Extracted career and application MCP mutation tools from
+  `packages/mcp/src/tools/mutations.ts` into
+  `packages/mcp/src/tools/mutations/career-mutations.ts`.
+- Kept `registerStudioMcpMutationTools` as the MCP mutation facade and
+  preserved tool names, Zod schemas, command names, dry-run/idempotency support
+  and payload construction.
+- Verification: `npm run verify`; evidence
+  `evd_20260619_mcp-career-mutation-verification`.

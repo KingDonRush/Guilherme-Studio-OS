@@ -588,6 +588,20 @@ Outcome:
 - recorded evidence `evd_20260619_mcp-finance-mutation-verification`;
 - produced a handoff with the next valid action.
 
+2026-06-19: the ninth self-build run closed as
+`run_20260619_self-build-mcp-career-mutation-extraction`.
+
+Outcome:
+
+- extracted Studio MCP career and application mutation tools into
+  `packages/mcp/src/tools/mutations/career-mutations.ts`;
+- kept `registerStudioMcpMutationTools` as the public MCP mutation facade;
+- preserved MCP tool names, Zod schemas, command names, target IDs, dry-run,
+  idempotency and payload construction;
+- passed `npm run verify`;
+- recorded evidence `evd_20260619_mcp-career-mutation-verification`;
+- produced a handoff with the next valid action.
+
 ## Gate To Resume PRD Waves
 
 Do not resume broad PRD subagents until:
