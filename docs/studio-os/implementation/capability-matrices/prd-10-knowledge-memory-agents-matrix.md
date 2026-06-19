@@ -43,3 +43,12 @@ security/recovery hardening, not PRD 10 harness capability.
   config/path extraction.
 - Evidence:
   `evd_20260619_self-build-storage-config-path-extraction-verification`.
+
+2026-06-19 second self-build execution update:
+
+- Closed `run_20260619_self-build-storage-transaction-lock-extraction` using
+  the same harness loop and development method lens.
+- Recorded action, verification, evidence and handoff for transaction/lock
+  extraction in storage.
+- Evidence:
+  `evd_20260619_self-build-storage-transaction-lock-extraction-verification`.

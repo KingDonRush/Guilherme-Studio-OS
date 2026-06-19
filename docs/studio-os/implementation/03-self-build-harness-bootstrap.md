@@ -487,6 +487,21 @@ Outcome:
   `evd_20260619_self-build-storage-config-path-extraction-verification`;
 - produced a handoff with the next valid action.
 
+2026-06-19: the second self-build run closed as
+`run_20260619_self-build-storage-transaction-lock-extraction`.
+
+Outcome:
+
+- extracted Studio storage transaction and entity lock helpers into
+  `packages/storage/src/transactions.ts`;
+- kept `EntityStore` as the public storage facade;
+- preserved transaction manifest formats, recovery behavior, lock semantics and
+  file mode behavior;
+- passed `npm run verify`;
+- recorded evidence
+  `evd_20260619_self-build-storage-transaction-lock-extraction-verification`;
+- produced a handoff with the next valid action.
+
 ## Gate To Resume PRD Waves
 
 Do not resume broad PRD subagents until:

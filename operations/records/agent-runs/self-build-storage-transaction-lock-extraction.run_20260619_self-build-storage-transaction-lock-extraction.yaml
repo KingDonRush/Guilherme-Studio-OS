@@ -1,0 +1,212 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: agentRun
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-19T02:20:12.181Z
+  id: run_20260619_self-build-storage-transaction-lock-extraction
+  labels: []
+  revision: 9
+  schema_version: 1
+  slug: self-build-storage-transaction-lock-extraction
+  updated_at: 2026-06-19T02:33:59.531Z
+relations:
+  - target_id: repo_20260614_root-coordinator
+    type: uses_repository
+  - target_id: evd_20260619_self-build-storage-transaction-lock-extraction-verification
+    type: verified_by
+spec:
+  actions:
+    - action: Extracted storage transaction and entity lock helpers into packages/storage/src/transactions.ts while keeping
+        EntityStore public methods stable.
+      command: npm run test -- packages/storage/src/index.test.ts; npm run verify
+      evidence_ids:
+        - evd_20260619_self-build-storage-transaction-lock-extraction-verification
+      recorded_at: 2026-06-19T02:33:31.273Z
+      result_summary: Storage focused tests, typecheck, lint, full test suite and workspace build passed after
+        behavior-preserving extraction.
+      status: executed
+  actor_id: per_20260614_guilherme-silva
+  authority:
+    allowed:
+      - read_context
+      - edit_storage
+      - run_tests
+      - update_matrix
+      - record_evidence
+    confirmation_required:
+      - external_send
+      - destructive_execute
+    prohibited:
+      - portfolio_release
+      - external_send
+      - destructive_execute
+  context_pack:
+    checksum: bdf31e9f102c2019264ad4a76a6e76580fed754927d6cce78beff7fdf404a9f5
+    forbidden_reopenings: []
+    gaps: []
+    generated_at: 2026-06-19T02:20:22.668Z
+    id: ctx_20260619_self-build-storage-transaction-lock-extraction_1781835622668
+    included_entity_ids:
+      - run_20260619_self-build-storage-transaction-lock-extraction
+      - repo_20260614_root-coordinator
+    method_lens:
+      areas:
+        business_value:
+          answer: Reduces shared storage hotspot risk before broader PRD work and continues proving Studio OS can govern its own
+            development.
+          prompt: What Studio outcome justifies doing this now, and what cost, risk or future work does it reduce?
+          required: true
+          status: answered
+        delivery_operations:
+          answer: Entrypoints are packages/storage tests, npm run verify and studio validate; rollback is the git diff for this
+            scoped extraction.
+          prompt: How will this be built, run, diagnosed, recovered, rolled back, supported or retired?
+          required: true
+          status: answered
+        governance:
+          answer: AgentRun close gate, development method lens, allowed write set, git status, npm run verify and canonical
+            evidence govern completion.
+          prompt: Which gate, decision point, definition of done, owner and authority boundary govern progress?
+          required: true
+          status: answered
+        knowledge_documentation:
+          answer: AgentRun, evidence record, bootstrap/matrix note and final handoff become operational memory for future storage
+            extraction lanes.
+          prompt: What becomes source of truth, evidence, decision record, documentation update or handoff?
+          required: true
+          status: answered
+        lifecycle:
+          answer: Implementation-stage Studio OS storage refactor in root coordinator repository; normal rigor with
+            characterization tests and canonical evidence.
+          prompt: What system, repository, environment and lifecycle stage does this development work touch, and what rigor is
+            proportional?
+          required: true
+          status: answered
+        methods_models_practices:
+          answer: Use behavior-preserving refactor with existing tests as characterization; stop after one coherent
+            transaction/lock slice, not a broad storage rewrite.
+          prompt: Which method, model, metric, practice, tailoring reason and stop criteria are being used?
+          required: true
+          status: answered
+        quality_risk_security:
+          answer: Primary risks are broken recovery, stale transaction handling, lock cleanup regression, path traversal/symlink
+            escape regression and secret leakage; evidence is focused tests plus full verify.
+          prompt: Which quality attributes, risks, misuse cases, security controls and assurance evidence matter?
+          required: true
+          status: answered
+        requirements_solution:
+          answer: Self-Build Harness Bootstrap, Operating North Star, PRD 10 harness, PRD 12 storage/recovery plan, and existing
+            storage transaction tests control acceptance.
+          prompt: Which PRD, acceptance criteria, constraints and traceability links control this change?
+          required: true
+          status: answered
+        software:
+          answer: Extract transaction and lock responsibilities while preserving public EntityStore methods, manifest formats,
+            lock semantics, file modes, recovery behavior and tests.
+          prompt: What architecture, design, construction, testing, configuration and maintenance concerns are changed?
+          required: true
+          status: answered
+        systems:
+          answer: System of interest is the local-first Studio OS coordinator; boundary is EntityStore transaction and lock
+            behavior consumed by core, CLI, MCP and local API.
+          prompt: What is the system of interest, boundary, affected interfaces and external environment?
+          required: true
+          status: answered
+      generated_at: 2026-06-19T02:20:22.668Z
+      missing_required: []
+      source: studio-operating-north-star
+      work_type: development
+    next_valid_action: Extract transaction and entity lock helpers from packages/storage/src/index.ts into a focused storage
+      module, then run storage tests and verify.
+    objective: Extract Studio storage transaction and entity lock responsibilities through the self-build development
+      harness while preserving behavior.
+    redactions:
+      - Canonical entity bodies are summarized; full specs are not embedded.
+    sections:
+      - entity_ids:
+          - run_20260619_self-build-storage-transaction-lock-extraction
+        summary: Extract Studio storage transaction and entity lock responsibilities through the self-build development harness
+          while preserving behavior.
+        title: Objective
+      - entity_ids:
+          - run_20260619_self-build-storage-transaction-lock-extraction
+        summary: "Allowed: read_context, edit_storage, run_tests, update_matrix, record_evidence. Confirmation required:
+          external_send, destructive_execute. Prohibited: portfolio_release, external_send, destructive_execute"
+        title: Authority
+      - entity_ids:
+          - run_20260619_self-build-storage-transaction-lock-extraction
+          - repo_20260614_root-coordinator
+        summary: repository repo_20260614_root-coordinator "Root Coordinator Repository" is active at revision 1
+        title: Entity references
+    source_revisions:
+      - entity_id: run_20260619_self-build-storage-transaction-lock-extraction
+        kind: agentRun
+        revision: 1
+        title: Self-build storage transaction lock extraction
+      - entity_id: repo_20260614_root-coordinator
+        kind: repository
+        revision: 1
+        title: Root Coordinator Repository
+    target_environment_ids: []
+    target_repository_ids:
+      - repo_20260614_root-coordinator
+  evidence_ids:
+    - evd_20260619_self-build-storage-transaction-lock-extraction-verification
+  finished_at: 2026-06-19T02:33:59.531Z
+  handoff:
+    confirmation_required: []
+    context_pack_id: ctx_20260619_self-build-storage-transaction-lock-extraction_1781835622668
+    created_at: 2026-06-19T02:33:47.628Z
+    evidence_ids:
+      - evd_20260619_self-build-storage-transaction-lock-extraction-verification
+    forbidden_reopenings: []
+    gaps: []
+    next_valid_action: Use the same self-build harness to extract the next storage responsibility, likely entity
+      scanning/legacy scanning or event/projection helpers, or stop and review this commit first.
+    omitted_sensitive_sections:
+      - Canonical entity bodies are summarized; full specs are not embedded.
+    repository_ids:
+      - repo_20260614_root-coordinator
+    status: ready
+    summary: Completed second self-build storage extraction. Transaction and entity lock helpers moved to
+      packages/storage/src/transactions.ts; EntityStore remains the public facade and full verify passed.
+  material: true
+  next_valid_action: Use the same self-build harness to extract the next storage responsibility, likely entity
+    scanning/legacy scanning or event/projection helpers, or stop and review this commit first.
+  objective: Extract Studio storage transaction and entity lock responsibilities through the self-build development
+    harness while preserving behavior.
+  observations:
+    - contradictions: []
+      observed_at: 2026-06-19T02:20:45.132Z
+      repository_id: repo_20260614_root-coordinator
+      source: git
+      summary: Git status before code mutation has only pre-existing untracked portfolio/WordPress asset directories plus this
+        new AgentRun record; tracked source files are clean for the scoped storage extraction.
+    - contradictions: []
+      observed_at: 2026-06-19T02:20:50.703Z
+      repository_id: repo_20260614_root-coordinator
+      source: code
+      summary: packages/storage/src/index.ts still owns lock acquisition, multi-record transaction manifests, transaction
+        recovery, pending transaction listing and single-record commit writes; this extraction will isolate those
+        helpers while preserving EntityStore public methods.
+  open_questions: []
+  owning_entities: []
+  phase: implementation
+  result: complete
+  risk: normal
+  risks: []
+  started_at: 2026-06-19T02:20:12.181Z
+  state: closed
+  status: done
+  summary: Closed self-build storage transaction/lock extraction with verification evidence and handoff.
+  target_environments: []
+  target_repositories:
+    - repo_20260614_root-coordinator
+  title: Self-build storage transaction lock extraction
+  verification:
+    command: npm run verify
+    result_summary: 16 test files passed, 64 tests passed, lint passed and all workspaces built after transaction/lock extraction.
+    status: passed
+    verified_at: 2026-06-19T02:33:39.928Z
