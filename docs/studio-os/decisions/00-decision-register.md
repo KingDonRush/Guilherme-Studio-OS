@@ -218,17 +218,16 @@ Each material decision records:
 
 - **Status:** accepted
 - **Date:** 2026-06-18
-- **Decision:** Praxis is the source of truth for Studio OS development method.
-  `docs/studio-os/implementation/02-praxis-development-method.md` is the local
-  Studio OS tailoring/projection record.
+- **Decision:** Studio OS development uses the Praxis-derived method in
+  `docs/studio-os/implementation/02-praxis-development-method.md`.
 - **Rationale:** "modular monolith" is not a sufficient development method.
   Development work must pass through explicit method selection, system context,
   contracts, architecture/decomposition, design/construction, V&V, security,
   configuration, operations/recovery, documentation and evidence gates.
-- **Consequence:** PRD subagents and refactor lanes must load the Studio
-  projection of the Praxis method before editing code. Line-count thresholds
-  are local metric targets under Praxis measurement/misuse/tailoring rules, not
-  substitutes for responsibility, boundary and dependency analysis.
+- **Consequence:** PRD subagents and refactor lanes must load the Praxis
+  development method before editing code. Line-count thresholds are gate
+  triggers, not substitutes for responsibility, boundary and dependency
+  analysis.
 - **Reconsideration trigger:** the local Praxis method is superseded by a
   stronger accepted Studio OS engineering method or the gates repeatedly add
   cost without improving decisions.

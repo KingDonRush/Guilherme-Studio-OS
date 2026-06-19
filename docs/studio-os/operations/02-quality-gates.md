@@ -166,8 +166,6 @@ Architecture warnings:
 
 Size and modularity triggers:
 
-- line count is a Praxis-subordinate measurement trigger, not a quality
-  measure;
 - preferred authored module size is 200-320 lines;
 - 400+ lines requires an explicit split decision or exception;
 - 450+ lines blocks new feature work unless a split task or recorded exception
