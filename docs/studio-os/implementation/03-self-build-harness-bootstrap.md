@@ -616,6 +616,20 @@ Outcome:
 - recorded evidence `evd_20260619_mcp-governance-mutation-verification`;
 - produced a handoff with the next valid action.
 
+2026-06-19: the eleventh self-build run closed as
+`run_20260619_self-build-mcp-entity-action-mutation-extraction`.
+
+Outcome:
+
+- extracted Studio MCP entity and prepared-action mutation tools into
+  `packages/mcp/src/tools/mutations/entity-action-mutations.ts`;
+- kept `registerStudioMcpMutationTools` as the public MCP mutation facade;
+- preserved MCP tool names, Zod schemas, command names, target IDs, dry-run,
+  idempotency, payload construction and adapter-disabled execution behavior;
+- passed `npm run verify`;
+- recorded evidence `evd_20260619_mcp-entity-action-mutation-verification`;
+- produced a handoff with the next valid action.
+
 ## Gate To Resume PRD Waves
 
 Do not resume broad PRD subagents until:

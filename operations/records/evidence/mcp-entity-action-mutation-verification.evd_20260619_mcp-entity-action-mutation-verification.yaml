@@ -1,0 +1,27 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-19T05:16:24.121Z
+  id: evd_20260619_mcp-entity-action-mutation-verification
+  labels: []
+  revision: 1
+  schema_version: 1
+  slug: mcp-entity-action-mutation-verification
+  updated_at: 2026-06-19T05:16:24.121Z
+relations: []
+spec:
+  claims:
+    - Self-build AgentRun executed a scoped MCP entity/action mutation extraction
+    - Entity and prepared-action MCP mutation tools now live behind a focused entity-action mutation module while MCP
+      tool names, command payloads and adapter-disabled execution behavior remain stable
+    - MCP typecheck, lint, build and full workspace verify passed after extraction
+  command: npm run verify
+  evidence_type: command
+  observed_at: 2026-06-19T05:16:24.121Z
+  source_mutability: operator-observed
+  status: active
+  title: MCP entity/action mutation verification
+  validated_at: 2026-06-19T05:16:24.121Z

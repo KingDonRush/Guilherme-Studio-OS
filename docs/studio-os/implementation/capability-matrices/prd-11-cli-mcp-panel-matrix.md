@@ -271,3 +271,14 @@ gap.
   and payload construction.
 - Verification: `npm run verify`; evidence
   `evd_20260619_mcp-governance-mutation-verification`.
+
+2026-06-19 MCP entity/action mutation modularity update:
+
+- Extracted entity and prepared-action MCP mutation tools from
+  `packages/mcp/src/tools/mutations.ts` into
+  `packages/mcp/src/tools/mutations/entity-action-mutations.ts`.
+- Kept `registerStudioMcpMutationTools` as the MCP mutation facade and
+  preserved tool names, Zod schemas, command names, dry-run/idempotency support,
+  payload construction and adapter-disabled execution behavior.
+- Verification: `npm run verify`; evidence
+  `evd_20260619_mcp-entity-action-mutation-verification`.
