@@ -108,3 +108,11 @@ security/recovery hardening, not PRD 10 harness capability.
 - Recorded action, verification, evidence and handoff for MCP career/application
   mutation extraction.
 - Evidence: `evd_20260619_mcp-career-mutation-verification`.
+
+2026-06-19 tenth self-build execution update:
+
+- Closed `run_20260619_self-build-mcp-governance-mutation-extraction` using the
+  same harness loop and development method lens.
+- Recorded action, verification, evidence and handoff for MCP
+  knowledge/decision/learning/handoff mutation extraction.
+- Evidence: `evd_20260619_mcp-governance-mutation-verification`.

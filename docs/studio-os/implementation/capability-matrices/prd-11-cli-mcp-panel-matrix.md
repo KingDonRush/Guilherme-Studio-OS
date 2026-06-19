@@ -260,3 +260,14 @@ gap.
   and payload construction.
 - Verification: `npm run verify`; evidence
   `evd_20260619_mcp-career-mutation-verification`.
+
+2026-06-19 MCP governance mutation modularity update:
+
+- Extracted knowledge, decision, learning and handoff MCP mutation tools from
+  `packages/mcp/src/tools/mutations.ts` into
+  `packages/mcp/src/tools/mutations/governance-mutations.ts`.
+- Kept `registerStudioMcpMutationTools` as the MCP mutation facade and
+  preserved tool names, Zod schemas, command names, dry-run/idempotency support
+  and payload construction.
+- Verification: `npm run verify`; evidence
+  `evd_20260619_mcp-governance-mutation-verification`.
