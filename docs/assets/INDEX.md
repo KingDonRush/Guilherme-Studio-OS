@@ -11,7 +11,7 @@ whether an asset lives under `portfolio/`, `sources/`, `distribution/` or
 
 | Pack | What it is | Start here | Current asset locations | Status |
 | --- | --- | --- | --- | --- |
-| Mina Forma | Institutional demo site; SBP appears only on the project-planning page. | [`packs/mina-forma/README.md`](packs/mina-forma/README.md) | `docs/assets/portfolio/mockups/mina-forma/`, `docs/assets/sources/imagegen/mina-forma/`, `wordpress/wp-content/themes/guilherme-portfolio/assets/images/mina-forma/` | mockups + generated WordPress WebPs exist; needs pack migration |
+| Mina Forma | Institutional demo site; SBP appears only on the project-planning page. | [`packs/mina-forma/README.md`](packs/mina-forma/README.md) | `docs/assets/packs/mina-forma/`, runtime mirror at `wordpress/wp-content/themes/guilherme-portfolio/assets/images/mina-forma/` | migrated pack |
 | Portfolio Home | Main Guilherme portfolio home/hero assets. | [`portfolio/README.md`](portfolio/README.md) | `docs/assets/portfolio/`, `docs/assets/distribution/lovable/portfolio-home-*` | active legacy pack |
 | Simple Budget Plugin | SBP plugin page and demo imagery. | [`simple-budget-demo/ASSET-MANIFEST.md`](simple-budget-demo/ASSET-MANIFEST.md) | `docs/assets/simple-budget-demo/` | active legacy pack |
 | Elementor Implementation Toolkit | Admin/product imagery for implementation tooling. | `implementation-toolkit/admin-v0.2/` | `docs/assets/implementation-toolkit/admin-v0.2/` | active legacy pack |
@@ -25,9 +25,10 @@ whether an asset lives under `portfolio/`, `sources/`, `distribution/` or
 
 - Pack hub: [`packs/mina-forma/README.md`](packs/mina-forma/README.md)
 - Full map: [`packs/mina-forma/ASSET_MAP.md`](packs/mina-forma/ASSET_MAP.md)
-- Mockups: `docs/assets/portfolio/mockups/mina-forma/`
-- Prompt/source images: `docs/assets/sources/imagegen/mina-forma/`
-- WordPress WebPs: `wordpress/wp-content/themes/guilherme-portfolio/assets/images/mina-forma/`
+- Mockups: `docs/assets/packs/mina-forma/mockups/`
+- Prompt/source images: `docs/assets/packs/mina-forma/prompts/` and `docs/assets/packs/mina-forma/sources/`
+- Production WebPs: `docs/assets/packs/mina-forma/production/wordpress/`
+- WordPress runtime mirror: `wordpress/wp-content/themes/guilherme-portfolio/assets/images/mina-forma/`
 
 ### Portfolio Home
 

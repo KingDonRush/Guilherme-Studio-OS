@@ -7,8 +7,9 @@ Start here:
 - [asset-taxonomy.md](asset-taxonomy.md): tags, lifecycle and metadata.
 
 If you are looking for Mina Forma, open
-[`packs/mina-forma/README.md`](packs/mina-forma/README.md) first. The current
-files are still in legacy locations, but the pack hub maps all of them.
+[`packs/mina-forma/README.md`](packs/mina-forma/README.md) first. Mina Forma
+has been migrated to the pack-first structure; old locations now redirect back
+to the pack.
 
 ## Purpose
 

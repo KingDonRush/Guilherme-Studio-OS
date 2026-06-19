@@ -93,7 +93,7 @@ Anything copied into WordPress should have:
 
 | Pack | Status |
 | --- | --- |
-| Mina Forma | Hub created; assets still live in legacy mockup/source/runtime folders. |
+| Mina Forma | Migrated to `docs/assets/packs/mina-forma/`; WordPress runtime mirror remains under the theme. |
 | Portfolio Home | Legacy pack; needs future migration hub. |
 | Simple Budget Plugin | Legacy pack; manifest exists. |
 | Implementation Toolkit | Legacy pack; admin asset structure exists. |

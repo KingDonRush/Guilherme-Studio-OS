@@ -3,39 +3,47 @@
 This map points to the files that exist today. It is intentionally path-based so
 Guilherme can find the asset without knowing the old folder logic.
 
-## Legacy Documentation
+## Documentation
 
 | File | Meaning |
 | --- | --- |
-| `docs/assets/portfolio/mockups/mina-forma/README.md` | original Mina Forma mockup pack notes and prompts |
-| `docs/assets/portfolio/mockups/mina-forma/ASSET_INVENTORY.md` | page-by-page asset inventory from the generation agents |
-| `docs/assets/portfolio/mockups/mina-forma/GENERATED_ASSETS_INDEX.md` | generated asset run index |
-| `docs/assets/portfolio/mockups/mina-forma/generation-manifests/` | batch generation manifests |
+| `README.md` | current pack hub |
+| `prompts/MOCKUP_PROMPTS.md` | original Mina Forma mockup pack notes and prompts |
+| `manifests/ASSET_INVENTORY.md` | page-by-page asset inventory from the generation agents |
+| `manifests/GENERATED_ASSETS_INDEX.md` | generated asset run index |
+| `manifests/generation/` | batch generation manifests |
+| `manifests/wordpress-webp-sha256.txt` | checksums for production WordPress WebPs |
 
 ## Mockups
 
 | Asset | Current path |
 | --- | --- |
-| Art direction guide | `docs/assets/portfolio/mockups/mina-forma/mina-forma-art-direction-guide-v1.png` |
-| Home | `docs/assets/portfolio/mockups/mina-forma/mina-forma-home-mockup-v1.png` |
-| About | `docs/assets/portfolio/mockups/mina-forma/mina-forma-about-mockup-v1.png` |
-| Services listing | `docs/assets/portfolio/mockups/mina-forma/mina-forma-services-listing-mockup-v1.png` |
-| Service detail | `docs/assets/portfolio/mockups/mina-forma/mina-forma-service-detail-mockup-v1.png` |
-| Projects/cases listing | `docs/assets/portfolio/mockups/mina-forma/mina-forma-projects-cases-listing-mockup-v1.png` |
-| Aurora Cafe case | `docs/assets/portfolio/mockups/mina-forma/mina-forma-case-aurora-cafe-mockup-v1.png` |
-| Plan your project / Orcamento | `docs/assets/portfolio/mockups/mina-forma/mina-forma-plan-your-project-orcamento-mockup-v1.png` |
-| Contact | `docs/assets/portfolio/mockups/mina-forma/mina-forma-contact-mockup-v1.png` |
+| Art direction guide | `mockups/mina-forma-art-direction-guide-v1.png` |
+| Home | `mockups/mina-forma-home-mockup-v1.png` |
+| About | `mockups/mina-forma-about-mockup-v1.png` |
+| Services listing | `mockups/mina-forma-services-listing-mockup-v1.png` |
+| Service detail | `mockups/mina-forma-service-detail-mockup-v1.png` |
+| Projects/cases listing | `mockups/mina-forma-projects-cases-listing-mockup-v1.png` |
+| Aurora Cafe case | `mockups/mina-forma-case-aurora-cafe-mockup-v1.png` |
+| Plan your project / Orcamento | `mockups/mina-forma-plan-your-project-orcamento-mockup-v1.png` |
+| Contact | `mockups/mina-forma-contact-mockup-v1.png` |
 
 ## Raw Sources
 
 | Asset | Current path |
 | --- | --- |
-| Orcamento source image | `docs/assets/sources/imagegen/mina-forma/mina-forma-plan-your-project-orcamento-source-v1.png` |
-| Projects/cases listing source image | `docs/assets/sources/imagegen/mina-forma/mina-forma-projects-cases-listing-source-v1.png` |
+| Orcamento source image | `sources/mina-forma-plan-your-project-orcamento-source-v1.png` |
+| Projects/cases listing source image | `sources/mina-forma-projects-cases-listing-source-v1.png` |
 
 ## WordPress WebP Assets
 
-Runtime root:
+Pack production root:
+
+```text
+docs/assets/packs/mina-forma/production/wordpress/
+```
+
+WordPress runtime mirror:
 
 ```text
 wordpress/wp-content/themes/guilherme-portfolio/assets/images/mina-forma/
@@ -112,17 +120,14 @@ wordpress/wp-content/themes/guilherme-portfolio/assets/images/mina-forma/
 | Contact map line art | `batch-5-lineart/mf-contact-map-line-art.webp` |
 | Services CTA blueprint | `batch-5-lineart/mf-services-cta-blueprint-v1.webp` |
 
-## Migration Notes
+## Legacy Redirects
 
-Target future paths:
+Old entrypoints:
 
 ```text
-docs/assets/packs/mina-forma/mockups/
-docs/assets/packs/mina-forma/sources/
-docs/assets/packs/mina-forma/production/
-docs/assets/packs/mina-forma/wordpress/
-docs/assets/packs/mina-forma/manifests/
+docs/assets/portfolio/mockups/mina-forma/README.md
+docs/assets/sources/imagegen/mina-forma/README.md
 ```
 
-Before moving files, update references in this map, legacy READMEs, manifests
-and any implementation paths that depend on current locations.
+Those files now point back to this pack. The old folders should not receive new
+Mina Forma assets.
