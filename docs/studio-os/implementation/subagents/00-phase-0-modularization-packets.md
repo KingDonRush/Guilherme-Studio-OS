@@ -1,7 +1,7 @@
 # Phase 0 Modularization Packets
 
-Status: Phase 0 in progress; 0A through 0F integrated, PRD packets realigned in
-`codex/phase-0-prd-packets`
+Status: Phase 0 integrated; adapter extraction remains the main architectural
+cleanup lane before future PRD 03/04/12 adapter-heavy parallel work
 Purpose: create disjoint write surfaces before PRD agents implement capability.
 
 ## Why Phase 0 Exists
@@ -19,13 +19,17 @@ Resolved by Phase 0:
 - `packages/cli/src/index.ts`: now a thin CLI program entrypoint.
 - `packages/local-api/src/index.ts`: now a thin local API barrel.
 - `packages/mcp/src/index.ts`: now a thin MCP barrel.
+- `packages/mcp/src/tools/mutations.ts`: now a thin MCP mutation facade backed
+  by owned mutation modules.
 - `apps/panel/src/main.tsx`: now a thin React render entrypoint.
+- `packages/storage/src/index.ts`: now a thin storage barrel backed by extracted
+  config, path, transaction, event, projection, canonical and entity-store
+  modules.
 
-Remaining hot surfaces before full PRD parallelization:
+Remaining hot surfaces before future adapter-heavy parallel work:
 
 - `packages/core/src/coverage.ts`
 - `packages/adapters/src/index.ts`
-- `packages/storage/src/index.ts`
 
 Phase 0 extracts registries and module folders without broadening PRD behavior.
 It is a behavior-preserving refactor.

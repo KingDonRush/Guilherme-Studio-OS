@@ -1,7 +1,7 @@
 # PRD 10 Capability Matrix: Knowledge, Memory, and Agents
 
 Target: 100% capability complete as the primary AI harness.
-Current estimate: 100%.
+Current estimate: 100% capability_complete; canonical agent-harness data is ready.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|

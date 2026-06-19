@@ -40,13 +40,17 @@ sets. These original hot files are already reduced by Phase 0:
 - `packages/cli/src/index.ts`: resolved into a thin CLI entrypoint.
 - `packages/local-api/src/index.ts`: resolved into a thin local API barrel.
 - `packages/mcp/src/index.ts`: resolved into a thin MCP barrel.
+- `packages/mcp/src/tools/mutations.ts`: resolved into a thin MCP mutation
+  facade backed by owned mutation modules.
 - `apps/panel/src/main.tsx`: resolved into a thin React render entrypoint.
+- `packages/storage/src/index.ts`: resolved into a thin storage barrel backed
+  by config, path, transaction, event, projection, canonical and entity-store
+  modules.
 
 The remaining shared coordination surfaces are:
 
 - `packages/core/src/coverage.ts`
 - `packages/adapters/src/index.ts`
-- `packages/storage/src/index.ts`
 
 Any plan that lets many agents edit those files at once is expected to fail by
 merge conflict, behavior drift, or duplicated abstractions.
@@ -122,8 +126,8 @@ Owners:
 - panel view extraction: implemented in `codex/phase-0-panel-views`.
 
 Wave 1 may start after Phase 0 is verified, but branches that need broad
-adapter or storage work must either own a narrow slice of the remaining
-monoliths or create an adapter/storage extraction lane first.
+adapter work must either own a narrow slice of the remaining adapter monolith
+or create an adapter extraction lane first.
 
 ### Wave 0.5: Self-Build Harness Bootstrap
 

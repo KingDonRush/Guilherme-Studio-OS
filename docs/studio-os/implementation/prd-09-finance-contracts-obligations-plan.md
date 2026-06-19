@@ -1,7 +1,8 @@
 # PRD 09 Implementation Plan: Finance, Contracts, and Obligations
 
-Status: ready for implementation planning
-Current harness estimate: 35%
+Status: historical implementation plan; current state is tracked in the matching capability matrix and `studio coverage --json`
+Initial harness estimate (historical baseline): 35%
+Current capability state as of 2026-06-19: capability_ready=true; real finance data remains intake_required
 Primary owner: `packages/core/src/domains/finance`
 
 ## Objective
@@ -69,4 +70,3 @@ Gaps:
 - no legal/tax compliance claims are made;
 - reminders and invoices are prepared actions before send;
 - economic view explains source and confidence.
-

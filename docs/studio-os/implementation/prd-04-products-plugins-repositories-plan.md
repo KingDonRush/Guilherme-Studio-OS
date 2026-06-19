@@ -1,7 +1,8 @@
 # PRD 04 Implementation Plan: Products, Plugins, and Repositories
 
-Status: ready for implementation planning
-Current harness estimate: 45%
+Status: historical implementation plan; current state is tracked in the matching capability matrix and `studio coverage --json`
+Initial harness estimate (historical baseline): 45%
+Current capability state as of 2026-06-19: capability_ready=true; real release data remains intake_required
 Primary owner: `packages/core/src/domains/products`
 
 ## Objective
@@ -67,4 +68,3 @@ Gaps:
 - repository health identifies correct Git root;
 - existing histories/remotes remain intact;
 - publication is prepared and confirmed, never implicit.
-

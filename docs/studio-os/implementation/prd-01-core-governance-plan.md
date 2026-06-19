@@ -1,7 +1,8 @@
 # PRD 01 Implementation Plan: Studio Core and Governance
 
-Status: ready for implementation planning
-Current harness estimate: 58%
+Status: historical implementation plan; current state is tracked in the matching capability matrix and `studio coverage --json`
+Initial harness estimate (historical baseline): 58%
+Current capability state as of 2026-06-19: capability_ready=true
 Primary owner: `packages/core`
 
 ## Objective
@@ -85,4 +86,3 @@ Names can be refined, but all mutations must still pass through
 - every mutable command emits an event;
 - gates cannot be weakened by CLI/API/MCP/panel;
 - coverage separates implemented capability, behavior evidence, and real data.
-

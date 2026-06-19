@@ -1,7 +1,7 @@
 # PRD 09 Capability Matrix: Finance, Contracts, and Obligations
 
 Target: 100% capability complete without requiring real invoices or payments.
-Current estimate: 100%.
+Current estimate: 100% capability_complete; canonical real finance data remains intake_required.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|

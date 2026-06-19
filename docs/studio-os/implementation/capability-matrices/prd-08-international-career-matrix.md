@@ -1,7 +1,7 @@
 # PRD 08 Capability Matrix: International Career Pipeline
 
 Target: 100% capability complete without requiring active applications.
-Current estimate: 100%.
+Current estimate: 100% capability_complete; canonical real application data remains intake_required.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|

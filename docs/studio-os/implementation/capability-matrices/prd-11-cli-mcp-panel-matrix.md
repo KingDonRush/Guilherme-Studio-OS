@@ -1,7 +1,7 @@
 # PRD 11 Capability Matrix: CLI, MCP, and Local Panel
 
 Target: 100% capability complete without requiring MCP to be always running.
-Current estimate: 100%.
+Current estimate: 100% capability_complete; canonical interface evidence is ready.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|

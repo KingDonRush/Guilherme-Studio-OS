@@ -1,7 +1,8 @@
 # PRD 02 Implementation Plan: Clients, CRM, and Profiles
 
-Status: ready for implementation planning
-Current harness estimate: 25%
+Status: historical implementation plan; current state is tracked in the matching capability matrix and `studio coverage --json`
+Initial harness estimate (historical baseline): 25%
+Current capability state as of 2026-06-19: capability_ready=true; real CRM data remains intake_required
 Primary owner: `packages/core/src/domains/crm`
 
 ## Objective
@@ -67,4 +68,3 @@ Gaps:
 - health indicators are traceable to explicit facts;
 - communication retention policy is visible;
 - no outbound duplicate is allowed without explicit override.
-

@@ -1,7 +1,8 @@
 # PRD 12 Implementation Plan: Data, Security, Backup, and Recovery
 
-Status: ready for implementation planning
-Current harness estimate: 55%
+Status: historical implementation plan; current state is tracked in the matching capability matrix and `studio coverage --json`
+Initial harness estimate (historical baseline): 55%
+Current capability state as of 2026-06-19: capability_ready=true
 Primary owner: `packages/storage`, `packages/adapters`, security checks
 
 ## Objective
@@ -77,4 +78,3 @@ Gaps:
 - SQLite is disposable;
 - backup age without restore rehearsal is not treated as sufficient proof;
 - recovery produces durable evidence.
-

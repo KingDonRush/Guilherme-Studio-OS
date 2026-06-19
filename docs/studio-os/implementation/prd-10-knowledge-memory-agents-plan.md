@@ -1,7 +1,8 @@
 # PRD 10 Implementation Plan: Knowledge, Memory, and Agents
 
-Status: highest priority harness plan
-Current harness estimate: 30%
+Status: historical highest-priority harness plan; current state is tracked in the matching capability matrix and `studio coverage --json`
+Initial harness estimate (historical baseline): 30%
+Current capability state as of 2026-06-19: capability_ready=true
 Primary owner: `packages/core/src/harness`
 
 ## Objective

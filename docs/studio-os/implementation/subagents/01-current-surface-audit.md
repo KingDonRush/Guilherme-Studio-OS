@@ -1,6 +1,7 @@
 # Current Surface Audit For Subagents
 
-Status: updated after Phase 0A, 0B, 0C, 0D, 0E and 0F extraction
+Status: updated after Phase 0A-0F, storage self-build extraction and MCP
+mutation extraction
 Purpose: preserve concrete conflict findings before implementation agents start.
 
 ## Audited Hot Files
@@ -17,9 +18,10 @@ Purpose: preserve concrete conflict findings before implementation agents start.
 | CLI | `packages/cli/src/index.ts` | resolved; 28-line entrypoint backed by `packages/cli/src/commands/**` and `packages/cli/src/runtime.ts` |
 | API | `packages/local-api/src/index.ts` | resolved; 2-line barrel backed by route, security and server modules |
 | MCP | `packages/mcp/src/index.ts` | resolved; 1-line barrel backed by resource, tool, prompt and server modules |
+| MCP mutations | `packages/mcp/src/tools/mutations.ts` | resolved; 149-line facade backed by Agent Harness, career, delivery/product, entity/action, finance, governance and sales mutation modules |
 | Panel | `apps/panel/src/main.tsx` | resolved; 14-line render entrypoint backed by app, api, component and view modules |
 | Adapters | `packages/adapters/src/index.ts` | unresolved; 911-line shared adapter file touched by PRD 03, 04 and 12 |
-| Storage | `packages/storage/src/index.ts` | unresolved; 1083-line storage/recovery surface owned by PRD 12 |
+| Storage | `packages/storage/src/index.ts` | resolved; 38-line barrel backed by extracted config, paths, transactions, events, projection, canonical and entity-store modules |
 | Assets | `packages/assets/src/index.ts` | moderate; PRD 05 owns asset governance and PRD 03/04/06 consume it |
 
 ## Concrete Conflict Patterns
@@ -46,9 +48,9 @@ Purpose: preserve concrete conflict findings before implementation agents start.
 - MCP mutating tools now share a command execution helper, so PRD agents should
   add new tools through `packages/mcp/src/tools/**` instead of rebuilding local
   command execution blocks.
-- Adapter and storage internals remain monolithic. Do not run PRD 03, 04 and 12
-  adapter/storage changes in parallel unless a dedicated extraction lane lands
-  first.
+- Adapter internals remain monolithic. Do not run PRD 03, PRD 04 and PRD 12
+  adapter-heavy changes in parallel unless a dedicated adapter extraction lane
+  lands first.
 
 ## Phase 0B Resulting Core Ownership
 
@@ -114,12 +116,14 @@ After 0E, API and MCP behavior is owned by:
 - MCP server composition: `packages/mcp/src/server.ts`
 - MCP resources: `packages/mcp/src/resources.ts`
 - MCP read-only tools: `packages/mcp/src/tools/read.ts`
-- MCP mutating tools: `packages/mcp/src/tools/mutations.ts`
+- MCP mutating tools facade: `packages/mcp/src/tools/mutations.ts`
+- MCP mutation modules: `packages/mcp/src/tools/mutations/**`
 - MCP command execution helper: `packages/mcp/src/command.ts`
 - MCP prompts: `packages/mcp/src/prompts.ts`
 
 Mutating local API routes and mutating MCP tools continue to adapt payloads into
-`executeStudioCommand`.
+`executeStudioCommand`. The MCP mutation facade should stay thin; new tools
+belong in the smallest owned module under `packages/mcp/src/tools/mutations/**`.
 
 ## Phase 0F Resulting Panel Ownership
 

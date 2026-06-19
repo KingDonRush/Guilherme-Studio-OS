@@ -1,7 +1,7 @@
 # PRD 04 Capability Matrix: Products, Plugins, and Repositories
 
 Target: 100% capability complete without requiring new products.
-Current estimate: 100%.
+Current estimate: 100% capability_complete; canonical real release data remains intake_required.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|

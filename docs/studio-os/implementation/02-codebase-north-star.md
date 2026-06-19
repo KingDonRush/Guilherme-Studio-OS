@@ -263,28 +263,33 @@ Current authored source hotspots, excluding generated `dist` and test files:
 
 | File | Lines observed | Architecture reading |
 |---|---:|---|
-| `packages/mcp/src/tools/mutations.ts` | 1658 | Tool registry plus many unrelated tool families. Should become a thin registry over owned mutation modules. |
-| `packages/storage/src/index.ts` | 1083 | Canonical store, transactions, events, projection, migration and validation in one surface. PRD 12 should own extraction. |
 | `packages/core/src/domains/sales.ts` | 912 | Prospect research, outreach review, opportunities, proposals, send/acceptance/conversion and negotiation in one domain surface. Split by sales lifecycle slices. |
 | `packages/adapters/src/index.ts` | 911 | Git, WordPress, backup and fake provider behavior in one adapter surface. Split by provider/capability before PRD 03/04/12 parallel work. |
-| `packages/core/src/harness/agent-harness.ts` | 734 | Run lifecycle, context packs, authorization, action records, verification and handoff in one harness file. Split when extending harness behavior. |
+| `packages/core/src/harness/agent-harness.ts` | 827 | Run lifecycle, context packs, authorization, action records, verification and handoff in one harness file. Split when extending harness behavior. |
 | `packages/core/src/domains/finance.ts` | 681 | Contract, invoice, payment, obligation and economic report behavior together. Split if PRD 09 grows. |
+| `packages/mcp/src/tools/mutations/sales-mutations.ts` | 629 | MCP sales mutation surface is domain-owned but still broad. Split by sales lifecycle if adding more sales tools. |
 | `packages/core/src/domains/career.ts` | 603 | Role targeting, evidence fit, applications, submission and interview behavior together. Split if PRD 08 grows. |
 | `packages/cli/src/commands/core.ts` | 580 | Health, validation, workflow, coverage, acceptance and diagnostics commands clustered. Split by operational command family. |
 | `packages/cli/src/commands/domains/sales.ts` | 533 | Domain CLI shortcuts for many sales lifecycle actions. Split only after core sales slices are stable. |
+| `packages/mcp/src/tools/mutations/finance-mutations.ts` | 488 | MCP finance mutation surface is domain-owned but still broad. Split only with future finance growth. |
+| `packages/mcp/src/tools/mutations/career-mutations.ts` | 452 | MCP career mutation surface is domain-owned but still broad. Split only with future career growth. |
 | `apps/panel/src/views/crm.tsx` | 452 | View, command forms and domain tables mixed. Split if CRM view gains workflow detail. |
+| `packages/mcp/src/tools/mutations.ts` | 149 | Resolved facade. Keep it as composition only. |
+| `packages/storage/src/index.ts` | 38 | Resolved barrel. Keep storage behavior in owned modules. |
 
 These are not all urgent. They are the map of where future work will create
 conflicts if agents continue adding behavior directly.
 
 ## Refactor Direction
 
-### 1. Storage and adapters before more parallel PRD work
+### 1. Adapters before future adapter-heavy parallel PRD work
 
-Storage and adapters are still shared surfaces. Do not run PRD 03, PRD 04 and
-PRD 12 implementation lanes against them at the same time.
+Storage has been extracted into owned modules and `packages/storage/src/index.ts`
+is now a barrel. Adapters are still a shared surface. Do not run PRD 03, PRD 04
+and PRD 12 adapter-heavy lanes against `packages/adapters/src/index.ts` at the
+same time.
 
-Target storage shape:
+Current storage shape:
 
 ```text
 packages/storage/src/config.ts
@@ -320,22 +325,20 @@ Acceptance:
 
 ### 2. MCP mutations become registry-first
 
-`packages/mcp/src/tools/mutations.ts` should become a composition file.
+`packages/mcp/src/tools/mutations.ts` is now a composition file. Preserve that
+boundary.
 
-Target shape:
+Current shape:
 
 ```text
-packages/mcp/src/tools/mutations/index.ts
-packages/mcp/src/tools/mutations/entities.ts
-packages/mcp/src/tools/mutations/prepared-actions.ts
-packages/mcp/src/tools/mutations/evidence.ts
-packages/mcp/src/tools/mutations/governance.ts
-packages/mcp/src/tools/mutations/delivery.ts
-packages/mcp/src/tools/mutations/products.ts
-packages/mcp/src/tools/mutations/finance.ts
-packages/mcp/src/tools/mutations/career.ts
-packages/mcp/src/tools/mutations/sales/
-packages/mcp/src/tools/mutations/agent-harness/
+packages/mcp/src/tools/mutations.ts
+packages/mcp/src/tools/mutations/agent-harness-mutations.ts
+packages/mcp/src/tools/mutations/career-mutations.ts
+packages/mcp/src/tools/mutations/delivery-product-mutations.ts
+packages/mcp/src/tools/mutations/entity-action-mutations.ts
+packages/mcp/src/tools/mutations/finance-mutations.ts
+packages/mcp/src/tools/mutations/governance-mutations.ts
+packages/mcp/src/tools/mutations/sales-mutations.ts
 ```
 
 The MCP rule remains: tools adapt request shape into command envelopes and do

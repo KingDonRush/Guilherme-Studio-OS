@@ -1,7 +1,8 @@
 # PRD 06 Implementation Plan: Marketing, Content, and Campaigns
 
-Status: ready for implementation planning
-Current harness estimate: 20%
+Status: historical implementation plan; current state is tracked in the matching capability matrix and `studio coverage --json`
+Initial harness estimate (historical baseline): 20%
+Current capability state as of 2026-06-19: capability_ready=true; real campaign/content data remains intake_required
 Primary owner: `packages/core/src/domains/marketing`
 
 ## Objective
@@ -64,4 +65,3 @@ Gaps:
 - every campaign has economic objective and stop condition;
 - every publication is a prepared action before external send;
 - content lessons do not become universal policy without decision.
-

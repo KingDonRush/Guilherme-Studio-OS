@@ -1,7 +1,8 @@
 # PRD 03 Implementation Plan: Engagements and WordPress Delivery
 
-Status: ready for implementation planning
-Current harness estimate: 35%
+Status: historical implementation plan; current state is tracked in the matching capability matrix and `studio coverage --json`
+Initial harness estimate (historical baseline): 35%
+Current capability state as of 2026-06-19: capability_ready=true; real delivery data remains intake_required
 Primary owner: `packages/core/src/domains/delivery`
 
 ## Objective
@@ -72,4 +73,3 @@ Gaps:
 - technical complete, client accepted, and paid remain separate;
 - WordPress projects are reproducible from tracked config plus private backup;
 - delivery cannot close without handoff, docs, backup and acceptance evidence.
-

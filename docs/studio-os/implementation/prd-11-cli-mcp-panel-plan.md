@@ -1,7 +1,8 @@
 # PRD 11 Implementation Plan: CLI, MCP, and Local Panel
 
-Status: ready for implementation planning
-Current harness estimate: 50%
+Status: historical implementation plan; current state is tracked in the matching capability matrix and `studio coverage --json`
+Initial harness estimate (historical baseline): 50%
+Current capability state as of 2026-06-19: capability_ready=true
 Primary owner: `packages/cli`, `packages/mcp`, `packages/local-api`,
 `apps/panel`
 
@@ -69,4 +70,3 @@ Gaps:
 - CLI is the fallback harness;
 - MCP is the governed agent context surface;
 - panel is review/visibility, not canonical state.
-

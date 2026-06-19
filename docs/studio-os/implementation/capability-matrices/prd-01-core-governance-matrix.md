@@ -1,7 +1,7 @@
 # PRD 01 Capability Matrix: Studio Core and Governance
 
 Target: 100% capability complete without requiring real business data.
-Current estimate: 100%.
+Current estimate: 100% capability_complete; canonical governance data is ready.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|

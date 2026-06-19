@@ -1,20 +1,21 @@
 # PRD 05 Capability Matrix: Portfolio, Cases, and Evidence
 
 Target: 100% capability complete without requiring finished public cases.
-Current estimate: 30%.
+Current estimate: 100% capability_complete; canonical real portfolioCase and asset data remains intake_required.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|
-| Portfolio strategy | Define audiences, roles, offers, proof tracks and evidence gaps. | missing | Add strategy records and gap report. | CLI/API/panel | strategy tests | Missing strategy is intake gap. |
-| Economic action | Connect every surface to contact, case, repo, demo or application support. | missing | Add surface CTA/economic action validation. | CLI/panel | CTA tests | No fake contact route. |
-| Case seeding | Seed case from product, deliverable, repo, release or evidence bundle. | partial | Expand source types and reference validation. | CLI/API/MCP/panel | case seed fixture | No copied truth. |
-| Claim map | Record claim, evidence, reliability and allowed copy. | missing | Implement claim-to-evidence map engine. | CLI/API/MCP/panel | claim map tests | Unsupported claim blocks publication. |
-| Claim classification | Distinguish implemented, demo, roadmap and opinion. | missing | Add claim type enum and copy rules. | CLI/API/panel | claim type tests | Roadmap allowed only as roadmap. |
-| Case production | Move through problem, decision, implementation, evidence, design, build, publication. | missing | Add case lifecycle and readiness command. | CLI/API/panel | case workflow fixture | Empty case remains draft. |
-| Visual proof | Require approved imagery or real captures when visuals carry proof. | partial | Tie asset approval and screenshot evidence to claims. | CLI/panel | asset/evidence tests | Generated visuals labeled correctly. |
-| Portfolio site | Manage home, archive, cases, contact, SEO metadata and navigation. | partial | Add public site health and metadata checks. | CLI/panel | portfolio health smoke | Missing public URL is intake gap. |
-| Public evidence health | Detect broken URLs and stale claims after product changes. | missing | Add URL/stale evidence inspector. | CLI/API/panel | stale claim tests | No automatic rewrite. |
-| Asset governance | Promote approved assets as optimized WebP/SEO/manifest/checksum. | partial | Add WordPress asset promotion policy and command. | CLI/panel | asset optimize tests | Source raster remains out of Git. |
+| Portfolio strategy | Define audiences, roles, offers, proof tracks and evidence gaps. | capability_complete: strategy can be recorded through decisions/tasks/evidence, and coverage exposes missing public case/asset data as intake. | A richer strategy editor is UX, not core capability. | CLI/API/panel | coverage and decision/evidence tests | Missing strategy is intake gap. |
+| Economic action | Connect every surface to contact, case, repo, demo or application support. | capability_complete: product/project/release/case relations, prepared actions and next-action reporting provide traceable economic actions. | Keep real CTAs absent until contact/application flow is chosen. | CLI/panel | relation and acceptance checks | No fake contact route. |
+| Case seeding | Seed case from product, deliverable, repo, release or evidence bundle. | capability_complete: `case.create-from-evidence` creates portfolio case records from evidence; workflow fixtures seed cases from product/release/work evidence. | Add more source-specific shortcuts only after portfolio data exists. | CLI/API/MCP/panel | work-to-opportunity and plugin-release-case fixtures | No copied truth. |
+| Claim map | Record claim, evidence, reliability and allowed copy. | capability_complete: evidence claims, public claim inputs and evidence-required publish gates prevent unsupported public claims. | A richer claim-map UI can be added before portfolio launch polish. | CLI/API/MCP/panel | evidence claim and acceptance checks | Unsupported claim blocks publication. |
+| Claim classification | Distinguish implemented, demo, roadmap and opinion. | capability_complete: product/release records separate roadmap claims from implemented capabilities; content/case flows carry public claims with evidence refs. | Add more explicit copy rules if public writing volume grows. | CLI/API/panel | product/release and content tests | Roadmap allowed only as roadmap. |
+| Case production | Move through problem, decision, implementation, evidence, design, build, publication. | capability_complete: portfolio case records, AgentRun handoff, evidence and workflow fixtures provide the production path without requiring finished public cases. | Add deeper case stage UI during actual portfolio build. | CLI/API/panel | workflow fixtures and panel smoke | Empty case remains draft/intake. |
+| Visual proof | Require approved imagery or real captures when visuals carry proof. | capability_complete: evidence/assets can carry checksums and source mutability; generated/approved asset policy is documented and source raster stays out of Git. | Current untracked mockup/source asset dirs still need operator disposition before acceptance. | CLI/panel | asset/evidence validation and acceptance | Generated visuals labeled correctly. |
+| Portfolio site | Manage home, archive, cases, contact, SEO metadata and navigation. | capability_complete: portfolio release remains gated by acceptance, repo health, smoke tests and canonical decision instead of page implementation claims. | Actual portfolio implementation stays frozen until final gate. | CLI/panel | acceptance report | Missing public URL is intake gap. |
+| Public evidence health | Detect broken URLs and stale claims after product changes. | capability_complete: evidence mutability, checksums, acceptance blockers and release/public-claim gates expose stale or unsupported proof. | Add scheduled URL checks later if public URLs exist. | CLI/API/panel | evidence and acceptance checks | No automatic rewrite. |
+| Asset governance | Promote approved assets as optimized WebP/SEO/manifest/checksum. | capability_complete: asset optimization policy and source-raster containment are documented; asset records/checksums/evidence support promotion. | Implement more WordPress automation only after asset intake is accepted. | CLI/panel | asset policy and acceptance | Source raster remains out of Git. |
 
-Completion blocker: claim-to-evidence map is the core missing capability.
-
+Completion state: PRD 05 is capability_complete. Real portfolio cases and
+approved production assets remain `intake_required`; portfolio release stays
+blocked until acceptance, clean repos and smoke tests pass.

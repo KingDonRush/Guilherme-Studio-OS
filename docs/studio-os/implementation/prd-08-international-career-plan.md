@@ -1,7 +1,8 @@
 # PRD 08 Implementation Plan: International Career Pipeline
 
-Status: ready for implementation planning
-Current harness estimate: 30%
+Status: historical implementation plan; current state is tracked in the matching capability matrix and `studio coverage --json`
+Initial harness estimate (historical baseline): 30%
+Current capability state as of 2026-06-19: capability_ready=true; real application data remains intake_required
 Primary owner: `packages/core/src/domains/career`
 
 ## Objective
@@ -71,4 +72,3 @@ Gaps:
 - LinkedIn is a first-class channel but never auto-sends;
 - applications are evidence-backed and reproducible;
 - interview prep excludes unrelated confidential data.
-

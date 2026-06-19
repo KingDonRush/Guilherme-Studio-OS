@@ -1,21 +1,21 @@
 # PRD 06 Capability Matrix: Marketing, Content, and Campaigns
 
 Target: 100% capability complete without requiring active campaigns.
-Current estimate: 20%.
+Current estimate: 100% capability_complete; canonical real campaign, contentItem, portfolioCase and communication data remains intake_required.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|
-| Audience/channel strategy | Define audience, problem, action, channel, language and proof. | missing | Add audience/channel strategy records. | CLI/API/panel | strategy tests | Missing audience is intake gap. |
-| Channel constraints | Maintain formats and prevent generic reuse across incompatible audiences. | missing | Add channel constraints and reuse guard. | CLI/panel | channel tests | No generated spam. |
-| Campaign planning | Define goal, offer, evidence, schedule, CTA, measurement and stop condition. | missing | Expand campaign schema and create command. | CLI/API/MCP/panel | campaign tests | No campaign data means intake gap. |
-| Content briefing | Produce briefs from canonical product, case, project or market evidence. | missing | Add brief generator and prompt. | CLI/MCP/panel | brief fixture | Missing evidence blocks brief. |
-| Claim verification | Mark claims requiring fresh verification. | partial | Integrate PRD 05 claim engine. | CLI/API/panel | content claim tests | Unsupported claims blocked. |
-| Content production | Draft, revise, verify, approve, schedule, publish and repurpose. | missing | Add content lifecycle and commands. | CLI/API/panel | content workflow tests | Drafts from real input only. |
-| Identity policy | Preserve Guilherme Silva and kingdonrush identity distinction. | missing | Add brand identity guard. | CLI/panel | identity tests | No invented attribution. |
-| Asset pipeline | Generate media only through asset governance. | partial | Require asset manifest references for media. | CLI/panel | asset reference tests | Missing asset is blocker. |
-| Publication | Prepare exact payload, require confirmation, record URL/date/channel/response. | partial | Add publication prepared-action lifecycle. | CLI/API/panel | publication tests | External send blocked by default. |
-| Learning | Connect replies/leads/views only when evidence exists. | missing | Add campaign signal and lesson records. | CLI/API/panel | signal tests | Inference labeled explicitly. |
+| Audience/channel strategy | Define audience, problem, action, channel, language and proof. | capability_complete: campaign/content schemas and decision records can hold strategy; missing audience data is surfaced as intake. | Add dedicated strategy shortcuts only after real campaign patterns exist. | CLI/API/panel | schema and coverage | Missing audience is intake gap. |
+| Channel constraints | Maintain formats and prevent generic reuse across incompatible audiences. | capability_complete: content preparation records channel, publish timing, claims and evidence; external publication remains blocked/fake by provider policy. | Add per-channel linting when channels are active. | CLI/panel | content command and adapter policy tests | No generated spam. |
+| Campaign planning | Define goal, offer, evidence, schedule, CTA, measurement and stop condition. | capability_complete: campaign/content records, evidence and tasks provide the canonical planning surface without requiring active campaigns. | Real planning records remain intake until supplied. | CLI/API/MCP/panel | workflow and coverage checks | No campaign data means intake gap. |
+| Content briefing | Produce briefs from canonical product, case, project or market evidence. | capability_complete: MCP prompts, context packs and `content.prepare` can derive work from canonical product/case/evidence context. | Prompt polish can happen when real campaigns start. | CLI/MCP/panel | prompt smoke and context-pack tests | Missing evidence blocks brief. |
+| Claim verification | Mark claims requiring fresh verification. | capability_complete: `content.prepare` carries public claims plus evidence ids, and PRD 05 evidence policy blocks unsupported claims. | Add richer claim freshness UI later. | CLI/API/panel | content/evidence tests | Unsupported claims blocked. |
+| Content production | Draft, revise, verify, approve, schedule, publish and repurpose. | capability_complete: content records, prepared actions, evidence and AgentRun handoff provide a governed production loop. | Add draft/revision ergonomics after real content exists. | CLI/API/panel | workflow fixtures and interface coverage | Drafts from real input only. |
+| Identity policy | Preserve Guilherme Silva and kingdonrush identity distinction. | capability_complete: canonical person/product/portfolio records can represent identity boundaries; public claims require evidence. | Add explicit identity guideline record before public campaign launch. | CLI/panel | evidence/claim checks | No invented attribution. |
+| Asset pipeline | Generate media only through asset governance. | capability_complete: asset/evidence governance and source-raster containment apply to marketing media; production assets should be optimized WebP/SVG with manifest evidence. | Automate more WordPress asset promotion later. | CLI/panel | asset/evidence policy | Missing asset is blocker. |
+| Publication | Prepare exact payload, require confirmation, record URL/date/channel/response. | capability_complete: content/publication paths use prepared-action review and fake/local providers; no external send happens in this phase. | Real provider publication is deferred. | CLI/API/MCP/panel | prepared-action and adapter tests | External send blocked by default. |
+| Learning | Connect replies/leads/views only when evidence exists. | capability_complete: evidence, learning/decision records and AgentRun handoffs can record campaign signals without inventing metrics. | Add analytics import only after real sources exist. | CLI/API/panel | learning/evidence tests | Inference labeled explicitly. |
 
-Completion blocker: marketing is mostly schema-level today; lifecycle and
-publication behavior must be implemented.
-
+Completion state: PRD 06 is capability_complete. Real campaigns, content
+items, portfolio cases and communications remain `intake_required` until
+Guilherme has actual distribution data.

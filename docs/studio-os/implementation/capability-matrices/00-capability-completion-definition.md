@@ -29,7 +29,8 @@ Use these statuses in every PRD matrix:
 
 | Status | Meaning |
 |---|---|
-| `complete` | Behavior, interface, test and evidence path exist. |
+| `capability_complete` | Behavior, interface, test and evidence path exist. |
+| `complete` | Accepted synonym only for older matrix rows; prefer `capability_complete` in new updates. |
 | `partial` | Some implementation exists, but the PRD behavior is not closed. |
 | `missing` | Required capability has no meaningful implementation yet. |
 | `deferred_by_decision` | Intentionally not implemented and linked to a decision. |
@@ -72,4 +73,3 @@ actions, or dashboard operation.
 The system may be 100% complete while showing no clients, applications,
 campaigns, invoices or payments. It must show the absence precisely and create
 records only from provided real input or deterministic fixtures.
-

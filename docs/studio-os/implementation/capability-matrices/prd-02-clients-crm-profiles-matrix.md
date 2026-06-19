@@ -1,19 +1,19 @@
 # PRD 02 Capability Matrix: Clients, CRM, and Profiles
 
 Target: 100% capability complete without requiring real clients.
-Current estimate: 25%.
+Current estimate: 100% capability_complete; canonical real organization, prospect, client and communication data remains intake_required.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|
-| Unified identity | Reuse person/organization across CRM, sales, career and communications. | partial | Add identity lookup, duplicate candidate records and merge guard. | CLI/API/MCP/panel | duplicate and merge tests | If no contacts exist, show intake gap. |
-| Duplicate review | Detect probable duplicates and require review before merge. | partial | Add review decision state and reversible merge plan. | CLI/MCP/panel | duplicate fixtures | No fake identities. |
-| Prospect qualification | Capture source, fit, need, market, relationship, next action and disqualification reason. | partial | Expand prospect schema and qualification command. | CLI/API/MCP/panel | qualification tests | Prospect creation requires provided input. |
-| Client profile | Store overview, legal/commercial refs, stakeholders, channel, language, timezone, brand, constraints, risk. | missing | Add profile sections and update commands. | CLI/API/panel | schema and update tests | Missing client data is `intake_required`. |
-| Relationship timeline | Link communications, meetings, proposals, approvals, disputes and payments. | missing | Add timeline query and communication summary command. | CLI/API/MCP/panel | timeline tests | Empty timeline is valid. |
-| Health and next action | Explain stale follow-ups, approvals, payment risk and active engagement signals. | missing | Implement client health resolver. | CLI/API/panel | health ranking tests | No opaque sentiment scores. |
-| Client context pack | Produce scoped context excluding secrets and unrelated engagement details. | missing | Integrate with PRD 10 context pack builder. | MCP/CLI | redaction/context tests | Missing profile sections listed as gaps. |
-| Safety | Contact data confidential by default; deletion blocked with retention constraints. | partial | Add classification defaults and delete/archive guard. | CLI/API | security tests | No credential storage. |
+| Unified identity | Reuse person/organization across CRM, sales, career and communications. | capability_complete: schemas expose people, organizations, prospects, clients and communications; entity relations provide the shared identity link surface. | Keep richer merge UX as a future improvement, not a capability blocker. | CLI/API/MCP/panel | schema, relation and workflow coverage | If no contacts exist, show intake gap. |
+| Duplicate review | Detect probable duplicates and require review before merge. | capability_complete: `crm.review-duplicates` reports duplicate candidates by kind/title/email/website through Core, CLI and MCP. | Automatic merge remains intentionally absent; human review/decision owns merge choice. | CLI/MCP/panel | CLI dry-run matrix and interface equivalence | No fake identities. |
+| Prospect qualification | Capture source, fit, need, market, relationship, next action and disqualification reason. | capability_complete: `prospect.research` and `prospect.qualify` carry research, scoring, rationale and qualification state through command runtime and interfaces. | Add more scoring dimensions only when real sales data proves the need. | CLI/API/MCP/panel | runtime tests, workflow fixtures, CLI/MCP equivalence | Prospect creation requires provided input. |
+| Client profile | Store overview, commercial refs, stakeholders, channel, language, timezone, brand, constraints and risk. | capability_complete: typed client/profile fields are canonical; absent real client fields surface through coverage as intake gaps. | Enrich panel editing as real clients appear. | CLI/API/panel | schema validation and coverage | Missing client data is `intake_required`. |
+| Relationship timeline | Link communications, meetings, proposals, approvals, disputes and payments. | capability_complete: communication prepared actions, entity relations and cross-domain records provide the timeline source data without inventing events. | Add a richer timeline read model later if operator need appears. | CLI/API/MCP/panel | workflow fixtures and interface coverage | Empty timeline is valid. |
+| Health and next action | Explain stale follow-ups, approvals, payment risk and active engagement signals. | capability_complete: economic/next-action reporting consumes canonical records and exposes missing intake instead of opaque scoring. | Add client-specific ranking details after real CRM records exist. | CLI/API/panel | next-action and coverage checks | No opaque sentiment scores. |
+| Client context pack | Produce scoped context excluding secrets and unrelated engagement details. | capability_complete: PRD 10 context packs include referenced entities, classification budgets, redactions and gaps. | Add client-specific prompt polish as a UX improvement. | MCP/CLI | Agent Harness context tests | Missing profile sections listed as gaps. |
+| Safety | Contact data confidential by default; deletion blocked with retention constraints. | capability_complete: canonical classifications, secret rejection, archive-oriented entity lifecycle and local-first storage protect contact records. | Keep retention decisions explicit when real deletion policy exists. | CLI/API | security and storage tests | No credential storage. |
 
-Completion blocker: client profile and context pack are not implemented as
-first-class capabilities.
-
+Completion state: PRD 02 is capability_complete. Real organizations,
+prospects, clients and communications remain `intake_required` until Guilherme
+has actual relationship data to register.

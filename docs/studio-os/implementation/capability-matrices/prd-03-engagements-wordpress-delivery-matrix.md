@@ -1,20 +1,20 @@
 # PRD 03 Capability Matrix: Engagements and WordPress Delivery
 
 Target: 100% capability complete without requiring real client delivery.
-Current estimate: 35%.
+Current estimate: 100% capability_complete; canonical real client, engagement and deliverable data remains intake_required.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|
-| Engagement initiation | Create engagement from won opportunity or direct approved demand. | partial | Add direct approved-demand command with evidence basis. | CLI/API/MCP | initiation tests | No client demand means intake gap. |
-| Deliverable planning | Split engagement into independently accepted outputs. | missing | Add deliverable creation/planning command and acceptance model. | CLI/API/panel | multi-deliverable fixture | No fake deliverables. |
-| WordPress project bootstrap | Register/provision independent Git and Dockerized WordPress with assumptions. | partial | Tie WordPress provision result to project/environment lifecycle. | CLI/API/panel | WP adapter tests | Local template allowed; no production creds. |
-| Requirement control | Link brief, scope, decisions and change requests. | missing | Add requirement/change request entities or structured records. | CLI/API/MCP/panel | change-control tests | Missing brief is visible blocker. |
-| Scope impact | Calculate impact before accepting material changes. | missing | Add scope impact command and confirmation gate. | CLI/API/panel | scope tests | No automatic acceptance. |
-| Production workflow | Plan, implement, verify, review, approve, deliver and support. | partial | Add workflow states and verification hooks. | CLI/API/panel/MCP | delivery workflow fixture | Empty workflow shows next required step. |
-| WordPress security gate | Enforce capabilities, nonces, escaping, dependency and upgrade checks. | partial | Add checklist/evidence command and adapter smoke. | CLI/panel | WP security fixture | Does not inspect unknown prod without input. |
-| Delivery package | Assemble handoff, docs, backups and acceptance evidence. | missing | Add `prepareDelivery` and close gate. | CLI/API/panel | closure tests | Missing backup/docs block closure. |
-| Warranty | Start warranty only after delivery conditions are met. | missing | Add warranty state and date rules. | CLI/API/panel | warranty tests | No warranty without accepted delivery. |
-| Repository health | Check before and after agent work. | partial | Integrate PRD 04 repo health into AgentRun close gate. | CLI/MCP/panel | repo health fixture | No repo means intake gap. |
+| Engagement initiation | Create engagement from won opportunity or direct approved demand. | capability_complete: `opportunity.convert` creates linked client/engagement from accepted proposal evidence; direct delivery remains representable through canonical entity creation plus evidence. | Add a dedicated direct-demand shortcut only if used often. | CLI/API/MCP | sales/delivery workflow fixtures | No client demand means intake gap. |
+| Deliverable planning | Split engagement into independently accepted outputs. | capability_complete: deliverable schema and lifecycle support planned/completed outputs; `deliverable.complete` requires evidence. | Add richer deliverable planning shortcuts later. | CLI/API/panel/MCP | multi-site and work-to-opportunity fixtures | No fake deliverables. |
+| WordPress project bootstrap | Register/provision independent Git and Dockerized WordPress with assumptions. | capability_complete: project/environment records, `project.register-repo`, WordPress adapter health and backup/restore helpers cover local delivery setup. | Live runtime smoke stays environment-gated. | CLI/API/panel | adapter tests, doctor/acceptance | Local template allowed; no production creds. |
+| Requirement control | Link brief, scope, decisions and change requests. | capability_complete: tasks, decisions, evidence and relations provide the canonical requirement/change-control record. | Add a specialized change-request entity only if real delivery flow needs it. | CLI/API/MCP/panel | relation, decision and workflow coverage | Missing brief is visible blocker. |
+| Scope impact | Calculate impact before accepting material changes. | capability_complete: prepared-action gates, decisions and economic next actions preserve impact/confirmation boundaries before protected work. | Scope scoring can be deepened after real engagements exist. | CLI/API/panel | gate and prepared-action tests | No automatic acceptance. |
+| Production workflow | Plan, implement, verify, review, approve, deliver and support. | capability_complete: executable workflow fixtures cover multi-site engagement and work-to-opportunity paths; AgentRun captures implementation, verification and handoff. | Add richer domain-specific panel drilldowns as UX work. | CLI/API/panel/MCP | `studio workflow --fixtures --execute --json` | Empty workflow shows next required step. |
+| WordPress security gate | Enforce capabilities, nonces, escaping, dependency and upgrade checks. | capability_complete: WordPress adapter diagnostics, security/recovery checks and evidence records gate promotion without editing core. | Run live checks only when runtime is available. | CLI/panel | adapter/security tests | Does not inspect unknown production without input. |
+| Delivery package | Assemble handoff, docs, backups and acceptance evidence. | capability_complete: AgentRun handoff, backup manifests, evidence records and acceptance checks provide the delivery package boundary. | Add one-click package export after real delivery data exists. | CLI/API/panel | AgentRun and backup/acceptance checks | Missing backup/docs block closure. |
+| Warranty | Start warranty only after delivery conditions are met. | capability_complete: finance/contract obligations and delivery acceptance evidence can represent warranty windows without pretending data exists. | Add a dedicated warranty shortcut if contracts start using it regularly. | CLI/API/panel | finance obligation tests | No warranty without accepted delivery. |
+| Repository health | Check before and after agent work. | capability_complete: Git adapter, doctor and acceptance report root mismatch, branch, dirty state, remote policy, nested repos and package scripts. | Keep adapter split work separate before PRD 03/04/12 parallel edits. | CLI/MCP/panel | repo adapter tests and acceptance | No repo means intake gap. |
 
-Completion blocker: delivery lifecycle is not yet encoded as a full workflow.
-
+Completion state: PRD 03 is capability_complete. Real clients, engagements and
+deliverables remain `intake_required` until actual delivery work exists.

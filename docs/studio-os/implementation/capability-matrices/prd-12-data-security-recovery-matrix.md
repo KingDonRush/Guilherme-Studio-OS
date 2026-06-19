@@ -1,7 +1,7 @@
 # PRD 12 Capability Matrix: Data, Security, Backup, and Recovery
 
 Target: 100% capability complete without requiring production secrets.
-Current estimate: 100%.
+Current estimate: 100% capability_complete; canonical recovery/security evidence is ready.
 
 | Requirement | Target capability | Current state | Implementation work | Interfaces | Verification | Real-data behavior |
 |---|---|---|---|---|---|---|

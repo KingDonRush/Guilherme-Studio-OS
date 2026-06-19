@@ -1,7 +1,8 @@
 # PRD 05 Implementation Plan: Portfolio, Cases, and Evidence
 
-Status: ready for implementation planning
-Current harness estimate: 30%
+Status: historical implementation plan; current state is tracked in the matching capability matrix and `studio coverage --json`
+Initial harness estimate (historical baseline): 30%
+Current capability state as of 2026-06-19: capability_ready=true; real portfolio case and asset data remains intake_required
 Primary owner: `packages/core/src/domains/portfolio`
 
 ## Objective
@@ -67,4 +68,3 @@ Gaps:
 - every public claim resolves to evidence;
 - portfolio home curation does not mutate canonical project truth;
 - publication payload includes URL, metadata, assets, claims and confirmation.
-
