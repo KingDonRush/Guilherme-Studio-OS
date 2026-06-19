@@ -39,6 +39,8 @@ describe("Agent harness loop", () => {
       "agent.context",
       {
         next_valid_action: "Inspect current state and run focused tests.",
+        work_type: "development",
+        method_lens_answers: developmentLensAnswers(),
       },
       entityId(run),
     );
@@ -47,6 +49,10 @@ describe("Agent harness loop", () => {
       context_pack: {
         objective: "Implement the PRD 10 harness fixture.",
         included_entity_ids: expect.arrayContaining([entityId(run), entityId(task)]),
+        method_lens: {
+          work_type: "development",
+          missing_required: [],
+        },
       },
     });
 
@@ -116,6 +122,83 @@ describe("Agent harness loop", () => {
       result: "complete",
       evidence_ids: [entityId(evidence)],
     });
+  });
+
+  it("blocks closure when a development method lens is incomplete", async () => {
+    const context = await createTestContext();
+    const evidence = await commandEntity(context, "evidence.register", {
+      title: "Incomplete method lens verification command",
+      evidence_type: "command",
+      command: "npm test -- packages/core/src/agent-harness.test.ts",
+      claims: ["Incomplete method lens fixture reached close gate"],
+    });
+    const run = await commandEntity(context, "agent.start", {
+      objective: "Try to close a development run with missing method lens answers.",
+      allowed: ["read_context", "edit_core", "run_tests"],
+    });
+
+    const oriented = await commandEntity(
+      context,
+      "agent.context",
+      {
+        next_valid_action: "Answer missing method lens fields before closing.",
+        work_type: "development",
+        method_lens_answers: {
+          lifecycle: "Implementation work in a temporary Studio fixture.",
+          business_value: "Proves the close gate treats Praxis lens gaps as real blockers.",
+        },
+      },
+      entityId(run),
+    );
+    const contextPack = oriented.spec.context_pack as ContextPack;
+    expect(contextPack.method_lens?.missing_required).toContain("requirements_solution");
+    expect(contextPack.gaps.join("\n")).toContain(
+      "Method lens missing required development answer",
+    );
+
+    await commandEntity(context, "agent.authorize", {}, entityId(run));
+    await commandEntity(
+      context,
+      "agent.observe",
+      {
+        source: "docs",
+        summary: "The context pack has an intentionally incomplete development method lens.",
+      },
+      entityId(run),
+    );
+    await commandEntity(
+      context,
+      "agent.record-action",
+      {
+        action: "Attempted to finish with incomplete method lens.",
+        evidence_ids: [entityId(evidence)],
+      },
+      entityId(run),
+    );
+    await commandEntity(
+      context,
+      "agent.verify",
+      {
+        status: "passed",
+        command: "npm test -- packages/core/src/agent-harness.test.ts",
+        result_summary: "Verification ran, but method lens is still incomplete.",
+      },
+      entityId(run),
+    );
+    await commandEntity(
+      context,
+      "agent.handoff",
+      {
+        summary: "Run should remain uncloseable until method lens is complete.",
+        next_valid_action: "Fill missing method lens fields and rebuild context.",
+        evidence_ids: [entityId(evidence)],
+      },
+      entityId(run),
+    );
+
+    const result = await execute(context, "agent.close", {}, entityId(run));
+    expect(result.status).not.toBe("ok");
+    expect(result.error?.message).toContain("method_lens answers");
   });
 
   it("blocks closure until the handoff exists", async () => {
@@ -259,6 +342,24 @@ async function execute(
 
 async function expectOk(promise: Promise<ResultEnvelope>): Promise<ResultEnvelope> {
   const result = await promise;
+  if (result.status !== "ok") {
+    throw new Error(JSON.stringify(result.error ?? result, null, 2));
+  }
   expect(result.status).toBe("ok");
   return result;
+}
+
+function developmentLensAnswers(): Record<string, string> {
+  return {
+    lifecycle: "Implementation work in the Studio OS agent harness lifecycle.",
+    business_value: "Reduces future rebriefing and makes agent work auditable.",
+    requirements_solution: "PRD 10 harness loop acceptance controls the change.",
+    systems: "The system of interest is the local-first Studio OS coordinator.",
+    software: "Core command runtime, schemas and tests are the affected software surfaces.",
+    governance: "The run must pass close gates, evidence and handoff requirements.",
+    quality_risk_security: "Secret redaction, evidence and close preconditions must hold.",
+    delivery_operations: "The actual entrypoint is npm test for the focused harness fixture.",
+    knowledge_documentation: "The AgentRun record and handoff become operational memory.",
+    methods_models_practices: "Use the Studio operating north star as the tailored method lens.",
+  };
 }

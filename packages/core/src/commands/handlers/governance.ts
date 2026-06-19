@@ -48,6 +48,9 @@ export const governanceCommandDefinitions: Record<string, StudioCommandDefinitio
         runId: runId(command.target_id, payload),
         nextValidAction: optionalString(payload, "next_valid_action"),
         forbiddenReopenings: stringArray(payload, "forbidden_reopenings"),
+        workType: optionalEnum(payload, "work_type", ["development"]),
+        methodLensAnswers: optionalStringRecord(payload, "method_lens_answers"),
+        methodLensNotMaterial: optionalMethodLensAreas(payload, "method_lens_not_material"),
       });
       return entityMutationResult(command.command, entity);
     },
@@ -320,6 +323,68 @@ function optionalBoolean(payload: Record<string, unknown>, key: string): boolean
 
 function optionalStringArray(payload: Record<string, unknown>, key: string): string[] | undefined {
   return payloadValue(payload, key) === undefined ? undefined : stringArray(payload, key);
+}
+
+function optionalStringRecord(
+  payload: Record<string, unknown>,
+  key: string,
+): Record<string, string> | undefined {
+  const value = payloadValue(payload, key);
+  if (value === undefined) {
+    return undefined;
+  }
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error(`${key} must be an object`);
+  }
+  const result: Record<string, string> = {};
+  for (const [entryKey, entryValue] of Object.entries(value)) {
+    if (typeof entryValue !== "string") {
+      throw new Error(`${key}.${entryKey} must be a string`);
+    }
+    result[entryKey] = entryValue;
+  }
+  return result;
+}
+
+function optionalMethodLensAreas(
+  payload: Record<string, unknown>,
+  key: string,
+):
+  | Array<
+      | "lifecycle"
+      | "business_value"
+      | "requirements_solution"
+      | "systems"
+      | "software"
+      | "governance"
+      | "quality_risk_security"
+      | "delivery_operations"
+      | "knowledge_documentation"
+      | "methods_models_practices"
+    >
+  | undefined {
+  const values = optionalStringArray(payload, key);
+  if (!values) {
+    return undefined;
+  }
+  const allowed = [
+    "lifecycle",
+    "business_value",
+    "requirements_solution",
+    "systems",
+    "software",
+    "governance",
+    "quality_risk_security",
+    "delivery_operations",
+    "knowledge_documentation",
+    "methods_models_practices",
+  ] as const;
+  for (const value of values) {
+    if (!allowed.includes(value as (typeof allowed)[number])) {
+      throw new Error(`${key} must contain only: ${allowed.join(", ")}`);
+    }
+  }
+  return values as Array<(typeof allowed)[number]>;
 }
 
 function enumValue<const T extends string>(

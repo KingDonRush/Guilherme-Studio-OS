@@ -186,9 +186,21 @@ function registerAgentHarnessCommands(program: Command): void {
     .argument("<run-id>")
     .option("--next-action <text>")
     .option("--forbidden-reopening <text...>")
+    .option("--work-type <type>", "Activate a method lens; currently development")
+    .option(
+      "--method-lens <area=value...>",
+      "Answer method lens areas, for example lifecycle=implementation",
+    )
+    .option("--method-lens-not-material <area...>")
     .action(async function action(this: Command, runId: string) {
       const options = globalOptions(this);
-      const local = this.opts() as { nextAction?: string; forbiddenReopening?: string[] };
+      const local = this.opts() as {
+        nextAction?: string;
+        forbiddenReopening?: string[];
+        workType?: string;
+        methodLens?: string[];
+        methodLensNotMaterial?: string[];
+      };
       await executeCliCommand(
         options,
         "agent.context",
@@ -196,6 +208,11 @@ function registerAgentHarnessCommands(program: Command): void {
           run_id: runId,
           ...(local.nextAction ? { next_valid_action: local.nextAction } : {}),
           forbidden_reopenings: local.forbiddenReopening ?? [],
+          ...(local.workType ? { work_type: local.workType } : {}),
+          ...(local.methodLens
+            ? { method_lens_answers: parseMethodLensAnswers(local.methodLens) }
+            : {}),
+          method_lens_not_material: local.methodLensNotMaterial ?? [],
         },
         runId,
       );
@@ -474,6 +491,23 @@ function registerAgentHarnessCommands(program: Command): void {
         evidence_ids: local.evidence ?? [],
       });
     });
+}
+
+function parseMethodLensAnswers(values: string[]): Record<string, string> {
+  const answers: Record<string, string> = {};
+  for (const value of values) {
+    const separatorIndex = value.indexOf("=");
+    if (separatorIndex <= 0) {
+      throw new Error(`Invalid method lens answer "${value}". Use area=value.`);
+    }
+    const area = value.slice(0, separatorIndex).trim();
+    const answer = value.slice(separatorIndex + 1).trim();
+    if (!area || !answer) {
+      throw new Error(`Invalid method lens answer "${value}". Use area=value.`);
+    }
+    answers[area] = answer;
+  }
+  return answers;
 }
 
 function registerKnowledgeCommands(program: Command): void {

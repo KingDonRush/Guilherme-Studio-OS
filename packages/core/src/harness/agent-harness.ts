@@ -12,6 +12,11 @@ import {
   entityRevision,
   entityStatus,
   entityTitle,
+  type MethodLens,
+  type MethodLensArea,
+  MethodLensAreaSchema,
+  type MethodLensWorkType,
+  MethodLensWorkTypeSchema,
   nowIso,
   type StudioEntity,
   stableChecksum,
@@ -61,6 +66,9 @@ export interface BuildContextPackInput {
   runId: string;
   nextValidAction?: string | undefined;
   forbiddenReopenings?: string[] | undefined;
+  workType?: MethodLensWorkType | undefined;
+  methodLensAnswers?: Partial<Record<MethodLensArea, string>> | undefined;
+  methodLensNotMaterial?: MethodLensArea[] | undefined;
 }
 
 export interface AuthorizeAgentRunInput {
@@ -218,6 +226,13 @@ export class AgentHarnessService {
     const missingIds = referencedIds.filter(
       (id) => !entities.some((entity) => entityId(entity) === id),
     );
+    const methodLens = input.workType
+      ? buildMethodLens({
+          workType: input.workType,
+          answers: input.methodLensAnswers ?? {},
+          notMaterial: input.methodLensNotMaterial ?? [],
+        })
+      : undefined;
     const packWithoutChecksum = {
       id: `ctx_${entityId(run).replace(/^run_/, "")}_${Date.now()}`,
       generated_at: nowIso(),
@@ -262,8 +277,12 @@ export class AgentHarnessService {
         ...redactedEntities.map(
           (entity) => `Referenced entity omitted by classification budget: ${entityId(entity)}`,
         ),
+        ...(methodLens?.missing_required.map(
+          (area) => `Method lens missing required ${methodLens.work_type} answer: ${area}`,
+        ) ?? []),
       ],
       forbidden_reopenings: input.forbiddenReopenings ?? [],
+      ...(methodLens ? { method_lens: methodLens } : {}),
       ...(input.nextValidAction ? { next_valid_action: input.nextValidAction } : {}),
     };
     assertNoSecretLikeText(packWithoutChecksum);
@@ -645,6 +664,11 @@ function closePreconditionGaps(entity: Extract<StudioEntity, { kind: "agentRun" 
   if (!spec.context_pack) {
     missing.push("context_pack");
   }
+  if (spec.material && (spec.context_pack?.method_lens?.missing_required.length ?? 0) > 0) {
+    missing.push(
+      `method_lens answers (${spec.context_pack?.method_lens?.missing_required.join(", ")})`,
+    );
+  }
   if (spec.material && spec.observations.length === 0) {
     missing.push("at least one observation");
   }
@@ -702,6 +726,75 @@ function summarizeAuthority(authority: {
       authority.prohibited.length > 0 ? authority.prohibited.join(", ") : "none listed"
     }`,
   ].join(". ");
+}
+
+const METHOD_LENS_AREA_ORDER: MethodLensArea[] = [
+  "lifecycle",
+  "business_value",
+  "requirements_solution",
+  "systems",
+  "software",
+  "governance",
+  "quality_risk_security",
+  "delivery_operations",
+  "knowledge_documentation",
+  "methods_models_practices",
+];
+
+const DEVELOPMENT_METHOD_LENS_PROMPTS: Record<MethodLensArea, string> = {
+  lifecycle:
+    "What system, repository, environment and lifecycle stage does this development work touch, and what rigor is proportional?",
+  business_value:
+    "What Studio outcome justifies doing this now, and what cost, risk or future work does it reduce?",
+  requirements_solution:
+    "Which PRD, acceptance criteria, constraints and traceability links control this change?",
+  systems:
+    "What is the system of interest, boundary, affected interfaces and external environment?",
+  software:
+    "What architecture, design, construction, testing, configuration and maintenance concerns are changed?",
+  governance:
+    "Which gate, decision point, definition of done, owner and authority boundary govern progress?",
+  quality_risk_security:
+    "Which quality attributes, risks, misuse cases, security controls and assurance evidence matter?",
+  delivery_operations:
+    "How will this be built, run, diagnosed, recovered, rolled back, supported or retired?",
+  knowledge_documentation:
+    "What becomes source of truth, evidence, decision record, documentation update or handoff?",
+  methods_models_practices:
+    "Which method, model, metric, practice, tailoring reason and stop criteria are being used?",
+};
+
+function buildMethodLens(input: {
+  workType: MethodLensWorkType;
+  answers: Partial<Record<MethodLensArea, string>>;
+  notMaterial: MethodLensArea[];
+}): MethodLens {
+  const workType = MethodLensWorkTypeSchema.parse(input.workType);
+  const notMaterial = new Set(input.notMaterial.map((area) => MethodLensAreaSchema.parse(area)));
+  const missingRequired: MethodLensArea[] = [];
+  const entries = METHOD_LENS_AREA_ORDER.map((area) => {
+    const answer = input.answers[area]?.trim();
+    const status = answer ? "answered" : notMaterial.has(area) ? "not_material" : "missing";
+    if (status === "missing") {
+      missingRequired.push(area);
+    }
+    return [
+      area,
+      {
+        prompt: DEVELOPMENT_METHOD_LENS_PROMPTS[area],
+        ...(answer ? { answer } : {}),
+        status,
+        required: true,
+      },
+    ] as const;
+  });
+  return {
+    work_type: workType,
+    generated_at: nowIso(),
+    source: "studio-operating-north-star",
+    areas: Object.fromEntries(entries) as MethodLens["areas"],
+    missing_required: missingRequired,
+  };
 }
 
 function assertNoSecretLikeText(value: unknown): void {

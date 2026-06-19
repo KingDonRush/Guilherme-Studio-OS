@@ -52,6 +52,56 @@ export const ContextPackSectionSchema = z
   })
   .strict();
 
+export const MethodLensWorkTypeSchema = z.enum(["development"]);
+export type MethodLensWorkType = z.infer<typeof MethodLensWorkTypeSchema>;
+
+export const MethodLensAreaSchema = z.enum([
+  "lifecycle",
+  "business_value",
+  "requirements_solution",
+  "systems",
+  "software",
+  "governance",
+  "quality_risk_security",
+  "delivery_operations",
+  "knowledge_documentation",
+  "methods_models_practices",
+]);
+export type MethodLensArea = z.infer<typeof MethodLensAreaSchema>;
+
+export const MethodLensItemSchema = z
+  .object({
+    prompt: z.string().min(1),
+    answer: z.string().min(1).optional(),
+    status: z.enum(["answered", "missing", "not_material"]).default("missing"),
+    required: z.boolean().default(true),
+  })
+  .strict();
+
+export const MethodLensSchema = z
+  .object({
+    work_type: MethodLensWorkTypeSchema,
+    generated_at: z.string().datetime(),
+    source: z.literal("studio-operating-north-star"),
+    areas: z
+      .object({
+        lifecycle: MethodLensItemSchema,
+        business_value: MethodLensItemSchema,
+        requirements_solution: MethodLensItemSchema,
+        systems: MethodLensItemSchema,
+        software: MethodLensItemSchema,
+        governance: MethodLensItemSchema,
+        quality_risk_security: MethodLensItemSchema,
+        delivery_operations: MethodLensItemSchema,
+        knowledge_documentation: MethodLensItemSchema,
+        methods_models_practices: MethodLensItemSchema,
+      })
+      .strict(),
+    missing_required: z.array(MethodLensAreaSchema).default([]),
+  })
+  .strict();
+export type MethodLens = z.infer<typeof MethodLensSchema>;
+
 export const ContextPackSchema = z
   .object({
     id: z.string().min(3),
@@ -66,6 +116,7 @@ export const ContextPackSchema = z
     gaps: z.array(z.string()).default([]),
     forbidden_reopenings: z.array(z.string()).default([]),
     next_valid_action: z.string().optional(),
+    method_lens: MethodLensSchema.optional(),
     checksum: z.string().length(64),
   })
   .strict();
