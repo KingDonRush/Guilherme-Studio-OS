@@ -60,3 +60,11 @@ security/recovery hardening, not PRD 10 harness capability.
 - Recorded action, verification, evidence and handoff for entity file scanning
   extraction in storage.
 - Evidence: `evd_20260619_storage-file-scan-verification`.
+
+2026-06-19 fourth self-build execution update:
+
+- Closed `run_20260619_self-build-storage-event-store-extraction` using the
+  same harness loop and development method lens.
+- Recorded action, verification, evidence and handoff for EventStore extraction
+  in storage.
+- Evidence: `evd_20260619_storage-event-verification`.

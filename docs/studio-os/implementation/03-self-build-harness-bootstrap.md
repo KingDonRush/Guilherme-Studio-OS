@@ -516,6 +516,20 @@ Outcome:
 - recorded evidence `evd_20260619_storage-file-scan-verification`;
 - produced a handoff with the next valid action.
 
+2026-06-19: the fourth self-build run closed as
+`run_20260619_self-build-storage-event-store-extraction`.
+
+Outcome:
+
+- extracted Studio storage event append/list and legacy event normalization into
+  `packages/storage/src/events.ts`;
+- kept `EventStore` exported through `packages/storage/src/index.ts`;
+- preserved JSONL append behavior, file mode, empty-list behavior, secret
+  checks and legacy event normalization;
+- passed `npm run verify`;
+- recorded evidence `evd_20260619_storage-event-verification`;
+- produced a handoff with the next valid action.
+
 ## Gate To Resume PRD Waves
 
 Do not resume broad PRD subagents until:
