@@ -32,6 +32,7 @@ Every PRD agent receives these files:
 - owning matrix under `docs/studio-os/implementation/capability-matrices/`
 - `docs/studio-os/implementation/00-parallel-execution-strategy.md`
 - `docs/studio-os/implementation/01-cross-prd-integration-map.md`
+- `docs/studio-os/implementation/02-codebase-north-star.md`
 - this contract
 
 ## Branch And Worktree Rule
@@ -138,6 +139,7 @@ Read:
 - docs/studio-os/implementation/capability-matrices/prd-XX-...
 - docs/studio-os/implementation/00-parallel-execution-strategy.md
 - docs/studio-os/implementation/01-cross-prd-integration-map.md
+- docs/studio-os/implementation/02-codebase-north-star.md
 - docs/studio-os/implementation/subagents/00-agent-orchestration-contract.md
 - docs/studio-os/implementation/subagents/prd-XX-...-agent.md
 

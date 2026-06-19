@@ -19,6 +19,11 @@ fixtures, and a final integration lane.
 Do not spawn implementation agents directly from the current monolithic source
 shape.
 
+Use [Codebase North Star](./02-codebase-north-star.md) to decide whether a
+large surface needs extraction. Line count alone is diagnostic; the decision
+comes from responsibility, boundary, public interface, dependency rule,
+verification and merge-conflict risk.
+
 First create enough modular seams so agents can work in mostly disjoint write
 sets. These original hot files are already reduced by Phase 0:
 
