@@ -574,6 +574,20 @@ Outcome:
 - recorded evidence `evd_20260619_storage-entitystore-verification`;
 - produced a handoff with the next valid action.
 
+2026-06-19: the eighth self-build run closed as
+`run_20260619_self-build-mcp-finance-mutation-extraction`.
+
+Outcome:
+
+- extracted Studio MCP contract, invoice, payment and finance mutation tools
+  into `packages/mcp/src/tools/mutations/finance-mutations.ts`;
+- kept `registerStudioMcpMutationTools` as the public MCP mutation facade;
+- preserved MCP tool names, Zod schemas, command names, target IDs, dry-run,
+  idempotency and payload construction;
+- passed `npm run verify`;
+- recorded evidence `evd_20260619_mcp-finance-mutation-verification`;
+- produced a handoff with the next valid action.
+
 ## Gate To Resume PRD Waves
 
 Do not resume broad PRD subagents until:

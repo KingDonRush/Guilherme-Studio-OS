@@ -238,3 +238,14 @@ gap.
   blocker.
 - PRD 11 is now 100% capability complete. Real business/client/application data
   remains governed by canonical intake status, not by interface capability.
+
+2026-06-19 MCP mutation modularity update:
+
+- Extracted contract, invoice, payment and finance MCP mutation tools from
+  `packages/mcp/src/tools/mutations.ts` into
+  `packages/mcp/src/tools/mutations/finance-mutations.ts`.
+- Kept `registerStudioMcpMutationTools` as the MCP mutation facade and
+  preserved tool names, Zod schemas, command names, dry-run/idempotency support
+  and payload construction.
+- Verification: `npm run verify`; evidence
+  `evd_20260619_mcp-finance-mutation-verification`.

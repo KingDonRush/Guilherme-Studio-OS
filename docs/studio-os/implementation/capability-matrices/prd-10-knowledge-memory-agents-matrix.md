@@ -92,3 +92,11 @@ security/recovery hardening, not PRD 10 harness capability.
 - Recorded action, verification, evidence and handoff for `EntityStore`
   extraction in storage.
 - Evidence: `evd_20260619_storage-entitystore-verification`.
+
+2026-06-19 eighth self-build execution update:
+
+- Closed `run_20260619_self-build-mcp-finance-mutation-extraction` using the
+  same harness loop and development method lens.
+- Recorded action, verification, evidence and handoff for MCP finance mutation
+  extraction.
+- Evidence: `evd_20260619_mcp-finance-mutation-verification`.
