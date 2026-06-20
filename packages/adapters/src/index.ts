@@ -1,6 +1,16 @@
 import { execFile, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
-import { access, mkdir, mkdtemp, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
+import {
+  access,
+  copyFile,
+  mkdir,
+  mkdtemp,
+  readdir,
+  readFile,
+  rm,
+  stat,
+  writeFile,
+} from "node:fs/promises";
 import path from "node:path";
 import { promisify } from "node:util";
 import { PreparedActionService, type StudioContext } from "@guilherme-studio/core";
@@ -12,6 +22,18 @@ import {
   entityId,
   entityTitle,
 } from "@guilherme-studio/schemas";
+import {
+  buildMediaImportEvalPhp,
+  createWordPressSiteKitPlan,
+  type WordPressSiteKitOptions,
+  type WordPressSiteKitResult,
+} from "./wordpress-site-kit.js";
+
+export type {
+  WordPressSiteKitAsset,
+  WordPressSiteKitOptions,
+  WordPressSiteKitResult,
+} from "./wordpress-site-kit.js";
 
 const execFileAsync = promisify(execFile);
 
@@ -368,6 +390,84 @@ export async function wordpressPluginList(context: StudioContext): Promise<unkno
     "--format=json",
   ]);
   return JSON.parse(stdout) as unknown[];
+}
+
+export async function applyWordPressSiteKit(
+  context: StudioContext,
+  options: WordPressSiteKitOptions,
+): Promise<WordPressSiteKitResult> {
+  const plan = await createWordPressSiteKitPlan(context, options);
+
+  let imported: unknown;
+  if (!options.dryRun) {
+    for (const asset of plan.assets) {
+      const sourcePath = path.join(context.paths.root, asset.sourcePath);
+      const runtimePath = path.join(context.paths.root, asset.runtimePath);
+      await mkdir(path.dirname(runtimePath), { recursive: true });
+      await copyFile(sourcePath, runtimePath);
+    }
+    if (options.importMedia ?? true) {
+      const media = await wordpressWpCli(context, ["eval", buildMediaImportEvalPhp(plan.assets)]);
+      const jsonLine = media.stdout
+        .split("\n")
+        .map((line) => line.trim())
+        .find((line) => line.startsWith("{"));
+      imported = jsonLine ? JSON.parse(jsonLine) : { stdout: media.stdout.trim() };
+    }
+    const elementor = await wordpressWpCli(context, [
+      "eval-file",
+      "scripts/apply-mina-forma-elementor-kit.php",
+    ]);
+    const manifestPath = path.join(
+      context.paths.runtime,
+      "wordpress-site-kits",
+      "mina-forma",
+      "manifest.json",
+    );
+    const result: WordPressSiteKitResult = {
+      apiVersion: "studio.guilherme.dev/wordpress-site-kit-v1",
+      site: "mina-forma",
+      dryRun: false,
+      capsulePath: plan.capsulePath,
+      canonicalAssetPath: plan.canonicalAssetPath,
+      runtimeAssetPath: plan.runtimeAssetPath,
+      cssPath: plan.cssPath,
+      manifestPath: path.relative(context.paths.root, manifestPath),
+      colors: plan.colors,
+      typography: plan.typography,
+      iconPolicy: plan.iconPolicy,
+      assets: plan.assets,
+      elementorKit: {
+        mode: "applied",
+        output: elementor.stdout.trim(),
+      },
+      mediaLibrary: {
+        mode: (options.importMedia ?? true) ? "imported" : "skipped",
+        ...(imported ? { imported } : {}),
+      },
+      warnings: plan.warnings,
+    };
+    await mkdir(path.dirname(manifestPath), { recursive: true });
+    await writeFile(manifestPath, `${JSON.stringify(result, null, 2)}\n`, { mode: 0o644 });
+    return result;
+  }
+
+  return {
+    apiVersion: "studio.guilherme.dev/wordpress-site-kit-v1",
+    site: "mina-forma",
+    dryRun: true,
+    capsulePath: plan.capsulePath,
+    canonicalAssetPath: plan.canonicalAssetPath,
+    runtimeAssetPath: plan.runtimeAssetPath,
+    cssPath: plan.cssPath,
+    colors: plan.colors,
+    typography: plan.typography,
+    iconPolicy: plan.iconPolicy,
+    assets: plan.assets,
+    elementorKit: { mode: "dry-run" },
+    mediaLibrary: { mode: "dry-run" },
+    warnings: plan.warnings,
+  };
 }
 
 export async function backupWordPressDatabase(

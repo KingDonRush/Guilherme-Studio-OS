@@ -6,6 +6,7 @@ import { promisify } from "node:util";
 import { createStudioContext, PreparedActionService } from "@guilherme-studio/core";
 import { describe, expect, it } from "vitest";
 import {
+  applyWordPressSiteKit,
   createExternalAdapterProvider,
   createStudioBackup,
   executeDisabledExternalAdapter,
@@ -153,6 +154,50 @@ describe("adapter contracts", () => {
       dryRun: true,
       sitePath: path.join(root, "runtime/wp-fixture"),
       templatePath: path.join(root, "wordpress"),
+    });
+  });
+
+  it("plans the Mina Forma WordPress site kit without touching WordPress in dry-run", async () => {
+    const root = await createStudioRoot("studio-wordpress-site-kit-");
+    const assetDir = path.join(
+      root,
+      "portfolio",
+      "sites",
+      "multipaginados",
+      "mina-forma",
+      "assets",
+      "wordpress",
+      "batch-1-core",
+    );
+    await mkdir(assetDir, { recursive: true });
+    await writeFile(path.join(assetDir, "mf-hero-material-plans.webp"), "fixture");
+    const context = await createStudioContext(root);
+
+    await expect(
+      applyWordPressSiteKit(context, {
+        site: "mina-forma",
+        capsulePath: "../escape",
+        dryRun: true,
+      }),
+    ).rejects.toThrow(/inside the Studio root/);
+
+    await expect(
+      applyWordPressSiteKit(context, {
+        site: "mina-forma",
+        dryRun: true,
+      }),
+    ).resolves.toMatchObject({
+      apiVersion: "studio.guilherme.dev/wordpress-site-kit-v1",
+      site: "mina-forma",
+      dryRun: true,
+      assets: [
+        expect.objectContaining({
+          wpPath:
+            "wp-content/themes/guilherme-portfolio/assets/images/mina-forma/batch-1-core/mf-hero-material-plans.webp",
+          title: "Mina Forma Hero Material Plans",
+        }),
+      ],
+      mediaLibrary: { mode: "dry-run" },
     });
   });
 

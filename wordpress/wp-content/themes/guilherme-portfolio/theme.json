@@ -10,7 +10,15 @@
         { "slug": "surface", "name": "Surface", "color": "#fbf8f0" },
         { "slug": "cyan", "name": "Cyan Accent", "color": "#13d8d2" },
         { "slug": "violet", "name": "Violet Accent", "color": "#5b35f2" },
-        { "slug": "orange", "name": "Warm CTA", "color": "#e9720c" }
+        { "slug": "orange", "name": "Warm CTA", "color": "#e9720c" },
+        { "slug": "mf-ink", "name": "Mina Ink", "color": "#151513" },
+        { "slug": "mf-paper", "name": "Mina Warm Paper", "color": "#f4efe5" },
+        { "slug": "mf-surface", "name": "Mina Surface", "color": "#fbf8f0" },
+        { "slug": "mf-line", "name": "Mina Fine Line", "color": "#d8d0c4" },
+        { "slug": "mf-muted", "name": "Mina Muted Text", "color": "#5f625d" },
+        { "slug": "mf-cyan", "name": "Mina Technical Cyan", "color": "#14d8d2" },
+        { "slug": "mf-clay", "name": "Mina Clay Accent", "color": "#d96e32" },
+        { "slug": "mf-violet", "name": "Mina Violet Accent", "color": "#6654d9" }
       ]
     },
     "typography": {
@@ -24,6 +32,21 @@
           "fontFamily": "JetBrains Mono, monospace",
           "slug": "jetbrains-mono",
           "name": "JetBrains Mono"
+        },
+        {
+          "fontFamily": "\"Archivo Black\", \"Space Grotesk\", Arial, sans-serif",
+          "slug": "mina-display",
+          "name": "Mina Display"
+        },
+        {
+          "fontFamily": "\"Space Grotesk\", Geist, Arial, sans-serif",
+          "slug": "mina-heading",
+          "name": "Mina Heading"
+        },
+        {
+          "fontFamily": "Hind, Geist, Arial, sans-serif",
+          "slug": "mina-body",
+          "name": "Mina Body"
         }
       ]
     },

@@ -313,6 +313,16 @@ describe("Studio CLI", () => {
         expected: { dryRun: true },
       },
       {
+        name: "wordpress.site-kit",
+        args: ["--dry-run", "wordpress", "site-kit", "mina-forma"],
+        expected: {
+          apiVersion: "studio.guilherme.dev/wordpress-site-kit-v1",
+          site: "mina-forma",
+          dryRun: true,
+          mediaLibrary: { mode: "dry-run" },
+        },
+      },
+      {
         name: "wordpress.backup-db",
         args: ["--dry-run", "wordpress", "backup-db"],
         expected: { dryRun: true, action: "wordpress.backup-db" },

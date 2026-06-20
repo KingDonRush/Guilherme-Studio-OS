@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GP_THEME_VERSION', '0.3.31' );
+define( 'GP_THEME_VERSION', '0.3.32' );
 define( 'GP_THEME_DIR', get_template_directory() );
 define( 'GP_THEME_URI', get_template_directory_uri() );
 
@@ -57,6 +57,15 @@ add_action(
 			array( 'gp-fonts' ),
 			GP_THEME_VERSION
 		);
+
+		if ( file_exists( GP_THEME_DIR . '/assets/css/mina-forma-kit.css' ) ) {
+			wp_enqueue_style(
+				'gp-mina-forma-kit',
+				GP_THEME_URI . '/assets/css/mina-forma-kit.css',
+				array( 'gp-theme' ),
+				GP_THEME_VERSION
+			);
+		}
 
 		if ( is_page( 'simple-budget-plugin' ) ) {
 			wp_enqueue_style(

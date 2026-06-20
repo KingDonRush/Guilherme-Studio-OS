@@ -1,4 +1,5 @@
 import {
+  applyWordPressSiteKit,
   backupWordPressDatabase,
   backupWordPressUploads,
   createStudioBackup,
@@ -138,6 +139,40 @@ function registerWordPressCommands(program: Command): void {
     print(result, options.json, options.quiet);
     process.exitCode = result.ok ? 0 : 7;
   });
+  wordpress
+    .command("site-kit")
+    .argument("<site>", "Portfolio site kit slug, currently mina-forma")
+    .description("Apply a portfolio site kit to the local WordPress/Elementor runtime")
+    .option("--capsule <path>", "Site capsule path", "portfolio/sites/multipaginados/mina-forma")
+    .option(
+      "--theme <path>",
+      "Target WordPress theme path",
+      "wordpress/wp-content/themes/guilherme-portfolio",
+    )
+    .option(
+      "--no-media-library",
+      "Copy runtime assets and apply tokens without Media Library import",
+    )
+    .action(async function action(this: Command, site: "mina-forma") {
+      const options = globalOptions(this);
+      const local = this.opts() as {
+        capsule: string;
+        theme: string;
+        mediaLibrary?: boolean;
+      };
+      const context = await createStudioContext(options.root);
+      print(
+        await applyWordPressSiteKit(context, {
+          site,
+          capsulePath: local.capsule,
+          themePath: local.theme,
+          importMedia: local.mediaLibrary ?? true,
+          dryRun: options.dryRun ?? false,
+        }),
+        options.json,
+        options.quiet,
+      );
+    });
   wordpress
     .command("fix-ownership")
     .argument("<site-path>", "WordPress site root path, relative to Studio root or absolute")
