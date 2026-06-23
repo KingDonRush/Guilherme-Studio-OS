@@ -67,6 +67,9 @@ Mina Forma can keep prices/ranges because SBP provides first-class price metadat
 - **FR-012**: SBP MUST include price/range in generated WhatsApp budget lines when available.
 - **FR-013**: EIT MUST expose extension filters for external meta field providers.
 - **FR-014**: SBP MUST use EIT extension filters to publish its price meta fields as filterable numeric fields.
+- **FR-015**: SBP MUST let Guilherme define additional `__SBP` budget value fields from wp-admin without code changes.
+- **FR-016**: SBP MUST expose the same admin settings and `__SBP` budget value fields through WP-CLI commands.
+- **FR-017**: SBP custom budget value fields MUST be option-backed, bounded, sanitized, post-meta registered, and discoverable by EIT when marked filterable.
 
 ### Non-Goals
 
@@ -82,6 +85,7 @@ Mina Forma can keep prices/ranges because SBP provides first-class price metadat
 - **Project Assignment**: Post meta linking a Page/post/CPT item to one Portfolio Project and a role.
 - **Project Mode**: Allowlisted behavior model: one page, multi-page site, blog, catalog/CPT, hybrid.
 - **SBP Pricing**: Post meta fields for display mode, fixed price, minimum price, maximum price, currency, unit, and label.
+- **SBP Budget Value Field**: Option-backed field definition under the `__SBP` namespace that can add custom post meta such as material cost, area, package, or price drivers.
 - **EIT External Field Contract**: Filters that let external plugins publish filterable fields into the Toolkit catalog.
 
 ## Security & Quality Constraints

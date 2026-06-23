@@ -14,3 +14,7 @@
 - [X] T012 Add EIT field catalog extension filters.
 - [X] T013 Publish SBP price fields into EIT through filters.
 - [X] T014 Run lint/smoke checks and commit per repository.
+- [X] T015 Add option-backed `__SBP` custom budget value field catalog.
+- [X] T016 Expose custom budget value field management in the SBP settings panel.
+- [X] T017 Add `wp sbp` WP-CLI commands for settings and `__SBP` value fields.
+- [X] T018 Run CLI/list/add/delete smoke checks for the `__SBP` value field contract.
