@@ -9,9 +9,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GP_THEME_VERSION', '0.3.32' );
+define( 'GP_THEME_VERSION', '0.3.33' );
 define( 'GP_THEME_DIR', get_template_directory() );
 define( 'GP_THEME_URI', get_template_directory_uri() );
+
+spl_autoload_register(
+	static function ( string $class ): void {
+		$prefix = 'GuilhermePortfolio\\';
+
+		if ( 0 !== strpos( $class, $prefix ) ) {
+			return;
+		}
+
+		if ( ! preg_match( '/^GuilhermePortfolio\\\\[A-Za-z0-9_\\\\]+$/', $class ) ) {
+			return;
+		}
+
+		$relative = substr( $class, strlen( $prefix ) );
+		$file     = GP_THEME_DIR . '/src/' . str_replace( '\\', '/', $relative ) . '.php';
+
+		if ( file_exists( $file ) ) {
+			require_once $file;
+		}
+	}
+);
+
+\GuilhermePortfolio\Theme::boot();
 
 add_action(
 	'after_setup_theme',
@@ -219,4 +242,11 @@ function gp_stack_mark( string $stack ): string {
 	);
 
 	return $marks[ $stack ] ?? '';
+}
+
+/**
+ * Return the assigned portfolio project ID for a content entry.
+ */
+function gp_assigned_project_id( int $post_id ): int {
+	return absint( get_post_meta( $post_id, \GuilhermePortfolio\Projects\ProjectRepository::META_ASSIGNED_PROJECT, true ) );
 }
