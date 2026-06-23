@@ -70,6 +70,7 @@ Mina Forma can keep prices/ranges because SBP provides first-class price metadat
 - **FR-015**: SBP MUST let Guilherme define additional `__SBP` budget value fields from wp-admin without code changes.
 - **FR-016**: SBP MUST expose the same admin settings and `__SBP` budget value fields through WP-CLI commands.
 - **FR-017**: SBP custom budget value fields MUST be option-backed, bounded, sanitized, post-meta registered, and discoverable by EIT when marked filterable.
+- **FR-018**: The theme project workbench MUST expose project creation, project configuration, and content assignment through WP-CLI using the same repository sanitization as wp-admin.
 
 ### Non-Goals
 

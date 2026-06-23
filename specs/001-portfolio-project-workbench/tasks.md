@@ -18,3 +18,6 @@
 - [X] T016 Expose custom budget value field management in the SBP settings panel.
 - [X] T017 Add `wp sbp` WP-CLI commands for settings and `__SBP` value fields.
 - [X] T018 Run CLI/list/add/delete smoke checks for the `__SBP` value field contract.
+- [X] T019 Add `wp gp project` commands for theme-owned portfolio projects.
+- [X] T020 Add `wp gp assignment` commands for content-to-project assignment.
+- [X] T021 Run theme WP-CLI create/update/assign/clear/trash smoke checks.

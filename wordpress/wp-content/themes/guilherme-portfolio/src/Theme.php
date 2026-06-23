@@ -7,6 +7,7 @@
 
 namespace GuilhermePortfolio;
 
+use GuilhermePortfolio\CLI\Command;
 use GuilhermePortfolio\Projects\AdminColumns;
 use GuilhermePortfolio\Projects\ContentAssignmentMetaBox;
 use GuilhermePortfolio\Projects\ProjectMetaBox;
@@ -34,6 +35,7 @@ final class Theme {
 		( new ProjectMetaBox( $repository ) )->init_hooks();
 		( new ContentAssignmentMetaBox( $repository ) )->init_hooks();
 		( new AdminColumns( $repository ) )->init_hooks();
+		( new Command( $repository ) )->init_hooks();
 
 		add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue_admin_assets' ) );
 	}
