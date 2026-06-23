@@ -21,3 +21,6 @@
 - [X] T019 Add `wp gp project` commands for theme-owned portfolio projects.
 - [X] T020 Add `wp gp assignment` commands for content-to-project assignment.
 - [X] T021 Run theme WP-CLI create/update/assign/clear/trash smoke checks.
+- [X] T022 Add dynamic registries for project modes, surfaces, roles and integration providers.
+- [X] T023 Normalize integration providers with status, capabilities, provider slug and source.
+- [X] T024 Register project and assignment meta through WordPress meta APIs.

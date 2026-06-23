@@ -10,6 +10,7 @@ namespace GuilhermePortfolio;
 use GuilhermePortfolio\CLI\Command;
 use GuilhermePortfolio\Projects\AdminColumns;
 use GuilhermePortfolio\Projects\ContentAssignmentMetaBox;
+use GuilhermePortfolio\Projects\ProjectMetaRegistration;
 use GuilhermePortfolio\Projects\ProjectMetaBox;
 use GuilhermePortfolio\Projects\ProjectPostType;
 use GuilhermePortfolio\Projects\ProjectRepository;
@@ -32,6 +33,7 @@ final class Theme {
 		$repository = new ProjectRepository();
 
 		( new ProjectPostType() )->init_hooks();
+		( new ProjectMetaRegistration() )->init_hooks();
 		( new ProjectMetaBox( $repository ) )->init_hooks();
 		( new ContentAssignmentMetaBox( $repository ) )->init_hooks();
 		( new AdminColumns( $repository ) )->init_hooks();

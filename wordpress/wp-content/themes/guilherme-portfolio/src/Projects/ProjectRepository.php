@@ -24,38 +24,56 @@ final class ProjectRepository {
 	public const META_ASSIGNED_ROLE = '_gp_project_role';
 
 	public static function modes(): array {
-		return array(
-			'one_page' => __( 'One page', 'guilherme-portfolio' ),
-			'multi_page' => __( 'Multi-page site', 'guilherme-portfolio' ),
-			'blog' => __( 'Blog / editorial', 'guilherme-portfolio' ),
-			'catalog' => __( 'Catalog / CPT-driven', 'guilherme-portfolio' ),
-			'hybrid' => __( 'Hybrid implementation', 'guilherme-portfolio' ),
+		return self::normalize_label_map(
+			apply_filters(
+				'gp_project_modes',
+				array(
+					'one_page'   => __( 'One page', 'guilherme-portfolio' ),
+					'multi_page' => __( 'Multi-page site', 'guilherme-portfolio' ),
+					'blog'       => __( 'Blog / editorial', 'guilherme-portfolio' ),
+					'catalog'    => __( 'Catalog / CPT-driven', 'guilherme-portfolio' ),
+					'hybrid'     => __( 'Hybrid implementation', 'guilherme-portfolio' ),
+				)
+			),
+			'multi_page'
 		);
 	}
 
 	public static function surfaces(): array {
-		return array(
-			'pages' => __( 'Pages', 'guilherme-portfolio' ),
-			'posts' => __( 'Posts / articles', 'guilherme-portfolio' ),
-			'single_posts' => __( 'Single templates', 'guilherme-portfolio' ),
-			'custom_post_types' => __( 'Custom post types', 'guilherme-portfolio' ),
-			'cct_filters' => __( 'CCT/filter listings', 'guilherme-portfolio' ),
+		return self::normalize_label_map(
+			apply_filters(
+				'gp_project_surfaces',
+				array(
+					'pages'             => __( 'Pages', 'guilherme-portfolio' ),
+					'posts'             => __( 'Posts / articles', 'guilherme-portfolio' ),
+					'single_posts'      => __( 'Single templates', 'guilherme-portfolio' ),
+					'custom_post_types' => __( 'Custom post types', 'guilherme-portfolio' ),
+					'cct_filters'       => __( 'CCT/filter listings', 'guilherme-portfolio' ),
+				)
+			),
+			'pages'
 		);
 	}
 
 	public static function roles(): array {
-		return array(
-			'home' => __( 'Home', 'guilherme-portfolio' ),
-			'landing' => __( 'Landing', 'guilherme-portfolio' ),
-			'about' => __( 'About', 'guilherme-portfolio' ),
-			'services' => __( 'Services', 'guilherme-portfolio' ),
-			'case' => __( 'Case', 'guilherme-portfolio' ),
-			'blog_index' => __( 'Blog index', 'guilherme-portfolio' ),
-			'post' => __( 'Post', 'guilherme-portfolio' ),
-			'catalog' => __( 'Catalog', 'guilherme-portfolio' ),
-			'product' => __( 'Product', 'guilherme-portfolio' ),
-			'legal' => __( 'Legal', 'guilherme-portfolio' ),
-			'other' => __( 'Other', 'guilherme-portfolio' ),
+		return self::normalize_label_map(
+			apply_filters(
+				'gp_project_roles',
+				array(
+					'home'       => __( 'Home', 'guilherme-portfolio' ),
+					'landing'    => __( 'Landing', 'guilherme-portfolio' ),
+					'about'      => __( 'About', 'guilherme-portfolio' ),
+					'services'   => __( 'Services', 'guilherme-portfolio' ),
+					'case'       => __( 'Case', 'guilherme-portfolio' ),
+					'blog_index' => __( 'Blog index', 'guilherme-portfolio' ),
+					'post'       => __( 'Post', 'guilherme-portfolio' ),
+					'catalog'    => __( 'Catalog', 'guilherme-portfolio' ),
+					'product'    => __( 'Product', 'guilherme-portfolio' ),
+					'legal'      => __( 'Legal', 'guilherme-portfolio' ),
+					'other'      => __( 'Other', 'guilherme-portfolio' ),
+				)
+			),
+			'other'
 		);
 	}
 
@@ -101,19 +119,23 @@ final class ProjectRepository {
 	}
 
 	public function config( int $project_id ): array {
-		return array(
-			'mode'         => $this->sanitize_mode( get_post_meta( $project_id, self::META_MODE, true ) ),
-			'surfaces'     => $this->sanitize_keys( get_post_meta( $project_id, self::META_SURFACES, true ), array_keys( self::surfaces() ) ),
-			'integrations' => $this->sanitize_keys( get_post_meta( $project_id, self::META_INTEGRATIONS, true ), array_keys( self::integrations() ) ),
-			'notes'        => sanitize_textarea_field( get_post_meta( $project_id, self::META_NOTES, true ) ),
+		return $this->sanitize_config(
+			array(
+				'mode'         => get_post_meta( $project_id, self::META_MODE, true ),
+				'surfaces'     => get_post_meta( $project_id, self::META_SURFACES, true ),
+				'integrations' => get_post_meta( $project_id, self::META_INTEGRATIONS, true ),
+				'notes'        => sanitize_textarea_field( get_post_meta( $project_id, self::META_NOTES, true ) ),
+			)
 		);
 	}
 
 	public function save_config( int $project_id, array $raw ): void {
-		update_post_meta( $project_id, self::META_MODE, $this->sanitize_mode( $raw['mode'] ?? '' ) );
-		update_post_meta( $project_id, self::META_SURFACES, $this->sanitize_keys( $raw['surfaces'] ?? array(), array_keys( self::surfaces() ) ) );
-		update_post_meta( $project_id, self::META_INTEGRATIONS, $this->sanitize_keys( $raw['integrations'] ?? array(), array_keys( self::integrations() ) ) );
-		update_post_meta( $project_id, self::META_NOTES, sanitize_textarea_field( $raw['notes'] ?? '' ) );
+		$config = $this->sanitize_config( $raw );
+
+		update_post_meta( $project_id, self::META_MODE, $config['mode'] );
+		update_post_meta( $project_id, self::META_SURFACES, $config['surfaces'] );
+		update_post_meta( $project_id, self::META_INTEGRATIONS, $config['integrations'] );
+		update_post_meta( $project_id, self::META_NOTES, $config['notes'] );
 	}
 
 	public function assigned_project_id( int $post_id ): int {
@@ -121,12 +143,12 @@ final class ProjectRepository {
 	}
 
 	public function assigned_role( int $post_id ): string {
-		return $this->sanitize_role( get_post_meta( $post_id, self::META_ASSIGNED_ROLE, true ) );
+		return self::sanitize_role_value( get_post_meta( $post_id, self::META_ASSIGNED_ROLE, true ) );
 	}
 
 	public function save_assignment( int $post_id, array $raw ): void {
 		$project_id = absint( $raw['project_id'] ?? 0 );
-		$role       = $this->sanitize_role( $raw['role'] ?? '' );
+		$role       = self::sanitize_role_value( $raw['role'] ?? '' );
 
 		if ( $project_id && self::POST_TYPE === get_post_type( $project_id ) ) {
 			update_post_meta( $post_id, self::META_ASSIGNED_PROJECT, $project_id );
@@ -138,22 +160,57 @@ final class ProjectRepository {
 		delete_post_meta( $post_id, self::META_ASSIGNED_ROLE );
 	}
 
-	private function sanitize_mode( $value ): string {
+	public function sanitize_config( array $raw ): array {
+		return array(
+			'mode'         => self::sanitize_mode_value( $raw['mode'] ?? '' ),
+			'surfaces'     => self::sanitize_surfaces_value( $raw['surfaces'] ?? array() ),
+			'integrations' => self::sanitize_integrations_value( $raw['integrations'] ?? array() ),
+			'notes'        => sanitize_textarea_field( $raw['notes'] ?? '' ),
+		);
+	}
+
+	public static function sanitize_mode_value( $value ): string {
 		$value = sanitize_key( $value );
 
 		return array_key_exists( $value, self::modes() ) ? $value : 'multi_page';
 	}
 
-	private function sanitize_role( $value ): string {
+	public static function sanitize_role_value( $value ): string {
 		$value = sanitize_key( $value );
 
 		return array_key_exists( $value, self::roles() ) ? $value : 'other';
 	}
 
-	private function sanitize_keys( $raw, array $allowed ): array {
+	public static function sanitize_surfaces_value( $raw ): array {
+		return self::sanitize_keys( $raw, array_keys( self::surfaces() ) );
+	}
+
+	public static function sanitize_integrations_value( $raw ): array {
+		return self::sanitize_keys( $raw, array_keys( self::integrations() ) );
+	}
+
+	private static function sanitize_keys( $raw, array $allowed ): array {
 		$values = array_map( 'sanitize_key', (array) $raw );
 		$values = array_values( array_unique( array_intersect( $values, $allowed ) ) );
 
 		return array_slice( $values, 0, count( $allowed ) );
+	}
+
+	private static function normalize_label_map( $items, string $fallback_key ): array {
+		$normalized = array();
+
+		foreach ( (array) $items as $key => $label ) {
+			$key = sanitize_key( $key );
+
+			if ( '' !== $key ) {
+				$normalized[ $key ] = sanitize_text_field( $label );
+			}
+		}
+
+		if ( empty( $normalized ) ) {
+			$normalized[ $fallback_key ] = $fallback_key;
+		}
+
+		return $normalized;
 	}
 }

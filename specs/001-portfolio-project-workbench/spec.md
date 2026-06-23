@@ -71,6 +71,9 @@ Mina Forma can keep prices/ranges because SBP provides first-class price metadat
 - **FR-016**: SBP MUST expose the same admin settings and `__SBP` budget value fields through WP-CLI commands.
 - **FR-017**: SBP custom budget value fields MUST be option-backed, bounded, sanitized, post-meta registered, and discoverable by EIT when marked filterable.
 - **FR-018**: The theme project workbench MUST expose project creation, project configuration, and content assignment through WP-CLI using the same repository sanitization as wp-admin.
+- **FR-019**: Project modes, surfaces, roles, and integration providers MUST be dynamic WordPress registries exposed through filters, not closed hardcoded lists.
+- **FR-020**: Project integrations MUST use a normalized provider contract with provider slug, label, description, capabilities, status, source, and active state.
+- **FR-021**: Project configuration and assignment metadata MUST be registered with WordPress meta APIs for editor, REST, and WP-CLI consistency.
 
 ### Non-Goals
 
@@ -85,6 +88,8 @@ Mina Forma can keep prices/ranges because SBP provides first-class price metadat
 - **Portfolio Project**: Theme-owned WordPress object representing one portfolio implementation/case/site/plugin demo.
 - **Project Assignment**: Post meta linking a Page/post/CPT item to one Portfolio Project and a role.
 - **Project Mode**: Allowlisted behavior model: one page, multi-page site, blog, catalog/CPT, hybrid.
+- **Project Registry**: WordPress-filtered catalog for modes, surfaces, roles, and integration providers.
+- **Integration Provider**: Normalized provider declaration for optional plugin/product bridges, including capabilities and status.
 - **SBP Pricing**: Post meta fields for display mode, fixed price, minimum price, maximum price, currency, unit, and label.
 - **SBP Budget Value Field**: Option-backed field definition under the `__SBP` namespace that can add custom post meta such as material cost, area, package, or price drivers.
 - **EIT External Field Contract**: Filters that let external plugins publish filterable fields into the Toolkit catalog.

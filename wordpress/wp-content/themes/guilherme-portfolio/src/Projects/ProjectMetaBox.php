@@ -74,14 +74,24 @@ final class ProjectMetaBox {
 				<h3><?php esc_html_e( 'Plugin Bridge', 'guilherme-portfolio' ); ?></h3>
 				<div class="gp-project-integrations">
 					<?php foreach ( $integrations as $key => $integration ) : ?>
+						<?php
+						$status       = sanitize_key( $integration['status'] ?? ( ! empty( $integration['active'] ) ? 'active' : 'missing' ) );
+						$capabilities = implode( ', ', (array) ( $integration['capabilities'] ?? array() ) );
+						?>
 						<label class="gp-project-integration">
 							<input type="checkbox" name="gp_project_config[integrations][]" value="<?php echo esc_attr( $key ); ?>" <?php checked( in_array( $key, $config['integrations'], true ) ); ?> />
 							<span>
 								<strong><?php echo esc_html( $integration['label'] ); ?></strong>
-								<em class="gp-project-status <?php echo ! empty( $integration['active'] ) ? 'is-active' : 'is-missing'; ?>">
-									<?php echo ! empty( $integration['active'] ) ? esc_html__( 'Active', 'guilherme-portfolio' ) : esc_html__( 'Missing', 'guilherme-portfolio' ); ?>
+								<em class="gp-project-status is-<?php echo esc_attr( $status ); ?>">
+									<?php echo esc_html( ucwords( str_replace( '_', ' ', $status ) ) ); ?>
 								</em>
 								<small><?php echo esc_html( $integration['description'] ); ?></small>
+								<small class="gp-project-provider">
+									<code><?php echo esc_html( $integration['provider'] ?? $key ); ?></code>
+									<?php if ( '' !== $capabilities ) : ?>
+										<span><?php echo esc_html( $capabilities ); ?></span>
+									<?php endif; ?>
+								</small>
 							</span>
 						</label>
 					<?php endforeach; ?>

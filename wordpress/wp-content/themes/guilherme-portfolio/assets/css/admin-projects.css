@@ -54,6 +54,17 @@
 	color: var(--gp-admin-muted);
 }
 
+.gp-project-provider {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	align-items: center;
+}
+
+.gp-project-provider code {
+	font-size: 11px;
+}
+
 .gp-project-status {
 	display: inline-flex;
 	width: fit-content;
