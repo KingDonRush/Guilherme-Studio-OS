@@ -32,34 +32,34 @@ final class OverviewView {
 		$this->parts      = $parts;
 	}
 
-	public function render( array $payload, array $project_options, int $project_id, string $notice ): void {
+	public function render( array $payload, array $context_options, string $context_id, string $notice ): void {
 		?>
 		<div class="wrap gp-workbench">
 			<h1><?php esc_html_e( 'Portfolio Workbench', 'guilherme-portfolio' ); ?></h1>
 			<hr class="wp-header-end">
 			<?php $this->parts->notice( $notice ); ?>
-			<?php $this->toolbar( $project_options, $project_id ); ?>
+			<?php $this->toolbar( $context_options, $context_id ); ?>
 			<?php $this->breadcrumb( $payload ); ?>
 			<?php $this->metrics( $payload ); ?>
 			<div class="gp-workbench-layout">
 				<main class="gp-workbench-main">
-					<?php $this->categories->render( $payload, $project_id ); ?>
-					<?php $this->relations->render( $payload['relations'], $project_id ); ?>
+					<?php $this->categories->render( $payload, $context_id ); ?>
+					<?php $this->relations->render( $payload['relations'], $context_id ); ?>
 				</main>
-				<?php $this->sidebar->render( $payload, $project_id ); ?>
+				<?php $this->sidebar->render( $payload, $context_id ); ?>
 			</div>
 		</div>
 		<?php
 	}
 
-	private function toolbar( array $project_options, int $project_id ): void {
+	private function toolbar( array $context_options, string $context_id ): void {
 		?>
 		<form method="get" class="gp-workbench-toolbar">
 			<input type="hidden" name="page" value="<?php echo esc_attr( AdminPage::MENU_SLUG ); ?>">
-			<label for="gp-workbench-project"><?php esc_html_e( 'Project context', 'guilherme-portfolio' ); ?></label>
-			<select id="gp-workbench-project" name="project">
-				<?php foreach ( $project_options as $id => $title ) : ?>
-					<option value="<?php echo esc_attr( $id ); ?>" <?php selected( $project_id, absint( $id ) ); ?>><?php echo esc_html( $title ); ?></option>
+			<label for="gp-workbench-context"><?php esc_html_e( 'Workbench context', 'guilherme-portfolio' ); ?></label>
+			<select id="gp-workbench-context" name="context">
+				<?php foreach ( $context_options as $id => $title ) : ?>
+					<option value="<?php echo esc_attr( $id ); ?>" <?php selected( $context_id, (string) $id ); ?>><?php echo esc_html( $title ); ?></option>
 				<?php endforeach; ?>
 			</select>
 			<button type="submit" class="button"><?php esc_html_e( 'Open', 'guilherme-portfolio' ); ?></button>
@@ -71,12 +71,14 @@ final class OverviewView {
 		?>
 		<div class="gp-workbench-root">
 			<div>
-				<span class="dashicons dashicons-admin-home" aria-hidden="true"></span>
-				<strong><?php echo esc_html( $payload['root']['label'] ); ?></strong>
-				<span class="gp-workbench-separator">/</span>
-				<strong><?php echo esc_html( $payload['project']['title'] ); ?></strong>
-			</div>
-			<?php $this->parts->badge( $payload['project']['status'], 'state', __( 'WordPress project post status', 'guilherme-portfolio' ) ); ?>
+					<span class="dashicons dashicons-admin-home" aria-hidden="true"></span>
+					<strong><?php echo esc_html( $payload['root']['label'] ); ?></strong>
+					<?php if ( 'root' !== $payload['context']['type'] ) : ?>
+						<span class="gp-workbench-separator">/</span>
+						<strong><?php echo esc_html( $payload['context']['label'] ); ?></strong>
+					<?php endif; ?>
+				</div>
+			<?php $this->parts->badge( $payload['context']['status'], 'state', __( 'Workbench context status', 'guilherme-portfolio' ) ); ?>
 		</div>
 		<?php
 	}

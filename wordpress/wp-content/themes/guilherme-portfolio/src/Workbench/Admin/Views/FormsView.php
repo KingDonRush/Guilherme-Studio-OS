@@ -17,12 +17,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class FormsView {
 
-	public function attach_item( int $project_id, array $providers ): void {
+	public function attach_item( string $context_id, array $providers ): void {
 		?>
 		<details class="gp-workbench-disclosure" open>
 			<summary><?php esc_html_e( 'Attach object', 'guilherme-portfolio' ); ?></summary>
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="gp-workbench-form">
-				<?php $this->hidden_action( 'gp_workbench_attach_item', $project_id ); ?>
+				<?php $this->hidden_action( 'gp_workbench_attach_item', $context_id ); ?>
 				<label>
 					<span><?php esc_html_e( 'Label', 'guilherme-portfolio' ); ?></span>
 					<input type="text" name="gp_workbench_item[label]" class="regular-text" required>
@@ -54,34 +54,12 @@ final class FormsView {
 		<?php
 	}
 
-	public function create_page( int $project_id ): void {
-		?>
-		<details class="gp-workbench-disclosure">
-			<summary><?php esc_html_e( 'Create page', 'guilherme-portfolio' ); ?></summary>
-			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="gp-workbench-form">
-				<?php $this->hidden_action( 'gp_workbench_create_page', $project_id ); ?>
-				<label>
-					<span><?php esc_html_e( 'Page title', 'guilherme-portfolio' ); ?></span>
-					<input type="text" name="gp_workbench_page[title]" class="regular-text" required>
-				</label>
-				<div class="gp-workbench-form-grid">
-					<?php $this->select( 'gp_workbench_page[status]', __( 'Status', 'guilherme-portfolio' ), $this->page_statuses(), 'draft' ); ?>
-					<?php $this->select( 'gp_workbench_page[category]', __( 'Category', 'guilherme-portfolio' ), CategoryRegistry::labels(), 'pages' ); ?>
-					<?php $this->select( 'gp_workbench_page[role]', __( 'Role', 'guilherme-portfolio' ), ProjectRepository::roles(), 'other' ); ?>
-				</div>
-				<textarea name="gp_workbench_page[notes]" rows="2" placeholder="<?php esc_attr_e( 'Optional note for the attached item', 'guilherme-portfolio' ); ?>"></textarea>
-				<button type="submit" class="button"><?php esc_html_e( 'Create and attach', 'guilherme-portfolio' ); ?></button>
-			</form>
-		</details>
-		<?php
-	}
-
-	public function add_relation( int $project_id, array $items ): void {
+	public function add_relation( string $context_id, array $items ): void {
 		?>
 		<details class="gp-workbench-disclosure">
 			<summary><?php esc_html_e( 'Mark relation', 'guilherme-portfolio' ); ?></summary>
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="gp-workbench-form">
-				<?php $this->hidden_action( 'gp_workbench_add_relation', $project_id ); ?>
+				<?php $this->hidden_action( 'gp_workbench_add_relation', $context_id ); ?>
 				<div class="gp-workbench-form-grid">
 					<?php $this->select( 'gp_workbench_relation[source]', __( 'Source', 'guilherme-portfolio' ), $this->item_options( $items ), '' ); ?>
 					<label>
@@ -98,12 +76,12 @@ final class FormsView {
 		<?php
 	}
 
-	public function add_suggestion( int $project_id ): void {
+	public function add_suggestion( string $context_id ): void {
 		?>
 		<details class="gp-workbench-disclosure">
 			<summary><?php esc_html_e( 'Add suggestion', 'guilherme-portfolio' ); ?></summary>
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="gp-workbench-form">
-				<?php $this->hidden_action( 'gp_workbench_add_suggestion', $project_id ); ?>
+				<?php $this->hidden_action( 'gp_workbench_add_suggestion', $context_id ); ?>
 				<label>
 					<span><?php esc_html_e( 'Suggestion', 'guilherme-portfolio' ); ?></span>
 					<input type="text" name="gp_workbench_suggestion[label]" class="regular-text" required>
@@ -122,20 +100,20 @@ final class FormsView {
 		<?php
 	}
 
-	public function row_action( string $action, int $project_id, string $field, string $value, string $label, string $class = 'button-link' ): void {
+	public function row_action( string $action, string $context_id, string $field, string $value, string $label, string $class = 'button-link' ): void {
 		?>
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="gp-workbench-inline-form">
-			<?php $this->hidden_action( $action, $project_id ); ?>
+			<?php $this->hidden_action( $action, $context_id ); ?>
 			<input type="hidden" name="<?php echo esc_attr( $field ); ?>" value="<?php echo esc_attr( $value ); ?>">
 			<button type="submit" class="<?php echo esc_attr( $class ); ?>"><?php echo esc_html( $label ); ?></button>
 		</form>
 		<?php
 	}
 
-	public function relation_state_action( int $project_id, string $relation_id, string $state, string $label ): void {
+	public function relation_state_action( string $context_id, string $relation_id, string $state, string $label ): void {
 		?>
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="gp-workbench-inline-form">
-			<?php $this->hidden_action( 'gp_workbench_update_relation', $project_id ); ?>
+			<?php $this->hidden_action( 'gp_workbench_update_relation', $context_id ); ?>
 			<input type="hidden" name="relation_id" value="<?php echo esc_attr( $relation_id ); ?>">
 			<input type="hidden" name="state" value="<?php echo esc_attr( $state ); ?>">
 			<button type="submit" class="button-link"><?php echo esc_html( $label ); ?></button>
@@ -143,11 +121,11 @@ final class FormsView {
 		<?php
 	}
 
-	private function hidden_action( string $action, int $project_id ): void {
+	private function hidden_action( string $action, string $context_id ): void {
 		wp_nonce_field( AdminActions::NONCE_ACTION, AdminActions::NONCE_NAME );
 		?>
 		<input type="hidden" name="action" value="<?php echo esc_attr( $action ); ?>">
-		<input type="hidden" name="project_id" value="<?php echo esc_attr( $project_id ); ?>">
+		<input type="hidden" name="context_id" value="<?php echo esc_attr( $context_id ); ?>">
 		<?php
 	}
 
@@ -207,15 +185,6 @@ final class FormsView {
 			'inherited'    => __( 'Inherited', 'guilherme-portfolio' ),
 			'needs_review' => __( 'Needs review', 'guilherme-portfolio' ),
 			'missing'      => __( 'Missing', 'guilherme-portfolio' ),
-		);
-	}
-
-	private function page_statuses(): array {
-		return array(
-			'draft'   => __( 'Draft', 'guilherme-portfolio' ),
-			'private' => __( 'Private', 'guilherme-portfolio' ),
-			'pending' => __( 'Pending', 'guilherme-portfolio' ),
-			'publish' => __( 'Publish', 'guilherme-portfolio' ),
 		);
 	}
 

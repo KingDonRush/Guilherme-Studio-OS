@@ -20,10 +20,15 @@ use GuilhermePortfolio\Workbench\Admin\AdminPage;
 use GuilhermePortfolio\Workbench\Admin\Views\CategoryModulesView;
 use GuilhermePortfolio\Workbench\Admin\Views\FormsView;
 use GuilhermePortfolio\Workbench\Admin\Views\OverviewView;
+use GuilhermePortfolio\Workbench\Admin\Views\PageFormsView;
 use GuilhermePortfolio\Workbench\Admin\Views\ProjectFormsView;
 use GuilhermePortfolio\Workbench\Admin\Views\RelationsStripView;
 use GuilhermePortfolio\Workbench\Admin\Views\SidebarView;
 use GuilhermePortfolio\Workbench\Admin\Views\ViewParts;
+use GuilhermePortfolio\Workbench\CodePageRegistry;
+use GuilhermePortfolio\Workbench\ContextResolver;
+use GuilhermePortfolio\Workbench\ContextStorage;
+use GuilhermePortfolio\Workbench\FrontPageService;
 use GuilhermePortfolio\Workbench\ItemStore;
 use GuilhermePortfolio\Workbench\PageCreator;
 use GuilhermePortfolio\Workbench\ProviderDataRegistry;
@@ -47,17 +52,22 @@ final class Theme {
 
 		self::$booted = true;
 
-		$repository = new ProjectRepository();
-		$items      = new ItemStore( $repository );
-		$pages      = new PageCreator( $items );
-		$relations  = new RelationStore();
-		$suggestions = new SuggestionStore();
-		$reviewer   = new SuggestionReviewer( $suggestions, $relations );
-		$providers  = new ProviderDataRegistry();
-		$topology   = new TopologyService( $repository, $items, $relations, $suggestions, $providers );
-		$form_view  = new FormsView();
+		$repository    = new ProjectRepository();
+		$contexts      = new ContextResolver( $repository );
+		$storage       = new ContextStorage( $repository );
+		$code_pages    = new CodePageRegistry();
+		$frontpages    = new FrontPageService();
+		$items         = new ItemStore( $repository, $storage );
+		$pages         = new PageCreator( $items, $code_pages );
+		$relations     = new RelationStore( $storage );
+		$suggestions   = new SuggestionStore( $storage );
+		$reviewer      = new SuggestionReviewer( $suggestions, $relations );
+		$providers     = new ProviderDataRegistry();
+		$topology      = new TopologyService( $repository, $contexts, $storage, $items, $relations, $suggestions, $providers, $code_pages );
+		$form_view     = new FormsView();
+		$page_forms    = new PageFormsView();
 		$project_forms = new ProjectFormsView();
-		$view_parts = new ViewParts();
+		$view_parts    = new ViewParts();
 
 		( new ProjectPostType() )->init_hooks();
 		( new ProjectMetaRegistration() )->init_hooks();
@@ -65,17 +75,16 @@ final class Theme {
 		( new ContentAssignmentMetaBox( $repository ) )->init_hooks();
 		( new AdminColumns( $repository ) )->init_hooks();
 		( new Command( $repository ) )->init_hooks();
-		( new WorkbenchCommand( $items, $pages, $relations, $reviewer, $suggestions, $topology ) )->init_hooks();
-		( new AdminActions( $repository, $items, $pages, $relations, $reviewer, $suggestions ) )->init_hooks();
+		( new WorkbenchCommand( $contexts, $code_pages, $frontpages, $items, $pages, $relations, $reviewer, $suggestions, $topology ) )->init_hooks();
+		( new AdminActions( $repository, $contexts, $storage, $frontpages, $items, $pages, $relations, $reviewer, $suggestions ) )->init_hooks();
 		( new AdminPage(
 			$topology,
 			new OverviewView(
 				new CategoryModulesView( $form_view, $view_parts ),
 				new RelationsStripView( $form_view, $view_parts ),
-				new SidebarView( $form_view, $view_parts, $project_forms ),
+				new SidebarView( $form_view, $page_forms, $view_parts, $project_forms ),
 				$view_parts
-			),
-			$project_forms
+			)
 		) )->init_hooks();
 
 		add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue_admin_assets' ) );

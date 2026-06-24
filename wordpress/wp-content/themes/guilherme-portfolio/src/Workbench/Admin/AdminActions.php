@@ -4,10 +4,13 @@
  *
  * @package GuilhermePortfolio
  */
-
 namespace GuilhermePortfolio\Workbench\Admin;
 
 use GuilhermePortfolio\Projects\ProjectRepository;
+use GuilhermePortfolio\Workbench\Context;
+use GuilhermePortfolio\Workbench\ContextResolver;
+use GuilhermePortfolio\Workbench\ContextStorage;
+use GuilhermePortfolio\Workbench\FrontPageService;
 use GuilhermePortfolio\Workbench\ItemStore;
 use GuilhermePortfolio\Workbench\PageCreator;
 use GuilhermePortfolio\Workbench\RelationStore;
@@ -24,6 +27,9 @@ final class AdminActions {
 	public const NONCE_NAME = 'gp_workbench_nonce';
 
 	private ProjectRepository $projects;
+	private ContextResolver $contexts;
+	private ContextStorage $storage;
+	private FrontPageService $frontpages;
 	private ItemStore $items;
 	private PageCreator $pages;
 	private RelationStore $relations;
@@ -32,6 +38,9 @@ final class AdminActions {
 
 	public function __construct(
 		ProjectRepository $projects,
+		ContextResolver $contexts,
+		ContextStorage $storage,
+		FrontPageService $frontpages,
 		ItemStore $items,
 		PageCreator $pages,
 		RelationStore $relations,
@@ -39,6 +48,9 @@ final class AdminActions {
 		SuggestionStore $suggestions
 	) {
 		$this->projects    = $projects;
+		$this->contexts    = $contexts;
+		$this->storage     = $storage;
+		$this->frontpages  = $frontpages;
 		$this->items       = $items;
 		$this->pages       = $pages;
 		$this->relations   = $relations;
@@ -49,8 +61,12 @@ final class AdminActions {
 	public function init_hooks(): void {
 		add_action( 'admin_post_gp_workbench_create_project', array( $this, 'create_project' ) );
 		add_action( 'admin_post_gp_workbench_update_project', array( $this, 'update_project' ) );
+		add_action( 'admin_post_gp_workbench_update_context', array( $this, 'update_context' ) );
 		add_action( 'admin_post_gp_workbench_attach_item', array( $this, 'attach_item' ) );
 		add_action( 'admin_post_gp_workbench_create_page', array( $this, 'create_page' ) );
+		add_action( 'admin_post_gp_workbench_materialize_page', array( $this, 'materialize_page' ) );
+		add_action( 'admin_post_gp_workbench_set_frontpage', array( $this, 'set_frontpage' ) );
+		add_action( 'admin_post_gp_workbench_set_posts_page', array( $this, 'set_posts_page' ) );
 		add_action( 'admin_post_gp_workbench_detach_item', array( $this, 'detach_item' ) );
 		add_action( 'admin_post_gp_workbench_add_relation', array( $this, 'add_relation' ) );
 		add_action( 'admin_post_gp_workbench_update_relation', array( $this, 'update_relation' ) );
@@ -61,109 +77,146 @@ final class AdminActions {
 	}
 
 	public function create_project(): void {
-		$this->assert_action();
-		$raw   = $this->posted_array( 'gp_workbench_project' );
+		AdminActionRequest::assert_action();
+		$raw   = AdminActionRequest::posted_array( 'gp_workbench_project' );
 		$title = sanitize_text_field( $raw['title'] ?? '' );
 
 		if ( '' === $title ) {
-			$this->redirect( 0, 'project_create_failed' );
+			$this->redirect_context_id( Context::ROOT_ID, 'project_create_failed' );
 		}
 
 		$project_id = wp_insert_post(
 			array(
 				'post_type'   => ProjectRepository::POST_TYPE,
 				'post_title'  => $title,
-				'post_status' => $this->status( $raw['status'] ?? 'draft' ),
+				'post_status' => AdminActionRequest::status( $raw['status'] ?? 'draft' ),
 			),
 			true
 		);
 
 		if ( is_wp_error( $project_id ) ) {
-			$this->redirect( 0, 'project_create_failed' );
+			$this->redirect_context_id( Context::ROOT_ID, 'project_create_failed' );
 		}
 
 		$this->projects->save_config( (int) $project_id, $raw );
-		$this->redirect( (int) $project_id, 'project_created' );
+		$this->redirect_context_id( Context::project_id( (int) $project_id ), 'project_created' );
 	}
 
 	public function update_project(): void {
-		$project_id = $this->project_id();
-		$raw        = $this->posted_array( 'gp_workbench_project' );
+		$this->update_context();
+	}
 
-		wp_update_post(
-			array_filter(
-				array(
-					'ID'          => $project_id,
-					'post_title'  => sanitize_text_field( $raw['title'] ?? '' ),
-					'post_status' => $this->status( $raw['status'] ?? 'draft' ),
-				)
-			)
-		);
+	public function update_context(): void {
+		$context = $this->context();
+		$raw     = AdminActionRequest::posted_array( 'gp_workbench_context' );
 
-		$this->projects->save_config( $project_id, $raw );
-		$this->redirect( $project_id, 'project_updated' );
+		if ( $context->is_project() ) {
+			$this->update_project_post( $context, $raw );
+		}
+
+		$this->storage->save_config( $context, $raw );
+		$this->redirect_context( $context, 'context_updated' );
 	}
 
 	public function attach_item(): void {
-		$project_id = $this->project_id();
-		$raw        = $this->posted_array( 'gp_workbench_item' );
+		$context = $this->context();
+		$raw     = AdminActionRequest::posted_array( 'gp_workbench_item' );
 
-		$this->items->attach( $project_id, $raw );
-		$this->redirect( $project_id, 'item_attached' );
+		$this->items->attach_to_context( $context, $raw );
+		$this->redirect_context( $context, 'item_attached' );
 	}
 
 	public function create_page(): void {
-		$project_id = $this->project_id();
-		$raw        = $this->posted_array( 'gp_workbench_page' );
+		$context = $this->context();
+		$raw     = AdminActionRequest::posted_array( 'gp_workbench_page' );
 
 		try {
-			$this->pages->create( $project_id, $raw );
+			$page = $this->pages->create_for_context( $context, $raw );
+			$this->apply_page_flags( (int) $page['post_id'], $raw );
 		} catch ( \Throwable $error ) {
-			$this->redirect( $project_id, 'page_create_failed' );
+			$this->redirect_context( $context, 'page_create_failed' );
 		}
 
-		$this->redirect( $project_id, 'page_created' );
+		$this->redirect_context( $context, 'page_created' );
+	}
+
+	public function materialize_page(): void {
+		$context       = $this->context();
+		$definition_id = AdminActionRequest::posted_text( 'definition_id' );
+
+		try {
+			$page = $this->pages->materialize_for_context( $context, $definition_id );
+			$this->apply_page_flags( (int) $page['post_id'], $page['definition'] );
+		} catch ( \Throwable $error ) {
+			$this->redirect_context( $context, 'page_materialize_failed' );
+		}
+
+		$this->redirect_context( $context, 'page_materialized' );
+	}
+
+	public function set_frontpage(): void {
+		$context = $this->context();
+
+		try {
+			$this->frontpages->set_front_page( absint( AdminActionRequest::posted_text( 'page_id' ) ) );
+		} catch ( \Throwable $error ) {
+			$this->redirect_context( $context, 'frontpage_failed' );
+		}
+
+		$this->redirect_context_id( Context::ROOT_ID, 'frontpage_updated' );
+	}
+
+	public function set_posts_page(): void {
+		$context = $this->context();
+
+		try {
+			$this->frontpages->set_posts_page( absint( AdminActionRequest::posted_text( 'page_id' ) ) );
+		} catch ( \Throwable $error ) {
+			$this->redirect_context( $context, 'posts_page_failed' );
+		}
+
+		$this->redirect_context( $context, 'posts_page_updated' );
 	}
 
 	public function detach_item(): void {
-		$project_id = $this->project_id();
-		$item_id    = $this->posted_text( 'item_id' );
+		$context = $this->context();
+		$item_id = AdminActionRequest::posted_text( 'item_id' );
 
-		$this->items->detach( $project_id, $item_id );
-		$this->redirect( $project_id, 'item_detached' );
+		$this->items->detach_from_context( $context, $item_id );
+		$this->redirect_context( $context, 'item_detached' );
 	}
 
 	public function add_relation(): void {
-		$project_id = $this->project_id();
-		$raw        = $this->posted_array( 'gp_workbench_relation' );
+		$context = $this->context();
+		$raw     = AdminActionRequest::posted_array( 'gp_workbench_relation' );
 
-		$this->relations->add( $project_id, $raw );
-		$this->redirect( $project_id, 'relation_stored' );
+		$this->relations->add_to_context( $context, $raw );
+		$this->redirect_context( $context, 'relation_stored' );
 	}
 
 	public function update_relation(): void {
-		$project_id  = $this->project_id();
-		$relation_id = $this->posted_text( 'relation_id' );
-		$state       = $this->posted_text( 'state' );
+		$context     = $this->context();
+		$relation_id = AdminActionRequest::posted_text( 'relation_id' );
+		$state       = AdminActionRequest::posted_text( 'state' );
 
-		$this->relations->update_state( $project_id, $relation_id, $state );
-		$this->redirect( $project_id, 'relation_updated' );
+		$this->relations->update_context_state( $context, $relation_id, $state );
+		$this->redirect_context( $context, 'relation_updated' );
 	}
 
 	public function remove_relation(): void {
-		$project_id  = $this->project_id();
-		$relation_id = $this->posted_text( 'relation_id' );
+		$context     = $this->context();
+		$relation_id = AdminActionRequest::posted_text( 'relation_id' );
 
-		$this->relations->remove( $project_id, $relation_id );
-		$this->redirect( $project_id, 'relation_removed' );
+		$this->relations->remove_from_context( $context, $relation_id );
+		$this->redirect_context( $context, 'relation_removed' );
 	}
 
 	public function add_suggestion(): void {
-		$project_id = $this->project_id();
-		$raw        = $this->posted_array( 'gp_workbench_suggestion' );
+		$context = $this->context();
+		$raw     = AdminActionRequest::posted_array( 'gp_workbench_suggestion' );
 
-		$this->suggestions->add( $project_id, $raw );
-		$this->redirect( $project_id, 'suggestion_stored' );
+		$this->suggestions->add_to_context( $context, $raw );
+		$this->redirect_context( $context, 'suggestion_stored' );
 	}
 
 	public function mark_suggestion(): void {
@@ -175,70 +228,73 @@ final class AdminActions {
 	}
 
 	private function set_suggestion_state( string $state, string $notice ): void {
-		$project_id    = $this->project_id();
-		$suggestion_id = $this->posted_text( 'suggestion_id' );
+		$context       = $this->context();
+		$suggestion_id = AdminActionRequest::posted_text( 'suggestion_id' );
 
 		if ( 'marked' === $state ) {
-			$this->reviewer->mark( $project_id, $suggestion_id );
+			$this->reviewer->mark_in_context( $context, $suggestion_id );
 		} else {
-			$this->reviewer->ignore( $project_id, $suggestion_id );
+			$this->reviewer->ignore_in_context( $context, $suggestion_id );
 		}
 
-		$this->redirect( $project_id, $notice );
+		$this->redirect_context( $context, $notice );
 	}
 
-	private function project_id(): int {
-		$this->assert_action();
+	private function context(): Context {
+		AdminActionRequest::assert_action();
+		$context_id = AdminActionRequest::posted_text( 'context_id' );
 
-		$project_id = isset( $_POST['project_id'] ) ? absint( wp_unslash( $_POST['project_id'] ) ) : 0;
-
-		if ( ! $project_id || ProjectRepository::POST_TYPE !== get_post_type( $project_id ) ) {
-			wp_die( esc_html__( 'Portfolio project ID is required.', 'guilherme-portfolio' ) );
+		if ( '' === $context_id && isset( $_POST['project_id'] ) ) {
+			$context_id = Context::project_id( absint( wp_unslash( $_POST['project_id'] ) ) );
 		}
 
-		if ( ! current_user_can( 'edit_post', $project_id ) ) {
+		try {
+			$context = $this->contexts->resolve( $context_id );
+		} catch ( \InvalidArgumentException $error ) {
+			wp_die( esc_html__( 'Workbench context is required.', 'guilherme-portfolio' ) );
+		}
+
+		if ( $context->is_project() && ! current_user_can( 'edit_post', $context->object_id() ) ) {
 			wp_die( esc_html__( 'You cannot edit this portfolio project.', 'guilherme-portfolio' ) );
 		}
 
-		return $project_id;
+		return $context;
 	}
 
-	private function assert_permission(): void {
-		if ( ! current_user_can( AdminPage::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to update this workbench.', 'guilherme-portfolio' ) );
-		}
+	private function redirect_context( Context $context, string $notice ): void {
+		$this->redirect_context_id( $context->id(), $notice );
 	}
 
-	private function assert_action(): void {
-		$this->assert_permission();
-		check_admin_referer( self::NONCE_ACTION, self::NONCE_NAME );
-	}
-
-	private function posted_array( string $key ): array {
-		return isset( $_POST[ $key ] ) && is_array( $_POST[ $key ] ) ? wp_unslash( $_POST[ $key ] ) : array();
-	}
-
-	private function posted_text( string $key ): string {
-		return isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
-	}
-
-	private function redirect( int $project_id, string $notice ): void {
+	private function redirect_context_id( string $context_id, string $notice ): void {
 		$args = array(
 			'page'                => AdminPage::MENU_SLUG,
 			'gp_workbench_notice' => $notice,
+			'context'             => $context_id,
 		);
-
-		if ( $project_id ) {
-			$args['project'] = $project_id;
-		}
 
 		wp_safe_redirect( add_query_arg( $args, admin_url( 'themes.php' ) ) );
 		exit;
 	}
 
-	private function status( $status ): string {
-		$status = sanitize_key( $status );
+	private function update_project_post( Context $context, array $raw ): void {
+		wp_update_post(
+			array_filter(
+				array(
+					'ID'          => $context->object_id(),
+					'post_title'  => sanitize_text_field( $raw['title'] ?? '' ),
+					'post_status' => AdminActionRequest::status( $raw['status'] ?? 'draft' ),
+				)
+			)
+		);
+	}
 
-		return in_array( $status, array( 'draft', 'publish', 'private', 'pending' ), true ) ? $status : 'draft';
+	private function apply_page_flags( int $page_id, array $raw ): void {
+		if ( ! empty( $raw['set_frontpage'] ) ) {
+			$this->frontpages->set_front_page( $page_id );
+		}
+
+		if ( ! empty( $raw['set_posts_page'] ) ) {
+			$this->frontpages->set_posts_page( $page_id );
+		}
 	}
 }

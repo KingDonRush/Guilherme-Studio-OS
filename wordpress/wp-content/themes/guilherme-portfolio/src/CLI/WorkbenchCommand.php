@@ -7,7 +7,10 @@
 
 namespace GuilhermePortfolio\CLI;
 
-use GuilhermePortfolio\Projects\ProjectRepository;
+use GuilhermePortfolio\Workbench\CodePageRegistry;
+use GuilhermePortfolio\Workbench\Context;
+use GuilhermePortfolio\Workbench\ContextResolver;
+use GuilhermePortfolio\Workbench\FrontPageService;
 use GuilhermePortfolio\Workbench\ItemStore;
 use GuilhermePortfolio\Workbench\PageCreator;
 use GuilhermePortfolio\Workbench\RelationStore;
@@ -21,6 +24,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class WorkbenchCommand {
 
+	private ContextResolver $contexts;
+	private CodePageRegistry $code_pages;
+	private FrontPageService $frontpages;
 	private ItemStore $items;
 	private PageCreator $pages;
 	private RelationStore $relations;
@@ -29,6 +35,9 @@ final class WorkbenchCommand {
 	private TopologyService $topology;
 
 	public function __construct(
+		ContextResolver $contexts,
+		CodePageRegistry $code_pages,
+		FrontPageService $frontpages,
 		ItemStore $items,
 		PageCreator $pages,
 		RelationStore $relations,
@@ -36,6 +45,9 @@ final class WorkbenchCommand {
 		SuggestionStore $suggestions,
 		TopologyService $topology
 	) {
+		$this->contexts    = $contexts;
+		$this->code_pages  = $code_pages;
+		$this->frontpages  = $frontpages;
 		$this->items       = $items;
 		$this->pages       = $pages;
 		$this->relations   = $relations;
@@ -53,39 +65,41 @@ final class WorkbenchCommand {
 		\WP_CLI::add_command( 'gp relation', array( $this, 'relation' ) );
 		\WP_CLI::add_command( 'gp suggestion', array( $this, 'suggestion' ) );
 		\WP_CLI::add_command( 'gp topology', array( $this, 'topology' ) );
+		\WP_CLI::add_command( 'gp frontpage', array( $this, 'frontpage' ) );
+		\WP_CLI::add_command( 'gp code-page', array( $this, 'code_page' ) );
 	}
 
 	public function item( array $args, array $assoc_args ): void {
-		$action     = $args[0] ?? 'list';
-		$project_id = $this->project_id_arg( $args, 1 );
+		$action  = $args[0] ?? 'list';
+		$context = $this->context_arg( $args, $assoc_args, 1 );
 
 		if ( 'list' === $action ) {
-			$this->format_items( $assoc_args, $this->items->all( $project_id ), array( 'id', 'type', 'label', 'category', 'role', 'provider', 'state' ) );
+			WorkbenchCommandSupport::format_items( $assoc_args, $this->items->all_for_context( $context ), array( 'id', 'type', 'label', 'category', 'role', 'provider', 'state' ) );
 			return;
 		}
 
 		if ( 'attach' === $action ) {
-			$item = $this->items->attach( $project_id, $this->item_args( $assoc_args ) );
-			$this->success_payload( 'Workbench item attached.', $item, $assoc_args );
+			$item = $this->items->attach_to_context( $context, WorkbenchCommandSupport::item_args( $assoc_args ) );
+			WorkbenchCommandSupport::success_payload( 'Workbench item attached.', $item, $assoc_args );
 			return;
 		}
 
 		if ( 'create-page' === $action ) {
 			try {
-				$page = $this->pages->create( $project_id, $this->page_args( $assoc_args ) );
+				$page = $this->pages->create_for_context( $context, WorkbenchCommandSupport::page_args( $assoc_args ) );
+				$this->apply_page_flags( (int) $page['post_id'], $assoc_args );
 			} catch ( \Throwable $error ) {
 				\WP_CLI::error( $error->getMessage() );
 			}
 
-			$this->success_payload( 'Workbench page created and attached.', $page, $assoc_args );
+			WorkbenchCommandSupport::success_payload( 'Workbench page created and attached.', $page, $assoc_args );
 			return;
 		}
 
 		if ( 'detach' === $action ) {
-			$item_id = $args[2] ?? '';
-			$this->require_value( $item_id, 'Workbench item ID is required.' );
+			$item_id = WorkbenchCommandSupport::record_arg( $args, $assoc_args, 'Workbench item ID is required.' );
 
-			if ( ! $this->items->detach( $project_id, $item_id ) ) {
+			if ( ! $this->items->detach_from_context( $context, $item_id ) ) {
 				\WP_CLI::error( 'Workbench item not found.' );
 			}
 
@@ -97,38 +111,36 @@ final class WorkbenchCommand {
 	}
 
 	public function relation( array $args, array $assoc_args ): void {
-		$action     = $args[0] ?? 'list';
-		$project_id = $this->project_id_arg( $args, 1 );
+		$action  = $args[0] ?? 'list';
+		$context = $this->context_arg( $args, $assoc_args, 1 );
 
 		if ( 'list' === $action ) {
-			$this->format_items( $assoc_args, $this->relations->all( $project_id ), array( 'id', 'source', 'relation', 'target', 'provider', 'state' ) );
+			WorkbenchCommandSupport::format_items( $assoc_args, $this->relations->all_for_context( $context ), array( 'id', 'source', 'relation', 'target', 'provider', 'state' ) );
 			return;
 		}
 
 		if ( 'add' === $action ) {
-			$relation = $this->relations->add( $project_id, $this->relation_args( $assoc_args ) );
-			$this->success_payload( 'Workbench relation stored.', $relation, $assoc_args );
+			$relation = $this->relations->add_to_context( $context, WorkbenchCommandSupport::relation_args( $assoc_args ) );
+			WorkbenchCommandSupport::success_payload( 'Workbench relation stored.', $relation, $assoc_args );
 			return;
 		}
 
 		if ( 'update' === $action ) {
-			$relation_id = $args[2] ?? '';
-			$this->require_value( $relation_id, 'Workbench relation ID is required.' );
-			$relation = $this->relations->update_state( $project_id, $relation_id, $assoc_args['state'] ?? 'needs_review' );
+			$relation_id = WorkbenchCommandSupport::record_arg( $args, $assoc_args, 'Workbench relation ID is required.' );
+			$relation    = $this->relations->update_context_state( $context, $relation_id, $assoc_args['state'] ?? 'needs_review' );
 
 			if ( ! $relation ) {
 				\WP_CLI::error( 'Workbench relation not found.' );
 			}
 
-			$this->success_payload( 'Workbench relation updated.', $relation, $assoc_args );
+			WorkbenchCommandSupport::success_payload( 'Workbench relation updated.', $relation, $assoc_args );
 			return;
 		}
 
 		if ( 'remove' === $action ) {
-			$relation_id = $args[2] ?? '';
-			$this->require_value( $relation_id, 'Workbench relation ID is required.' );
+			$relation_id = WorkbenchCommandSupport::record_arg( $args, $assoc_args, 'Workbench relation ID is required.' );
 
-			if ( ! $this->relations->remove( $project_id, $relation_id ) ) {
+			if ( ! $this->relations->remove_from_context( $context, $relation_id ) ) {
 				\WP_CLI::error( 'Workbench relation not found.' );
 			}
 
@@ -140,32 +152,31 @@ final class WorkbenchCommand {
 	}
 
 	public function suggestion( array $args, array $assoc_args ): void {
-		$action     = $args[0] ?? 'list';
-		$project_id = $this->project_id_arg( $args, 1 );
+		$action  = $args[0] ?? 'list';
+		$context = $this->context_arg( $args, $assoc_args, 1 );
 
 		if ( 'list' === $action ) {
-			$this->format_items( $assoc_args, $this->suggestions->all( $project_id ), array( 'id', 'label', 'type', 'provider', 'state' ) );
+			WorkbenchCommandSupport::format_items( $assoc_args, $this->suggestions->all_for_context( $context ), array( 'id', 'label', 'type', 'provider', 'state' ) );
 			return;
 		}
 
 		if ( 'add' === $action ) {
-			$suggestion = $this->suggestions->add( $project_id, $this->suggestion_args( $assoc_args ) );
-			$this->success_payload( 'Workbench suggestion stored.', $suggestion, $assoc_args );
+			$suggestion = $this->suggestions->add_to_context( $context, WorkbenchCommandSupport::suggestion_args( $assoc_args ) );
+			WorkbenchCommandSupport::success_payload( 'Workbench suggestion stored.', $suggestion, $assoc_args );
 			return;
 		}
 
 		if ( in_array( $action, array( 'mark', 'ignore' ), true ) ) {
-			$suggestion_id = $args[2] ?? '';
-			$this->require_value( $suggestion_id, 'Workbench suggestion ID is required.' );
+			$suggestion_id = WorkbenchCommandSupport::record_arg( $args, $assoc_args, 'Workbench suggestion ID is required.' );
 			$suggestion = 'mark' === $action
-				? $this->reviewer->mark( $project_id, $suggestion_id )
-				: $this->reviewer->ignore( $project_id, $suggestion_id );
+				? $this->reviewer->mark_in_context( $context, $suggestion_id )
+				: $this->reviewer->ignore_in_context( $context, $suggestion_id );
 
 			if ( ! $suggestion ) {
 				\WP_CLI::error( 'Workbench suggestion not found.' );
 			}
 
-			$this->success_payload( 'Workbench suggestion updated.', $suggestion, $assoc_args );
+			WorkbenchCommandSupport::success_payload( 'Workbench suggestion updated.', $suggestion, $assoc_args );
 			return;
 		}
 
@@ -173,112 +184,92 @@ final class WorkbenchCommand {
 	}
 
 	public function topology( array $args, array $assoc_args ): void {
-		$project_id = $this->project_id_arg( array( 'get', $args[0] ?? 0 ), 1 );
-		$this->line_json( $this->topology->project( $project_id ), $assoc_args );
+		$context_id = $assoc_args['context'] ?? ( $args[0] ?? Context::ROOT_ID );
+		WorkbenchCommandSupport::line_json( $this->topology->context( (string) $context_id ), $assoc_args );
 	}
 
-	private function item_args( array $assoc_args ): array {
-		return array(
-			'id'          => $assoc_args['id'] ?? '',
-			'type'        => $assoc_args['type'] ?? 'custom',
-			'label'       => $assoc_args['label'] ?? '',
-			'object_id'   => $assoc_args['object-id'] ?? '',
-			'object_type' => $assoc_args['object-type'] ?? '',
-			'category'    => $assoc_args['category'] ?? 'content',
-			'role'        => $assoc_args['role'] ?? 'other',
-			'provider'    => $assoc_args['provider'] ?? 'manual',
-			'state'       => $assoc_args['state'] ?? 'manual',
-			'notes'       => $assoc_args['notes'] ?? '',
-		);
-	}
+	public function frontpage( array $args, array $assoc_args ): void {
+		$action  = $args[0] ?? 'get';
+		$page_id = absint( $args[1] ?? 0 );
 
-	private function page_args( array $assoc_args ): array {
-		if ( empty( $assoc_args['title'] ) ) {
-			\WP_CLI::error( 'Use --title=<text> for the new page.' );
+		if ( 'get' === $action ) {
+			WorkbenchCommandSupport::line_json(
+				array(
+					'show_on_front' => get_option( 'show_on_front' ),
+					'front_page_id' => (int) get_option( 'page_on_front' ),
+					'posts_page_id' => (int) get_option( 'page_for_posts' ),
+				),
+				$assoc_args
+			);
+			return;
 		}
 
-		return array(
-			'title'    => $assoc_args['title'],
-			'status'   => $assoc_args['status'] ?? 'draft',
-			'category' => $assoc_args['category'] ?? 'pages',
-			'role'     => $assoc_args['role'] ?? 'other',
-			'notes'    => $assoc_args['notes'] ?? '',
-		);
-	}
+		if ( ! $page_id ) {
+			\WP_CLI::error( 'A WordPress page ID is required.' );
+		}
 
-	private function relation_args( array $assoc_args ): array {
-		foreach ( array( 'source', 'relation', 'target' ) as $required ) {
-			if ( empty( $assoc_args[ $required ] ) ) {
-				\WP_CLI::error( 'Use --source=<id>, --relation=<type> and --target=<id>.' );
+		try {
+			if ( 'set' === $action ) {
+				$this->frontpages->set_front_page( $page_id );
+				\WP_CLI::success( 'Portfolio front page updated.' );
+				return;
 			}
+
+			if ( 'posts-page' === $action ) {
+				$this->frontpages->set_posts_page( $page_id );
+				\WP_CLI::success( 'Portfolio posts page updated.' );
+				return;
+			}
+		} catch ( \Throwable $error ) {
+			\WP_CLI::error( $error->getMessage() );
 		}
 
-		return array(
-			'id'       => $assoc_args['id'] ?? '',
-			'source'   => $assoc_args['source'],
-			'relation' => $assoc_args['relation'],
-			'target'   => $assoc_args['target'],
-			'provider' => $assoc_args['provider'] ?? 'manual',
-			'state'    => $assoc_args['state'] ?? 'needs_review',
-			'notes'    => $assoc_args['notes'] ?? '',
-		);
+		\WP_CLI::error( 'Use one of: get, set, posts-page.' );
 	}
 
-	private function suggestion_args( array $assoc_args ): array {
-		if ( empty( $assoc_args['label'] ) ) {
-			\WP_CLI::error( 'Use --label=<text> for the suggestion.' );
-		}
+	public function code_page( array $args, array $assoc_args ): void {
+		$action = $args[0] ?? 'list';
 
-		return array(
-			'id'       => $assoc_args['id'] ?? '',
-			'label'    => $assoc_args['label'],
-			'type'     => $assoc_args['type'] ?? 'relation',
-			'provider' => $assoc_args['provider'] ?? 'manual',
-			'state'    => $assoc_args['state'] ?? 'pending',
-			'notes'    => $assoc_args['notes'] ?? '',
-			'payload'  => array(
-				'source'   => $assoc_args['source'] ?? '',
-				'relation' => $assoc_args['relation'] ?? '',
-				'target'   => $assoc_args['target'] ?? '',
-			),
-		);
-	}
-
-	private function project_id_arg( array $args, int $index ): int {
-		$project_id = absint( $args[ $index ] ?? 0 );
-
-		if ( ! $project_id || ProjectRepository::POST_TYPE !== get_post_type( $project_id ) ) {
-			\WP_CLI::error( 'Portfolio project ID is required.' );
-		}
-
-		return $project_id;
-	}
-
-	private function require_value( $value, string $message ): void {
-		if ( '' === trim( (string) $value ) ) {
-			\WP_CLI::error( $message );
-		}
-	}
-
-	private function success_payload( string $message, array $payload, array $assoc_args ): void {
-		if ( 'json' === ( $assoc_args['format'] ?? '' ) ) {
-			$this->line_json( $payload, $assoc_args );
+		if ( 'list' === $action ) {
+			WorkbenchCommandSupport::format_items( $assoc_args, WorkbenchCommandSupport::code_page_rows( $this->code_pages ), array( 'id', 'title', 'slug', 'scope', 'role' ) );
 			return;
 		}
 
-		\WP_CLI::success( $message );
-	}
+		if ( 'materialize' === $action ) {
+			$context       = $this->context_arg( $args, $assoc_args, 1 );
+			$definition_id = WorkbenchCommandSupport::record_arg( $args, $assoc_args, 'Coded page definition ID is required.' );
 
-	private function format_items( array $assoc_args, array $items, array $fields ): void {
-		\WP_CLI\Utils\format_items( $assoc_args['format'] ?? 'table', $items, $fields );
-	}
+			try {
+				$page = $this->pages->materialize_for_context( $context, $definition_id );
+				$this->apply_page_flags( (int) $page['post_id'], $page['definition'] );
+			} catch ( \Throwable $error ) {
+				\WP_CLI::error( $error->getMessage() );
+			}
 
-	private function line_json( array $payload, array $assoc_args ): void {
-		if ( 'table' === ( $assoc_args['format'] ?? '' ) ) {
-			$this->format_items( $assoc_args, array( $payload ), array_keys( $payload ) );
+			WorkbenchCommandSupport::success_payload( 'Coded page materialized.', $page, $assoc_args );
 			return;
 		}
 
-		\WP_CLI::line( wp_json_encode( $payload ) );
+		\WP_CLI::error( 'Use one of: list, materialize.' );
+	}
+
+	private function context_arg( array $args, array $assoc_args, int $index ): Context {
+		$context_id = (string) ( $assoc_args['context'] ?? ( $args[ $index ] ?? Context::ROOT_ID ) );
+
+		try {
+			return $this->contexts->resolve( $context_id );
+		} catch ( \InvalidArgumentException $error ) {
+			\WP_CLI::error( $error->getMessage() );
+		}
+	}
+
+	private function apply_page_flags( int $page_id, array $assoc_args ): void {
+		if ( ! empty( $assoc_args['set-frontpage'] ) ) {
+			$this->frontpages->set_front_page( $page_id );
+		}
+
+		if ( ! empty( $assoc_args['set-posts-page'] ) ) {
+			$this->frontpages->set_posts_page( $page_id );
+		}
 	}
 }

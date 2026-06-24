@@ -16,8 +16,18 @@ final class RelationStore {
 	private const LIMIT = 300;
 	private const STATES = array( 'suggested', 'confirmed', 'ignored', 'needs_review' );
 
+	private ContextStorage $storage;
+
+	public function __construct( ContextStorage $storage ) {
+		$this->storage = $storage;
+	}
+
 	public function all( int $project_id ): array {
 		return self::sanitize_relations( get_post_meta( $project_id, WorkbenchMeta::RELATIONS, true ) );
+	}
+
+	public function all_for_context( Context $context ): array {
+		return $this->storage->relations( $context );
 	}
 
 	public function add( int $project_id, array $raw ): array {
@@ -38,6 +48,24 @@ final class RelationStore {
 		return $relation;
 	}
 
+	public function add_to_context( Context $context, array $raw ): array {
+		$relation  = self::sanitize_relation( $raw );
+		$relations = $this->all_for_context( $context );
+		$index     = $this->find_index( $relations, $relation['id'] );
+
+		if ( null !== $index ) {
+			$relation['created_at'] = $relations[ $index ]['created_at'];
+			$relations[ $index ]    = $relation;
+		} else {
+			$relation['id'] = $this->unique_id( $relation['id'], $relations );
+			$relations[]    = $relation;
+		}
+
+		$this->storage->save_relations( $context, array_slice( $relations, 0, self::LIMIT ) );
+
+		return $relation;
+	}
+
 	public function update_state( int $project_id, string $relation_id, string $state ): ?array {
 		$relations = $this->all( $project_id );
 		$index     = $this->find_index( $relations, $relation_id );
@@ -49,6 +77,21 @@ final class RelationStore {
 		$relations[ $index ]['state']      = WorkbenchSanitizer::allowed( $state, self::STATES, 'needs_review' );
 		$relations[ $index ]['updated_at'] = current_time( 'mysql' );
 		update_post_meta( $project_id, WorkbenchMeta::RELATIONS, $relations );
+
+		return $relations[ $index ];
+	}
+
+	public function update_context_state( Context $context, string $relation_id, string $state ): ?array {
+		$relations = $this->all_for_context( $context );
+		$index     = $this->find_index( $relations, $relation_id );
+
+		if ( null === $index ) {
+			return null;
+		}
+
+		$relations[ $index ]['state']      = WorkbenchSanitizer::allowed( $state, self::STATES, 'needs_review' );
+		$relations[ $index ]['updated_at'] = current_time( 'mysql' );
+		$this->storage->save_relations( $context, $relations );
 
 		return $relations[ $index ];
 	}
@@ -66,6 +109,23 @@ final class RelationStore {
 		);
 
 		update_post_meta( $project_id, WorkbenchMeta::RELATIONS, $filtered );
+
+		return count( $filtered ) !== count( $relations );
+	}
+
+	public function remove_from_context( Context $context, string $relation_id ): bool {
+		$relation_id = WorkbenchSanitizer::id( $relation_id );
+		$relations   = $this->all_for_context( $context );
+		$filtered    = array_values(
+			array_filter(
+				$relations,
+				static function ( array $relation ) use ( $relation_id ): bool {
+					return $relation['id'] !== $relation_id;
+				}
+			)
+		);
+
+		$this->storage->save_relations( $context, $filtered );
 
 		return count( $filtered ) !== count( $relations );
 	}

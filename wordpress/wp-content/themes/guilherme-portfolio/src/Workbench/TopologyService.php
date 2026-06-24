@@ -16,40 +16,61 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class TopologyService {
 
 	private ProjectRepository $projects;
+	private ContextResolver $contexts;
+	private ContextStorage $storage;
 	private ItemStore $items;
 	private RelationStore $relations;
 	private SuggestionStore $suggestions;
 	private ProviderDataRegistry $providers;
+	private CodePageRegistry $code_pages;
 
 	public function __construct(
 		ProjectRepository $projects,
+		ContextResolver $contexts,
+		ContextStorage $storage,
 		ItemStore $items,
 		RelationStore $relations,
 		SuggestionStore $suggestions,
-		ProviderDataRegistry $providers
+		ProviderDataRegistry $providers,
+		CodePageRegistry $code_pages
 	) {
 		$this->projects     = $projects;
+		$this->contexts     = $contexts;
+		$this->storage      = $storage;
 		$this->items        = $items;
 		$this->relations    = $relations;
 		$this->suggestions  = $suggestions;
 		$this->providers    = $providers;
+		$this->code_pages   = $code_pages;
 	}
 
 	public function project( int $project_id ): array {
-		$project = $this->require_project( $project_id );
-		$items   = $this->items->all( $project_id );
+		return $this->context( Context::project_id( $project_id ) );
+	}
+
+	public function root(): array {
+		return $this->context( Context::ROOT_ID );
+	}
+
+	public function context( string $context_id ): array {
+		$context = $this->contexts->resolve( $context_id );
+		$items   = $this->items->all_for_context( $context );
 
 		return array(
-			'root'        => $this->front_page(),
-			'project'     => $this->project_payload( $project ),
-			'config'      => $this->projects->config( $project_id ),
-			'categories'  => CategoryRegistry::all(),
-			'items'       => $items,
-			'groups'      => $this->group_items( $items ),
-			'relations'   => $this->relations->all( $project_id ),
-			'suggestions' => $this->suggestions->all( $project_id ),
-			'providers'   => $this->providers->providers(),
+			'root'             => $this->contexts->root()->to_array(),
+			'context'          => $context->to_array(),
+			'project'          => $this->legacy_project_payload( $context ),
+			'config'           => $this->storage->config( $context ),
+			'frontpage'        => $this->frontpage_state(),
+			'context_options'  => $this->contexts->options(),
+			'categories'       => CategoryRegistry::all(),
+			'items'            => $items,
+			'groups'           => $this->group_items( $items ),
+			'relations'        => $this->relations->all_for_context( $context ),
+			'suggestions'      => $this->suggestions->all_for_context( $context ),
+			'providers'        => $this->providers->providers(),
 			'provider_records' => $this->providers->records(),
+			'code_pages'       => $this->code_pages->all(),
 		);
 	}
 
@@ -57,33 +78,23 @@ final class TopologyService {
 		return $this->projects->project_options();
 	}
 
-	private function require_project( int $project_id ): \WP_Post {
-		$project = get_post( $project_id );
-
-		if ( ! $project || ProjectRepository::POST_TYPE !== $project->post_type ) {
-			throw new \InvalidArgumentException( 'Portfolio project not found.' );
-		}
-
-		return $project;
+	public function context_options(): array {
+		return $this->contexts->options();
 	}
 
-	private function front_page(): array {
-		$front_page_id = (int) get_option( 'page_on_front' );
-		$front_page    = $front_page_id ? get_post( $front_page_id ) : null;
-
+	private function frontpage_state(): array {
 		return array(
-			'id'     => $front_page ? $front_page->ID : 0,
-			'label'  => $front_page ? get_the_title( $front_page ) : __( 'Portfolio Front Page', 'guilherme-portfolio' ),
-			'type'   => 'front_page',
-			'status' => $front_page ? $front_page->post_status : 'missing',
+			'show_on_front' => get_option( 'show_on_front' ),
+			'front_page_id' => (int) get_option( 'page_on_front' ),
+			'posts_page_id' => (int) get_option( 'page_for_posts' ),
 		);
 	}
 
-	private function project_payload( \WP_Post $project ): array {
+	private function legacy_project_payload( Context $context ): array {
 		return array(
-			'id'     => $project->ID,
-			'title'  => get_the_title( $project ),
-			'status' => $project->post_status,
+			'id'     => $context->is_project() ? $context->object_id() : 0,
+			'title'  => $context->label(),
+			'status' => $context->status(),
 		);
 	}
 

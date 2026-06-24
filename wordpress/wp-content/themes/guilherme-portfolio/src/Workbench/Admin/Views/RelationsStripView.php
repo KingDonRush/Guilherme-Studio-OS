@@ -21,7 +21,7 @@ final class RelationsStripView {
 		$this->parts = $parts;
 	}
 
-	public function render( array $relations, int $project_id ): void {
+	public function render( array $relations, string $context_id ): void {
 		?>
 		<section class="gp-workbench-panel">
 			<header>
@@ -39,8 +39,8 @@ final class RelationsStripView {
 						<code><?php echo esc_html( $relation['target'] ); ?></code>
 						<div>
 							<?php $this->parts->badge( $relation['state'], 'state', __( 'Relation state', 'guilherme-portfolio' ) ); ?>
-							<?php $this->forms->relation_state_action( $project_id, $relation['id'], 'confirmed', __( 'Confirm', 'guilherme-portfolio' ) ); ?>
-							<?php $this->forms->row_action( 'gp_workbench_remove_relation', $project_id, 'relation_id', $relation['id'], __( 'Remove', 'guilherme-portfolio' ) ); ?>
+								<?php $this->forms->relation_state_action( $context_id, $relation['id'], 'confirmed', __( 'Confirm', 'guilherme-portfolio' ) ); ?>
+								<?php $this->forms->row_action( 'gp_workbench_remove_relation', $context_id, 'relation_id', $relation['id'], __( 'Remove', 'guilherme-portfolio' ) ); ?>
 						</div>
 					</div>
 				<?php endforeach; ?>

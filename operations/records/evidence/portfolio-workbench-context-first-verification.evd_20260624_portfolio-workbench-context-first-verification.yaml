@@ -1,0 +1,58 @@
+api_version: studio.guilherme.dev/v1
+extensions:
+  artifacts:
+    - checksum: 0981a44b1494e595074a476e8905acef959638264a60e557a5fc84354b213916
+      path: /tmp/gp-root-topology-smoke.json
+      purpose: Root context topology after coded page, page creation, frontpage and relation-suggestion smoke.
+    - checksum: 6927bc279fabfb926248fa1a6674f3e8c9b5ac70e7a3cbeee2005a5e51298fdc
+      path: /tmp/gp-project-topology-smoke.json
+      purpose: Project context topology with local blog_index item.
+    - checksum: 6055a703385055e95ebbaafd2823d8c4b107a44f4a30c8af8d56ff70f2951ee5
+      path: /tmp/gp-admin-root-smoke.txt
+      purpose: Admin render smoke for configured frontpage root context.
+    - checksum: 6055a703385055e95ebbaafd2823d8c4b107a44f4a30c8af8d56ff70f2951ee5
+      path: /tmp/gp-admin-missing-frontpage-smoke.txt
+      purpose: Admin render smoke for missing frontpage setup.
+    - checksum: 0f4d3940b724f0a5bafc94780e28b34372d7765199fb2262400d546641320ed7
+      path: /tmp/gp-context-root-after-smokes.json
+      purpose: Post-smoke restore check proving root workbench records are clean and frontpage options restored.
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-24T05:36:07.000Z
+  id: evd_20260624_portfolio-workbench-context-first-verification
+  labels:
+    - portfolio
+    - wordpress
+    - workbench
+    - wp-cli
+    - wp-admin
+  revision: 1
+  schema_version: 1
+  slug: portfolio-workbench-context-first-verification
+  updated_at: 2026-06-24T05:36:07.000Z
+relations:
+  - target_id: tsk_20260615_finish-legacy-agentic-portfolio-promises
+    type: supports
+spec:
+  checksum: 0981a44b1494e595074a476e8905acef959638264a60e557a5fc84354b213916
+  claims:
+    - Portfolio Workbench defaults to `context=root`, so the portfolio front page can be inspected and configured without first creating a project.
+    - Root context supports option-backed items, relations, suggestions, settings, frontpage state and code-created page definitions.
+    - Project contexts keep project-backed storage and support local `blog_index` attachments without mutating WordPress `page_for_posts`.
+    - Admin render smokes pass with configured and missing frontpage states, and no legacy project creation gate is rendered.
+    - WP-CLI exposes root topology, frontpage controls, context item/relation/suggestion commands and coded page materialization.
+    - Temporary pages, project posts and root Workbench records were removed after verification.
+  command: >-
+    docker compose run --rm wpcli --skip-plugins=elementor,pro-elements
+    gp topology root / gp code-page materialize / gp item create-page /
+    gp suggestion mark / gp frontpage / wp eval admin render smoke
+  evidence_type: command
+  observed_at: 2026-06-24T05:36:07.000Z
+  path: /tmp/gp-root-topology-smoke.json
+  source_mutability: operator-observed
+  status: active
+  subject_id: prj_20260614_wordpress-portfolio
+  title: Portfolio Workbench context-first verification
+  validated_at: 2026-06-24T05:36:07.000Z
