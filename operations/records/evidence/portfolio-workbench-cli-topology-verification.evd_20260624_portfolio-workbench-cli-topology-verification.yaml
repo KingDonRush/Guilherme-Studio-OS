@@ -1,0 +1,40 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-24T00:28:57.000Z
+  id: evd_20260624_portfolio-workbench-cli-topology-verification
+  labels:
+    - portfolio
+    - wordpress
+    - workbench
+    - wp-cli
+  revision: 1
+  schema_version: 1
+  slug: portfolio-workbench-cli-topology-verification
+  updated_at: 2026-06-24T00:28:57.000Z
+relations:
+  - target_id: tsk_20260615_finish-legacy-agentic-portfolio-promises
+    type: supports
+spec:
+  checksum: ba2ba16d7ac9591bf7b32dc723037b2a429000bea0308a53a0edb4817117d46c
+  claims:
+    - Portfolio Workbench stores attached project items, manual relations and suggestion review state through WordPress APIs.
+    - "`wp gp item`, `wp gp relation`, `wp gp suggestion` and `wp gp topology` operate on the same Workbench records without direct SQL or raw meta editing."
+    - Topology output includes front-page context, categories, grouped items, relations, suggestions, provider statuses and SBP/EIT provider records.
+    - Provider records expose SBP price/value fields and EIT field catalog data while missing 3D Viewer remains non-fatal.
+  command: >-
+    php -l changed theme PHP files &&
+    git diff --check &&
+    docker compose -f wordpress/docker-compose.yml -f operations/wordpress/docker-compose.products.yml run --rm wpcli --skip-plugins=elementor,pro-elements
+    gp item/relation/suggestion/topology smoke workflow
+  evidence_type: command
+  observed_at: 2026-06-24T00:28:57.000Z
+  path: /tmp/gp-topology-smoke.json
+  source_mutability: operator-observed
+  status: active
+  subject_id: prj_20260614_wordpress-portfolio
+  title: Portfolio Workbench CLI topology verification
+  validated_at: 2026-06-24T00:28:57.000Z

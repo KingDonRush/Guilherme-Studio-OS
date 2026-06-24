@@ -26,22 +26,22 @@
 
 ## New Workbench Scope
 
-- [ ] T022 Rename/spec-align the feature surface from Project Workbench to Portfolio Workbench where appropriate.
-- [ ] T023 Add project categories registry: Entry, Pages, Content, Presentation, Data, Evidence, Providers, Suggestions, Relations.
-- [ ] T024 Add Project Item storage for attached existing WordPress/plugin objects.
-- [ ] T025 Add Project Relation storage with source, relation type, target, provider/source, state and notes.
-- [ ] T026 Add Suggestion storage with provider/source, payload, state and review actions.
-- [ ] T027 Add visual wp-admin overview screen using category modules, badges, chips, inspector and compact relation strip.
-- [ ] T028 Add hover-tip UI pattern for icons, badges and category labels.
-- [ ] T029 Add manual attach/detach UI actions with capability and nonce checks.
-- [ ] T030 Add manual relation mark/edit/remove UI actions with capability and nonce checks.
-- [ ] T031 Add suggestion mark/ignore UI actions with capability and nonce checks.
-- [ ] T032 Add `wp gp item attach|detach|list` commands.
-- [ ] T033 Add `wp gp relation add|list|update|remove` commands.
-- [ ] T034 Add `wp gp suggestion list|mark|ignore` commands.
-- [ ] T035 Add `wp gp topology <project>` read command for Codex.
-- [ ] T036 Add provider adapter for SBP value fields and price/range fields.
-- [ ] T037 Add provider adapter for EIT field catalog and filter data.
-- [ ] T038 Add admin smoke checks for overview, badges, tips, suggestions and missing provider state.
-- [ ] T039 Add WP-CLI smoke checks for create/attach/relation/suggestion/topology workflows.
-- [ ] T040 Update acceptance evidence after implementation.
+- [X] T022 Rename/spec-align the feature surface from Project Workbench to Portfolio Workbench where appropriate.
+- [X] T023 Add project categories registry: Entry, Pages, Content, Presentation, Data, Evidence, Providers, Suggestions, Relations.
+- [X] T024 Add Project Item storage for attached existing WordPress/plugin objects.
+- [X] T025 Add Project Relation storage with source, relation type, target, provider/source, state and notes.
+- [X] T026 Add Suggestion storage with provider/source, payload, state and review actions.
+- [X] T027 Add visual wp-admin overview screen using category modules, badges, chips, inspector and compact relation strip.
+- [X] T028 Add hover-tip UI pattern for icons, badges and category labels.
+- [X] T029 Add manual attach/detach UI actions with capability and nonce checks.
+- [X] T030 Add manual relation mark/edit/remove UI actions with capability and nonce checks.
+- [X] T031 Add suggestion mark/ignore UI actions with capability and nonce checks.
+- [X] T032 Add `wp gp item attach|detach|list` commands.
+- [X] T033 Add `wp gp relation add|list|update|remove` commands.
+- [X] T034 Add `wp gp suggestion list|mark|ignore` commands.
+- [X] T035 Add `wp gp topology <project>` read command for Codex.
+- [X] T036 Add provider adapter for SBP value fields and price/range fields.
+- [X] T037 Add provider adapter for EIT field catalog and filter data.
+- [X] T038 Add admin smoke checks for overview, badges, tips, suggestions and missing provider state.
+- [X] T039 Add WP-CLI smoke checks for create/attach/relation/suggestion/topology workflows.
+- [X] T040 Update acceptance evidence after implementation.

@@ -1,0 +1,37 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-24T00:32:30.000Z
+  id: evd_20260624_portfolio-workbench-admin-smoke-verification
+  labels:
+    - portfolio
+    - wordpress
+    - workbench
+    - wp-admin
+  revision: 1
+  schema_version: 1
+  slug: portfolio-workbench-admin-smoke-verification
+  updated_at: 2026-06-24T00:32:30.000Z
+relations:
+  - target_id: tsk_20260615_finish-legacy-agentic-portfolio-promises
+    type: supports
+spec:
+  checksum: c310de809161611d1e21e79171e62ce4e6e68ed2d072bde183652739dedc3fa3
+  claims:
+    - Portfolio Workbench admin render succeeds for an administrator user with a temporary project context.
+    - Rendered markup includes the Workbench overview, badge pattern, hover-tip pattern, suggestion inbox, pending suggestion text, missing provider state and an attached item label.
+    - Temporary smoke project and page were removed after the check.
+  command: >-
+    docker compose -f wordpress/docker-compose.yml -f operations/wordpress/docker-compose.products.yml run --rm wpcli --skip-plugins=elementor,pro-elements
+    eval admin render smoke for Portfolio Workbench
+  evidence_type: command
+  observed_at: 2026-06-24T00:32:30.000Z
+  path: /tmp/gp-admin-smoke-result.txt
+  source_mutability: operator-observed
+  status: active
+  subject_id: prj_20260614_wordpress-portfolio
+  title: Portfolio Workbench admin smoke verification
+  validated_at: 2026-06-24T00:32:30.000Z

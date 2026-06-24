@@ -7,6 +7,11 @@
 
 namespace GuilhermePortfolio\Projects;
 
+use GuilhermePortfolio\Workbench\ItemStore;
+use GuilhermePortfolio\Workbench\RelationStore;
+use GuilhermePortfolio\Workbench\SuggestionStore;
+use GuilhermePortfolio\Workbench\WorkbenchMeta;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -45,6 +50,24 @@ final class ProjectMetaRegistration {
 			ProjectRepository::POST_TYPE,
 			ProjectRepository::META_NOTES,
 			$this->string_meta_args( 'sanitize_textarea_field' )
+		);
+
+		register_post_meta(
+			ProjectRepository::POST_TYPE,
+			WorkbenchMeta::ITEMS,
+			$this->object_list_meta_args( array( ItemStore::class, 'sanitize_items' ) )
+		);
+
+		register_post_meta(
+			ProjectRepository::POST_TYPE,
+			WorkbenchMeta::RELATIONS,
+			$this->object_list_meta_args( array( RelationStore::class, 'sanitize_relations' ) )
+		);
+
+		register_post_meta(
+			ProjectRepository::POST_TYPE,
+			WorkbenchMeta::SUGGESTIONS,
+			$this->object_list_meta_args( array( SuggestionStore::class, 'sanitize_suggestions' ) )
 		);
 	}
 
@@ -93,6 +116,23 @@ final class ProjectMetaRegistration {
 					'type'  => 'array',
 					'items' => array(
 						'type' => 'string',
+					),
+				),
+			),
+			'sanitize_callback' => $sanitize_callback,
+			'auth_callback'     => array( $this, 'can_edit_posts' ),
+		);
+	}
+
+	private function object_list_meta_args( $sanitize_callback ): array {
+		return array(
+			'type'              => 'array',
+			'single'            => true,
+			'show_in_rest'      => array(
+				'schema' => array(
+					'type'  => 'array',
+					'items' => array(
+						'type' => 'object',
 					),
 				),
 			),

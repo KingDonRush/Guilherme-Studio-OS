@@ -33,6 +33,9 @@ Theme post meta:
 - `_gp_project_surfaces`
 - `_gp_project_integrations`
 - `_gp_project_notes`
+- `_gp_project_items`
+- `_gp_project_relations`
+- `_gp_project_suggestions`
 - `_gp_project_id`
 - `_gp_project_role`
 
@@ -56,7 +59,8 @@ EIT filters:
 - PHP lint on changed PHP files.
 - Product verify scripts where available.
 - `git diff --check`.
-- WordPress admin smoke by WP-CLI if runtime can load the theme/plugins.
+- WP-CLI smoke for `gp item`, `gp relation`, `gp suggestion`, and `gp topology`.
+- WordPress admin visual smoke for the Workbench page.
 - Final git status for root, `wordpress`, SBP, and EIT repositories.
 
 ## Rollback
