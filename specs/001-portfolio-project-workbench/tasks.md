@@ -57,27 +57,27 @@
 
 ## Context-First Correction
 
-- [X] T047 Add `Context` contract for `root`, `project:<id>` and future-compatible `page:<id>`/`section:<slug>` context IDs.
-- [X] T048 Add `ContextResolver` that resolves labels, type, storage, capabilities, configured frontpage state and missing/setup states.
-- [X] T049 Add option-backed root/frontpage config storage with mode, operational status, notes, surfaces and integrations.
-- [X] T050 Refactor item, relation and suggestion stores to accept a resolved context instead of a raw `project_id`.
-- [X] T051 Preserve project-backed storage for `project:<id>` contexts while adding root option-backed storage for `root`.
-- [X] T052 Add `TopologyService::root()` or equivalent context topology method that returns root settings, items, relations, suggestions, providers and frontpage state.
-- [X] T053 Change Workbench admin default route to render `context=root` when no project/context is selected.
-- [X] T054 Replace project-only toolbar with context-aware selector that keeps `Portfolio Front Page` as the first/default context.
-- [X] T055 Replace `Project settings` with generic `Context settings`, using project-specific fields only inside `project:<id>` contexts.
-- [X] T056 Add root setup UI for `Use existing page` and `Create new page` when no frontpage is configured.
-- [X] T057 Add prominent `Set as portfolio front page` action for existing or newly created WordPress pages.
-- [X] T058 Add explicit `Set as portfolio posts page` action and keep it visually distinct from project-local blog actions.
-- [X] T059 Add project-local `blog index` attach role/action that does not mutate WordPress `page_for_posts`.
-- [X] T060 Extend page creation flow to accept `context_id`, optional `set_frontpage`, optional `set_posts_page`, and source metadata.
-- [X] T061 Add code-created page registry for stable page definitions that can be materialized through admin and WP-CLI.
-- [X] T062 Refactor admin forms/actions to submit and validate `context_id` instead of requiring `project_id` for every mutation.
-- [X] T063 Add WP-CLI context commands: root topology, frontpage set, posts-page set, context item attach/detach, context relation add/update/remove and context suggestion mark/ignore.
-- [X] T064 Keep legacy `wp gp item <project_id>` compatibility only as a thin adapter to `context=project:<id>` or document its removal before implementation.
-- [X] T065 Add admin smoke: configured frontpage plus zero projects renders root context and never shows a project creation gate.
-- [X] T066 Add admin smoke: missing frontpage renders setup actions without requiring a project.
-- [X] T067 Add WP-CLI smoke: existing page can be set as portfolio frontpage.
-- [X] T068 Add WP-CLI smoke: newly created page can be attached to root and optionally set as frontpage.
-- [X] T069 Add WP-CLI smoke: project blog index attach does not mutate `page_for_posts`.
-- [X] T070 Update canonical evidence after context-first correction.
+- [ ] T047 Add `Context` contract for `root`, `project:<id>` and future-compatible `page:<id>`/`section:<slug>` context IDs.
+- [ ] T048 Add `ContextResolver` that resolves labels, type, storage, capabilities, configured frontpage state and missing/setup states.
+- [ ] T049 Add option-backed root/frontpage config storage with mode, operational status, notes, surfaces and integrations.
+- [ ] T050 Refactor item, relation and suggestion stores to accept a resolved context instead of a raw `project_id`.
+- [ ] T051 Preserve project-backed storage for `project:<id>` contexts while adding root option-backed storage for `root`.
+- [ ] T052 Add `TopologyService::root()` or equivalent context topology method that returns root settings, items, relations, suggestions, providers and frontpage state.
+- [ ] T053 Change Workbench admin default route to render `context=root` when no project/context is selected.
+- [ ] T054 Replace project-only toolbar with context-aware selector that keeps `Portfolio Front Page` as the first/default context.
+- [ ] T055 Replace `Project settings` with generic `Context settings`, using project-specific fields only inside `project:<id>` contexts.
+- [ ] T056 Add root setup UI for `Use existing page` and `Create new page` when no frontpage is configured.
+- [ ] T057 Add prominent `Set as portfolio front page` action for existing or newly created WordPress pages.
+- [ ] T058 Add explicit `Set as portfolio posts page` action and keep it visually distinct from project-local blog actions.
+- [ ] T059 Add project-local `blog index` attach role/action that does not mutate WordPress `page_for_posts`.
+- [ ] T060 Extend page creation flow to accept `context_id`, optional `set_frontpage`, optional `set_posts_page`, and source metadata.
+- [ ] T061 Add code-created page registry for stable page definitions that can be materialized through admin and WP-CLI.
+- [ ] T062 Refactor admin forms/actions to submit and validate `context_id` instead of requiring `project_id` for every mutation.
+- [ ] T063 Add WP-CLI context commands: root topology, frontpage set, posts-page set, context item attach/detach, context relation add/update/remove and context suggestion mark/ignore.
+- [ ] T064 Keep legacy `wp gp item <project_id>` compatibility only as a thin adapter to `context=project:<id>` or document its removal before implementation.
+- [ ] T065 Add admin smoke: configured frontpage plus zero projects renders root context and never shows a project creation gate.
+- [ ] T066 Add admin smoke: missing frontpage renders setup actions without requiring a project.
+- [ ] T067 Add WP-CLI smoke: existing page can be set as portfolio frontpage.
+- [ ] T068 Add WP-CLI smoke: newly created page can be attached to root and optionally set as frontpage.
+- [ ] T069 Add WP-CLI smoke: project blog index attach does not mutate `page_for_posts`.
+- [ ] T070 Update canonical evidence after context-first correction.

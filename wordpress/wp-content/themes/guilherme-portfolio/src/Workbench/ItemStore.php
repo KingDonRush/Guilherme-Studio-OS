@@ -44,19 +44,13 @@ final class ItemStore {
 	);
 
 	private ProjectRepository $projects;
-	private ContextStorage $storage;
 
-	public function __construct( ProjectRepository $projects, ContextStorage $storage ) {
+	public function __construct( ProjectRepository $projects ) {
 		$this->projects = $projects;
-		$this->storage  = $storage;
 	}
 
 	public function all( int $project_id ): array {
 		return self::sanitize_items( get_post_meta( $project_id, WorkbenchMeta::ITEMS, true ) );
-	}
-
-	public function all_for_context( Context $context ): array {
-		return $this->storage->items( $context );
 	}
 
 	public function attach( int $project_id, array $raw ): array {
@@ -74,28 +68,6 @@ final class ItemStore {
 
 		update_post_meta( $project_id, WorkbenchMeta::ITEMS, array_slice( $items, 0, self::LIMIT ) );
 		$this->save_content_assignment( $project_id, $item );
-
-		return $item;
-	}
-
-	public function attach_to_context( Context $context, array $raw ): array {
-		$item  = self::sanitize_item( $raw );
-		$items = $this->all_for_context( $context );
-		$index = $this->find_existing_index( $items, $item );
-
-		if ( null !== $index ) {
-			$item['created_at'] = $items[ $index ]['created_at'];
-			$items[ $index ]    = $item;
-		} else {
-			$item['id'] = $this->unique_id( $item['id'], $items );
-			$items[]    = $item;
-		}
-
-		$this->storage->save_items( $context, array_slice( $items, 0, self::LIMIT ) );
-
-		if ( $context->is_project() ) {
-			$this->save_content_assignment( $context->object_id(), $item );
-		}
 
 		return $item;
 	}
@@ -122,28 +94,6 @@ final class ItemStore {
 
 		update_post_meta( $project_id, WorkbenchMeta::ITEMS, $filtered );
 		$this->clear_removed_assignments( $project_id, $removed );
-
-		return count( $filtered ) !== count( $items );
-	}
-
-	public function detach_from_context( Context $context, string $item_id ): bool {
-		$item_id = WorkbenchSanitizer::id( $item_id );
-		$items   = $this->all_for_context( $context );
-		$removed = $this->matching_items( $items, $item_id );
-		$filtered = array_values(
-			array_filter(
-				$items,
-				static function ( array $item ) use ( $item_id ): bool {
-					return $item['id'] !== $item_id;
-				}
-			)
-		);
-
-		$this->storage->save_items( $context, $filtered );
-
-		if ( $context->is_project() ) {
-			$this->clear_removed_assignments( $context->object_id(), $removed );
-		}
 
 		return count( $filtered ) !== count( $items );
 	}
@@ -209,17 +159,6 @@ final class ItemStore {
 
 			$this->projects->save_assignment( $post_id, array( 'project_id' => 0 ) );
 		}
-	}
-
-	private function matching_items( array $items, string $item_id ): array {
-		return array_values(
-			array_filter(
-				$items,
-				static function ( array $item ) use ( $item_id ): bool {
-					return $item['id'] === $item_id;
-				}
-			)
-		);
 	}
 
 	private function find_existing_index( array $items, array $item ): ?int {

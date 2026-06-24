@@ -38,54 +38,40 @@ final class ProjectFormsView {
 	}
 
 	public function project_settings( array $payload, int $project_id ): void {
-		$this->context_settings( $payload );
-	}
-
-	public function context_settings( array $payload ): void {
 		$config  = $payload['config'];
-		$context = $payload['context'];
+		$project = $payload['project'];
 		?>
 		<section class="gp-workbench-panel">
 			<header>
-				<h2><?php esc_html_e( 'Context settings', 'guilherme-portfolio' ); ?></h2>
+				<h2><?php esc_html_e( 'Project settings', 'guilherme-portfolio' ); ?></h2>
 			</header>
 			<div class="gp-workbench-panel-body">
 				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="gp-workbench-form is-compact">
-					<?php $this->hidden_action( 'gp_workbench_update_context', $context['id'] ); ?>
-					<?php if ( 'project' === $context['type'] ) : ?>
-						<label>
-							<span><?php esc_html_e( 'Title', 'guilherme-portfolio' ); ?></span>
-							<input type="text" name="gp_workbench_context[title]" value="<?php echo esc_attr( $context['label'] ); ?>" required>
-						</label>
-						<div class="gp-workbench-form-grid">
-							<?php $this->select( 'gp_workbench_context[status]', __( 'Status', 'guilherme-portfolio' ), $this->statuses(), $context['status'] ); ?>
-							<?php $this->select( 'gp_workbench_context[mode]', __( 'Mode', 'guilherme-portfolio' ), ProjectRepository::modes(), $config['mode'] ); ?>
-						</div>
-					<?php else : ?>
-						<p class="description">
-							<?php echo esc_html( $context['label'] ); ?>
-							<?php if ( ! empty( $context['object_id'] ) ) : ?>
-								<?php echo esc_html( sprintf( ' #%d', $context['object_id'] ) ); ?>
-							<?php endif; ?>
-						</p>
-						<?php $this->select( 'gp_workbench_context[mode]', __( 'Mode', 'guilherme-portfolio' ), ProjectRepository::modes(), $config['mode'] ); ?>
-					<?php endif; ?>
-					<?php $this->checks( 'gp_workbench_context[surfaces]', ProjectRepository::surfaces(), $config['surfaces'], __( 'Surfaces', 'guilherme-portfolio' ) ); ?>
-					<?php $this->checks( 'gp_workbench_context[integrations]', ProjectRepository::integrations(), $config['integrations'], __( 'Providers', 'guilherme-portfolio' ) ); ?>
-					<textarea name="gp_workbench_context[notes]" rows="3"><?php echo esc_textarea( $config['notes'] ); ?></textarea>
-					<button type="submit" class="button"><?php esc_html_e( 'Save context', 'guilherme-portfolio' ); ?></button>
+					<?php $this->hidden_action( 'gp_workbench_update_project', $project_id ); ?>
+					<label>
+						<span><?php esc_html_e( 'Title', 'guilherme-portfolio' ); ?></span>
+						<input type="text" name="gp_workbench_project[title]" value="<?php echo esc_attr( $project['title'] ); ?>" required>
+					</label>
+					<div class="gp-workbench-form-grid">
+						<?php $this->select( 'gp_workbench_project[status]', __( 'Status', 'guilherme-portfolio' ), $this->statuses(), $project['status'] ); ?>
+						<?php $this->select( 'gp_workbench_project[mode]', __( 'Mode', 'guilherme-portfolio' ), ProjectRepository::modes(), $config['mode'] ); ?>
+					</div>
+					<?php $this->checks( 'gp_workbench_project[surfaces]', ProjectRepository::surfaces(), $config['surfaces'], __( 'Surfaces', 'guilherme-portfolio' ) ); ?>
+					<?php $this->checks( 'gp_workbench_project[integrations]', ProjectRepository::integrations(), $config['integrations'], __( 'Providers', 'guilherme-portfolio' ) ); ?>
+					<textarea name="gp_workbench_project[notes]" rows="3"><?php echo esc_textarea( $config['notes'] ); ?></textarea>
+					<button type="submit" class="button"><?php esc_html_e( 'Save project', 'guilherme-portfolio' ); ?></button>
 				</form>
 			</div>
 		</section>
 		<?php
 	}
 
-	private function hidden_action( string $action, $context_id = '' ): void {
+	private function hidden_action( string $action, int $project_id = 0 ): void {
 		wp_nonce_field( AdminActions::NONCE_ACTION, AdminActions::NONCE_NAME );
 		?>
 		<input type="hidden" name="action" value="<?php echo esc_attr( $action ); ?>">
-		<?php if ( '' !== (string) $context_id ) : ?>
-			<input type="hidden" name="context_id" value="<?php echo esc_attr( $context_id ); ?>">
+		<?php if ( $project_id ) : ?>
+			<input type="hidden" name="project_id" value="<?php echo esc_attr( $project_id ); ?>">
 		<?php endif; ?>
 		<?php
 	}

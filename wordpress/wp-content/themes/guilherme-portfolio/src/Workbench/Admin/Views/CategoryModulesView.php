@@ -21,7 +21,7 @@ final class CategoryModulesView {
 		$this->parts = $parts;
 	}
 
-	public function render( array $payload, string $context_id ): void {
+	public function render( array $payload, int $project_id ): void {
 		?>
 		<div class="gp-workbench-categories">
 			<?php foreach ( $payload['categories'] as $key => $category ) : ?>
@@ -36,7 +36,7 @@ final class CategoryModulesView {
 						<?php $this->parts->badge( (string) count( $items ), 'count', __( 'Items attached to this category', 'guilherme-portfolio' ) ); ?>
 					</header>
 					<div class="gp-workbench-module-body">
-						<?php $this->contents( $key, $items, $payload, $context_id ); ?>
+						<?php $this->contents( $key, $items, $payload, $project_id ); ?>
 					</div>
 				</section>
 			<?php endforeach; ?>
@@ -44,7 +44,7 @@ final class CategoryModulesView {
 		<?php
 	}
 
-	private function contents( string $key, array $items, array $payload, string $context_id ): void {
+	private function contents( string $key, array $items, array $payload, int $project_id ): void {
 		if ( 'providers' === $key ) {
 			$this->providers( $payload['providers'] );
 			return;
@@ -70,11 +70,11 @@ final class CategoryModulesView {
 		}
 
 		foreach ( $items as $item ) {
-			$this->item( $item, $context_id );
+			$this->item( $item, $project_id );
 		}
 	}
 
-	private function item( array $item, string $context_id ): void {
+	private function item( array $item, int $project_id ): void {
 		?>
 		<div class="gp-workbench-chip">
 			<div>
@@ -84,7 +84,7 @@ final class CategoryModulesView {
 			<div class="gp-workbench-chip-actions">
 				<?php $this->parts->badge( $item['type'], 'type', __( 'Attached object type', 'guilherme-portfolio' ) ); ?>
 				<?php $this->parts->badge( $item['state'], 'state', __( 'Manual workbench state', 'guilherme-portfolio' ) ); ?>
-				<?php $this->forms->row_action( 'gp_workbench_detach_item', $context_id, 'item_id', $item['id'], __( 'Detach', 'guilherme-portfolio' ) ); ?>
+				<?php $this->forms->row_action( 'gp_workbench_detach_item', $project_id, 'item_id', $item['id'], __( 'Detach', 'guilherme-portfolio' ) ); ?>
 			</div>
 		</div>
 		<?php

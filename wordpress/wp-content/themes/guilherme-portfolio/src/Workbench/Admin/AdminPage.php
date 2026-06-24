@@ -8,7 +8,7 @@
 namespace GuilhermePortfolio\Workbench\Admin;
 
 use GuilhermePortfolio\Workbench\Admin\Views\OverviewView;
-use GuilhermePortfolio\Workbench\Context;
+use GuilhermePortfolio\Workbench\Admin\Views\ProjectFormsView;
 use GuilhermePortfolio\Workbench\TopologyService;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,11 +22,13 @@ final class AdminPage {
 
 	private TopologyService $topology;
 	private OverviewView $view;
+	private ProjectFormsView $project_forms;
 	private string $page_hook = '';
 
-	public function __construct( TopologyService $topology, OverviewView $view ) {
-		$this->topology = $topology;
-		$this->view     = $view;
+	public function __construct( TopologyService $topology, OverviewView $view, ProjectFormsView $project_forms ) {
+		$this->topology      = $topology;
+		$this->view          = $view;
+		$this->project_forms = $project_forms;
 	}
 
 	public function init_hooks(): void {
@@ -62,28 +64,47 @@ final class AdminPage {
 			wp_die( esc_html__( 'You do not have permission to access this page.', 'guilherme-portfolio' ) );
 		}
 
-		$context_id = $this->selected_context_id();
+		$projects = $this->topology->project_options();
+
+		if ( empty( $projects ) ) {
+			$this->render_empty_state();
+			return;
+		}
+
+		$project_id = $this->selected_project_id( $projects );
 
 		try {
-			$payload = $this->topology->context( $context_id );
+			$payload = $this->topology->project( $project_id );
 		} catch ( \InvalidArgumentException $error ) {
-			$context_id = Context::ROOT_ID;
-			$payload    = $this->topology->root();
+			$project_id = absint( array_key_first( $projects ) );
+			$payload    = $this->topology->project( $project_id );
 		}
 
-		$this->view->render( $payload, $this->topology->context_options(), $context_id, $this->notice() );
+		$this->view->render( $payload, $projects, $project_id, $this->notice() );
 	}
 
-	private function selected_context_id(): string {
-		if ( isset( $_GET['context'] ) ) {
-			return sanitize_text_field( wp_unslash( $_GET['context'] ) );
+	private function render_empty_state(): void {
+		?>
+		<div class="wrap gp-workbench">
+			<h1><?php esc_html_e( 'Portfolio Workbench', 'guilherme-portfolio' ); ?></h1>
+			<div class="gp-workbench-empty">
+				<span class="dashicons dashicons-portfolio" aria-hidden="true"></span>
+				<h2><?php esc_html_e( 'No portfolio projects yet', 'guilherme-portfolio' ); ?></h2>
+				<p><?php esc_html_e( 'Create the first project record, then attach pages, provider data and relations from here.', 'guilherme-portfolio' ); ?></p>
+				<?php $this->project_forms->create_project(); ?>
+			</div>
+		</div>
+		<?php
+	}
+
+	private function selected_project_id( array $projects ): int {
+		$requested = isset( $_GET['project'] ) ? absint( wp_unslash( $_GET['project'] ) ) : 0;
+
+		if ( $requested && isset( $projects[ (string) $requested ] ) ) {
+			return $requested;
 		}
 
-		if ( isset( $_GET['project'] ) ) {
-			return Context::project_id( absint( wp_unslash( $_GET['project'] ) ) );
-		}
-
-		return Context::ROOT_ID;
+		return absint( array_key_first( $projects ) );
 	}
 
 	private function notice(): string {

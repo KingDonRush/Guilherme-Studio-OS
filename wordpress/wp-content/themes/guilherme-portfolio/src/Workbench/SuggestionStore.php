@@ -16,29 +16,12 @@ final class SuggestionStore {
 	private const LIMIT = 200;
 	private const STATES = array( 'pending', 'marked', 'ignored' );
 
-	private ContextStorage $storage;
-
-	public function __construct( ContextStorage $storage ) {
-		$this->storage = $storage;
-	}
-
 	public function all( int $project_id ): array {
 		return self::sanitize_suggestions( get_post_meta( $project_id, WorkbenchMeta::SUGGESTIONS, true ) );
 	}
 
-	public function all_for_context( Context $context ): array {
-		return $this->storage->suggestions( $context );
-	}
-
 	public function find( int $project_id, string $suggestion_id ): ?array {
 		$suggestions = $this->all( $project_id );
-		$index       = $this->find_index( $suggestions, $suggestion_id );
-
-		return null === $index ? null : $suggestions[ $index ];
-	}
-
-	public function find_in_context( Context $context, string $suggestion_id ): ?array {
-		$suggestions = $this->all_for_context( $context );
 		$index       = $this->find_index( $suggestions, $suggestion_id );
 
 		return null === $index ? null : $suggestions[ $index ];
@@ -62,24 +45,6 @@ final class SuggestionStore {
 		return $suggestion;
 	}
 
-	public function add_to_context( Context $context, array $raw ): array {
-		$suggestion  = self::sanitize_suggestion( $raw );
-		$suggestions = $this->all_for_context( $context );
-		$index       = $this->find_index( $suggestions, $suggestion['id'] );
-
-		if ( null !== $index ) {
-			$suggestion['created_at'] = $suggestions[ $index ]['created_at'];
-			$suggestions[ $index ]    = $suggestion;
-		} else {
-			$suggestion['id'] = $this->unique_id( $suggestion['id'], $suggestions );
-			$suggestions[]    = $suggestion;
-		}
-
-		$this->storage->save_suggestions( $context, array_slice( $suggestions, 0, self::LIMIT ) );
-
-		return $suggestion;
-	}
-
 	public function set_state( int $project_id, string $suggestion_id, string $state ): ?array {
 		$suggestions = $this->all( $project_id );
 		$index       = $this->find_index( $suggestions, $suggestion_id );
@@ -91,21 +56,6 @@ final class SuggestionStore {
 		$suggestions[ $index ]['state']      = WorkbenchSanitizer::allowed( $state, self::STATES, 'pending' );
 		$suggestions[ $index ]['updated_at'] = current_time( 'mysql' );
 		update_post_meta( $project_id, WorkbenchMeta::SUGGESTIONS, $suggestions );
-
-		return $suggestions[ $index ];
-	}
-
-	public function set_context_state( Context $context, string $suggestion_id, string $state ): ?array {
-		$suggestions = $this->all_for_context( $context );
-		$index       = $this->find_index( $suggestions, $suggestion_id );
-
-		if ( null === $index ) {
-			return null;
-		}
-
-		$suggestions[ $index ]['state']      = WorkbenchSanitizer::allowed( $state, self::STATES, 'pending' );
-		$suggestions[ $index ]['updated_at'] = current_time( 'mysql' );
-		$this->storage->save_suggestions( $context, $suggestions );
 
 		return $suggestions[ $index ];
 	}
