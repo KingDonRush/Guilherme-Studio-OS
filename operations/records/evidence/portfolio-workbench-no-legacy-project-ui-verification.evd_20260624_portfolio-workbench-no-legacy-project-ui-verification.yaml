@@ -1,0 +1,38 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-24T00:50:08.000Z
+  id: evd_20260624_portfolio-workbench-no-legacy-project-ui-verification
+  labels:
+    - portfolio
+    - wordpress
+    - workbench
+    - wp-admin
+  revision: 1
+  schema_version: 1
+  slug: portfolio-workbench-no-legacy-project-ui-verification
+  updated_at: 2026-06-24T00:50:08.000Z
+relations:
+  - target_id: tsk_20260615_finish-legacy-agentic-portfolio-promises
+    type: supports
+spec:
+  checksum: 346649767dea28506b8c48c39fca401e0c9292719ad0269449c4dbc8c05096bd
+  claims:
+    - "`gp_project` no longer exposes its standalone wp-admin UI or Appearance submenu; it remains internal storage for the Workbench."
+    - Portfolio Workbench renders project creation and project settings forms inside the Workbench instead of linking to the legacy post editor.
+    - Content list project links now open the selected project context in Portfolio Workbench.
+    - Admin render smoke rejects legacy `post-new.php?post_type=gp_project`, `Edit project` and `New project` links.
+  command: >-
+    docker compose -f wordpress/docker-compose.yml -f operations/wordpress/docker-compose.products.yml run --rm wpcli --skip-plugins=elementor,pro-elements
+    eval Workbench create-project action, gp_project show_ui check, and no-legacy admin render smoke
+  evidence_type: command
+  observed_at: 2026-06-24T00:50:08.000Z
+  path: /tmp/gp-admin-no-legacy-smoke-result.txt
+  source_mutability: operator-observed
+  status: active
+  subject_id: prj_20260614_wordpress-portfolio
+  title: Portfolio Workbench no legacy project UI verification
+  validated_at: 2026-06-24T00:50:08.000Z

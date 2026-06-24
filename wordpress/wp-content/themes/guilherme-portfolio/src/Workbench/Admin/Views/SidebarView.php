@@ -15,48 +15,25 @@ final class SidebarView {
 
 	private FormsView $forms;
 	private ViewParts $parts;
+	private ProjectFormsView $project_forms;
 
-	public function __construct( FormsView $forms, ViewParts $parts ) {
-		$this->forms = $forms;
-		$this->parts = $parts;
+	public function __construct( FormsView $forms, ViewParts $parts, ProjectFormsView $project_forms ) {
+		$this->forms         = $forms;
+		$this->parts         = $parts;
+		$this->project_forms = $project_forms;
 	}
 
 	public function render( array $payload, int $project_id ): void {
 		?>
 		<aside class="gp-workbench-side">
-			<?php $this->project_inspector( $payload ); ?>
+			<?php $this->project_forms->project_settings( $payload, $project_id ); ?>
 			<?php $this->forms->attach_item( $project_id, $payload['providers'] ); ?>
+			<?php $this->forms->create_page( $project_id ); ?>
 			<?php $this->forms->add_relation( $project_id, $payload['items'] ); ?>
 			<?php $this->suggestions_inbox( $payload['suggestions'], $project_id ); ?>
 			<?php $this->forms->add_suggestion( $project_id ); ?>
+			<?php $this->project_forms->create_project(); ?>
 		</aside>
-		<?php
-	}
-
-	private function project_inspector( array $payload ): void {
-		$config = $payload['config'];
-		?>
-		<section class="gp-workbench-panel">
-			<header>
-				<h2><?php esc_html_e( 'Inspector', 'guilherme-portfolio' ); ?></h2>
-				<a href="<?php echo esc_url( $payload['project']['edit'] ); ?>"><?php esc_html_e( 'Edit project', 'guilherme-portfolio' ); ?></a>
-			</header>
-			<div class="gp-workbench-panel-body">
-				<p><strong><?php echo esc_html( $payload['project']['title'] ); ?></strong></p>
-				<div class="gp-workbench-badges">
-					<?php $this->parts->badge( $config['mode'], 'type', __( 'Project mode', 'guilherme-portfolio' ) ); ?>
-					<?php foreach ( $config['surfaces'] as $surface ) : ?>
-						<?php $this->parts->badge( $surface, 'type', __( 'Enabled surface', 'guilherme-portfolio' ) ); ?>
-					<?php endforeach; ?>
-					<?php foreach ( $config['integrations'] as $integration ) : ?>
-						<?php $this->parts->badge( $integration, 'state', __( 'Enabled provider bridge', 'guilherme-portfolio' ) ); ?>
-					<?php endforeach; ?>
-				</div>
-				<?php if ( '' !== $config['notes'] ) : ?>
-					<p class="description"><?php echo esc_html( $config['notes'] ); ?></p>
-				<?php endif; ?>
-			</div>
-		</section>
 		<?php
 	}
 

@@ -9,7 +9,9 @@ namespace GuilhermePortfolio\CLI;
 
 use GuilhermePortfolio\Projects\ProjectRepository;
 use GuilhermePortfolio\Workbench\ItemStore;
+use GuilhermePortfolio\Workbench\PageCreator;
 use GuilhermePortfolio\Workbench\RelationStore;
+use GuilhermePortfolio\Workbench\SuggestionReviewer;
 use GuilhermePortfolio\Workbench\SuggestionStore;
 use GuilhermePortfolio\Workbench\TopologyService;
 
@@ -20,18 +22,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class WorkbenchCommand {
 
 	private ItemStore $items;
+	private PageCreator $pages;
 	private RelationStore $relations;
+	private SuggestionReviewer $reviewer;
 	private SuggestionStore $suggestions;
 	private TopologyService $topology;
 
 	public function __construct(
 		ItemStore $items,
+		PageCreator $pages,
 		RelationStore $relations,
+		SuggestionReviewer $reviewer,
 		SuggestionStore $suggestions,
 		TopologyService $topology
 	) {
 		$this->items       = $items;
+		$this->pages       = $pages;
 		$this->relations   = $relations;
+		$this->reviewer    = $reviewer;
 		$this->suggestions = $suggestions;
 		$this->topology    = $topology;
 	}
@@ -62,6 +70,17 @@ final class WorkbenchCommand {
 			return;
 		}
 
+		if ( 'create-page' === $action ) {
+			try {
+				$page = $this->pages->create( $project_id, $this->page_args( $assoc_args ) );
+			} catch ( \Throwable $error ) {
+				\WP_CLI::error( $error->getMessage() );
+			}
+
+			$this->success_payload( 'Workbench page created and attached.', $page, $assoc_args );
+			return;
+		}
+
 		if ( 'detach' === $action ) {
 			$item_id = $args[2] ?? '';
 			$this->require_value( $item_id, 'Workbench item ID is required.' );
@@ -74,7 +93,7 @@ final class WorkbenchCommand {
 			return;
 		}
 
-		\WP_CLI::error( 'Use one of: list, attach, detach.' );
+		\WP_CLI::error( 'Use one of: list, attach, create-page, detach.' );
 	}
 
 	public function relation( array $args, array $assoc_args ): void {
@@ -138,7 +157,9 @@ final class WorkbenchCommand {
 		if ( in_array( $action, array( 'mark', 'ignore' ), true ) ) {
 			$suggestion_id = $args[2] ?? '';
 			$this->require_value( $suggestion_id, 'Workbench suggestion ID is required.' );
-			$suggestion = $this->suggestions->set_state( $project_id, $suggestion_id, 'mark' === $action ? 'marked' : 'ignored' );
+			$suggestion = 'mark' === $action
+				? $this->reviewer->mark( $project_id, $suggestion_id )
+				: $this->reviewer->ignore( $project_id, $suggestion_id );
 
 			if ( ! $suggestion ) {
 				\WP_CLI::error( 'Workbench suggestion not found.' );
@@ -168,6 +189,20 @@ final class WorkbenchCommand {
 			'provider'    => $assoc_args['provider'] ?? 'manual',
 			'state'       => $assoc_args['state'] ?? 'manual',
 			'notes'       => $assoc_args['notes'] ?? '',
+		);
+	}
+
+	private function page_args( array $assoc_args ): array {
+		if ( empty( $assoc_args['title'] ) ) {
+			\WP_CLI::error( 'Use --title=<text> for the new page.' );
+		}
+
+		return array(
+			'title'    => $assoc_args['title'],
+			'status'   => $assoc_args['status'] ?? 'draft',
+			'category' => $assoc_args['category'] ?? 'pages',
+			'role'     => $assoc_args['role'] ?? 'other',
+			'notes'    => $assoc_args['notes'] ?? '',
 		);
 	}
 

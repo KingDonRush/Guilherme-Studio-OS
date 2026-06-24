@@ -1,0 +1,39 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-24T00:43:02.000Z
+  id: evd_20260624_portfolio-workbench-page-creation-promotion-verification
+  labels:
+    - portfolio
+    - wordpress
+    - workbench
+    - wp-cli
+    - wp-admin
+  revision: 1
+  schema_version: 1
+  slug: portfolio-workbench-page-creation-promotion-verification
+  updated_at: 2026-06-24T00:43:02.000Z
+relations:
+  - target_id: tsk_20260615_finish-legacy-agentic-portfolio-promises
+    type: supports
+spec:
+  checksum: 3cca07c5da8458a58c15ec7f647bdae3634d478929bc35ff3afd5c52a6a6763c
+  claims:
+    - Workbench can create a normal WordPress page and immediately attach it to the selected portfolio project.
+    - Marking a pending relation suggestion with source, relation and target promotes it into a confirmed relation record.
+    - Admin render smoke includes the Create page disclosure and keeps badges, tips, suggestion inbox and missing provider state available.
+    - Temporary smoke project and pages were removed after verification.
+  command: >-
+    docker compose -f wordpress/docker-compose.yml -f operations/wordpress/docker-compose.products.yml run --rm wpcli --skip-plugins=elementor,pro-elements
+    gp item create-page / gp suggestion mark / gp topology smoke plus admin render smoke
+  evidence_type: command
+  observed_at: 2026-06-24T00:43:02.000Z
+  path: /tmp/gp-page-promotion-topology-smoke.json
+  source_mutability: operator-observed
+  status: active
+  subject_id: prj_20260614_wordpress-portfolio
+  title: Portfolio Workbench page creation and suggestion promotion verification
+  validated_at: 2026-06-24T00:43:02.000Z

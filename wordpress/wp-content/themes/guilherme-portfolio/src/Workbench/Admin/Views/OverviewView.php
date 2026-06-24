@@ -7,7 +7,6 @@
 
 namespace GuilhermePortfolio\Workbench\Admin\Views;
 
-use GuilhermePortfolio\Projects\ProjectRepository;
 use GuilhermePortfolio\Workbench\Admin\AdminPage;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -36,8 +35,7 @@ final class OverviewView {
 	public function render( array $payload, array $project_options, int $project_id, string $notice ): void {
 		?>
 		<div class="wrap gp-workbench">
-			<h1 class="wp-heading-inline"><?php esc_html_e( 'Portfolio Workbench', 'guilherme-portfolio' ); ?></h1>
-			<a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=' . ProjectRepository::POST_TYPE ) ); ?>" class="page-title-action"><?php esc_html_e( 'New project', 'guilherme-portfolio' ); ?></a>
+			<h1><?php esc_html_e( 'Portfolio Workbench', 'guilherme-portfolio' ); ?></h1>
 			<hr class="wp-header-end">
 			<?php $this->parts->notice( $notice ); ?>
 			<?php $this->toolbar( $project_options, $project_id ); ?>

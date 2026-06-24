@@ -54,6 +54,28 @@ final class FormsView {
 		<?php
 	}
 
+	public function create_page( int $project_id ): void {
+		?>
+		<details class="gp-workbench-disclosure">
+			<summary><?php esc_html_e( 'Create page', 'guilherme-portfolio' ); ?></summary>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="gp-workbench-form">
+				<?php $this->hidden_action( 'gp_workbench_create_page', $project_id ); ?>
+				<label>
+					<span><?php esc_html_e( 'Page title', 'guilherme-portfolio' ); ?></span>
+					<input type="text" name="gp_workbench_page[title]" class="regular-text" required>
+				</label>
+				<div class="gp-workbench-form-grid">
+					<?php $this->select( 'gp_workbench_page[status]', __( 'Status', 'guilherme-portfolio' ), $this->page_statuses(), 'draft' ); ?>
+					<?php $this->select( 'gp_workbench_page[category]', __( 'Category', 'guilherme-portfolio' ), CategoryRegistry::labels(), 'pages' ); ?>
+					<?php $this->select( 'gp_workbench_page[role]', __( 'Role', 'guilherme-portfolio' ), ProjectRepository::roles(), 'other' ); ?>
+				</div>
+				<textarea name="gp_workbench_page[notes]" rows="2" placeholder="<?php esc_attr_e( 'Optional note for the attached item', 'guilherme-portfolio' ); ?>"></textarea>
+				<button type="submit" class="button"><?php esc_html_e( 'Create and attach', 'guilherme-portfolio' ); ?></button>
+			</form>
+		</details>
+		<?php
+	}
+
 	public function add_relation( int $project_id, array $items ): void {
 		?>
 		<details class="gp-workbench-disclosure">
@@ -185,6 +207,15 @@ final class FormsView {
 			'inherited'    => __( 'Inherited', 'guilherme-portfolio' ),
 			'needs_review' => __( 'Needs review', 'guilherme-portfolio' ),
 			'missing'      => __( 'Missing', 'guilherme-portfolio' ),
+		);
+	}
+
+	private function page_statuses(): array {
+		return array(
+			'draft'   => __( 'Draft', 'guilherme-portfolio' ),
+			'private' => __( 'Private', 'guilherme-portfolio' ),
+			'pending' => __( 'Pending', 'guilherme-portfolio' ),
+			'publish' => __( 'Publish', 'guilherme-portfolio' ),
 		);
 	}
 

@@ -84,7 +84,6 @@ final class TopologyService {
 			'id'     => $project->ID,
 			'title'  => get_the_title( $project ),
 			'status' => $project->post_status,
-			'edit'   => get_edit_post_link( $project->ID, '' ),
 		);
 	}
 

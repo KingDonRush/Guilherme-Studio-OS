@@ -9,7 +9,9 @@ namespace GuilhermePortfolio\Workbench\Admin;
 
 use GuilhermePortfolio\Projects\ProjectRepository;
 use GuilhermePortfolio\Workbench\ItemStore;
+use GuilhermePortfolio\Workbench\PageCreator;
 use GuilhermePortfolio\Workbench\RelationStore;
+use GuilhermePortfolio\Workbench\SuggestionReviewer;
 use GuilhermePortfolio\Workbench\SuggestionStore;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,18 +23,34 @@ final class AdminActions {
 	public const NONCE_ACTION = 'gp_workbench_action';
 	public const NONCE_NAME = 'gp_workbench_nonce';
 
+	private ProjectRepository $projects;
 	private ItemStore $items;
+	private PageCreator $pages;
 	private RelationStore $relations;
+	private SuggestionReviewer $reviewer;
 	private SuggestionStore $suggestions;
 
-	public function __construct( ItemStore $items, RelationStore $relations, SuggestionStore $suggestions ) {
+	public function __construct(
+		ProjectRepository $projects,
+		ItemStore $items,
+		PageCreator $pages,
+		RelationStore $relations,
+		SuggestionReviewer $reviewer,
+		SuggestionStore $suggestions
+	) {
+		$this->projects    = $projects;
 		$this->items       = $items;
+		$this->pages       = $pages;
 		$this->relations   = $relations;
+		$this->reviewer    = $reviewer;
 		$this->suggestions = $suggestions;
 	}
 
 	public function init_hooks(): void {
+		add_action( 'admin_post_gp_workbench_create_project', array( $this, 'create_project' ) );
+		add_action( 'admin_post_gp_workbench_update_project', array( $this, 'update_project' ) );
 		add_action( 'admin_post_gp_workbench_attach_item', array( $this, 'attach_item' ) );
+		add_action( 'admin_post_gp_workbench_create_page', array( $this, 'create_page' ) );
 		add_action( 'admin_post_gp_workbench_detach_item', array( $this, 'detach_item' ) );
 		add_action( 'admin_post_gp_workbench_add_relation', array( $this, 'add_relation' ) );
 		add_action( 'admin_post_gp_workbench_update_relation', array( $this, 'update_relation' ) );
@@ -42,12 +60,69 @@ final class AdminActions {
 		add_action( 'admin_post_gp_workbench_ignore_suggestion', array( $this, 'ignore_suggestion' ) );
 	}
 
+	public function create_project(): void {
+		$this->assert_action();
+		$raw   = $this->posted_array( 'gp_workbench_project' );
+		$title = sanitize_text_field( $raw['title'] ?? '' );
+
+		if ( '' === $title ) {
+			$this->redirect( 0, 'project_create_failed' );
+		}
+
+		$project_id = wp_insert_post(
+			array(
+				'post_type'   => ProjectRepository::POST_TYPE,
+				'post_title'  => $title,
+				'post_status' => $this->status( $raw['status'] ?? 'draft' ),
+			),
+			true
+		);
+
+		if ( is_wp_error( $project_id ) ) {
+			$this->redirect( 0, 'project_create_failed' );
+		}
+
+		$this->projects->save_config( (int) $project_id, $raw );
+		$this->redirect( (int) $project_id, 'project_created' );
+	}
+
+	public function update_project(): void {
+		$project_id = $this->project_id();
+		$raw        = $this->posted_array( 'gp_workbench_project' );
+
+		wp_update_post(
+			array_filter(
+				array(
+					'ID'          => $project_id,
+					'post_title'  => sanitize_text_field( $raw['title'] ?? '' ),
+					'post_status' => $this->status( $raw['status'] ?? 'draft' ),
+				)
+			)
+		);
+
+		$this->projects->save_config( $project_id, $raw );
+		$this->redirect( $project_id, 'project_updated' );
+	}
+
 	public function attach_item(): void {
 		$project_id = $this->project_id();
 		$raw        = $this->posted_array( 'gp_workbench_item' );
 
 		$this->items->attach( $project_id, $raw );
 		$this->redirect( $project_id, 'item_attached' );
+	}
+
+	public function create_page(): void {
+		$project_id = $this->project_id();
+		$raw        = $this->posted_array( 'gp_workbench_page' );
+
+		try {
+			$this->pages->create( $project_id, $raw );
+		} catch ( \Throwable $error ) {
+			$this->redirect( $project_id, 'page_create_failed' );
+		}
+
+		$this->redirect( $project_id, 'page_created' );
 	}
 
 	public function detach_item(): void {
@@ -103,13 +178,17 @@ final class AdminActions {
 		$project_id    = $this->project_id();
 		$suggestion_id = $this->posted_text( 'suggestion_id' );
 
-		$this->suggestions->set_state( $project_id, $suggestion_id, $state );
+		if ( 'marked' === $state ) {
+			$this->reviewer->mark( $project_id, $suggestion_id );
+		} else {
+			$this->reviewer->ignore( $project_id, $suggestion_id );
+		}
+
 		$this->redirect( $project_id, $notice );
 	}
 
 	private function project_id(): int {
-		$this->assert_permission();
-		check_admin_referer( self::NONCE_ACTION, self::NONCE_NAME );
+		$this->assert_action();
 
 		$project_id = isset( $_POST['project_id'] ) ? absint( wp_unslash( $_POST['project_id'] ) ) : 0;
 
@@ -130,6 +209,11 @@ final class AdminActions {
 		}
 	}
 
+	private function assert_action(): void {
+		$this->assert_permission();
+		check_admin_referer( self::NONCE_ACTION, self::NONCE_NAME );
+	}
+
 	private function posted_array( string $key ): array {
 		return isset( $_POST[ $key ] ) && is_array( $_POST[ $key ] ) ? wp_unslash( $_POST[ $key ] ) : array();
 	}
@@ -139,16 +223,22 @@ final class AdminActions {
 	}
 
 	private function redirect( int $project_id, string $notice ): void {
-		wp_safe_redirect(
-			add_query_arg(
-				array(
-					'page'                => AdminPage::MENU_SLUG,
-					'project'             => $project_id,
-					'gp_workbench_notice' => $notice,
-				),
-				admin_url( 'themes.php' )
-			)
+		$args = array(
+			'page'                => AdminPage::MENU_SLUG,
+			'gp_workbench_notice' => $notice,
 		);
+
+		if ( $project_id ) {
+			$args['project'] = $project_id;
+		}
+
+		wp_safe_redirect( add_query_arg( $args, admin_url( 'themes.php' ) ) );
 		exit;
+	}
+
+	private function status( $status ): string {
+		$status = sanitize_key( $status );
+
+		return in_array( $status, array( 'draft', 'publish', 'private', 'pending' ), true ) ? $status : 'draft';
 	}
 }

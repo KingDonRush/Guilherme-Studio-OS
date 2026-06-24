@@ -20,6 +20,13 @@ final class SuggestionStore {
 		return self::sanitize_suggestions( get_post_meta( $project_id, WorkbenchMeta::SUGGESTIONS, true ) );
 	}
 
+	public function find( int $project_id, string $suggestion_id ): ?array {
+		$suggestions = $this->all( $project_id );
+		$index       = $this->find_index( $suggestions, $suggestion_id );
+
+		return null === $index ? null : $suggestions[ $index ];
+	}
+
 	public function add( int $project_id, array $raw ): array {
 		$suggestion  = self::sanitize_suggestion( $raw );
 		$suggestions = $this->all( $project_id );

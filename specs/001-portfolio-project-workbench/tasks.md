@@ -45,3 +45,12 @@
 - [X] T038 Add admin smoke checks for overview, badges, tips, suggestions and missing provider state.
 - [X] T039 Add WP-CLI smoke checks for create/attach/relation/suggestion/topology workflows.
 - [X] T040 Update acceptance evidence after implementation.
+
+## Follow-up Closure
+
+- [X] T041 Add Workbench page creation flow that creates a normal WordPress page and immediately attaches it to the selected project.
+- [X] T042 Promote marked relation suggestions into confirmed relation records when the suggestion payload includes source, relation and target.
+- [X] T043 Add admin and WP-CLI smoke evidence for page creation and suggestion promotion.
+- [X] T044 Make `gp_project` an internal storage post type by removing its standalone wp-admin UI/menu.
+- [X] T045 Replace legacy project editor links with Workbench-native project create/update forms and context links.
+- [X] T046 Add smoke evidence that Workbench render has no `gp_project` legacy create/edit links.

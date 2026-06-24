@@ -50,6 +50,11 @@ final class ViewParts {
 
 		$messages = array(
 			'item_attached'      => __( 'Workbench item attached.', 'guilherme-portfolio' ),
+			'project_created'    => __( 'Project created in Workbench.', 'guilherme-portfolio' ),
+			'project_updated'    => __( 'Project updated.', 'guilherme-portfolio' ),
+			'project_create_failed' => __( 'Could not create the project.', 'guilherme-portfolio' ),
+			'page_created'       => __( 'Page created and attached.', 'guilherme-portfolio' ),
+			'page_create_failed' => __( 'Could not create the page.', 'guilherme-portfolio' ),
 			'item_detached'      => __( 'Workbench item detached.', 'guilherme-portfolio' ),
 			'relation_stored'    => __( 'Workbench relation stored.', 'guilherme-portfolio' ),
 			'relation_updated'   => __( 'Workbench relation updated.', 'guilherme-portfolio' ),

@@ -7,6 +7,8 @@
 
 namespace GuilhermePortfolio\Projects;
 
+use GuilhermePortfolio\Workbench\Admin\AdminPage;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -63,14 +65,15 @@ final class AdminColumns {
 			}
 
 			$title = get_the_title( $project_id );
-			$url   = get_edit_post_link( $project_id );
+			$url   = add_query_arg(
+				array(
+					'page'    => AdminPage::MENU_SLUG,
+					'project' => $project_id,
+				),
+				admin_url( 'themes.php' )
+			);
 
-			if ( $url ) {
-				printf( '<a href="%1$s">%2$s</a>', esc_url( $url ), esc_html( $title ) );
-				return;
-			}
-
-			echo esc_html( $title );
+			printf( '<a href="%1$s">%2$s</a>', esc_url( $url ), esc_html( $title ) );
 			return;
 		}
 

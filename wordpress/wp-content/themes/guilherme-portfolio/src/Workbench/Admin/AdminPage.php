@@ -7,8 +7,8 @@
 
 namespace GuilhermePortfolio\Workbench\Admin;
 
-use GuilhermePortfolio\Projects\ProjectRepository;
 use GuilhermePortfolio\Workbench\Admin\Views\OverviewView;
+use GuilhermePortfolio\Workbench\Admin\Views\ProjectFormsView;
 use GuilhermePortfolio\Workbench\TopologyService;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,11 +22,13 @@ final class AdminPage {
 
 	private TopologyService $topology;
 	private OverviewView $view;
+	private ProjectFormsView $project_forms;
 	private string $page_hook = '';
 
-	public function __construct( TopologyService $topology, OverviewView $view ) {
-		$this->topology = $topology;
-		$this->view     = $view;
+	public function __construct( TopologyService $topology, OverviewView $view, ProjectFormsView $project_forms ) {
+		$this->topology      = $topology;
+		$this->view          = $view;
+		$this->project_forms = $project_forms;
 	}
 
 	public function init_hooks(): void {
@@ -82,7 +84,6 @@ final class AdminPage {
 	}
 
 	private function render_empty_state(): void {
-		$url = admin_url( 'post-new.php?post_type=' . ProjectRepository::POST_TYPE );
 		?>
 		<div class="wrap gp-workbench">
 			<h1><?php esc_html_e( 'Portfolio Workbench', 'guilherme-portfolio' ); ?></h1>
@@ -90,7 +91,7 @@ final class AdminPage {
 				<span class="dashicons dashicons-portfolio" aria-hidden="true"></span>
 				<h2><?php esc_html_e( 'No portfolio projects yet', 'guilherme-portfolio' ); ?></h2>
 				<p><?php esc_html_e( 'Create the first project record, then attach pages, provider data and relations from here.', 'guilherme-portfolio' ); ?></p>
-				<a class="button button-primary" href="<?php echo esc_url( $url ); ?>"><?php esc_html_e( 'Create project', 'guilherme-portfolio' ); ?></a>
+				<?php $this->project_forms->create_project(); ?>
 			</div>
 		</div>
 		<?php
