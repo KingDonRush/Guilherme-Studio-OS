@@ -11,10 +11,10 @@ metadata:
     - product
     - wave-1
     - trust-baseline
-  revision: 1
+  revision: 2
   schema_version: 1
   slug: elementor-toolkit-wave-1-trust-baseline
-  updated_at: 2026-07-15T19:44:18.000Z
+  updated_at: 2026-07-15T21:19:12.000Z
 relations:
   - target_id: dec_20260715_elementor-toolkit-blueprint-authority
     type: governed_by
@@ -33,6 +33,6 @@ spec:
   blocked_by: []
   economic_reason: Remove trust, leakage and interaction failures before exposing a canonical compiler or migration UI.
   priority: now
-  status: active
-  summary: Hardens legacy runtime and UI into a safe V0.4 substrate for Blueprint compilation.
+  status: done
+  summary: V0.4 is locally committed, tagged and verified as the migration-safe substrate for Blueprint compilation; remote publication remains behind the external-action confirmation gate.
   title: EIT Wave 1 - trust baseline

@@ -1,0 +1,54 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-15T21:19:12.000Z
+  id: evd_20260715_elementor-toolkit-wave-1-trust-baseline-verification
+  labels:
+    - elementor-implementation-toolkit
+    - product
+    - wave-1
+    - trust-baseline
+    - verification
+  revision: 1
+  schema_version: 1
+  slug: elementor-toolkit-wave-1-trust-baseline-verification
+  updated_at: 2026-07-15T21:19:12.000Z
+relations:
+  - target_id: tsk_20260715_elementor-toolkit-wave-1-trust-baseline
+    type: supports
+spec:
+  claims:
+    - CCT schema writes fail closed, verify installed columns and indexes, preserve published storage identities and expose only published rows publicly.
+    - CPT and CCT validation reject reserved or duplicate identities, preserve failed input and accept the required string value zero.
+    - Filter requests enforce the 32 KB body, 20-filter, 24-default, 48-maximum and computed-cost contracts.
+    - The legacy DOM provider is capped at 200 items, matches exact tokens and performs no WordPress enrichment queries.
+    - Frontend requests abort stale work, apply only the latest response and preserve visible results while exposing actionable error state.
+    - Browser checks prove busy state, live regions, focus recovery, reduced-motion support and an axe-clean Toolkit surface.
+    - Elementor 4.0.8 opens the Toolkit panel through the official selection and panel hook path without fixed polling.
+    - Built assets are source-owned and consolidated to at most four Toolkit requests when all surfaces are active.
+    - The line-budget report has no review or blocking debt after large admin, controller and verification files were modularized.
+    - The V0.4 branch contains exactly three functional commits and the local annotated v0.4.0 tag points to commit 4b2bd57232b8f723e46487194488ffe3a514ed93.
+    - Composer validation, PHP syntax, WPCS and PHPCompatibility, PHPStan, PHPUnit, WordPress integration, Vitest, Playwright with axe, Gitleaks and Git whitespace checks pass.
+  command: >-
+    composer validate --strict --no-check-publish &&
+    composer lint &&
+    composer phpcs &&
+    composer analyse -- --no-progress &&
+    composer test &&
+    npm run build &&
+    npm test -- --run &&
+    npm run check:js &&
+    composer test:wp &&
+    npm run test:e2e &&
+    php scripts/verify-line-budget.php &&
+    gitleaks git --redact --no-banner --exit-code 1 &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-07-15T21:19:12.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Elementor Implementation Toolkit Wave 1 trust baseline verification
+  validated_at: 2026-07-15T21:19:12.000Z
