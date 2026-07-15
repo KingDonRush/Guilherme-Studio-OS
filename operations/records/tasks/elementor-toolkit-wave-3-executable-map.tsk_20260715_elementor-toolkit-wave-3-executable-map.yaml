@@ -12,10 +12,10 @@ metadata:
     - wave-3
     - wp-admin
     - ux
-  revision: 1
+  revision: 2
   schema_version: 1
   slug: elementor-toolkit-wave-3-executable-map
-  updated_at: 2026-07-15T19:44:18.000Z
+  updated_at: 2026-07-15T22:56:10.000Z
 relations:
   - target_id: dec_20260715_elementor-toolkit-blueprint-authority
     type: governed_by
@@ -33,6 +33,6 @@ spec:
     - tsk_20260715_elementor-toolkit-wave-2-blueprint-kernel
   economic_reason: Give implementers a legible control plane without turning wp-admin into a foreign decorative dashboard.
   priority: normal
-  status: waiting
-  summary: Delivers the V0.6 executable topology map and accessible native admin control plane.
+  status: active
+  summary: V0.6 is implemented and mechanically verified in three local commits; real-browser approval of map grammar and inspector density plus remote publication remain open gates.
   title: EIT Wave 3 - executable map

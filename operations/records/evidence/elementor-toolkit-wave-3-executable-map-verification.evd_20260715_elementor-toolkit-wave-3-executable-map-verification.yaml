@@ -1,0 +1,57 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-15T22:56:10.000Z
+  id: evd_20260715_elementor-toolkit-wave-3-executable-map-verification
+  labels:
+    - elementor-implementation-toolkit
+    - product
+    - wave-3
+    - executable-map
+    - verification
+  revision: 1
+  schema_version: 1
+  slug: elementor-toolkit-wave-3-executable-map-verification
+  updated_at: 2026-07-15T22:56:10.000Z
+relations:
+  - target_id: tsk_20260715_elementor-toolkit-wave-3-executable-map
+    type: supports
+spec:
+  claims:
+    - V0.6 exposes only Systems, Runs, Diagnostics and Settings in the Toolkit navigation; CPT, CCT and legacy configuration screens remain hidden direct recovery surfaces.
+    - The Systems workspace loads its WordPress components and React Flow assets only on that screen, with exactly four Toolkit asset requests when the workspace is present.
+    - Blueprint draft CRUD, validation, compiler impact, apply, reconcile, rollback, schema, Runs and Diagnostics are capability-gated administrative REST contracts with a 512 KB body bound.
+    - Incomplete drafts remain saveable for in-context correction while impact preparation and publication fail closed.
+    - The map validates typed connections, keeps canvas position non-semantic, provides auto-layout, exposes real compiler impact and renders a bounded recovery state instead of a blank screen.
+    - Node cards are limited to name, function, proven validation health and compiled output; the inspector preserves the required six-section order with technical details collapsed.
+    - The outline is an equivalent keyboard-operable representation, focus and live states are explicit, reduced motion is respected and axe reports no violations in the tested workspace and navigation states.
+    - Connected Adapter nodes are the compiler authority; conflicting raw Entity adapter aliases do not override the executable map.
+    - The minified Systems bundle is approximately 220.5 KB and replaces the initial approximately 458 KB development bundle without adding requests.
+    - A 1440 px real wp-admin capture was inspected at /tmp/eit-v060-systems-map-v2.png; overlapping cards were corrected before evidence registration.
+    - Composer validation, PHP syntax, WPCS and PHPCompatibility, PHPStan, PHPUnit with 16 tests and 34 assertions, WordPress integration, Vitest, five Playwright scenarios with axe, strict line budget, Gitleaks and Git whitespace checks pass.
+    - The branch contains exactly three functional commits from c2030a5c9e9030543cd10dddb2dba439f4926b25 to 40c08572c92ac84ee6767002d50440b585e5c993.
+    - Deterministic Git evidence patches were generated at /tmp/git-evidence.patch and /tmp/git-evidence-range.patch against v0.5.0.
+    - Final v0.6.0 tagging, remote publication and completion status remain withheld until Guilherme approves map grammar and inspector density in a real browser.
+  command: >-
+    composer validate --strict --no-check-publish &&
+    composer lint &&
+    composer phpcs &&
+    composer analyse &&
+    composer test &&
+    composer test:wp &&
+    npm run build &&
+    npm test -- --run &&
+    npm run check:js &&
+    npm run test:e2e -- --reporter=line &&
+    php scripts/verify-line-budget.php --strict &&
+    gitleaks git --redact --no-banner --exit-code 1 &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-07-15T22:56:10.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Elementor Implementation Toolkit Wave 3 executable map verification
+  validated_at: 2026-07-15T22:56:10.000Z
