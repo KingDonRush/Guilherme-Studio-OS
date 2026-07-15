@@ -11,10 +11,10 @@ metadata:
     - product
     - wave-2
     - blueprint
-  revision: 1
+  revision: 2
   schema_version: 1
   slug: elementor-toolkit-wave-2-blueprint-kernel
-  updated_at: 2026-07-15T19:44:18.000Z
+  updated_at: 2026-07-15T22:01:51.000Z
 relations:
   - target_id: dec_20260715_elementor-toolkit-blueprint-authority
     type: governed_by
@@ -31,6 +31,6 @@ spec:
     - tsk_20260715_elementor-toolkit-wave-1-trust-baseline
   economic_reason: Create the stable compilation boundary that removes implementation-specific glue from every future system.
   priority: high
-  status: waiting
-  summary: Implements the V0.5 executable Blueprint kernel and migration-safe runtime contracts.
+  status: done
+  summary: V0.5 implements and verifies the executable Blueprint kernel, immutable lifecycle, normalized storage contracts and read-only legacy shadow import; remote publication remains behind the external-action confirmation gate.
   title: EIT Wave 2 - Blueprint kernel
