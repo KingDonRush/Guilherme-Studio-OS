@@ -1,0 +1,38 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-15T19:44:18.000Z
+  id: tsk_20260715_elementor-toolkit-wave-4-entry-surfaces
+  labels:
+    - elementor-implementation-toolkit
+    - product
+    - wave-4
+    - forms
+    - frontend
+  revision: 1
+  schema_version: 1
+  slug: elementor-toolkit-wave-4-entry-surfaces
+  updated_at: 2026-07-15T19:44:18.000Z
+relations:
+  - target_id: dec_20260715_elementor-toolkit-blueprint-authority
+    type: governed_by
+spec:
+  acceptance:
+    - Structured, Editorial and Hybrid modes expose Gutenberg only by explicit choice
+    - initial Field Contract primitives compile storage, validation, exposure and Elementor categories
+    - Entry Surfaces support groups, conditions, steps, repeaters, relations, media, drafts and safe calculated values
+    - create, update, moderation, archive, restore, redirect, notification and webhook workflows are idempotent and retryable
+    - object policy enforces capability, ownership and scope server-side
+    - controlled guest intake cannot escalate privileges and constrains rates, time, actions and uploads
+    - the client editor can create and update content without wp-admin while a recovery screen remains available
+    - Guilherme approves the frontend forms and editor workspace in a real browser
+  blocked_by:
+    - tsk_20260715_elementor-toolkit-wave-3-executable-map
+  economic_reason: Move client content operations to a safe frontend while keeping implementation semantics reusable.
+  priority: normal
+  status: waiting
+  summary: Delivers V0.7 Field Contracts, frontend Entry Surfaces, policies and workflows.
+  title: EIT Wave 4 - content and Entry Surfaces

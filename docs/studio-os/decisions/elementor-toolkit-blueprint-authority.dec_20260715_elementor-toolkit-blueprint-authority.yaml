@@ -1,0 +1,28 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: decision
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-15T19:44:18.000Z
+  id: dec_20260715_elementor-toolkit-blueprint-authority
+  labels:
+    - studio-os
+    - product
+    - wordpress
+    - elementor
+    - blueprint
+  revision: 1
+  schema_version: 1
+  slug: elementor-toolkit-blueprint-authority
+  updated_at: 2026-07-15T19:44:18.000Z
+relations:
+  - target_id: prod_20260614_elementor-implementation-toolkit
+    type: governs
+spec:
+  decision: The eit.dev/v1 executable Blueprint is the canonical authority for Elementor Implementation Toolkit system behavior. It replaces the V0.2 conceptual canvas, CPT/CCT product separation and widget-first filter authority. Collection owns query behavior; Entry Surface owns workflow semantics; Elementor owns presentation.
+  rationale: The previous model exposed implementation details, distributed authority across widgets and definitions, and encouraged manual bindings that do not scale into a reliable no-code system. A compiled contract preserves stable identities, migration safety, diagnostics and a smaller implementation surface.
+  reconsideration_trigger: Reconsider only if dogfood proves that an executable Blueprint cannot express a required general implementation without raw keys or code, or if the compilation boundary creates measured regressions that adapters cannot contain.
+  status: active
+  summary: Establishes Blueprint as the executable product authority and formally supersedes incompatible V0.2 and widget-first preconizations.
+  title: Elementor Toolkit Blueprint authority

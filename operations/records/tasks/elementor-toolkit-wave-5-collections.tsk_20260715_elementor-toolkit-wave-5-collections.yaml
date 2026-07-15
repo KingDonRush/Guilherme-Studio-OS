@@ -1,0 +1,37 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-15T19:44:18.000Z
+  id: tsk_20260715_elementor-toolkit-wave-5-collections
+  labels:
+    - elementor-implementation-toolkit
+    - product
+    - wave-5
+    - collections
+    - filters
+  revision: 1
+  schema_version: 1
+  slug: elementor-toolkit-wave-5-collections
+  updated_at: 2026-07-15T19:44:18.000Z
+relations:
+  - target_id: dec_20260715_elementor-toolkit-blueprint-authority
+    type: governed_by
+spec:
+  acceptance:
+    - Collection is the only normal query contract across CPT, CCT, WooCommerce and bounded DOM fallback
+    - Filter Surface derives compatible controls and operators from Field Contract capabilities
+    - facets, disabled options, sort, URL state, readable chips, pagination and version-aware cache are complete
+    - substring matching and raw selectors are absent from normal Blueprint flows
+    - legacy presets and widgets migrate while the 1.x widget compatibility path remains functional
+    - Explain Why reports source, applied filter, comparison, result and fallback per item
+    - a 10000-row indexed CCT fixture meets local p95 below 250 ms with no query or render N+1
+  blocked_by:
+    - tsk_20260715_elementor-toolkit-wave-4-entry-surfaces
+  economic_reason: Make reusable query and filtering behavior independent from page-level widget configuration.
+  priority: normal
+  status: waiting
+  summary: Delivers V0.8 canonical Collections, derived filters, facets, cache and explainability.
+  title: EIT Wave 5 - Collections and filters

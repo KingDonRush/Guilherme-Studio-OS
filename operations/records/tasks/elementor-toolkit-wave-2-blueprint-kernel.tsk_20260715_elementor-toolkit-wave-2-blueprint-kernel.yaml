@@ -1,0 +1,36 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-15T19:44:18.000Z
+  id: tsk_20260715_elementor-toolkit-wave-2-blueprint-kernel
+  labels:
+    - elementor-implementation-toolkit
+    - product
+    - wave-2
+    - blueprint
+  revision: 1
+  schema_version: 1
+  slug: elementor-toolkit-wave-2-blueprint-kernel
+  updated_at: 2026-07-15T19:44:18.000Z
+relations:
+  - target_id: dec_20260715_elementor-toolkit-blueprint-authority
+    type: governed_by
+spec:
+  acceptance:
+    - eit.dev/v1 schemas validate stable IDs, typed connections, cycles and orphan references
+    - registries, compiler, version store, change sets, locks and runtime cache are idempotent
+    - CPT, CCT and adapter recommendation is explainable and advanced override discloses impact
+    - the legacy importer runs in read-only shadow mode
+    - internal bindings use UUIDs while preserving aliases for current raw keys
+    - relations and repeatable groups use normalized queryable child structures
+    - published versions are immutable and rollback can reactivate prior artifacts
+  blocked_by:
+    - tsk_20260715_elementor-toolkit-wave-1-trust-baseline
+  economic_reason: Create the stable compilation boundary that removes implementation-specific glue from every future system.
+  priority: high
+  status: waiting
+  summary: Implements the V0.5 executable Blueprint kernel and migration-safe runtime contracts.
+  title: EIT Wave 2 - Blueprint kernel

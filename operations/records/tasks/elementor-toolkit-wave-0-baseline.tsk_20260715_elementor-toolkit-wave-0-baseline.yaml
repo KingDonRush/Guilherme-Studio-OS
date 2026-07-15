@@ -1,0 +1,33 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-15T19:44:18.000Z
+  id: tsk_20260715_elementor-toolkit-wave-0-baseline
+  labels:
+    - elementor-implementation-toolkit
+    - product
+    - wave-0
+    - migration-baseline
+  revision: 1
+  schema_version: 1
+  slug: elementor-toolkit-wave-0-baseline
+  updated_at: 2026-07-15T19:44:18.000Z
+relations:
+  - target_id: dec_20260715_elementor-toolkit-blueprint-authority
+    type: governed_by
+spec:
+  acceptance:
+    - the original nine-file working tree is preserved by deterministic status and patch evidence
+    - truthful runtime diagnostics and CPT media selection changes are separated into understandable commits
+    - Composer, PHP and JavaScript syntax, line-budget delta, runtime CCT verification and robustness harness pass
+    - local version and immutable tag identify V0.3.2 as the migration baseline
+    - the exact branch, tag and PR publication payload is confirmed before any remote mutation
+  blocked_by: []
+  economic_reason: Preserve proven dogfood behavior before replacing internal authority and storage contracts.
+  priority: now
+  status: waiting
+  summary: V0.3.2 is locally verified and tagged; remote publication is intentionally waiting on the external-action confirmation gate.
+  title: EIT Wave 0 - preserve V0.3.2 baseline

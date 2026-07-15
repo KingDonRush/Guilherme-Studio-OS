@@ -214,6 +214,22 @@ Each material decision records:
   or distribution cost operationally harmful.
 - **Authority:** Guilherme's approved asset policy and V1 plan.
 
+### PRODUCT-EIT-001: Executable Blueprint authority
+
+- **Status:** accepted
+- **Date:** 2026-07-15
+- **Decision:** `eit.dev/v1 Blueprint` is the canonical executable authority
+  for Elementor Implementation Toolkit systems. Collection owns query behavior,
+  Entry Surface owns workflow semantics, and Elementor owns presentation.
+- **Supersedes:** the V0.2 conceptual canvas, CPT/CCT as parallel product
+  surfaces, and widget-first filter authority.
+- **Consequence:** runtime changes require validated, confirmable and
+  reconcilable change sets; raw keys and selectors are legacy-only in 1.x.
+- **Reconsideration trigger:** dogfood proves a general implementation cannot be
+  expressed without raw keys or code, or measured compiler regressions cannot
+  be contained by adapters.
+- **Authority:** Guilherme's approved Elementor Implementation Toolkit 1.0 plan.
+
 ## Explicit Non-Decisions
 
 The following remain intentionally unresolved:

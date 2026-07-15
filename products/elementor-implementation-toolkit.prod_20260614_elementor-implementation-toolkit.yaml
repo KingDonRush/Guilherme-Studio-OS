@@ -15,16 +15,34 @@ metadata:
     - elementor
     - internal-tooling
   owner_id: per_20260614_guilherme-silva
-  revision: 1
+  revision: 2
   schema_version: 1
   slug: elementor-implementation-toolkit
-  updated_at: 2026-06-14T20:30:00.000Z
-relations: []
+  updated_at: 2026-07-15T19:44:18.000Z
+relations:
+  - target_id: dec_20260715_elementor-toolkit-blueprint-authority
+    type: governed_by
 spec:
+  current_version: 0.3.2
+  differentiation: Compiles stable data, entry, query, presentation and policy contracts into WordPress and Elementor without exposing PHP, SQL, raw keys or selector maps in the normal workflow.
+  implemented_capabilities:
+    - CPT definitions with Elementor-aware fields
+    - table-backed CCT definitions and Elementor listings
+    - legacy DOM and CCT filter providers
+    - native CPT media selection with URL preservation
   portfolio_role: infrastructure-product
+  problem: General WordPress implementations become fragile when schema, forms, queries, filters and Elementor bindings are configured independently through raw technical identifiers.
   repository_path: products/elementor-implementation-toolkit/repository
-  signal: Production tooling for implementation workflows.
+  roadmap_claims:
+    - executable Blueprint compiler
+    - frontend Entry Surfaces and policy workflows
+    - canonical Collections and derived Filter Surfaces
+    - typed Elementor bridge and WooCommerce adapter
+    - per-Blueprint migration, diagnostics and rollback
+  signal: A visual compiler that turns implementation intent into governed WordPress and Elementor runtime contracts.
   status: active
-  summary: Toolkit for Elementor implementation features, filtering and future custom content structures.
+  summary: Dogfood-first implementation toolkit evolving from verified V0.3.2 primitives into the executable Blueprint 1.0 architecture.
+  target_user: No-code Elementor implementers who build reusable client systems; client editors operate content through generated frontend surfaces.
+  thesis: Put complexity in compiled contracts, migrations and diagnostics so sophisticated WordPress systems remain small and intuitive to implement.
   title: Elementor Implementation Toolkit
   wordpress_mount: wordpress/wp-content/plugins/elementor-implementation-toolkit

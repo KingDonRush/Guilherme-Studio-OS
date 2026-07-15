@@ -1,0 +1,38 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-15T19:44:18.000Z
+  id: tsk_20260715_elementor-toolkit-wave-1-trust-baseline
+  labels:
+    - elementor-implementation-toolkit
+    - product
+    - wave-1
+    - trust-baseline
+  revision: 1
+  schema_version: 1
+  slug: elementor-toolkit-wave-1-trust-baseline
+  updated_at: 2026-07-15T19:44:18.000Z
+relations:
+  - target_id: dec_20260715_elementor-toolkit-blueprint-authority
+    type: governed_by
+spec:
+  acceptance:
+    - CCT schema changes are atomic, checked and indexed for declared filter and sort capabilities
+    - unpublished CCT rows cannot leak through public rendering
+    - published slugs and storage keys cannot change without an explicit migration plan
+    - field validation accepts the string zero, rejects duplicates and reserved keys, and preserves input after failure
+    - Collection REST enforces body, filter, page-size and computed-cost budgets
+    - DOM legacy is capped at 200 items, tokenizes exactly and performs no enrichment N+1
+    - concurrent frontend requests abort stale work and only the latest response mutates state
+    - loading, error, focus, live-region and reduced-motion behavior passes keyboard and axe checks
+    - ghost controls are removed or backed by proven behavior and Toolkit assets use no more than four requests when all surfaces are present
+    - files above the blocking line budget are modularized before receiving new responsibilities
+  blocked_by: []
+  economic_reason: Remove trust, leakage and interaction failures before exposing a canonical compiler or migration UI.
+  priority: now
+  status: active
+  summary: Hardens legacy runtime and UI into a safe V0.4 substrate for Blueprint compilation.
+  title: EIT Wave 1 - trust baseline

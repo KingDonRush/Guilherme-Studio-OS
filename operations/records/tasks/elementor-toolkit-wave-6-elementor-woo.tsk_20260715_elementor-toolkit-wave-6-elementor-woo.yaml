@@ -1,0 +1,38 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-15T19:44:18.000Z
+  id: tsk_20260715_elementor-toolkit-wave-6-elementor-woo
+  labels:
+    - elementor-implementation-toolkit
+    - product
+    - wave-6
+    - elementor
+    - woocommerce
+  revision: 1
+  schema_version: 1
+  slug: elementor-toolkit-wave-6-elementor-woo
+  updated_at: 2026-07-15T19:44:18.000Z
+relations:
+  - target_id: dec_20260715_elementor-toolkit-blueprint-authority
+    type: governed_by
+spec:
+  acceptance:
+    - Elementor Free exposes Field, Collection Surface, Filter Surface, Entry Surface and Action connector widgets
+    - widget controls contain presentation choices only and use declared asset dependencies
+    - the optional Pro adapter provides context-compatible typed tags through one TypedValueResolver
+    - stable field IDs replace typed meta keys in normal Elementor controls
+    - Loop and Theme integrations use public managers and compatibility canaries instead of Pro internals
+    - editor synchronization prefers official events with a bounded MutationObserver fallback
+    - Woo contracts use WooCommerce APIs and leave cart, checkout, orders and payment ownership unchanged
+    - Guilherme approves the Elementor editor experience in a real browser
+  blocked_by:
+    - tsk_20260715_elementor-toolkit-wave-5-collections
+  economic_reason: Turn compiled behavior into a native, low-friction Elementor implementation surface without cloning Elementor.
+  priority: normal
+  status: waiting
+  summary: Delivers the V0.9 Elementor Free bridge, optional Pro adapter and WooCommerce contract adapter.
+  title: EIT Wave 6 - Elementor and Woo bridge

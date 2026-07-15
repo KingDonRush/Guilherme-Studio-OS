@@ -1,0 +1,40 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: task
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-15T19:44:18.000Z
+  id: tsk_20260715_elementor-toolkit-wave-7-rc
+  labels:
+    - elementor-implementation-toolkit
+    - product
+    - wave-7
+    - migration
+    - release-candidate
+  revision: 1
+  schema_version: 1
+  slug: elementor-toolkit-wave-7-rc
+  updated_at: 2026-07-15T19:44:18.000Z
+relations:
+  - target_id: dec_20260715_elementor-toolkit-blueprint-authority
+    type: governed_by
+spec:
+  acceptance:
+    - CPT __imoveis, CCT projects and the three active Elementor documents migrate through draft and shadow comparison
+    - revisions remain in backup evidence but do not count as active usage
+    - count, checksum, normalized HTML, status and query comparisons gate per-Blueprint activation
+    - Impact Map, Flight Recorder, QA Scenario Runner and factual Handoff Notes expose redacted evidence
+    - rollback reactivates prior artifacts without deleting data written by the newer version
+    - real-estate, clinic, delivery and ecommerce sufficiency fixtures use one primitive set without raw identifiers or domain code
+    - implementer and editor time-box acceptance targets pass
+    - the distributable ZIP excludes sources and tests and includes compatibility, upgrade, uninstall and public readme material
+    - every visual acceptance area receives Guilherme's real-browser approval
+    - public release remains prepared but is not published without exact confirmation
+  blocked_by:
+    - tsk_20260715_elementor-toolkit-wave-6-elementor-woo
+  economic_reason: Prove migration safety and general implementation power before turning dogfood into a public-ready product.
+  priority: normal
+  status: waiting
+  summary: Migrates dogfood Blueprints, closes diagnostics and prepares the evidence-backed 1.0 release candidate.
+  title: EIT Wave 7 - migration, diagnostics and RC 1.0
