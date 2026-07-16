@@ -1,0 +1,61 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-16T02:15:30.000Z
+  id: evd_20260715_elementor-toolkit-wave-6-elementor-woo-verification
+  labels:
+    - elementor-implementation-toolkit
+    - product
+    - wave-6
+    - elementor
+    - woocommerce
+    - verification
+  revision: 1
+  schema_version: 1
+  slug: elementor-toolkit-wave-6-elementor-woo-verification
+  updated_at: 2026-07-16T02:15:30.000Z
+relations:
+  - target_id: tsk_20260715_elementor-toolkit-wave-6-elementor-woo
+    type: supports
+spec:
+  claims:
+    - V0.9 exposes five Elementor Free connector widgets for published Field, Collection, Filter Surface, Entry Surface and Action contracts while retaining the legacy Filter Controller throughout 1.x.
+    - Connector controls select stable contract UUIDs and presentation choices; they do not recreate field schema, query grammar, storage mapping, workflow or authorization in Elementor.
+    - Optional Elementor Pro Dynamic Tags cover text, number, URL, image, gallery and color through one TypedValueResolver, with compatible fields derived from the known entity context and no typed meta key in the normal path.
+    - Collection presentation uses an explicitly selected existing Elementor document through public Core document managers; template creation is an explicit draft action and read paths do not mutate Elementor metadata.
+    - The direct dependency on internal Elementor Pro Loop classes was removed and replaced with a public document/widget-manager compatibility canary.
+    - Filter Surfaces connect to standalone Collection Surfaces through published Collection UUIDs and compile automatic or explicit-submit behavior without selectors or provider configuration.
+    - The WooCommerce adapter exposes 13 closed product Field Contracts and uses Woo query and CRUD APIs for supported reads and mutations; cart, checkout, orders, payments and direct product-meta access remain outside its authority.
+    - Exact stock quantity is nonpublic by default, Woo Entry mutation requires Woo product capabilities, guest Woo intake is blocked and unsupported adapters fail closed instead of falling through to CCT storage.
+    - WooCommerce is not installed on the verification runtime, so the adapter honestly reports unhealthy while its schema and isolated query/CRUD contracts remain mechanically tested; a live Woo runtime canary remains open for Wave 7.
+    - Composer validation, PHP syntax across 252 files, WPCS/PHPCompatibility, PHPStan across 84 analyzed files, strict line budget, Gitleaks and Git whitespace checks pass.
+    - PHPUnit passes 40 tests and 128 assertions; Vitest passes 14 tests; eight Playwright wp-admin, Elementor editor and frontend scenarios pass.
+    - WordPress 6.9.4, PHP 8.3.31, Elementor 4.0.8 and the local Pro-compatible 4.0.4.2 runtime pass the full integration suite; the V0.9 bridge contributes 32 assertions.
+    - The 10000-row indexed CCT performance fixture measured p95 30.80 ms with at most three queries, and the legacy Filter Controller regression remains at 113 passes, zero failures and 14 explicit human-QA gates.
+    - The branch contains exactly three functional commits from abe110acb4ccc7ff5d56c1285cc4df11ee79cb79 to 0aef4b59df96d0bffc42b4326625e2ad18ebb125.
+    - Deterministic Git evidence patches were generated at /tmp/git-evidence.patch and /tmp/git-evidence-range.patch with SHA-256 3c20f2fb817167f4cf55c328fb5b25a68d6cba80775a64280b5729f52dff91af.
+    - Studio OS validation, typecheck, 65 tests, lint and Gitleaks pass; the rebuilt derived projection verified 149 entities and 110 relations.
+    - Guilherme's nuanced real-browser approval, the inherited Wave 3 through Wave 5 visual gates, the v0.9.0 tag and remote publication remain intentionally open.
+  command: >-
+    composer validate --strict &&
+    composer lint &&
+    composer test &&
+    composer phpcs &&
+    composer analyse &&
+    composer test:wp &&
+    npm run build &&
+    npm test &&
+    npm run check:js &&
+    npm run test:e2e &&
+    php scripts/verify-line-budget.php --strict &&
+    gitleaks git --redact --no-banner --exit-code 1 &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-07-16T02:15:30.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Elementor Implementation Toolkit Wave 6 Elementor and Woo verification
+  validated_at: 2026-07-16T02:15:30.000Z

@@ -12,10 +12,10 @@ metadata:
     - wave-6
     - elementor
     - woocommerce
-  revision: 1
+  revision: 2
   schema_version: 1
   slug: elementor-toolkit-wave-6-elementor-woo
-  updated_at: 2026-07-15T19:44:18.000Z
+  updated_at: 2026-07-16T02:15:30.000Z
 relations:
   - target_id: dec_20260715_elementor-toolkit-blueprint-authority
     type: governed_by
@@ -33,6 +33,6 @@ spec:
     - tsk_20260715_elementor-toolkit-wave-5-collections
   economic_reason: Turn compiled behavior into a native, low-friction Elementor implementation surface without cloning Elementor.
   priority: normal
-  status: waiting
-  summary: Delivers the V0.9 Elementor Free bridge, optional Pro adapter and WooCommerce contract adapter.
+  status: active
+  summary: V0.9 is implemented and mechanically verified in three local commits; Guilherme's real-browser approval, a live WooCommerce runtime canary and remote publication remain open, so the wave is not tagged or marked complete.
   title: EIT Wave 6 - Elementor and Woo bridge
