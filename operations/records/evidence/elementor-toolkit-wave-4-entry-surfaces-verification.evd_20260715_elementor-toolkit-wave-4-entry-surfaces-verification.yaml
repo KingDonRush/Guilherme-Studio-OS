@@ -1,0 +1,62 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-16T00:00:01.000Z
+  id: evd_20260715_elementor-toolkit-wave-4-entry-surfaces-verification
+  labels:
+    - elementor-implementation-toolkit
+    - product
+    - wave-4
+    - entry-surfaces
+    - verification
+  revision: 1
+  schema_version: 1
+  slug: elementor-toolkit-wave-4-entry-surfaces-verification
+  updated_at: 2026-07-16T00:00:01.000Z
+relations:
+  - target_id: tsk_20260715_elementor-toolkit-wave-4-entry-surfaces
+    type: supports
+spec:
+  claims:
+    - V0.7 compiles governed Entry Surface contracts from stable Field IDs, entity mode, groups, steps, conditions, calculations, workflow, actions, autosave, guest safeguards and object policy without exposing storage keys to the browser.
+    - Structured remains the default entity mode; WordPress editorial content is rendered only for explicitly selected Editorial or Hybrid entities.
+    - The frontend workspace derives semantic controls, inline validation, media preview, repeatable rows, conditional visibility, multi-step focus flow and safe calculated output from the compiled contract.
+    - Required values accept zero, calculated input is recomputed server-side and submitted values are accepted only under Field IDs owned by the active Entry contract.
+    - CPT and CCT create, update, draft, review, publish, archive and restore mutations use a durable idempotency ledger; normalized relations and repeatable values are stored through the runtime gateway.
+    - Capability, ownership and object scope are evaluated server-side after loading the target record; browser item IDs never grant authority.
+    - Redirect, email, notification and SSRF-guarded webhook actions execute separately from content persistence and failed external actions remain retryable in the action ledger without duplicating content.
+    - Guest intake is create-only and opt-in, with moderated status, signed time trap, honeypot, hourly rate bound and constrained opt-in uploads; guest edit and privileged lifecycle operations remain unavailable.
+    - Infrastructure now verifies 13 dedicated tables, including Entry submission and action job ledgers; activation installs infrastructure and does not migrate content.
+    - A hidden wp-admin recovery screen remains available to operators while the primary content flow is delivered by the frontend Entry workspace.
+    - Entry runtime code reuses the existing Toolkit frontend asset request, all newly authored source files remain within the strict 400-line modularization budget and inspector Entry decisions are split into bounded components.
+    - Browser QA found and corrected an invisible calculated output, an overemphasized row-removal action and focus loss during submission; the focused submit trigger now remains stable while the workspace is busy.
+    - The final mobile Entry capture is /tmp/eit-v070-entry-workspace.png with SHA-256 b86cfbcc09807ef38a9b4de1cfea50f4427f6c9b94ee1458241b7353c77c3887.
+    - Composer validation, PHP syntax, WPCS and PHPCompatibility, PHPStan, PHPUnit with 22 tests and 55 assertions, WordPress integration, Vitest with 7 tests, six Playwright scenarios with axe, strict line budget, Gitleaks and Git whitespace checks pass.
+    - WordPress integration includes 27 infrastructure, 32 kernel, 12 admin REST and 21 Entry assertions; the legacy filter-controller suite remains at 113 passes, zero failures and 14 explicit human-QA gates.
+    - The branch contains exactly three functional commits from 40c08572c92ac84ee6767002d50440b585e5c993 to 35e02a58f1aad2433cd1ba10c0973db533ed6852.
+    - Deterministic Git evidence patches were generated at /tmp/git-evidence.patch and /tmp/git-evidence-range.patch with SHA-256 786b69e25ac441ab5319ed5dae0bd1b5a6626bca2efa92a9b546e4395674d2bb.
+    - Studio OS canonical validation passed with 147 entities and the rebuilt derived projection verified 147 entities, 108 relations and checksum be08a8069252eb8fd23e5a43a52d0dc6e086b295c7f3af35329d09e658271fc5.
+    - Final v0.7.0 tagging, remote publication and completion status remain withheld until Guilherme approves frontend forms and the editor workspace in a real browser; Wave 3 visual approval also remains open.
+  command: >-
+    composer validate --strict --no-check-publish &&
+    composer lint &&
+    composer phpcs &&
+    composer analyse &&
+    composer test &&
+    composer test:wp &&
+    npm run build &&
+    npm test -- --run &&
+    npm run check:js &&
+    npm run test:e2e &&
+    php scripts/verify-line-budget.php --strict &&
+    gitleaks git --redact --no-banner --exit-code 1 &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-07-16T00:00:01.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Elementor Implementation Toolkit Wave 4 Entry Surfaces verification
+  validated_at: 2026-07-16T00:00:01.000Z

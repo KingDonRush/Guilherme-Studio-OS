@@ -12,10 +12,10 @@ metadata:
     - wave-4
     - forms
     - frontend
-  revision: 1
+  revision: 2
   schema_version: 1
   slug: elementor-toolkit-wave-4-entry-surfaces
-  updated_at: 2026-07-15T19:44:18.000Z
+  updated_at: 2026-07-16T00:00:01.000Z
 relations:
   - target_id: dec_20260715_elementor-toolkit-blueprint-authority
     type: governed_by
@@ -33,6 +33,6 @@ spec:
     - tsk_20260715_elementor-toolkit-wave-3-executable-map
   economic_reason: Move client content operations to a safe frontend while keeping implementation semantics reusable.
   priority: normal
-  status: waiting
-  summary: Delivers V0.7 Field Contracts, frontend Entry Surfaces, policies and workflows.
+  status: active
+  summary: V0.7 is implemented and mechanically verified in three local commits; real-browser approval of frontend forms and editor workspace, the upstream Wave 3 visual gate and remote publication remain open.
   title: EIT Wave 4 - content and Entry Surfaces
