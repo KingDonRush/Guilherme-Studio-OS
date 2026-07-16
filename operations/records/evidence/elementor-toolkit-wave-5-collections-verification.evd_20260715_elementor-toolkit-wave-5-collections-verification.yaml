@@ -1,0 +1,62 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-16T01:16:22.000Z
+  id: evd_20260715_elementor-toolkit-wave-5-collections-verification
+  labels:
+    - elementor-implementation-toolkit
+    - product
+    - wave-5
+    - collections
+    - filters
+    - verification
+  revision: 1
+  schema_version: 1
+  slug: elementor-toolkit-wave-5-collections-verification
+  updated_at: 2026-07-16T01:16:22.000Z
+relations:
+  - target_id: tsk_20260715_elementor-toolkit-wave-5-collections
+    type: supports
+spec:
+  claims:
+    - V0.8 makes Collection the compiled query contract for CPT, indexed CCT, WooCommerce and a deliberately bounded legacy DOM fallback.
+    - Collection and Filter Surface decisions are derived from stable Field IDs and declared search, filter and sort capabilities; the normal Blueprint path does not expose storage keys, providers, selectors, SQL or PHP.
+    - Public query requests accept only contract-authorized Field IDs, operators, sort, facets and pagination, with a 32 KB body limit, at most 20 filters, 24 default items, 48 maximum items and computed request cost.
+    - Public projection is field-exposure aware, omits empty values without losing zero or false, renders choice labels instead of storage values and keeps restricted fields out of browser contracts.
+    - Facet counts, unavailable options, sort, URL state, readable active chips, windowed pagination and latest-request-wins behavior are implemented from the compiled contract.
+    - Collection cache keys include the published Blueprint version and invalidate on content, relation and artifact changes; Explain Why records source, applied comparisons, result and fallback without exposing raw query keys.
+    - CCT Collection execution hydrates normalized relations and multivalues in bulk; the 10000-row fixture measured p95 24.15 ms with at most three queries and no query-per-item path.
+    - The legacy Filter Controller remains operational throughout 1.x and now offers a Published Collection compatibility mode whose schema, filters, facets, sort, pagination and URL behavior come from Systems rather than local raw mappings.
+    - Numeric filters render a bounded slider only when both limits exist; otherwise they use labeled open-ended minimum and maximum inputs instead of inventing a 0-100 domain.
+    - The Systems map auto-fits new nodes and presents Collection and Filter Surface decisions contextually; the Collection frontend capture shows public labels, preserved zero, one readable result chip and no empty field rows.
+    - The final Systems capture is /tmp/eit-v080-collections-map.png with SHA-256 5d15fb3bdfda1c1d0142dffe7fe7a87f943d71879c14dc0cd5540f2854b595fd.
+    - The final Collection Surface capture is /tmp/eit-v080-collection-surface.png with SHA-256 5fd27406a5b498ba867b4387a439a201605fd4e94fd6809f6b713ef3e4f6ecdd.
+    - Composer validation, PHP syntax, WPCS and PHPCompatibility, PHPStan, PHPUnit with 31 tests and 91 assertions, Vitest with 13 tests, eight Playwright scenarios with axe, strict line budget, Gitleaks and Git whitespace checks pass.
+    - WordPress integration includes 27 infrastructure, 32 kernel, 12 admin REST, 21 Entry and 35 Collection assertions; the legacy Filter Controller suite remains at 113 passes, zero failures and 14 explicit human-QA gates.
+    - The branch contains exactly three functional commits from 35e02a58f1aad2433cd1ba10c0973db533ed6852 to abe110acb4ccc7ff5d56c1285cc4df11ee79cb79.
+    - Deterministic Git evidence patches were generated at /tmp/git-evidence.patch and /tmp/git-evidence-range.patch with SHA-256 2e38543d433480f5224de778a111e7515904570a256090f95999b655c823707d.
+    - Studio OS validation, typecheck, 65 tests, lint and Gitleaks pass; the rebuilt derived projection verified 148 entities and 109 relations.
+    - Final v0.8.0 tagging, remote publication and completion status remain withheld until Guilherme performs the nuanced real-browser approval required by the master plan; upstream Wave 3 and Wave 4 visual gates also remain open.
+  command: >-
+    composer validate --strict &&
+    composer lint &&
+    composer test &&
+    composer phpcs &&
+    composer analyse &&
+    composer test:wp &&
+    npm run build &&
+    npm test &&
+    npm run check:js &&
+    npm run test:e2e &&
+    php scripts/verify-line-budget.php --strict &&
+    gitleaks git --redact --no-banner --exit-code 1 &&
+    git diff --check
+  evidence_type: command
+  observed_at: 2026-07-16T01:16:22.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Elementor Implementation Toolkit Wave 5 Collections verification
+  validated_at: 2026-07-16T01:16:22.000Z

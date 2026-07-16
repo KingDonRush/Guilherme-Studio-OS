@@ -12,10 +12,10 @@ metadata:
     - wave-5
     - collections
     - filters
-  revision: 1
+  revision: 2
   schema_version: 1
   slug: elementor-toolkit-wave-5-collections
-  updated_at: 2026-07-15T19:44:18.000Z
+  updated_at: 2026-07-16T01:16:22.000Z
 relations:
   - target_id: dec_20260715_elementor-toolkit-blueprint-authority
     type: governed_by
@@ -32,6 +32,6 @@ spec:
     - tsk_20260715_elementor-toolkit-wave-4-entry-surfaces
   economic_reason: Make reusable query and filtering behavior independent from page-level widget configuration.
   priority: normal
-  status: waiting
-  summary: Delivers V0.8 canonical Collections, derived filters, facets, cache and explainability.
+  status: active
+  summary: V0.8 is implemented and mechanically verified in three local commits; nuanced browser approval and remote publication remain open, so the wave is not marked complete or tagged.
   title: EIT Wave 5 - Collections and filters
