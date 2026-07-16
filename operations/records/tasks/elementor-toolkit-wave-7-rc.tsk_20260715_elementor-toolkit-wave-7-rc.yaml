@@ -12,10 +12,10 @@ metadata:
     - wave-7
     - migration
     - release-candidate
-  revision: 1
+  revision: 2
   schema_version: 1
   slug: elementor-toolkit-wave-7-rc
-  updated_at: 2026-07-15T19:44:18.000Z
+  updated_at: 2026-07-16T04:04:57.000Z
 relations:
   - target_id: dec_20260715_elementor-toolkit-blueprint-authority
     type: governed_by
@@ -35,6 +35,6 @@ spec:
     - tsk_20260715_elementor-toolkit-wave-6-elementor-woo
   economic_reason: Prove migration safety and general implementation power before turning dogfood into a public-ready product.
   priority: normal
-  status: waiting
-  summary: Migrates dogfood Blueprints, closes diagnostics and prepares the evidence-backed 1.0 release candidate.
+  status: active
+  summary: The 1.0 RC is implemented and mechanically verified in three local commits; live compatibility canaries, implementer/editor time-box trials, Guilherme's real-browser approval and remote publication remain open.
   title: EIT Wave 7 - migration, diagnostics and RC 1.0

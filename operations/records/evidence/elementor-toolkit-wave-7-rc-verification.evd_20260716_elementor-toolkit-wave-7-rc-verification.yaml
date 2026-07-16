@@ -1,0 +1,69 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-16T03:32:07.000Z
+  id: evd_20260716_elementor-toolkit-wave-7-rc-verification
+  labels:
+    - elementor-implementation-toolkit
+    - product
+    - wave-7
+    - migration
+    - diagnostics
+    - release-candidate
+    - release-blocked
+    - verification
+  revision: 3
+  schema_version: 1
+  slug: elementor-toolkit-wave-7-rc-verification
+  updated_at: 2026-07-16T16:46:41.000Z
+relations:
+  - target_id: tsk_20260715_elementor-toolkit-wave-7-rc
+    type: supports
+spec:
+  claims:
+    - Infrastructure schema V6 installs and verifies 18 dedicated tables, adding durable storage identity claims and pending-upload lifecycle state to immutable Blueprints, artifacts, bindings, change sets, locks, runs, reconciliation, rollback, normalized relations and multivalues, Entry idempotency and actions, migrations, ordered events and QA scenarios; activation still performs no content migration.
+    - Blueprint publication is checksum- and confirmation-bound, revalidated under locks, activates immutable versions through compare-and-swap and can safely resume the same interrupted applying change set with the same token without duplicating runtime artifacts.
+    - Durable CPT/CCT storage claims survive an interrupted apply, reject foreign or ambiguous ownership before storage exists, permit recovery only by the exact owning Blueprint and change contract and preserve prepared claims for reconciliation when a later transaction fails.
+    - Publication remains fail-closed when a field or storage change needs destructive copy, transform, count/checksum validation and switch semantics that the current migration engine cannot prove.
+    - Entry Surfaces preserve an existing item's status during autosave, reconcile pending uploads without orphan promotion, validate relation targets and ownership server-side, resolve relation labels without N+1 behavior, support repeaters and conditions and no longer expose an unimplemented notification action; supported core actions are redirect, email and webhook.
+    - Collection runtime derives provider requirements from compiled Field Contract capabilities, applies typed exact filters, stores CPT multichoice values as repeated exact meta rows, compiles CCT multichoice facets without substring matching, projects taxonomies publicly as id/name/slug/url objects through batched term resolution and exposes Explain Why only when explicitly requested.
+    - Collection and Entry authorization remains server-owned; browser-supplied IDs do not grant capability, ownership or object scope and Collection responses are reduced to the allowed projection.
+    - Legacy inventory remains read-only until explicit selection, checksum-bound confirmation and draft creation; source drift, active imported systems and locally edited drafts fail closed.
+    - The five dogfood pilots remain CPT __imoveis with one record, CCT projects with six records and Elementor documents 301, 340 and 479 as unpublished Blueprint drafts; Elementor revisions remain backup evidence rather than active usage.
+    - Real-estate, clinic, delivery and ecommerce sufficiency fixtures validate and compile through the same primitive grammar without PHP, SQL, raw meta keys, selectors or domain-specific Blueprint code.
+    - Concrete Impact Maps resolve exact pages, templates, Toolkit widgets, fields, records, adapters and revision backup counts without substring matching or treating visual position as semantics; Flight Recorder data is bounded and redacted and the QA Scenario Runner invalidates stale passing evidence.
+    - Mechanical browser verification produced /tmp/eit-v100rc-connector-surfaces.png at 782x564 with SHA-256 a98fd6bbd9790b81c8be53c3c9d225da7af2654ec32fe5aedc7af91368d01007 and /tmp/eit-v100rc-connector-editor.png at 1280x720 with SHA-256 5e7af0e6849342a37493125a1845001232fd52b30f70105d26352531db3ddd9f.
+    - Mechanical browser verification produced /tmp/eit-v100rc-diagnostics.png at 1238x3003 with SHA-256 2ada01468fdaea403a8cc5df4d5299a5c16cfc4748b33af6f9f6274114438f93 and /tmp/eit-v070-entry-workspace.png at 252x1268 with SHA-256 c2f813d707f6fd0b204ef45a148b7cf0bdc11ffbec1b9cabd732eab8970ee1c5.
+    - Mechanical browser verification produced /tmp/eit-v080-collections-map.png at 1238x1275 with SHA-256 db4e05c5ced06c5c5dcb576bd6ccc1e2f4beb19842037e92269efe7fc0120a69 and /tmp/eit-v100rc-impact-plan.png at 688x504 with SHA-256 a97ea6da526a89bfd88d24e6d1899d6460b026a9fc09e27850194cbf77783f4c.
+    - The screenshots mechanically verify native factual diagnostics, concise node cards, contextual inspector ordering, connector binding feedback, mobile Entry state and a real impact plan; they are coarse regression evidence, not Guilherme's visual approval.
+    - Composer validation, syntax checks for 303 PHP files, WPCS/PHPCompatibility, PHPStan across 109 analysed files, strict line budget with zero debt across 395 authored files, JavaScript syntax checks and Git whitespace checks pass.
+    - PHPUnit passes 131 tests and 555 assertions; Vitest passes 37 tests across 12 files and the full Playwright suite passes eight wp-admin, frontend and Elementor scenarios with axe coverage.
+    - WordPress integration passes Blueprint infrastructure with 51 assertions, kernel with 37, publication and interrupted recovery with 39, admin REST with 12, Entry with 63, Entry relations with 17, Collections with 49, Elementor/Woo bridge with 32 and release-candidate pilots with 88, in addition to CPT and CCT verification.
+    - The 10000-row indexed CCT performance fixture measured p95 25.47 ms with at most three queries and no query/render N+1; the legacy Filter Controller regression remains 113 passes, zero failures and 14 explicit human-QA skips.
+    - Git history and current source scans pass Gitleaks; an unbounded directory scan reported five generic-api-key false positives exclusively inside the ignored 27 MB vendor/phpstan/phpstan/phpstan.phar dependency binary, while the source scan with dependency binaries above 10 MB excluded scanned 25.62 MB with no leaks.
+    - Two consecutive deterministic builds produced /home/kingdonrush/Área de trabalho/Dev/Guilherme-Studio-OS/products/elementor-implementation-toolkit/repository/dist/elementor-implementation-toolkit-1.0.0-rc.1.zip with 395 files, 1597693 bytes and SHA-256 68b8f0570326d02a753051fcc2398d0f547c713c7d27cac012faa9e91c1f42e2; the archive excludes tests, source assets, build scripts, dependency trees and repository internals.
+    - The observed dogfood runtime is WordPress 6.9.4, PHP 8.3.31, Elementor Free 4.0.8 and a Pro-compatible 4.0.4.2 runtime; WooCommerce is absent and the live Woo canary remains open.
+    - Parameterized per-item routes such as slug placeholders are not implemented; only literal routes are currently publishable.
+    - Shadow import compares the compiled projection with the legacy source but is not independent dual-runtime cutover proof; destructive transformation and full cutover certification remain release gates.
+    - WordPress 6.7 and 6.8, PHP 8.1, 8.2 and 8.4, Elementor 3.28 and prior 4.x, official Elementor Pro current and prior, live WooCommerce, Firefox and WebKit remain compatibility canaries rather than certifications.
+    - The branch contains exactly three functional commits from 0aef4b59df96d0bffc42b4326625e2ad18ebb125 to 6fea0ac3f81bfc16be84a0b672965b770d87698c.
+    - Deterministic Git evidence patches were generated at /tmp/git-evidence.patch and /tmp/git-evidence-range.patch; each is 1537848 bytes with SHA-256 9f550e82f8c6e59e7b31b768b091f358ad208a213f1ac740e70bbc95d6751fb5.
+    - Studio OS validation and rebuilt projection verify 150 canonical entities and 111 relations; typecheck, 65 tests across 16 files, lint, Git-history Gitleaks and a focused Gitleaks scan of this evidence record pass without modifying unrelated working-tree changes.
+    - Guilherme's map, inspector, Elementor, frontend workspace, responsive and implementer/editor time-box approvals remain open; the 14 human-QA skips are intentionally unresolved.
+    - This artifact is an internal RC hardening build and is not public-ready; no tag, push, pull request, public release or live installation was performed.
+  command: >-
+    composer validate --strict && composer lint && composer phpcs && composer analyse &&
+    composer test && npm test && npm run check:js && php scripts/verify-line-budget.php --strict &&
+    composer test:wp && npm run build && npm run test:e2e &&
+    gitleaks git --redact --no-banner --exit-code 1 &&
+    gitleaks dir . --redact --no-banner --exit-code 1 --max-target-megabytes 10 &&
+    git diff --check && composer run build:release && composer run build:release
+  evidence_type: command
+  observed_at: 2026-07-16T16:46:41.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Elementor Implementation Toolkit Wave 7 internal RC hardening verification
+  validated_at: 2026-07-16T16:46:41.000Z
