@@ -1,0 +1,123 @@
+{
+    "schema_version": 1,
+    "post": {
+        "local_id": 335,
+        "parent_id": 0,
+        "post_type": "elementor_library",
+        "slug": "simple-budget-cart-modal",
+        "status": "publish",
+        "title": "Simple Budget Cart Modal"
+    },
+    "render": {
+        "authority": "elementor_library",
+        "entrypoint": "exports/elementor/sources",
+        "route": null
+    },
+    "elementor": {
+        "conditions": [],
+        "data": [
+            {
+                "elType": "container",
+                "elements": [
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "b39e058",
+                        "settings": {
+                            "header_size": "h2",
+                            "title": "Your Budget",
+                            "title_color": "#111827"
+                        },
+                        "widgetType": "heading"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "8ee115e",
+                        "settings": {
+                            "empty_message": "Your cart is empty.",
+                            "quantity_label": "Quantidade",
+                            "remove_position": "inline_end",
+                            "remove_text": "Remove",
+                            "show_image": "yes",
+                            "show_quantity": "yes",
+                            "show_remove": "yes"
+                        },
+                        "widgetType": "sbp-budget-list"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "6701a38",
+                        "settings": {
+                            "action": "send_whatsapp",
+                            "empty_cart_animation": "shake",
+                            "empty_cart_behavior": "hide",
+                            "size": "sm",
+                            "text": "Enviar orçamento via WhatsApp"
+                        },
+                        "widgetType": "sbp-budget-button"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "4a06365",
+                        "settings": {
+                            "action": "close_cart",
+                            "button_type": "",
+                            "selected_icon": {
+                                "library": "fa-solid",
+                                "value": "fas fa-times"
+                            },
+                            "size": "sm",
+                            "text": "Close"
+                        },
+                        "widgetType": "sbp-budget-button"
+                    }
+                ],
+                "id": "0a58774",
+                "isInner": false,
+                "settings": {
+                    "background_background": "classic",
+                    "background_color": "#ffffff",
+                    "border_radius": {
+                        "bottom": 18,
+                        "isLinked": true,
+                        "left": 18,
+                        "right": 18,
+                        "top": 18,
+                        "unit": "px"
+                    },
+                    "container_type": "flex",
+                    "content_width": "boxed",
+                    "flex_direction": "column",
+                    "gap": {
+                        "size": 18,
+                        "unit": "px"
+                    },
+                    "html_tag": "section",
+                    "padding": {
+                        "bottom": 28,
+                        "isLinked": true,
+                        "left": 28,
+                        "right": 28,
+                        "top": 28,
+                        "unit": "px"
+                    }
+                }
+            }
+        ],
+        "edit_mode": "builder",
+        "page_settings": {
+            "template": "elementor_canvas"
+        },
+        "page_template": "elementor_canvas",
+        "pro_version": "",
+        "template_type": "page",
+        "version": "4.0.8"
+    },
+    "integrations": {
+        "_sbp_template_role": "cart_modal"
+    },
+    "post_content": "<h2>Your Budget</h2>\t\t\t\t\t        \n                                    <p>Your cart is empty.</p>\n                            <a href=\"#\" data-sbp-action=\"send_whatsapp\" data-sbp-empty-behavior=\"hide\" data-sbp-empty-animation=\"shake\" role=\"button\">\n                        Enviar orçamento via WhatsApp\n                </a>\n            <a href=\"#\" role=\"button\" data-sbp-action=\"close_cart\">\n                    <svg aria-hidden=\"true\" viewBox=\"0 0 352 512\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z\"></path></svg>                \n                            Close\n                    </a>"
+}

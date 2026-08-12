@@ -1,0 +1,146 @@
+{
+    "schema_version": 1,
+    "post": {
+        "local_id": 491,
+        "parent_id": 0,
+        "post_type": "elementor_library",
+        "slug": "portfolio-project-loop-item",
+        "status": "publish",
+        "title": "Portfolio Project Loop Item"
+    },
+    "render": {
+        "authority": "elementor_library",
+        "entrypoint": "exports/elementor/sources",
+        "route": null
+    },
+    "elementor": {
+        "conditions": [],
+        "data": [
+            {
+                "elType": "container",
+                "elements": [
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "cctimg01",
+                        "settings": {
+                            "__dynamic__": {
+                                "image": "[elementor-tag id=\"d330b7fb-c56a-4198-80d0-0f5f0cc9e394\" name=\"eit-cct-image\" settings=\"%7B%22cct_type%22%3A%22projects%22%2C%22field%22%3A%22thumbnail%22%7D\"]"
+                            },
+                            "image": {
+                                "id": "",
+                                "url": ""
+                            },
+                            "image_size": "large"
+                        },
+                        "widgetType": "image"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "ccttype1",
+                        "settings": {
+                            "__dynamic__": {
+                                "title": "[elementor-tag id=\"f8740697-363c-4b21-9376-ca55f022e8e3\" name=\"eit-cct-text\" settings=\"%7B%22cct_type%22%3A%22projects%22%2C%22field%22%3A%22project_type%22%7D\"]"
+                            },
+                            "header_size": "span",
+                            "title": "Project type"
+                        },
+                        "widgetType": "heading"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "ccttitle",
+                        "settings": {
+                            "__dynamic__": {
+                                "title": "[elementor-tag id=\"1568462f-b3f0-4851-ae7e-9fd91a74fa19\" name=\"eit-cct-text\" settings=\"%7B%22cct_type%22%3A%22projects%22%2C%22field%22%3A%22title%22%7D\"]"
+                            },
+                            "header_size": "h3",
+                            "title": "Project title"
+                        },
+                        "widgetType": "heading"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "cctsum01",
+                        "settings": {
+                            "__dynamic__": {
+                                "editor": "[elementor-tag id=\"c2eb70f3-f354-44a5-adcf-65e71fb38ce9\" name=\"eit-cct-text\" settings=\"%7B%22cct_type%22%3A%22projects%22%2C%22field%22%3A%22summary%22%7D\"]"
+                            },
+                            "editor": "Project summary"
+                        },
+                        "widgetType": "text-editor"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "cctstack",
+                        "settings": {
+                            "__dynamic__": {
+                                "editor": "[elementor-tag id=\"6de44e16-3300-40b2-8b48-c7eddab079ec\" name=\"eit-cct-text\" settings=\"%7B%22cct_type%22%3A%22projects%22%2C%22field%22%3A%22stacks%22%7D\"]"
+                            },
+                            "editor": "Stack"
+                        },
+                        "widgetType": "text-editor"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "cctbtn01",
+                        "settings": {
+                            "__dynamic__": {
+                                "link": "[elementor-tag id=\"54c98a04-0b1d-473e-b832-6f7bc452bab3\" name=\"eit-cct-url\" settings=\"%7B%22cct_type%22%3A%22projects%22%2C%22field%22%3A%22case_url%22%7D\"]"
+                            },
+                            "link": {
+                                "url": ""
+                            },
+                            "text": "View case"
+                        },
+                        "widgetType": "button"
+                    }
+                ],
+                "id": "cctcard1",
+                "isInner": false,
+                "settings": {
+                    "_css_classes": "gp-loop-project",
+                    "background_background": "classic",
+                    "background_color": "#f7f7f4",
+                    "border_border": "solid",
+                    "border_color": "#171717",
+                    "border_width": {
+                        "bottom": 1,
+                        "isLinked": true,
+                        "left": 1,
+                        "right": 1,
+                        "top": 1,
+                        "unit": "px"
+                    },
+                    "container_type": "flex",
+                    "flex_direction": "column",
+                    "gap": {
+                        "size": 16,
+                        "unit": "px"
+                    },
+                    "padding": {
+                        "bottom": 18,
+                        "isLinked": true,
+                        "left": 18,
+                        "right": 18,
+                        "top": 18,
+                        "unit": "px"
+                    }
+                }
+            }
+        ],
+        "edit_mode": "builder",
+        "page_settings": [],
+        "page_template": "",
+        "pro_version": "4.0.4.2",
+        "template_type": "loop-item",
+        "version": "4.0.8"
+    },
+    "integrations": [],
+    "post_content": "<a role=\"button\">\n\t\t\t\t\t\t\t\t\tView case\n\t\t\t\t\t</a>"
+}

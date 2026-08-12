@@ -1,0 +1,67 @@
+{
+    "schema_version": 1,
+    "post": {
+        "local_id": 618,
+        "parent_id": 0,
+        "post_type": "elementor_library",
+        "slug": "",
+        "status": "draft",
+        "title": "Elementor Single Post #618"
+    },
+    "render": {
+        "authority": "elementor_library",
+        "entrypoint": "exports/elementor/sources",
+        "route": null
+    },
+    "elementor": {
+        "conditions": [
+            "include/singular/post",
+            "exclude/singular/post"
+        ],
+        "data": [
+            {
+                "elType": "container",
+                "elements": [
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "f3ec677",
+                        "settings": {
+                            "__dynamic__": {
+                                "title": "[elementor-tag id=\"ed10163\" name=\"post-title\" settings=\"%7B%7D\"]"
+                            },
+                            "title": "Add Your Heading Text Here"
+                        },
+                        "widgetType": "heading"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "5db7a8a",
+                        "settings": {
+                            "__dynamic__": {
+                                "image": "[elementor-tag id=\"d47ee0d\" name=\"post-featured-image\" settings=\"%7B%7D\"]"
+                            }
+                        },
+                        "widgetType": "image"
+                    }
+                ],
+                "id": "22250d0",
+                "isInner": false,
+                "settings": {
+                    "flex_direction": "column"
+                }
+            }
+        ],
+        "edit_mode": "builder",
+        "page_settings": {
+            "page_template": "elementor_canvas"
+        },
+        "page_template": "default",
+        "pro_version": "4.0.4.2",
+        "template_type": "single-post",
+        "version": "4.0.8"
+    },
+    "integrations": [],
+    "post_content": ""
+}

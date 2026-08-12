@@ -1,0 +1,48 @@
+{
+    "schema_version": 1,
+    "post": {
+        "local_id": 1596,
+        "parent_id": 0,
+        "post_type": "elementor_library",
+        "slug": "elementor-loop-item-1596",
+        "status": "publish",
+        "title": "Clientes Loop Teste"
+    },
+    "render": {
+        "authority": "elementor_library",
+        "entrypoint": "exports/elementor/sources",
+        "route": null
+    },
+    "elementor": {
+        "conditions": [],
+        "data": [
+            {
+                "elType": "container",
+                "elements": [
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "9fed87f",
+                        "settings": {
+                            "surface_id": "942a1afd-54a6-411b-b9bf-be979a1a6999"
+                        },
+                        "widgetType": "eit-toolkit-entry-surface"
+                    }
+                ],
+                "id": "6b2efb3",
+                "isInner": false,
+                "settings": {
+                    "flex_direction": "column"
+                }
+            }
+        ],
+        "edit_mode": "builder",
+        "page_settings": [],
+        "page_template": "default",
+        "pro_version": "4.0.4.2",
+        "template_type": "loop-item",
+        "version": "4.0.8"
+    },
+    "integrations": [],
+    "post_content": "<section id=\"eit-entry-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f\" data-eit-entry-workspace data-surface-id=\"942a1afd-54a6-411b-b9bf-be979a1a6999\" data-eit-entry-instance=\"942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f\" data-item-id=\"0\">\n\t\t\t<header>\n\t\t\t\t<p>Clientes</p>\n\t\t\t\t<h2>Editar Clientes</h2>\n\t\t\t\t\t\t\t</header>\n\t\t\t<form data-eit-entry-form novalidate>\n\t\t\t\t\t<progress max=\"1\" value=\"1\" data-eit-step-progress></progress>\n\t\t\t\t\t\t\t\t\t<section data-eit-entry-step=\"0\" >\n\t\t\t\t\t\t<h3 tabindex=\"-1\">Details</h3>\n\t\t\t\t\t\t\t<label for=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-b3bac5f7-7e02-469e-984b-4683f36994a1\">Nome *</label>\n\t\t\t\t\t\t<input id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-b3bac5f7-7e02-469e-984b-4683f36994a1\" type=\"text\" value=\"\" required  aria-describedby=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-b3bac5f7-7e02-469e-984b-4683f36994a1-error\" aria-invalid=\"false\">\t\t\t\t\t\t<p id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-b3bac5f7-7e02-469e-984b-4683f36994a1-error\" data-eit-field-error aria-live=\"polite\"></p>\n\t\t\t\t\t\t\t<label for=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-17183fab-10e4-4b26-a104-ccfd8ec21a01\">CPF *</label>\n\t\t\t\t\t\t<input id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-17183fab-10e4-4b26-a104-ccfd8ec21a01\" type=\"text\" value=\"\" required  aria-describedby=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-17183fab-10e4-4b26-a104-ccfd8ec21a01-error\" aria-invalid=\"false\">\t\t\t\t\t\t<p id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-17183fab-10e4-4b26-a104-ccfd8ec21a01-error\" data-eit-field-error aria-live=\"polite\"></p>\n\t\t\t\t\t\t\t<label for=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-44f7ba14-97e6-4745-b8e4-ed6c79bc4fd6\">New field</label>\n\t\t\t\t\t\t<input id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-44f7ba14-97e6-4745-b8e4-ed6c79bc4fd6\" type=\"text\" value=\"\"   aria-describedby=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-44f7ba14-97e6-4745-b8e4-ed6c79bc4fd6-error\" aria-invalid=\"false\">\t\t\t\t\t\t<p id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-44f7ba14-97e6-4745-b8e4-ed6c79bc4fd6-error\" data-eit-field-error aria-live=\"polite\"></p>\n\t\t\t\t\t\t\t<label for=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-851b1eee-62c4-4797-8b07-4bb652fed8fb\">Idade *</label>\n\t\t\t\t\t\t<input id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-851b1eee-62c4-4797-8b07-4bb652fed8fb\" type=\"text\" value=\"\" required  aria-describedby=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-851b1eee-62c4-4797-8b07-4bb652fed8fb-error\" aria-invalid=\"false\">\t\t\t\t\t\t<p id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-851b1eee-62c4-4797-8b07-4bb652fed8fb-error\" data-eit-field-error aria-live=\"polite\"></p>\n\t\t\t\t\t\t\t<label for=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-34653845-3cbc-4249-b1ce-c36e0b30b3fe\">Email</label>\n\t\t\t\t\t\t<input id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-34653845-3cbc-4249-b1ce-c36e0b30b3fe\" type=\"email\" value=\"\"   aria-describedby=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-34653845-3cbc-4249-b1ce-c36e0b30b3fe-error\" aria-invalid=\"false\">\t\t\t\t\t\t<p id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-34653845-3cbc-4249-b1ce-c36e0b30b3fe-error\" data-eit-field-error aria-live=\"polite\"></p>\n\t\t\t\t\t\t\t<label for=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-8e179f8a-8674-4f2e-9a78-0b72e114211e\">New field</label>\n\t\t\t\t\t\t<input id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-8e179f8a-8674-4f2e-9a78-0b72e114211e\" type=\"text\" value=\"\"   aria-describedby=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-8e179f8a-8674-4f2e-9a78-0b72e114211e-error\" aria-invalid=\"false\">\t\t\t\t\t\t<p id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-8e179f8a-8674-4f2e-9a78-0b72e114211e-error\" data-eit-field-error aria-live=\"polite\"></p>\n\t\t\t\t\t\t\t<label for=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-ba02428d-cc4e-4339-9390-0825129583d6\">Instagram</label>\n\t\t\t\t\t\t<input id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-ba02428d-cc4e-4339-9390-0825129583d6\" type=\"url\" value=\"\"   aria-describedby=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-ba02428d-cc4e-4339-9390-0825129583d6-error\" aria-invalid=\"false\">\t\t\t\t\t\t<p id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-ba02428d-cc4e-4339-9390-0825129583d6-error\" data-eit-field-error aria-live=\"polite\"></p>\n\t\t\t\t\t\t\t<label for=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-7b15947e-34b7-462a-b453-c9989a49f2e2\">Linkedinn</label>\n\t\t\t\t\t\t<input id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-7b15947e-34b7-462a-b453-c9989a49f2e2\" type=\"url\" value=\"\"   aria-describedby=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-7b15947e-34b7-462a-b453-c9989a49f2e2-error\" aria-invalid=\"false\">\t\t\t\t\t\t<p id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-7b15947e-34b7-462a-b453-c9989a49f2e2-error\" data-eit-field-error aria-live=\"polite\"></p>\n\t\t\t\t\t\t\t<label for=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-ca8e0587-a5ac-4438-bbd9-6d88a22e2d14\">Facebook</label>\n\t\t\t\t\t\t<input id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-ca8e0587-a5ac-4438-bbd9-6d88a22e2d14\" type=\"url\" value=\"\"   aria-describedby=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-ca8e0587-a5ac-4438-bbd9-6d88a22e2d14-error\" aria-invalid=\"false\">\t\t\t\t\t\t<p id=\"eit-entry-field-942a1afd-54a6-411b-b9bf-be979a1a6999-9fed87f-ca8e0587-a5ac-4438-bbd9-6d88a22e2d14-error\" data-eit-field-error aria-live=\"polite\"></p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</section>\n\t\t\t\t\t\t\t\t<label>Website<input type=\"text\" name=\"company_website\" tabindex=\"-1\" autocomplete=\"off\" data-eit-honeypot></label>\n\t\t\t\t<input type=\"hidden\" value=\"\" data-eit-form-token>\n\t\t\t\t<footer>\n\t\t\t\t\t<button type=\"button\" data-eit-previous hidden>Previous</button>\n\t\t\t\t\t<button type=\"button\" data-eit-next hidden>Continue</button>\n\t\t\t\t\t<button type=\"submit\" data-eit-intent=\"default\">Save draft</button><button type=\"submit\" data-eit-intent=\"submit_review\">Submit for review</button>\n\t\t\t\t</footer>\n\t\t\t</form>\n\t\t</section>"
+}

@@ -16,7 +16,9 @@ An agent or external reviewer should read the repository in this order:
 2. [`docs/studio-os/00-index.md`](docs/studio-os/00-index.md) for the normative
    system map and document authority;
 3. [`docs/studio-os/architecture/04-repository-wordpress-topology.md`](docs/studio-os/architecture/04-repository-wordpress-topology.md)
-   for repository ownership, WordPress mounts, and product boundaries.
+   for repository ownership, WordPress mounts, and product boundaries;
+4. [`wordpress/README.md`](wordpress/README.md) for the concrete frontend
+   rendering map, theme entrypoints, Elementor exports, and known gaps.
 
 The records in `products/` describe independently versioned plugin repositories.
 Their working trees live locally under `products/<slug>/repository/` and are

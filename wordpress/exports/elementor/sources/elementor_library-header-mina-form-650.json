@@ -1,0 +1,165 @@
+{
+    "schema_version": 1,
+    "post": {
+        "local_id": 650,
+        "parent_id": 0,
+        "post_type": "elementor_library",
+        "slug": "header-mina-form",
+        "status": "publish",
+        "title": "Header - Mina-Form"
+    },
+    "render": {
+        "authority": "elementor_library",
+        "entrypoint": "exports/elementor/sources",
+        "route": null
+    },
+    "elementor": {
+        "conditions": [
+            "include/singular/page/508"
+        ],
+        "data": [
+            {
+                "elType": "container",
+                "elements": [
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "ac04b44",
+                        "settings": {
+                            "__globals__": {
+                                "title_color": "globals/colors?id=mf_ink"
+                            },
+                            "_element_custom_width": {
+                                "size": 40,
+                                "sizes": [],
+                                "unit": "%"
+                            },
+                            "_element_width": "initial",
+                            "_flex_align_self": "center",
+                            "align": "start",
+                            "title": "Mina Forma",
+                            "title_color": "#151513",
+                            "typography_font_family": "Space Grotesk",
+                            "typography_font_size": {
+                                "size": 40,
+                                "sizes": [],
+                                "unit": "px"
+                            },
+                            "typography_font_weight": "800",
+                            "typography_letter_spacing": {
+                                "size": 0,
+                                "sizes": [],
+                                "unit": "px"
+                            },
+                            "typography_line_height": {
+                                "size": 1.05,
+                                "sizes": [],
+                                "unit": "em"
+                            },
+                            "typography_typography": "custom"
+                        },
+                        "widgetType": "heading"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "e664f7a",
+                        "settings": {
+                            "__globals__": [],
+                            "_element_width": "inherit",
+                            "align_items": "center",
+                            "menu": "mina-forma-navigation",
+                            "menu_name": "Menu"
+                        },
+                        "widgetType": "nav-menu"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "95a8bea",
+                        "settings": {
+                            "__globals__": {
+                                "button_text_color": "globals/colors?id=mf_dark"
+                            },
+                            "_element_custom_width": {
+                                "size": 22,
+                                "sizes": [],
+                                "unit": "%"
+                            },
+                            "_element_width": "initial",
+                            "_flex_align_self": "center",
+                            "align": "right",
+                            "background_color": "#5E35F200",
+                            "border_border": "solid",
+                            "border_color": "#000000",
+                            "border_width": {
+                                "bottom": "2",
+                                "isLinked": true,
+                                "left": "2",
+                                "right": "2",
+                                "top": "2",
+                                "unit": "px"
+                            },
+                            "link": {
+                                "custom_attributes": "",
+                                "is_external": "",
+                                "nofollow": "",
+                                "url": "/mina-form/#contact"
+                            },
+                            "text": "Let's Talk"
+                        },
+                        "widgetType": "button"
+                    }
+                ],
+                "id": "e852916",
+                "isInner": false,
+                "settings": {
+                    "border_border": "solid",
+                    "border_radius": {
+                        "bottom": "0",
+                        "isLinked": true,
+                        "left": "0",
+                        "right": "0",
+                        "top": "0",
+                        "unit": "px"
+                    },
+                    "border_width": {
+                        "bottom": "0",
+                        "isLinked": false,
+                        "left": "3",
+                        "right": "3",
+                        "top": "3",
+                        "unit": "px"
+                    },
+                    "content_width": "full",
+                    "custom_css": "selector {\n  width: calc(100% - 30px);\n  margin: 15px 15px 0 15px;\n  box-sizing: border-box;\n}",
+                    "flex_direction": "row",
+                    "margin": {
+                        "bottom": "0",
+                        "isLinked": false,
+                        "left": "0",
+                        "right": "0",
+                        "top": "0",
+                        "unit": "px"
+                    },
+                    "padding": {
+                        "bottom": "15",
+                        "isLinked": false,
+                        "left": "075",
+                        "right": "075",
+                        "top": "15",
+                        "unit": "px"
+                    }
+                }
+            }
+        ],
+        "edit_mode": "builder",
+        "page_settings": [],
+        "page_template": "default",
+        "pro_version": "4.0.4.2",
+        "template_type": "header",
+        "version": "4.0.8"
+    },
+    "integrations": [],
+    "post_content": "<h2>Mina Forma</h2>\t\t\t\t\t\t\t\t\t\t<a href=\"/mina-form/#contact\">\n\t\t\t\t\t\t\t\t\tLet's Talk\n\t\t\t\t\t</a>"
+}

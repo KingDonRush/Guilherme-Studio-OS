@@ -1,0 +1,1698 @@
+{
+    "schema_version": 1,
+    "post": {
+        "local_id": 4,
+        "parent_id": 0,
+        "post_type": "elementor_library",
+        "slug": "default-kit",
+        "status": "publish",
+        "title": "Default Kit"
+    },
+    "render": {
+        "authority": "elementor_library",
+        "entrypoint": "exports/elementor/sources",
+        "route": null
+    },
+    "elementor": {
+        "conditions": [],
+        "data": [],
+        "edit_mode": "builder",
+        "page_settings": {
+            "custom_colors": [
+                {
+                    "_id": "secondary",
+                    "color": "#07111C",
+                    "title": "01 Hero bg / footer"
+                },
+                {
+                    "_id": "hero_panel",
+                    "color": "#0D1721",
+                    "title": "02 Dark panel / cards"
+                },
+                {
+                    "_id": "bio_name",
+                    "color": "#F7FAFC",
+                    "title": "03 Text on dark / heading"
+                },
+                {
+                    "_id": "bio_role",
+                    "color": "#D8DEE8",
+                    "title": "04 Text on dark / body"
+                },
+                {
+                    "_id": "bio_body",
+                    "color": "#B8C2D1",
+                    "title": "05 Text on dark / muted"
+                },
+                {
+                    "_id": "primary",
+                    "color": "#00D6C9",
+                    "title": "06 Accent cyan / links"
+                },
+                {
+                    "_id": "bio_handle",
+                    "color": "#22E6D2",
+                    "title": "07 Cyan active / underline"
+                },
+                {
+                    "_id": "accent",
+                    "color": "#5E35F2",
+                    "title": "08 Accent violet / plugin"
+                },
+                {
+                    "_id": "accent_deep",
+                    "color": "#3C16C8",
+                    "title": "09 Violet deep / hover"
+                },
+                {
+                    "_id": "cta_warm",
+                    "color": "#E36A00",
+                    "title": "10 CTA warm / demo button"
+                },
+                {
+                    "_id": "case_canvas",
+                    "color": "#F7F3EA",
+                    "title": "11 Light bg / case sections"
+                },
+                {
+                    "_id": "case_card",
+                    "color": "#FBFAF4",
+                    "title": "12 Light card / UI blocks"
+                },
+                {
+                    "_id": "project_heading",
+                    "color": "#081020",
+                    "title": "13 Text on light / heading"
+                },
+                {
+                    "_id": "text",
+                    "color": "#283241",
+                    "title": "14 Text on light / body"
+                },
+                {
+                    "_id": "project_muted",
+                    "color": "#647083",
+                    "title": "15 Text on light / muted"
+                },
+                {
+                    "_id": "project_link",
+                    "color": "#007B78",
+                    "title": "16 Link on light / teal"
+                },
+                {
+                    "_id": "divider_light",
+                    "color": "#D8D0C8",
+                    "title": "17 Border on light"
+                },
+                {
+                    "_id": "border_dark",
+                    "color": "#2B3948",
+                    "title": "18 Border on dark"
+                },
+                {
+                    "_id": "success_check",
+                    "color": "#00A899",
+                    "title": "19 Success / check icon"
+                },
+                {
+                    "_id": "warning_line",
+                    "color": "#D97706",
+                    "title": "20 Warning / problem icon"
+                },
+                {
+                    "_id": "mf_ink",
+                    "color": "#151513",
+                    "title": "Mina 01 Ink"
+                },
+                {
+                    "_id": "mf_paper",
+                    "color": "#F4EFE5",
+                    "title": "Mina 02 Warm Paper"
+                },
+                {
+                    "_id": "mf_surface",
+                    "color": "#FBF8F0",
+                    "title": "Mina 03 Surface"
+                },
+                {
+                    "_id": "mf_line",
+                    "color": "#D8D0C4",
+                    "title": "Mina 04 Fine Line"
+                },
+                {
+                    "_id": "mf_muted",
+                    "color": "#5F625D",
+                    "title": "Mina 05 Muted Text"
+                },
+                {
+                    "_id": "mf_cyan",
+                    "color": "#14D8D2",
+                    "title": "Mina 06 Technical Cyan"
+                },
+                {
+                    "_id": "mf_clay",
+                    "color": "#D96E32",
+                    "title": "Mina 07 Clay Accent"
+                },
+                {
+                    "_id": "mf_violet",
+                    "color": "#6654D9",
+                    "title": "Mina 08 Violet Accent"
+                },
+                {
+                    "_id": "mf_dark",
+                    "color": "#23211E",
+                    "title": "Mina 09 Dark Section"
+                },
+                {
+                    "_id": "mf_success",
+                    "color": "#2F9B75",
+                    "title": "Mina 10 Success"
+                }
+            ],
+            "custom_typography": [
+                {
+                    "_id": "mf_display",
+                    "title": "Base - Display / H1",
+                    "typography_font_family": "Bebas Neue",
+                    "typography_font_size": {
+                        "size": 72,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.88,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_heading",
+                    "title": "Base - Section heading",
+                    "typography_font_family": "Bebas Neue",
+                    "typography_font_size": {
+                        "size": 40,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.92,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_body",
+                    "title": "Base - Body copy",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.45,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_card_title",
+                    "title": "Base - Card title",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 28,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "700",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.98,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_small",
+                    "title": "Base - Small copy",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 20,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.35,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_label",
+                    "title": "Base - Label / nav / button",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_logo",
+                    "title": "Base - Wordmark",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 27,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.95,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_header_main_title",
+                    "title": "Header - Main title / wordmark",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 40,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.9,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_header_menu",
+                    "title": "Header - Menu",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 13,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_header_cta",
+                    "title": "Header - CTA",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 13,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_page_kicker",
+                    "title": "Page - Kicker",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_page_title",
+                    "title": "Page - Main title",
+                    "typography_font_family": "Bebas Neue",
+                    "typography_font_size": {
+                        "size": 72,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.88,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_page_lead",
+                    "title": "Page - Lead copy",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 20,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.42,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_section_kicker",
+                    "title": "Section - Kicker",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_section_title",
+                    "title": "Section - Title",
+                    "typography_font_family": "Bebas Neue",
+                    "typography_font_size": {
+                        "size": 42,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.92,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_section_body",
+                    "title": "Section - Body",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.45,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_body_long",
+                    "title": "Body - Long form",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.55,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_metadata",
+                    "title": "Metadata - Small detail",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 18,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.25,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_inline_link",
+                    "title": "Inline - Text link",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 18,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_button",
+                    "title": "Button - Primary / Secondary",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_home_hero_eyebrow",
+                    "title": "Home Hero - Eyebrow",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 18,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_home_hero_title",
+                    "title": "Home Hero - Main title",
+                    "typography_font_family": "Bebas Neue",
+                    "typography_font_size": {
+                        "size": 80,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.88,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_home_hero_lead",
+                    "title": "Home Hero - Lead",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 20,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.42,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_home_proof_value",
+                    "title": "Home Proof - Value",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 24,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_home_proof_label",
+                    "title": "Home Proof - Label",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_home_service_number",
+                    "title": "Home Service Card - Number",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 18,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_home_service_title",
+                    "title": "Home Service Card - Title",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 28,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "700",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.98,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_home_service_body",
+                    "title": "Home Service Card - Body",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 21,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.4,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_home_project_title",
+                    "title": "Home Project Card - Title",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 28,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "700",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.98,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_home_cta_title",
+                    "title": "Home CTA - Title",
+                    "typography_font_family": "Bebas Neue",
+                    "typography_font_size": {
+                        "size": 56,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.9,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_about_hero_title",
+                    "title": "About Hero - Title",
+                    "typography_font_family": "Bebas Neue",
+                    "typography_font_size": {
+                        "size": 72,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.88,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_about_statement",
+                    "title": "About - Statement / quote",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 24,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.32,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_about_process_title",
+                    "title": "About Process - Step title",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 24,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "700",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_about_process_body",
+                    "title": "About Process - Body",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 16,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.45,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_services_page_title",
+                    "title": "Services Page - Title",
+                    "typography_font_family": "Bebas Neue",
+                    "typography_font_size": {
+                        "size": 72,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.88,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_services_card_title",
+                    "title": "Services Card - Title",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 30,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "700",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.98,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_services_card_body",
+                    "title": "Services Card - Body",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 16,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.45,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_service_detail_title",
+                    "title": "Service Detail - Title",
+                    "typography_font_family": "Bebas Neue",
+                    "typography_font_size": {
+                        "size": 68,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.88,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_service_detail_lead",
+                    "title": "Service Detail - Lead",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 20,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.42,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_service_deliverable_title",
+                    "title": "Service Detail - Deliverable title",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 22,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "700",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_projects_page_title",
+                    "title": "Projects Page - Title",
+                    "typography_font_family": "Bebas Neue",
+                    "typography_font_size": {
+                        "size": 72,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.88,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_projects_filter_label",
+                    "title": "Projects Filter - Label",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_projects_card_title",
+                    "title": "Projects Card - Title",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 30,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "700",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.98,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_projects_card_meta",
+                    "title": "Projects Card - Meta",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 18,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.25,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_case_hero_title",
+                    "title": "Case Detail - Hero title",
+                    "typography_font_family": "Bebas Neue",
+                    "typography_font_size": {
+                        "size": 76,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.88,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_case_hero_lead",
+                    "title": "Case Detail - Lead",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 20,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.42,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_case_metric_value",
+                    "title": "Case Detail - Metric value",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 34,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.95,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_case_metric_label",
+                    "title": "Case Detail - Metric label",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_case_caption",
+                    "title": "Case Detail - Gallery caption",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 18,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.35,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_plan_hero_title",
+                    "title": "Plan Page - Hero title",
+                    "typography_font_family": "Bebas Neue",
+                    "typography_font_size": {
+                        "size": 72,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.88,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_plan_hero_lead",
+                    "title": "Plan Page - Lead",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 20,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.42,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_plan_form_label",
+                    "title": "Plan Form - Label",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_plan_form_input",
+                    "title": "Plan Form - Input text",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 21,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.35,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_plan_item_title",
+                    "title": "Plan Quote Item - Title",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 21,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "600",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.3,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_plan_item_meta",
+                    "title": "Plan Quote Item - Meta",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.25,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_plan_table_head",
+                    "title": "Plan Quote Table - Header",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 16,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_plan_price",
+                    "title": "Plan Quote - Price / Total",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 22,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.95,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_plan_empty_title",
+                    "title": "Plan Empty State - Title",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 26,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "700",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_plan_empty_body",
+                    "title": "Plan Empty State - Body",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 21,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.45,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_contact_page_title",
+                    "title": "Contact Page - Title",
+                    "typography_font_family": "Bebas Neue",
+                    "typography_font_size": {
+                        "size": 72,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.88,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_contact_form_label",
+                    "title": "Contact Form - Label",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_contact_input",
+                    "title": "Contact Form - Input text",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 21,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.35,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_contact_detail_title",
+                    "title": "Contact Detail - Title",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 24,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "700",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_contact_detail_body",
+                    "title": "Contact Detail - Body",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 21,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "400",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.4,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_footer_wordmark",
+                    "title": "Footer - Wordmark",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 28,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 0.95,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_footer_heading",
+                    "title": "Footer - Column heading",
+                    "typography_font_family": "Barlow Condensed",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "800",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.05,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_text_transform": "uppercase",
+                    "typography_typography": "custom"
+                },
+                {
+                    "_id": "mf_footer_nav",
+                    "title": "Footer - Nav / legal",
+                    "typography_font_family": "Geist",
+                    "typography_font_size": {
+                        "size": 17,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": {
+                        "size": 0,
+                        "sizes": [],
+                        "unit": "px"
+                    },
+                    "typography_line_height": {
+                        "size": 1.35,
+                        "sizes": [],
+                        "unit": "em"
+                    },
+                    "typography_typography": "custom"
+                }
+            ]
+        },
+        "page_template": "default",
+        "pro_version": "",
+        "template_type": "kit",
+        "version": ""
+    },
+    "integrations": [],
+    "post_content": ""
+}

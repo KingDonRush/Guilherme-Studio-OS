@@ -1,0 +1,95 @@
+{
+    "schema_version": 1,
+    "post": {
+        "local_id": 621,
+        "parent_id": 0,
+        "post_type": "elementor_library",
+        "slug": "elementor-single-post-621",
+        "status": "publish",
+        "title": "Elementor Single Post #621"
+    },
+    "render": {
+        "authority": "elementor_library",
+        "entrypoint": "exports/elementor/sources",
+        "route": null
+    },
+    "elementor": {
+        "conditions": [
+            "include/singular/in___tipo_imovel"
+        ],
+        "data": [
+            {
+                "elType": "container",
+                "elements": [
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "ad5f772",
+                        "settings": {
+                            "__dynamic__": {
+                                "title": "[elementor-tag id=\"\" name=\"post-title\" settings=\"%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D\"]"
+                            },
+                            "title": "Add Your Heading Text Here"
+                        },
+                        "widgetType": "theme-post-title"
+                    }
+                ],
+                "id": "e8afe04",
+                "isInner": false,
+                "settings": {
+                    "flex_direction": "column"
+                }
+            },
+            {
+                "elType": "container",
+                "elements": [
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "884ebe7",
+                        "settings": {
+                            "__dynamic__": {
+                                "image": "[elementor-tag id=\"af0648b\" name=\"post-featured-image\" settings=\"%7B%7D\"]"
+                            }
+                        },
+                        "widgetType": "image"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "2129a36",
+                        "settings": {
+                            "__dynamic__": []
+                        },
+                        "widgetType": "image-gallery"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "40cce27",
+                        "settings": {
+                            "__dynamic__": {
+                                "editor": "[elementor-tag id=\"6ae9fe0\" name=\"post-custom-field\" settings=\"%7B%22custom_key%22%3A%22__preco_imovel%22%7D\"]"
+                            }
+                        },
+                        "widgetType": "text-editor"
+                    }
+                ],
+                "id": "eff7ca4",
+                "isInner": false,
+                "settings": []
+            }
+        ],
+        "edit_mode": "builder",
+        "page_settings": {
+            "preview_id": "620",
+            "preview_type": "single/__imoveis"
+        },
+        "page_template": "default",
+        "pro_version": "4.0.4.2",
+        "template_type": "single-post",
+        "version": "4.0.8"
+    },
+    "integrations": [],
+    "post_content": ""
+}

@@ -1,0 +1,130 @@
+{
+    "schema_version": 1,
+    "post": {
+        "local_id": 479,
+        "parent_id": 0,
+        "post_type": "page",
+        "slug": "work",
+        "status": "publish",
+        "title": "Work"
+    },
+    "render": {
+        "authority": "elementor",
+        "entrypoint": "exports/elementor/sources",
+        "route": "/work/"
+    },
+    "elementor": {
+        "conditions": [],
+        "data": [
+            {
+                "elType": "container",
+                "elements": [
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "workhead",
+                        "settings": {
+                            "header_size": "h1",
+                            "title": "Selected work"
+                        },
+                        "widgetType": "heading"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "workfilt",
+                        "settings": {
+                            "auto_apply": "yes",
+                            "cct_template_id": 491,
+                            "cct_type": "projects",
+                            "configuration_source": "widget",
+                            "data_provider": "cct",
+                            "filters": [
+                                {
+                                    "_id": "searchwork",
+                                    "label": "Search",
+                                    "layout_width": 60,
+                                    "placeholder": "Search projects",
+                                    "show_label": "",
+                                    "type": "search"
+                                },
+                                {
+                                    "_id": "typework",
+                                    "field_binding": "project_type",
+                                    "key": "project_type",
+                                    "label": "Project type",
+                                    "layout_width": 40,
+                                    "options": "plugin | Plugin systems\nwebsite | Website builds",
+                                    "resolved_key": "project_type",
+                                    "show_label": "",
+                                    "source": "data_attr",
+                                    "type": "chips"
+                                }
+                            ],
+                            "layout_direction": "row",
+                            "per_page": 6,
+                            "show_sort": "yes",
+                            "sort_options_items": [
+                                {
+                                    "_id": "manual",
+                                    "direction": "asc",
+                                    "label": "Curated order",
+                                    "source": "default"
+                                },
+                                {
+                                    "_id": "title",
+                                    "direction": "asc",
+                                    "label": "Title A-Z",
+                                    "source": "title"
+                                }
+                            ],
+                            "sync_url": "yes",
+                            "target_selector": ".gp-work-loop .elementor-loop-container"
+                        },
+                        "widgetType": "eit-filter-controller"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "workloop",
+                        "settings": {
+                            "_css_classes": "gp-work-loop",
+                            "_skin": "toolkit-cct",
+                            "columns": 3,
+                            "columns_mobile": 1,
+                            "columns_tablet": 2,
+                            "pagination_type": "numbers",
+                            "posts_per_page": 6,
+                            "template_id": 491,
+                            "toolkit_cct_cct_type": "projects",
+                            "toolkit_cct_order": "ASC",
+                            "toolkit_cct_orderby": "menu_order",
+                            "toolkit_cct_status": "publish"
+                        },
+                        "widgetType": "loop-grid"
+                    }
+                ],
+                "id": "workwrap",
+                "isInner": false,
+                "settings": {
+                    "_css_classes": "gp-work-archive",
+                    "container_type": "flex",
+                    "content_width": "boxed",
+                    "flex_direction": "column",
+                    "gap": {
+                        "size": 28,
+                        "unit": "px"
+                    }
+                }
+            }
+        ],
+        "edit_mode": "builder",
+        "page_settings": [],
+        "page_template": "elementor_full_width",
+        "pro_version": "4.0.4.2",
+        "template_type": "wp-page",
+        "version": "4.0.8"
+    },
+    "integrations": [],
+    "post_content": "<h1>Selected work</h1>\t\t\t\t\t\t\t\n\t\t\t\t\t\t<form action=\"#\" method=\"get\">\n\t\t\t\t<svg viewBox=\"0 0 20 20\" focusable=\"false\" aria-hidden=\"true\">\n\t\t\t\t\t<path d=\"M8.7 3.2a5.5 5.5 0 0 1 4.35 8.86l3.07 3.07-1.2 1.2-3.07-3.07A5.5 5.5 0 1 1 8.7 3.2Zm0 1.7a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z\" fill=\"currentColor\"/>\n\t\t\t\t</svg>\n\t\t\t<input\n\t\t\t\tid=\"workfilt-0\"\n\t\t\t\tclass=\"eit-input eit-input--search\"\n\t\t\t\ttype=\"search\"\n\t\t\t\tplaceholder=\"Search projects\"\n\t\t\t\taria-label=\"Search\"\n\t\t\t\tdata-eit-control\n\t\t\t\tdata-eit-search-input\n\t\t\t\tdata-eit-type=\"search\"\n\t\t\t\tdata-eit-key=\"\"\n\t\t\t/>\n\t\t\t<button\n\t\t\t\ttype=\"button\"\n\t\t\t\tclass=\"eit-search-field__clear\"\n\t\t\t\tdata-eit-search-clear\n\t\t\t\taria-label=\"Clear search\"\n\t\t\t\thidden\n\t\t\t>\n\t\t\t\t&times;\n\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t<label>\n\t\t\t\t\t<input\n\t\t\t\t\t\ttype=\"checkbox\"\n\t\t\t\t\t\tname=\"eit-workfilt-1[]\"\n\t\t\t\t\t\tvalue=\"plugin\"\n\t\t\t\t\t\tdata-eit-control\n\t\t\t\t\t\tdata-eit-type=\"chips\"\n\t\t\t\t\t\tdata-eit-key=\"project_type\"\n\t\t\t\t\t/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPlugin systems\n\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t<label>\n\t\t\t\t\t<input\n\t\t\t\t\t\ttype=\"checkbox\"\n\t\t\t\t\t\tname=\"eit-workfilt-1[]\"\n\t\t\t\t\t\tvalue=\"website\"\n\t\t\t\t\t\tdata-eit-control\n\t\t\t\t\t\tdata-eit-type=\"chips\"\n\t\t\t\t\t\tdata-eit-key=\"project_type\"\n\t\t\t\t\t/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tWebsite builds\n\t\t\t\t\t\t\t\t\t</label>\n\t\t\t<label for=\"workfilt-sort\">\n\t\t\t\tSort by\t\t\t</label>\n\t\t\t<select id=\"workfilt-sort\" data-eit-sort>\n\t\t\t\t\t\t\t\t\t<option value=\"default\">Curated order</option>\n\t\t\t\t\t\t\t\t\t<option value=\"title_asc\">Title A-Z</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t<button type=\"button\" data-eit-reset>\n\t\t\t\tReset\t\t\t</button>\n\t\t\t\t\t</form>\n\t\tNo matching items found.\n\t\t<nav data-eit-pagination aria-label=\"Filtered listing pagination\"></nav>"
+}

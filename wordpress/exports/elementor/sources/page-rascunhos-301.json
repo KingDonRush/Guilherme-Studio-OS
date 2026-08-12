@@ -1,0 +1,219 @@
+{
+    "schema_version": 1,
+    "post": {
+        "local_id": 301,
+        "parent_id": 0,
+        "post_type": "page",
+        "slug": "rascunhos",
+        "status": "publish",
+        "title": "Rascunhos"
+    },
+    "render": {
+        "authority": "elementor",
+        "entrypoint": "exports/elementor/sources",
+        "route": "/rascunhos/"
+    },
+    "elementor": {
+        "conditions": [],
+        "data": [
+            {
+                "elType": "container",
+                "elements": [
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "3fc0d99",
+                        "settings": {
+                            "action": "open_cart",
+                            "cart_shell": "drawer_right",
+                            "cart_template_id": "335",
+                            "text": "Adicionar ao orçamento"
+                        },
+                        "widgetType": "sbp-budget-button"
+                    }
+                ],
+                "id": "c5b75af",
+                "isInner": false,
+                "settings": []
+            },
+            {
+                "elType": "container",
+                "elements": [
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "a9827f6",
+                        "settings": [],
+                        "widgetType": "viewer-to-elementor"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "da171bb",
+                        "settings": {
+                            "empty_message": "Your cart is empty.",
+                            "quantity_label": "Quantidade",
+                            "remove_text": "Remove",
+                            "submit_text": "Enviar orçamento via WhatsApp"
+                        },
+                        "widgetType": "sbp-budget-list"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "2174aca",
+                        "settings": {
+                            "text": "Adicionar ao orçamento"
+                        },
+                        "widgetType": "sbp-budget-button"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "357129d",
+                        "settings": {
+                            "apply_text": "Apply filters",
+                            "controller_padding": {
+                                "bottom": "0",
+                                "isLinked": true,
+                                "left": "0",
+                                "right": "0",
+                                "top": "0",
+                                "unit": "px"
+                            },
+                            "controller_radius": {
+                                "bottom": "0",
+                                "isLinked": true,
+                                "left": "0",
+                                "right": "0",
+                                "top": "0",
+                                "unit": "px"
+                            },
+                            "eit_filter_has_chips_controls": "",
+                            "eit_filter_has_range_controls": "",
+                            "eit_filter_has_rating_controls": "yes",
+                            "empty_text": "No matching items found.",
+                            "filters": [
+                                {
+                                    "_id": "02aa3b9",
+                                    "label": "Filter",
+                                    "placeholder": "Search...",
+                                    "radio_all_label": "All"
+                                },
+                                {
+                                    "_id": "3600e24",
+                                    "label": "Filter",
+                                    "placeholder": "Search...",
+                                    "radio_all_label": "All",
+                                    "type": "rating"
+                                }
+                            ],
+                            "next_text": "Next",
+                            "previous_text": "Previous",
+                            "range_handle_icon": {
+                                "library": "fa-regular",
+                                "value": "far fa-address-card"
+                            },
+                            "range_handle_icon_enabled": "yes",
+                            "range_handle_icon_size": {
+                                "size": 100,
+                                "sizes": [],
+                                "unit": "px"
+                            },
+                            "range_handle_size": {
+                                "size": 31,
+                                "sizes": [],
+                                "unit": "px"
+                            },
+                            "range_input_flow": "",
+                            "range_orientation": "vertical",
+                            "range_show_inputs": "",
+                            "range_track_height": {
+                                "size": 11,
+                                "sizes": [],
+                                "unit": "px"
+                            },
+                            "range_value_color": "#F70A0A",
+                            "range_vertical_alignment": "start",
+                            "rating_color": "#320808",
+                            "reset_text": "Reset",
+                            "result_count_text": "{count} results",
+                            "sort_label": "Sort by",
+                            "sort_options": "default|Default\ntitle_asc|Title A-Z\ntitle_desc|Title Z-A\ndate_desc|Newest\nnumeric_asc|Lowest value\nnumeric_desc|Highest value",
+                            "sort_options_items": [
+                                {
+                                    "_id": "b689930",
+                                    "label": "Default",
+                                    "source": "default"
+                                },
+                                {
+                                    "_id": "87eea67",
+                                    "label": "Title A-Z"
+                                },
+                                {
+                                    "_id": "4e19948",
+                                    "direction": "desc",
+                                    "label": "Title Z-A"
+                                },
+                                {
+                                    "_id": "072b5c2",
+                                    "data_type": "date",
+                                    "direction": "desc",
+                                    "label": "Newest",
+                                    "source": "date"
+                                },
+                                {
+                                    "_id": "8392d77",
+                                    "data_type": "number",
+                                    "key": "sort",
+                                    "label": "Lowest value",
+                                    "source": "numeric"
+                                },
+                                {
+                                    "_id": "6bc569c",
+                                    "data_type": "number",
+                                    "direction": "desc",
+                                    "key": "sort",
+                                    "label": "Highest value",
+                                    "source": "numeric"
+                                }
+                            ]
+                        },
+                        "widgetType": "eit-filter-controller"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "f90408a",
+                        "settings": {
+                            "alternate_templates": [
+                                {
+                                    "_id": "a86b5da",
+                                    "template_id": null
+                                }
+                            ],
+                            "load_more_no_posts_custom_message": "No more posts to show",
+                            "nothing_found_message_text": "It seems we can’t find what you’re looking for.",
+                            "pagination_next_label": "Next",
+                            "pagination_page_limit": "5",
+                            "pagination_prev_label": "Previous",
+                            "text": "Load More"
+                        },
+                        "widgetType": "loop-grid"
+                    }
+                ],
+                "id": "b8dfc3c",
+                "isInner": false,
+                "settings": []
+            }
+        ],
+        "edit_mode": "builder",
+        "page_settings": [],
+        "page_template": "elementor_canvas",
+        "pro_version": "4.0.4.2",
+        "template_type": "wp-page",
+        "version": "4.0.8"
+    },
+    "integrations": [],
+    "post_content": "<a href=\"#\" role=\"button\" data-sbp-action=\"open_cart\" data-sbp-template-id=\"335\" data-sbp-shell=\"drawer_right\" data-sbp-animation=\"fade_scale\" data-sbp-panel-width=\"560px\" data-sbp-overlay-color=\"#000000\" data-sbp-overlay-opacity=\"50\" data-sbp-close-overlay=\"yes\" data-sbp-close-escape=\"yes\" data-sbp-show-close=\"yes\">\n                    <svg aria-hidden=\"true\" viewBox=\"0 0 448 512\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z\"></path></svg>                \n                            Adicionar ao orçamento\n                    </a>\n        \t\t\t\t\t<p style=\"color:#666;margin:0;\">Selecione um modelo 3D (.zip/.glb/.gltf).</p>\t\t\t\t\t        \n                                    <p>Your cart is empty.</p>\n                            <a href=\"#\" data-sbp-action=\"send_whatsapp\" data-sbp-empty-behavior=\"hide\" data-sbp-empty-animation=\"shake\" role=\"button\">\n                        Enviar orçamento via WhatsApp\n                </a>\n            <a href=\"#\" role=\"button\" data-sbp-action=\"add\" data-sbp-product-id=\"301\" data-sbp-quantity=\"1\">\n                    <svg aria-hidden=\"true\" viewBox=\"0 0 448 512\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z\"></path></svg>                \n                            Adicionar ao orçamento\n                    </a>\n\t\t\t\t\t\t<form action=\"#\" method=\"get\">\n\t\t\t\t\t\t\tFilter\n\t\t\t\t<svg viewBox=\"0 0 20 20\" focusable=\"false\" aria-hidden=\"true\">\n\t\t\t\t\t<path d=\"M8.7 3.2a5.5 5.5 0 0 1 4.35 8.86l3.07 3.07-1.2 1.2-3.07-3.07A5.5 5.5 0 1 1 8.7 3.2Zm0 1.7a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z\" fill=\"currentColor\"/>\n\t\t\t\t</svg>\n\t\t\t<input\n\t\t\t\tid=\"357129d-0\"\n\t\t\t\tclass=\"eit-input eit-input--search\"\n\t\t\t\ttype=\"search\"\n\t\t\t\tplaceholder=\"Search...\"\n\t\t\t\taria-label=\"Filter\"\n\t\t\t\tdata-eit-control\n\t\t\t\tdata-eit-search-input\n\t\t\t\tdata-eit-type=\"search\"\n\t\t\t\tdata-eit-key=\"\"\n\t\t\t/>\n\t\t\t<button\n\t\t\t\ttype=\"button\"\n\t\t\t\tclass=\"eit-search-field__clear\"\n\t\t\t\tdata-eit-search-clear\n\t\t\t\taria-label=\"Clear search\"\n\t\t\t\thidden\n\t\t\t>\n\t\t\t\t&times;\n\t\t\t</button>\n\t\t\t\t\t\t\tFilter\n\t\t\t\t\t\t\t<label>\n\t\t\t\t\t<input type=\"radio\" name=\"eit-357129d-1\" value=\"5\" data-eit-control data-eit-type=\"rating\" data-eit-key=\"\" />\n\t\t\t<svg aria-hidden=\"true\" viewBox=\"0 0 576 512\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z\"></path></svg>\t\t\n\t\t\t\t\t\t\t5 stars\n\t\t\t\t</label>\n\t\t\t\t\t\t\t<label>\n\t\t\t\t\t<input type=\"radio\" name=\"eit-357129d-1\" value=\"4\" data-eit-control data-eit-type=\"rating\" data-eit-key=\"\" />\n\t\t\t<svg aria-hidden=\"true\" viewBox=\"0 0 576 512\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z\"></path></svg>\t\t\n\t\t\t\t\t\t\t4+ stars\n\t\t\t\t</label>\n\t\t\t\t\t\t\t<label>\n\t\t\t\t\t<input type=\"radio\" name=\"eit-357129d-1\" value=\"3\" data-eit-control data-eit-type=\"rating\" data-eit-key=\"\" />\n\t\t\t<svg aria-hidden=\"true\" viewBox=\"0 0 576 512\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z\"></path></svg>\t\t\n\t\t\t\t\t\t\t3+ stars\n\t\t\t\t</label>\n\t\t\t\t\t\t\t<label>\n\t\t\t\t\t<input type=\"radio\" name=\"eit-357129d-1\" value=\"2\" data-eit-control data-eit-type=\"rating\" data-eit-key=\"\" />\n\t\t\t<svg aria-hidden=\"true\" viewBox=\"0 0 576 512\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z\"></path></svg>\t\t\n\t\t\t\t\t\t\t2+ stars\n\t\t\t\t</label>\n\t\t\t\t\t\t\t<label>\n\t\t\t\t\t<input type=\"radio\" name=\"eit-357129d-1\" value=\"1\" data-eit-control data-eit-type=\"rating\" data-eit-key=\"\" />\n\t\t\t<svg aria-hidden=\"true\" viewBox=\"0 0 576 512\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z\"></path></svg>\t\t\n\t\t\t\t\t\t\t1+ star\n\t\t\t\t</label>\n\t\t\t<label for=\"357129d-sort\">\n\t\t\t\tSort by\t\t\t</label>\n\t\t\t<select id=\"357129d-sort\" data-eit-sort>\n\t\t\t\t\t\t\t\t\t<option value=\"default\">Default</option>\n\t\t\t\t\t\t\t\t\t<option value=\"title_asc\">Title A-Z</option>\n\t\t\t\t\t\t\t\t\t<option value=\"title_desc\">Title Z-A</option>\n\t\t\t\t\t\t\t\t\t<option value=\"date_desc\">Newest</option>\n\t\t\t\t\t\t\t\t\t<option value=\"numeric_asc\">Lowest value</option>\n\t\t\t\t\t\t\t\t\t<option value=\"numeric_desc\">Highest value</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t<button type=\"button\" data-eit-reset>\n\t\t\t\tReset\t\t\t</button>\n\t\t\t\t\t</form>\n\t\tNo matching items found.\n\t\t<nav data-eit-pagination aria-label=\"Filtered listing pagination\"></nav>"
+}

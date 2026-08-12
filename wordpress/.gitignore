@@ -5,9 +5,14 @@
 !.gitignore
 !.env.example
 !.mcp.example.json
+!README.md
 !docker-compose.yml
 !scripts/
 !scripts/**
+!exports/
+exports/*
+!exports/elementor/
+!exports/elementor/**
 
 # Keep wp-content structure tracked, but ignore generated runtime objects.
 !wp-content/

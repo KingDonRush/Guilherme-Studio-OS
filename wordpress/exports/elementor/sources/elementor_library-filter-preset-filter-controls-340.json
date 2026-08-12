@@ -1,0 +1,81 @@
+{
+    "schema_version": 1,
+    "post": {
+        "local_id": 340,
+        "parent_id": 0,
+        "post_type": "elementor_library",
+        "slug": "filter-preset-filter-controls",
+        "status": "publish",
+        "title": "filter-preset Filter Controls"
+    },
+    "render": {
+        "authority": "elementor_library",
+        "entrypoint": "exports/elementor/sources",
+        "route": null
+    },
+    "elementor": {
+        "conditions": [],
+        "data": [
+            {
+                "elType": "container",
+                "elements": [
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "66eddb5",
+                        "settings": {
+                            "header_size": "h3",
+                            "title": "Filter controls"
+                        },
+                        "widgetType": "heading"
+                    },
+                    {
+                        "elType": "widget",
+                        "elements": [],
+                        "id": "73cac0d",
+                        "settings": {
+                            "auto_apply": "yes",
+                            "configuration_source": "preset",
+                            "filter_preset": "filter-preset",
+                            "sync_url": "yes"
+                        },
+                        "widgetType": "eit-filter-controller"
+                    }
+                ],
+                "id": "86e0ec1",
+                "isInner": false,
+                "settings": {
+                    "container_type": "flex",
+                    "content_width": "boxed",
+                    "flex_direction": "column",
+                    "gap": {
+                        "size": 16,
+                        "unit": "px"
+                    },
+                    "html_tag": "section",
+                    "padding": {
+                        "bottom": 20,
+                        "isLinked": true,
+                        "left": 20,
+                        "right": 20,
+                        "top": 20,
+                        "unit": "px"
+                    }
+                }
+            }
+        ],
+        "edit_mode": "builder",
+        "page_settings": {
+            "template": "elementor_canvas"
+        },
+        "page_template": "elementor_canvas",
+        "pro_version": "4.0.4.2",
+        "template_type": "page",
+        "version": "4.0.8"
+    },
+    "integrations": {
+        "_eit_filter_preset": "filter-preset",
+        "_eit_template_role": "filter_controller"
+    },
+    "post_content": "<h3>Filter controls</h3>\t\t\t\t\t\t\t\n\t\t\t<form action=\"#\" method=\"get\">\n\t\t\t\t\t\t\tSearch\n\t\t\t\t\t\t\t<input\n\t\t\t\t\tid=\"73cac0d-0\"\n\t\t\t\t\tclass=\"eit-input eit-input--search\"\n\t\t\t\t\ttype=\"search\"\n\t\t\t\t\tplaceholder=\"Search...\"\n\t\t\t\t\tdata-eit-control\n\t\t\t\t\tdata-eit-type=\"search\"\n\t\t\t\t\tdata-eit-key=\"title\"\n\t\t\t\t/>\n\t\t\t\t\t\t<label for=\"73cac0d-sort\">\n\t\t\t\t\t\t\tSort by\t\t\t\t\t\t</label>\n\t\t\t\t\t\t<select id=\"73cac0d-sort\" data-eit-sort>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<option value=\"default\">Default</option>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<option value=\"title_asc\">Title A-Z</option>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<option value=\"title_desc\">Title Z-A</option>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<option value=\"date_desc\">Newest</option>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t\t<button type=\"button\" data-eit-reset>\n\t\t\t\t\t\tReset\t\t\t\t\t</button>\n\t\t\t</form>\n\t\t\tNo matching items found.\n\t\t\t<nav data-eit-pagination aria-label=\"Filtered listing pagination\"></nav>"
+}
