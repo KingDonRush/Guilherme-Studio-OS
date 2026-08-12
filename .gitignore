@@ -38,3 +38,5 @@ clients/*/engagements/*/deliverables/*/wordpress/
 .DS_Store
 Thumbs.db
 .idea/
+.obsidian/
+tmp/
