@@ -1,8 +1,12 @@
 # Guilherme Studio OS
 
-Private local-first operating system for Guilherme Silva's international
+Public, local-first operating system for Guilherme Silva's international
 WordPress business, products, portfolio, career pipeline, and governed agent
 work.
+
+The source, non-sensitive operating rules, fixtures, and evidence in this Git
+repository are public. Secrets, confidential business records, private client
+data, local runtime state, and credentials are not part of this repository.
 
 The normative product specification lives in
 [`docs/studio-os/`](docs/studio-os/00-index.md).

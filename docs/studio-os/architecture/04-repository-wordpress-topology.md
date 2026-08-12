@@ -13,6 +13,8 @@ Git history.
 The correct boundary is based on ownership and release lifecycle:
 
 - Studio policies and canonical business records share the coordinator repo;
+- only records safe for public disclosure may enter the coordinator Git
+  history;
 - independently released plugins use independent repositories;
 - each client or owned WordPress site with its own delivery lifecycle uses its
   own repository;
@@ -32,7 +34,8 @@ Contains:
 - non-secret registry entries;
 - migration and operational documentation.
 
-Visibility: private.
+Visibility: public. Confidential records and secrets are excluded regardless of
+their schema classification.
 
 ### Product repository
 
@@ -76,7 +79,7 @@ assume push authority.
 ## Proposed Ownership Topology
 
 ```text
-guilherme-studio-os/                 # private coordinator Git
+guilherme-studio-os/                 # public, disclosure-safe coordinator Git
 ├── products/
 │   ├── simple-budget-plugin/
 │   │   ├── product.yaml

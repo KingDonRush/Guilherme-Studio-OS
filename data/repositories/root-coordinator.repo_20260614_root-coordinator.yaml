@@ -14,15 +14,18 @@ metadata:
     - git
     - coordinator
   owner_id: per_20260614_guilherme-silva
-  revision: 1
+  revision: 2
   schema_version: 1
   slug: root-coordinator
-  updated_at: 2026-06-14T20:30:00.000Z
+  updated_at: 2026-08-12T21:55:00.000Z
 relations: []
 spec:
-  branch: codex/studio-os-v1
+  branch: main
+  default_branch: main
+  expected_remote: https://github.com/KingDonRush/Guilherme-Studio-OS.git
   path: .
-  remote_policy: no-remote-in-v1
+  remote_policy: allowed
   status: active
-  summary: Private local coordinator repository for Guilherme Studio OS V1.
+  summary: Public, disclosure-safe coordinator repository for Guilherme Studio OS.
   title: Root Coordinator Repository
+  visibility: public

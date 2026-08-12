@@ -57,7 +57,8 @@ Gaps:
 
 - All PRDs depend on classification and secret safety.
 - PRD 03 depends on WordPress backup/restore.
-- PRD 04 depends on private repository recovery.
+- PRD 04 depends on recovery for both the public coordinator and independently
+  governed private repositories.
 - PRD 10 depends on safe context packs.
 - PRD 11 depends on panel/MCP transport security.
 

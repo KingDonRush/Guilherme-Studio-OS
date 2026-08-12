@@ -137,8 +137,11 @@ A soft gate becomes hard when:
 
 ## Article 6: Security and Privacy
 
-- The coordinator repository is private.
-- Commercial and personal operational data may be versioned when classified.
+- The coordinator repository is public.
+- Every committed file must be safe for public disclosure. A classification
+  label does not create access control inside public Git history.
+- Confidential commercial and personal operational data belongs only in an
+  ignored local store or a separately governed private repository.
 - Passwords, API keys, OAuth secrets, private keys, recovery codes, session
   cookies, and production credentials must never be committed.
 - Secret entry must occur through a protected local mechanism.

@@ -145,7 +145,8 @@ inputs to migration. They do not override this specification.
 
 The Studio OS is:
 
-- a private local-first business and production operating system;
+- a public-source, local-first business and production operating system;
+- a repository whose committed content is always safe for public disclosure;
 - a versioned repository of human-readable canonical records;
 - a deterministic CLI for controlled mutations;
 - an MCP surface for governed agent access;

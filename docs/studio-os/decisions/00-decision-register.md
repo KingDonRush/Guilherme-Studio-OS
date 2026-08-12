@@ -88,7 +88,7 @@ Each material decision records:
 
 ### STUDIO-008: Private coordinator
 
-- **Status:** accepted
+- **Status:** superseded by STUDIO-021
 - **Date:** 2026-06-14
 - **Decision:** the coordinator repository is private.
 - **Consequence:** internal/confidential commercial data may be versioned when
@@ -213,6 +213,21 @@ Each material decision records:
 - **Reconsideration trigger:** approved production assets make repository size
   or distribution cost operationally harmful.
 - **Authority:** Guilherme's approved asset policy and V1 plan.
+
+### STUDIO-021: Public disclosure-safe coordinator
+
+- **Status:** accepted
+- **Date:** 2026-08-12
+- **Decision:** the coordinator repository is public, while the Studio runtime
+  remains local-first.
+- **Supersedes:** STUDIO-008.
+- **Consequence:** every committed file is publicly visible regardless of its
+  schema classification. Confidential operational records must use an ignored
+  local store or a separately governed private repository, and secret values
+  remain prohibited from Git.
+- **Evidence:** full-history Gitleaks scan, tracked-path audit, public-boundary
+  documentation, and reconciled GitHub visibility.
+- **Authority:** Guilherme.
 
 ### PRODUCT-EIT-001: Executable Blueprint authority
 

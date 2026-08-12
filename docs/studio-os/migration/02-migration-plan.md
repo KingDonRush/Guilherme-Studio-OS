@@ -380,7 +380,7 @@ Each phase:
 1. begins from recorded state;
 2. produces one or more coherent commits;
 3. verifies its own ownership boundary;
-4. is pushed to the private coordinator only after review;
+4. is pushed to the coordinator only after public-disclosure and secret review;
 5. does not mix independent repository commits.
 
 Suggested commit sequence:
@@ -414,7 +414,7 @@ Abort and restore when:
 
 ## Final Migration Acceptance
 
-- root operates as private coordinator;
+- root operates as a public, disclosure-safe coordinator;
 - Agentic Ops is absent and unreferenced;
 - retained `.ai/` knowledge has domain ownership;
 - owned products keep independent Git histories;

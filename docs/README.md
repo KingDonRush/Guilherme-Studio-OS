@@ -9,7 +9,7 @@ The future operating model for this repository is specified in
 [Guilherme Studio OS](./studio-os/00-index.md).
 
 That specification governs the planned transition from a portfolio-focused
-workspace into a private local-first system for:
+workspace into a public-source, local-first system for:
 
 - international freelance and employment pipelines;
 - clients, engagements, WordPress delivery, and payments;

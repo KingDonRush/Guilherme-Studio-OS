@@ -295,9 +295,11 @@ operations?
 
 ### Current recommendation
 
-Allow justified internal and confidential records in the private coordinator.
-Prohibit secrets. Minimize raw communication bodies and sensitive personal data.
-Generate public exports through classification-aware projections.
+Allow internal records in the public coordinator only when their contents are
+safe for public disclosure. Keep confidential records in ignored local storage
+or a separately governed private repository. Prohibit secrets. Minimize raw
+communication bodies and sensitive personal data. Generate public exports
+through classification-aware projections.
 
 ### Closing spike
 

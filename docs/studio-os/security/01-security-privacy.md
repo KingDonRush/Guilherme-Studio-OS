@@ -47,6 +47,10 @@ contact information, released content.
 Non-public operational plans, repository health, task state, general product
 roadmaps, non-sensitive decisions.
 
+`internal` controls agent context and publication intent; it is not an access
+control. An internal record may be committed to this public repository only
+when its contents are nevertheless safe for public disclosure.
+
 ### Confidential
 
 Client identity and context, proposals, contracts, invoices, payments,
@@ -61,7 +65,9 @@ cookies, financial authentication, production credentials.
 Rules:
 
 - public is an intentional state, not the absence of a label;
-- confidential data may exist in the private coordinator repo when justified;
+- the public coordinator Git history contains only disclosure-safe data;
+- confidential data lives in an ignored local store or separately governed
+  private repository;
 - secret values never enter canonical Git storage;
 - projections, logs, exports, screenshots, and backups preserve or increase
   protection;
