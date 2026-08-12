@@ -1,0 +1,10 @@
+schema_version: 1
+route: /contact
+file: contact__desktop__approved.png
+dimensions: 863x1823
+color_mode: RGB
+sha256: 23366acd70c413844934dc264718e5516da8618df0891dbd0d195f4f94ea23ae
+approved_at: 2026-07-15
+approved_by: Guilherme
+role: Contact route visual authority
+source: ../01-runs/2026-07-15__direct-conversation-surface/outputs/contact__direct-conversation-surface__candidate-01.png

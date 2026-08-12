@@ -1,0 +1,96 @@
+schema_version: 1
+id: projects-listing-geometry-2026-07-14
+coordinate_space:
+  canvas_width: 1440
+  canvas_height: 3200
+  target_viewport_width: 1440
+  target_viewport_height: 900
+  fold_line_y: 900
+boxes:
+  header:
+    x: 24
+    y: 20
+    width: 1392
+    height: 92
+  intro:
+    x: 24
+    y: 112
+    width: 1392
+    height: 390
+  intro_title:
+    x: 80
+    y: 168
+    width: 780
+    height: 270
+  intro_copy:
+    x: 920
+    y: 190
+    width: 360
+    height: 210
+  filter_row:
+    x: 24
+    y: 502
+    width: 1392
+    height: 128
+  featured_case:
+    x: 24
+    y: 630
+    width: 1392
+    height: 570
+  featured_image:
+    x: 70
+    y: 700
+    width: 870
+    height: 405
+  featured_copy:
+    x: 990
+    y: 730
+    width: 330
+    height: 340
+  project_index:
+    x: 24
+    y: 1200
+    width: 1392
+    height: 1300
+  project_band_one:
+    x: 70
+    y: 1300
+    width: 1300
+    height: 530
+  project_band_two:
+    x: 70
+    y: 1870
+    width: 1300
+    height: 550
+  proof_strip:
+    x: 24
+    y: 2500
+    width: 1392
+    height: 240
+  final_cta:
+    x: 24
+    y: 2740
+    width: 1392
+    height: 260
+  footer:
+    x: 24
+    y: 3000
+    width: 1392
+    height: 200
+fixed_height_regions:
+  - header
+  - intro
+  - filter_row
+  - final_cta
+image_max_boxes:
+  featured_case: 870x405
+  project_grid_image: 410x270
+content_that_must_not_grow_parent:
+  - intro contains no image
+  - filter labels stay on one controlled row at desktop
+  - project images crop inside assigned spans
+  - project captions do not determine image height
+  - the project index must not push the CTA below the canvas
+responsive_recomposition:
+  tablet: feature becomes two bands and project images use a two-column ordered grid
+  mobile: filters wrap; feature and all projects become one semantic vertical list; image precedes attached caption and action

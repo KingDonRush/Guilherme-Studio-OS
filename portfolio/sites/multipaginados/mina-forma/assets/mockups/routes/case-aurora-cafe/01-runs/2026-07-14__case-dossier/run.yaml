@@ -1,0 +1,30 @@
+id: 2026-07-14__case-dossier
+route: /projects/aurora-cafe
+state: candidate-generation
+parent: ../../../../mina-forma-case-aurora-cafe-mockup-v1.png
+hypothesis: >-
+  A compact photo-free dossier masthead followed by a wide establishing image
+  and a plan-led evidence sequence will distinguish the case from Home and the
+  Projects listing while proving how Mina Forma's decisions shaped the space.
+change: >-
+  Replace the old side-by-side home-like hero and dense boxed dossier wall with
+  a documentary sequence: context, space, problem, spatial move, use and outcome.
+preserve:
+  - approved Mina Forma route-family language
+  - Aurora Café material and photographic identity
+  - content atoms from the old Aurora case
+  - shared header, CTA and footer behavior
+authority:
+  content:
+    - references/03-aurora-v1__content-only.png
+  geometry:
+    - ../../00-contract/geometry.yaml
+  visual_language:
+    - references/01-projects-listing__aurora-identity.png
+    - references/02-commercial-layout__plan-to-place.png
+    - references/04-art-direction-guide__palette-photography.png
+  photography:
+    - references/01-projects-listing__aurora-identity.png
+    - references/02-commercial-layout__plan-to-place.png
+output: outputs/case-aurora-cafe__case-dossier__candidate-01.png
+approval: pending

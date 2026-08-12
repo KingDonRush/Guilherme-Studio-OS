@@ -1,0 +1,36 @@
+schema_version: 1
+id: 2026-07-15__long-title-document-evidence
+route: /services/implementation-package
+state: approved
+hypothesis: >-
+  The approved Single Service skeleton can contain the longest title and a
+  document-heavy evidence system without changing section geometry or hierarchy.
+parent: service-detail-commercial-layout__desktop__approved.png
+authorities:
+  content: references/02-services-listing__service-03-content.png plus references/05-old-service-detail__deliverable-atoms-only.png
+  geometry: references/01-commercial-layout__template-authority.png plus ../../00-contract/geometry.yaml
+  visual_language: references/01-commercial-layout__template-authority.png
+  photography: references/03-projects-listing__loja-terral.png plus references/04-art-direction-guide__materials.png
+change: Substitute only service content, longest title and evidence modality.
+preserve:
+  - complete Single Service section order and proportions
+  - header, footer, rails, typography and palette
+  - flat four-item bands and asymmetric deliverables section
+  - Elementor-safe fixed media slots
+success_test:
+  - implementation package title fits the existing masthead
+  - documents are primary evidence rather than a decorative desk scene
+  - no parent section grows and no new layout archetype appears
+  - same template can be populated dynamically
+output: outputs/service-detail-implementation-package__long-title-document-evidence__candidate-01.png
+review:
+  intent: pass
+  hierarchy: pass
+  geometry: pass
+  text: pass
+  visual_system: pass
+  reference_fidelity: pass
+  elementor_feasibility: pass
+  scope_fidelity: pass
+decision: approved-by-guilherme
+approved_at: 2026-07-15

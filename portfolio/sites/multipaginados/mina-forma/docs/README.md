@@ -30,6 +30,12 @@ Current state:
 - asset inventory and generation manifests live in `../assets/manifests/`;
 - raw imagegen source files live in `../assets/sources/`;
 - optimized WebP batches live in `../assets/wordpress/`;
+- approved Home v2 individual assets live in
+  `../assets/wordpress/home-v2-individual/`;
+- the Services listing final mockup was approved on `2026-07-11` and is locked
+  at `../assets/mockups/routes/services-listing/02-approved/services-listing__desktop__approved.png`;
+- the same Home v2 assets are imported into the WordPress Media Library under
+  `Mina Forma - Home v2 Individual Assets`;
 - the WordPress theme still keeps runtime copies under
   `wordpress/wp-content/themes/guilherme-portfolio/assets/images/mina-forma/`.
 
@@ -38,14 +44,14 @@ Current state:
 | Page | Mockup |
 | --- | --- |
 | Art direction guide | `../assets/mockups/mina-forma-art-direction-guide-v1.png` |
-| Home | `../assets/mockups/mina-forma-home-mockup-v1.png` |
-| About | `../assets/mockups/mina-forma-about-mockup-v1.png` |
-| Services listing | `../assets/mockups/mina-forma-services-listing-mockup-v1.png` |
-| Service detail | `../assets/mockups/mina-forma-service-detail-mockup-v1.png` |
-| Projects/cases listing | `../assets/mockups/mina-forma-projects-cases-listing-mockup-v1.png` |
+| Home | `../assets/mockups/mina-forma-home-mockup-v2.png` |
+| About | `../assets/mockups/routes/about/02-approved/about__desktop__approved.png` |
+| Services listing | `../assets/mockups/routes/services-listing/02-approved/services-listing__desktop__approved.png` |
+| Service detail — Commercial Layout | `../assets/mockups/routes/service-detail-commercial-layout/02-approved/service-detail-commercial-layout__desktop__approved.png` |
+| Projects/cases listing | `../assets/mockups/routes/projects-listing/02-approved/projects-listing__desktop__approved.png` |
 | Aurora Cafe case | `../assets/mockups/mina-forma-case-aurora-cafe-mockup-v1.png` |
 | Plan your project / Orcamento | `../assets/mockups/mina-forma-plan-your-project-orcamento-mockup-v1.png` |
-| Contact | `../assets/mockups/mina-forma-contact-mockup-v1.png` |
+| Contact | `../assets/mockups/routes/contact/02-approved/contact__desktop__approved.png` |
 
 ## WordPress WebP Batches
 
@@ -77,7 +83,17 @@ Checksum manifest:
 - Use `../assets/wordpress/` as the source-of-truth production WebP set.
 - Keep the WordPress theme path as the runtime implementation copy.
 - Use `../assets/mockups/` as visual references.
+- Treat the final Services listing as a locked visual contract. Its manifest,
+  history, approved file and Elementor handoff live under
+  `../assets/mockups/routes/services-listing/`; do not regenerate or
+  reinterpret it.
 - When generating new Mina Forma assets, add them to this capsule first.
+- Guilherme owns Elementor page implementation unless he explicitly delegates
+  it. Asset-generation tasks must not rewrite Elementor page/header/menu data.
+- When the request is to generate or regenerate visual icons, use imagegen
+  raster output. For transparent icons, generate one flat chroma source image
+  per icon, remove chroma locally, validate alpha, and save PNG/WebP assets. Do
+  not switch to hand-coded SVG unless Guilherme explicitly asks for SVG/code.
 
 ## Capsule Layout
 

@@ -19,14 +19,21 @@ Guilherme can find the asset without knowing the old folder logic.
 | Asset | Current path |
 | --- | --- |
 | Art direction guide | `assets/mockups/mina-forma-art-direction-guide-v1.png` |
-| Home | `assets/mockups/mina-forma-home-mockup-v1.png` |
-| About | `assets/mockups/mina-forma-about-mockup-v1.png` |
-| Services listing | `assets/mockups/mina-forma-services-listing-mockup-v1.png` |
-| Service detail | `assets/mockups/mina-forma-service-detail-mockup-v1.png` |
-| Projects/cases listing | `assets/mockups/mina-forma-projects-cases-listing-mockup-v1.png` |
+| Home | `assets/mockups/mina-forma-home-mockup-v2.png` |
+| About | `assets/mockups/routes/about/02-approved/about__desktop__approved.png` |
+| Services listing | `assets/mockups/routes/services-listing/02-approved/services-listing__desktop__approved.png` |
+| Service detail — Commercial Layout | `assets/mockups/routes/service-detail-commercial-layout/02-approved/service-detail-commercial-layout__desktop__approved.png` |
+| Service detail — Interior Concept | `assets/mockups/routes/service-detail-interior-concept/02-approved/service-detail-interior-concept__desktop__approved.png` |
+| Service detail — Implementation Package | `assets/mockups/routes/service-detail-implementation-package/02-approved/service-detail-implementation-package__desktop__approved.png` |
+| Projects/cases listing | `assets/mockups/routes/projects-listing/02-approved/projects-listing__desktop__approved.png` |
 | Aurora Cafe case | `assets/mockups/mina-forma-case-aurora-cafe-mockup-v1.png` |
 | Plan your project / Orcamento | `assets/mockups/mina-forma-plan-your-project-orcamento-mockup-v1.png` |
-| Contact | `assets/mockups/mina-forma-contact-mockup-v1.png` |
+| Contact | `assets/mockups/routes/contact/02-approved/contact__desktop__approved.png` |
+
+Services listing was approved on `2026-07-11`. Its route workspace is
+`assets/mockups/routes/services-listing/`; the approved file and root
+compatibility alias are byte-identical. The visual contract is locked; do not
+regenerate or reinterpret it.
 
 ## Raw Sources
 
@@ -48,6 +55,31 @@ WordPress runtime mirror:
 ```text
 wordpress/wp-content/themes/guilherme-portfolio/assets/images/mina-forma/
 ```
+
+### Home V2: Individual Assetization
+
+Media Library group:
+
+```text
+Mina Forma - Home v2 Individual Assets
+```
+
+| Asset | Runtime path |
+| --- | --- |
+| Hero reception interior | `home-v2-individual/mina-home-v2-hero-reception-interior.webp` |
+| Field Notes materials | `home-v2-individual/mina-home-v2-field-materials.webp` |
+| Field Notes floor plan | `home-v2-individual/mina-home-v2-field-floor-plan.webp` |
+| Field Notes chair corner | `home-v2-individual/mina-home-v2-field-chair-corner.webp` |
+| Project retail fit-out | `home-v2-individual/mina-home-v2-project-retail-fitout.webp` |
+| Project cafe counter | `home-v2-individual/mina-home-v2-project-cafe-counter.webp` |
+| Project studio reception | `home-v2-individual/mina-home-v2-project-studio-reception.webp` |
+| CTA planning desk | `home-v2-individual/mina-home-v2-cta-planning-desk.webp` |
+| Paper grain texture | `home-v2-individual/mina-home-v2-paper-grain.webp` |
+| Calendar check icon | `home-v2-individual/mina-home-v2-icon-calendar-check.webp` |
+| Storefront icon | `home-v2-individual/mina-home-v2-icon-storefront.webp` |
+| Scope document icon | `home-v2-individual/mina-home-v2-icon-scope-document.webp` |
+| Corner marker shape | `home-v2-individual/mina-home-v2-shape-corner-mark.webp` |
+| Orange arrow icon | `home-v2-individual/mina-home-v2-icon-orange-arrow.webp` |
 
 ### Batch 1: Core Reusable Photography
 

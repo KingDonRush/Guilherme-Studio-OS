@@ -1,0 +1,26 @@
+schema_version: 1
+id: replace-me
+route: replace-me
+state: discovery
+hypothesis: null
+parent: null
+authorities:
+  content: null
+  geometry: null
+  visual_language: null
+  photography: null
+change: null
+preserve: []
+success_test: []
+outputs: []
+review:
+  intent: pending
+  hierarchy: pending
+  geometry: pending
+  text: pending
+  visual_system: pending
+  reference_fidelity: pending
+  elementor_feasibility: pending
+  scope_fidelity: pending
+decision: pending
+created_at: null

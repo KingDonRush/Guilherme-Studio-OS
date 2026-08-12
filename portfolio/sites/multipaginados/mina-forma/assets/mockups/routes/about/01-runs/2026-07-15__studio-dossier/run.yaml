@@ -1,0 +1,38 @@
+schema_version: 1
+id: 2026-07-15__studio-dossier
+route: /about
+state: approved
+hypothesis: >-
+  About will feel distinct from Home and the listing pages when it opens with
+  an image-free editorial statement followed by wide human working evidence.
+parent: mina-forma-about-mockup-v1.png
+authorities:
+  content: references/01-about-v1__content-authority.png
+  geometry: ../../00-contract/geometry.yaml
+  visual_language: references/02-services-approved__visual-language.png plus references/04-projects-approved__sibling-rhythm.png
+  shared_surfaces: references/03-home-v2__shared-surfaces-only.png
+  photography: references/05-about-studio-desk__photo-authority.webp plus references/06-human-process-table__photo-authority.webp
+change: Replace only the v1 opening composition and reorganize the page as a studio dossier.
+preserve:
+  - verified About content and photographic atoms
+  - approved Mina Forma rails, palette, typography and flat border discipline
+  - shared compact header and footer
+  - Elementor-safe container and grid construction
+success_test:
+  - the first viewport cannot be mistaken for Home
+  - the route reads as an institutional studio dossier rather than a listing
+  - human process is the primary evidence
+  - no treatment budget or geometry constraint is exceeded
+output: outputs/about__studio-dossier__candidate-01.png
+review:
+  intent: pass
+  hierarchy: pass
+  geometry: pass
+  text: pass
+  visual_system: pass
+  reference_fidelity: pass
+  elementor_feasibility: pass
+  scope_fidelity: pass
+decision: approved-by-guilherme
+approved_at: 2026-07-15
+created_at: 2026-07-15

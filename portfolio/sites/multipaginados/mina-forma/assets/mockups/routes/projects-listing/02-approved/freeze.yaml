@@ -1,0 +1,17 @@
+schema_version: 1
+route: /projects
+approved_at: 2026-07-14
+approved_by: Guilherme
+status: locked
+file: projects-listing__desktop__approved.png
+dimensions: 864x1821
+mode: RGB
+sha256: 9b7e1a90a10abea606ae92882a687280633ea17c36e35dbb25be5ddfd5d660a3
+source_candidate: ../01-runs/2026-07-14__editorial-case-index/outputs/projects-listing__editorial-case-index__candidate-01.png
+rules:
+  - do not regenerate, reinterpret or restyle without explicit scope from Guilherme
+  - preserve the photo-free editorial opening and single filter row
+  - preserve Aurora Café as the dominant featured case
+  - preserve the approved flat three-column selected-work grid
+  - preserve continuous rails, flat separators and zero UI shadows
+  - do not crop the approved full-page bitmap into production assets by default

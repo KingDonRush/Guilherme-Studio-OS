@@ -1,0 +1,27 @@
+route: /projects/aurora-cafe
+slug: case-aurora-cafe
+page_type: case-detail
+state: active-run
+current_run: 2026-07-14__case-dossier
+approved: null
+template_family:
+  id: single-case
+  implementation_target: elementor-theme-builder
+  authority_role: visual-authority-candidate
+  layout_policy: shared-across-cases
+  content_policy: dynamic-per-case
+  asset_policy: individual-pack-per-case
+  exception_policy: >-
+    Do not generate a new full-page direction for another case unless its
+    narrative genuinely cannot fit the approved Single Case structure.
+authority:
+  content: "../../mina-forma-case-aurora-cafe-mockup-v1.png"
+  visual_language:
+    - "../projects-listing/02-approved/projects-listing__desktop__approved.png"
+    - "../service-detail-commercial-layout/02-approved/service-detail-commercial-layout__desktop__approved.png"
+    - "../../mina-forma-art-direction-guide-v1.png"
+notes:
+  - "The old Aurora mockup is content authority only; its composition is explicitly rejected."
+  - "This route must read as a project dossier, not as another home or services hero."
+  - "Aurora Café is the seed content for the reusable Single Case visual contract, not a one-off layout."
+  - "No asset extraction or implementation work begins before explicit visual approval."

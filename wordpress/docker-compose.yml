@@ -28,10 +28,60 @@ services:
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wordpress}
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
       WORDPRESS_DEBUG: "1"
+      WORDPRESS_TAILSCALE_DNS_SUFFIX: ${WORDPRESS_TAILSCALE_DNS_SUFFIX:-tailf154e1.ts.net}
+      WORDPRESS_TAILSCALE_HOST: ${WORDPRESS_TAILSCALE_HOST:-mayte-pc}
       WORDPRESS_CONFIG_EXTRA: |
         define( 'WP_DEBUG_DISPLAY', false );
         define( 'WP_DEBUG_LOG', true );
         @ini_set( 'display_errors', 0 );
+
+        // Keep local Docker URLs aligned with the host used in the browser.
+        if ( isset( $$_SERVER['HTTP_HOST'] ) ) {
+          $$studio_host = strtolower( trim( (string) $$_SERVER['HTTP_HOST'] ) );
+          $$studio_host = preg_replace( '/[^a-z0-9.:\-\[\]]/', '', $$studio_host );
+          $$studio_host_name = $$studio_host;
+
+          if ( preg_match( '/^\[(.+)\](?::\d+)?$$/', $$studio_host, $$studio_host_matches ) ) {
+            $$studio_host_name = $$studio_host_matches[1];
+          } else {
+            $$studio_host_name = preg_replace( '/:\d+$$/', '', $$studio_host );
+          }
+
+          $$studio_is_localhost = 'localhost' === $$studio_host_name;
+          $$studio_is_ip = false !== filter_var( $$studio_host_name, FILTER_VALIDATE_IP );
+          $$studio_tailscale_suffix = strtolower( trim( (string) getenv( 'WORDPRESS_TAILSCALE_DNS_SUFFIX' ) ) );
+          $$studio_tailscale_suffix = preg_replace( '/[^a-z0-9.\-]/', '', rtrim( $$studio_tailscale_suffix, '.' ) );
+          $$studio_tailscale_host = strtolower( trim( (string) getenv( 'WORDPRESS_TAILSCALE_HOST' ) ) );
+          $$studio_tailscale_host = preg_replace( '/[^a-z0-9\-]/', '', rtrim( $$studio_tailscale_host, '.' ) );
+          $$studio_is_tailscale_dns = false;
+
+          if ( $$studio_tailscale_host ) {
+            $$studio_is_tailscale_dns = $$studio_host_name === $$studio_tailscale_host;
+
+            if ( $$studio_tailscale_suffix ) {
+              $$studio_is_tailscale_dns = $$studio_is_tailscale_dns
+                || $$studio_host_name === $$studio_tailscale_host . '.' . $$studio_tailscale_suffix;
+            }
+          }
+
+          if ( $$studio_host && ( $$studio_is_localhost || $$studio_is_ip || $$studio_is_tailscale_dns ) ) {
+            $$studio_scheme = 'http';
+
+            if ( ! empty( $$_SERVER['HTTPS'] ) && 'off' !== strtolower( (string) $$_SERVER['HTTPS'] ) ) {
+              $$studio_scheme = 'https';
+            }
+
+            if (
+              isset( $$_SERVER['HTTP_X_FORWARDED_PROTO'] )
+              && in_array( strtolower( (string) $$_SERVER['HTTP_X_FORWARDED_PROTO'] ), array( 'http', 'https' ), true )
+            ) {
+              $$studio_scheme = strtolower( (string) $$_SERVER['HTTP_X_FORWARDED_PROTO'] );
+            }
+
+            define( 'WP_HOME', $$studio_scheme . '://' . $$studio_host );
+            define( 'WP_SITEURL', $$studio_scheme . '://' . $$studio_host );
+          }
+        }
     volumes:
       - ./:/var/www/html
 

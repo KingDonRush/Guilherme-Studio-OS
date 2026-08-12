@@ -9,7 +9,14 @@ Scope rules:
 - Landing and ecommerce assets are out of scope.
 - Borders, buttons, cards, grids, labels, form fields and layout masks should be
   Elementor/CSS/HTML unless explicitly marked as raster/SVG.
-- Prefer bundled Elementor/Font Awesome icons before generating icon rasters.
+- Prefer bundled Elementor/Font Awesome icons before generating icon rasters only
+  when the task is implementation inside Elementor. If the active task is to
+  generate or regenerate a visual asset/icon pack, use the imagegen raster
+  workflow first.
+- Generated transparent icons must use the imagegen chroma-key workflow:
+  generate one flat chroma source image per icon, remove chroma locally,
+  validate alpha, and save PNG/WebP review assets before any WordPress
+  promotion.
 
 ## Page Inventories
 
@@ -18,6 +25,21 @@ Scope rules:
 | asset_id | type | crop | priority | purpose / prompt seed | implementation note |
 | --- | --- | --- | --- | --- | --- |
 | `mina-home-mockup-ref-v1` | raster mockup | full page | high | Existing mockup reference. | Reference only, not frontend. |
+| `mina-home-mockup-approved-v2` | raster mockup | full page | high | Approved Home mockup with compact first viewport, stronger border system continuity, low-entropy imagery and pixel-box-constrained hero. | Current visual reference for manual Elementor implementation; not a frontend asset. |
+| `mina-home-v2-hero-reception-interior` | generated photography | 1516x1038 | high | Individually generated reception/plan hero image matching the approved Home v2 visual contract. | Current Home v2 hero candidate; use WebP from `home-v2-individual`. |
+| `mina-home-v2-field-materials` | generated photography/detail | 1000x1000 | high | Individually generated material palette still-life. | Field Notes image; use WebP from `home-v2-individual`. |
+| `mina-home-v2-field-floor-plan` | generated photography/detail | 1000x1000 | high | Individually generated floor-plan and pen still-life. | Field Notes image; use WebP from `home-v2-individual`. |
+| `mina-home-v2-field-chair-corner` | generated photography/detail | 1000x1000 | medium | Individually generated quiet chair/slat-wall interior corner. | Field Notes image; use WebP from `home-v2-individual`. |
+| `mina-home-v2-project-retail-fitout` | generated project photo | 1200x900 | high | Individually generated retail fit-out project image. | Featured Projects image; use WebP from `home-v2-individual`. |
+| `mina-home-v2-project-cafe-counter` | generated project photo | 1200x900 | high | Individually generated cafe counter system project image. | Featured Projects image; use WebP from `home-v2-individual`. |
+| `mina-home-v2-project-studio-reception` | generated project photo | 1200x900 | high | Individually generated studio reception project image. | Featured Projects image; use WebP from `home-v2-individual`. |
+| `mina-home-v2-cta-planning-desk` | generated banner photo | 1920x640 | high | Individually generated planning desk CTA image. | Home CTA image; use WebP from `home-v2-individual`. |
+| `mina-home-v2-paper-grain` | generated texture | 900x900 | low | Individually generated subtle warm off-white paper grain. | Optional background texture; use WebP from `home-v2-individual`. |
+| `mina-home-v2-icon-calendar-check` | generated transparent icon | 495x512 | high | Individually generated chroma-key icon for 12-week build maps. | Hero attribute icon; WebP has alpha. |
+| `mina-home-v2-icon-storefront` | generated transparent icon | 512x498 | high | Individually generated chroma-key storefront icon. | Hero attribute icon; WebP has alpha. |
+| `mina-home-v2-icon-scope-document` | generated transparent icon | 389x512 | high | Individually generated chroma-key scope document icon. | Hero attribute icon; WebP has alpha. |
+| `mina-home-v2-shape-corner-mark` | generated transparent shape | 256x238 | medium | Individually generated chroma-key turquoise corner marker. | Card/project decorative marker; WebP has alpha. |
+| `mina-home-v2-icon-orange-arrow` | generated transparent icon | 256x102 | medium | Individually generated chroma-key orange right arrow. | Service/CTA decorative arrow; WebP has alpha. |
 | `mina-home-hero-interior-v1` | photography | 4:3 or 5:4 desktop, 4:5 mobile | high | Commercial interior architecture studio scene, warm wood ceiling, stone counter, lighting, floor plan and material samples. | Main Home hero. Borders/shadow/labels are CSS. |
 | `mina-home-proof-materials-v1` | photography/detail | 4:3 | high | Close-up material board with stone, wood, metal and fabric samples. | Reusable in services/process. |
 | `mina-home-proof-plan-v1` | photography/detail | 4:3 | high | Architectural floor plan close-up with pen and annotations. | Reusable for method/CTA. |
@@ -57,6 +79,7 @@ Scope rules:
 
 | asset_id | type | crop | priority | purpose / prompt seed | implementation note |
 | --- | --- | --- | --- | --- | --- |
+| `mina-forma-services-listing-mockup-final` | raster mockup | full page | high | Approved Services listing visual contract in `assets/mockups/routes/services-listing/02-approved/`. | Approved 2026-07-11; reference only, do not regenerate or reinterpret. |
 | `mf-services-hero-materials-v1` | photo | 16:9 wide | high | Architectural material samples, stone, wood, concrete, technical plans, pen. | Stepped mask is CSS. |
 | `mf-services-icon-concept-layout-v1` | icon/line-art | 1:1 SVG | high | Minimal floor plan line icon. | SVG or local icon. |
 | `mf-services-icon-interior-design-v1` | icon/line-art | 1:1 SVG | high | Chair and floor lamp line icon. | Black stroke, no fill. |
@@ -259,7 +282,10 @@ institutional site:
 
 ### Batch 5: line-art, icons and backgrounds
 
-Do this last. First check Elementor/Font Awesome/Lucide/local icon availability:
+Do this last. First check Elementor/Font Awesome/Lucide/local icon availability
+only when implementing the page. For a requested generated visual icon pack,
+generate each raster icon as its own imagegen/chroma-key asset instead of
+hand-building SVG/code:
 
 - `mf-footer-blueprint-lineart`
 - `footer-blueprint-line-art`

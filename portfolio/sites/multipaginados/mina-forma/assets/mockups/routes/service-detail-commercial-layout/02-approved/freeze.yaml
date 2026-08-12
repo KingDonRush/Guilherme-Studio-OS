@@ -1,0 +1,17 @@
+schema_version: 1
+route: /services/commercial-layout
+approved_at: 2026-07-14
+approved_by: Guilherme
+status: locked
+file: service-detail-commercial-layout__desktop__approved.png
+dimensions: 864x1821
+mode: RGB
+sha256: edcbe6e6c54003f735659f8a9f5555eb2b29cb41506fb8170d0fabb594ce3188
+source_candidate: ../01-runs/2026-07-13__plan-as-primary-evidence/outputs/service-detail-commercial-layout__plan-as-primary-evidence__candidate-01.png
+rules:
+  - do not regenerate, reinterpret or restyle without explicit scope from Guilherme
+  - preserve the compact editorial masthead without a dominant photograph
+  - preserve the annotated plan as the primary evidence
+  - preserve continuous rails, flat separators and zero UI shadows
+  - preserve the asymmetric deliverables and plan-to-place case relationship
+  - do not crop the approved full-page bitmap into production assets by default

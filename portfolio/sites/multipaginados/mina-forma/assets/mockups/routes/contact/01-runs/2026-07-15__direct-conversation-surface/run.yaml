@@ -1,0 +1,40 @@
+schema_version: 1
+id: 2026-07-15__direct-conversation-surface
+route: /contact
+state: approved
+hypothesis: >-
+  Contact will feel distinct from Home and Plan your project when the first
+  action surface is a simple message form and direct-channel rail, with
+  photography demoted to a later human pause.
+parent: mina-forma-contact-mockup-v1.png
+authorities:
+  content: references/01-contact-v1__content-atoms.png
+  geometry: ../../00-contract/geometry.yaml
+  visual_language: references/03-services-approved__visual-language.png plus references/04-projects-approved__sibling-rhythm.png
+  scope_boundary: references/02-plan-v1__scope-boundary.png
+  photography: references/01-contact-v1__content-atoms.png
+  location_line_art: references/05-contact-map__line-art.webp
+change: Replace the split hero and proposal-first hierarchy with a direct conversation surface.
+preserve:
+  - useful Contact v1 copy, channel, FAQ and studio-presence atoms
+  - approved Mina Forma rails, palette, typography and flat border discipline
+  - compact shared header and footer
+  - Elementor-native form and accordion feasibility
+success_test:
+  - Contact cannot be mistaken for Home
+  - a simple message is unmistakably the primary action
+  - Plan your project appears only as a secondary structured path
+  - no detailed scope-builder or fictional address appears
+output: outputs/contact__direct-conversation-surface__candidate-01.png
+review:
+  intent: pass
+  hierarchy: pass
+  geometry: pass
+  text: pass
+  visual_system: pass
+  reference_fidelity: pass
+  elementor_feasibility: pass
+  scope_fidelity: pass
+decision: approved-by-guilherme
+approved_at: 2026-07-15
+created_at: 2026-07-15

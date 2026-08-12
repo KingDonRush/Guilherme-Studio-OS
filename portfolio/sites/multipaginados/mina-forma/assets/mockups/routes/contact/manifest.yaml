@@ -1,0 +1,20 @@
+schema_version: 1
+route: /contact
+slug: contact
+page_type: contact
+state: approved
+current_run: 2026-07-15__direct-conversation-surface
+approved: 02-approved/contact__desktop__approved.png
+authorities:
+  content: ../../mina-forma-contact-mockup-v1.png
+  geometry: 00-contract/geometry.yaml
+  visual_language:
+    - ../services-listing/02-approved/services-listing__desktop__approved.png
+    - ../projects-listing/02-approved/projects-listing__desktop__approved.png
+  scope_boundary: ../../mina-forma-plan-your-project-orcamento-mockup-v1.png
+notes:
+  - "Contact starts a low-friction conversation; Plan your project owns detailed scope building."
+  - "The Contact v1 mockup controls useful content atoms, not hero hierarchy, location or primary action."
+  - "São Paulo is the location authority because it is consistent across the approved sibling pages."
+  - "Explicitly approved by Guilherme and frozen byte-exact on 2026-07-15."
+  - "Shared navigation implementation omits Studio and Method; About owns both topics."

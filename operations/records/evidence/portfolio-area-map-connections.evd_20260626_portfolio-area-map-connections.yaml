@@ -1,0 +1,36 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-26T20:27:08.000Z
+  id: evd_20260626_portfolio-area-map-connections
+  labels:
+    - portfolio
+    - wordpress
+    - area-map
+    - wp-cli
+  revision: 1
+  schema_version: 1
+  slug: portfolio-area-map-connections
+  updated_at: 2026-06-26T20:27:08.000Z
+relations: []
+spec:
+  claims:
+    - The Portfolio Area Map was populated from existing WordPress objects through the `wp gp` CLI.
+    - Created active areas for Portfolio, Mina Forma, Simple Budget Plugin, 3D Viewer for Elementor, WooCommerce Toolkit, Landing Page Implementation and WooCommerce Store.
+    - Associated existing pages, menu records, Elementor templates and native admin destinations without creating portfolio content.
+    - Verified native destination links for the Mina Forma page and Elementor Library shortcut.
+    - Fixed admin URL sanitization so safe query-string admin paths such as `edit.php?post_type=elementor_library` are accepted.
+  command: >-
+    docker compose run --rm wpcli gp area list --format=json;
+    docker compose run --rm wpcli gp area-item list <area> --format=json;
+    docker compose run --rm wpcli gp area-item links 632 mina-form-home --format=json;
+    docker compose run --rm wpcli gp area-item links 631 elementor-library --format=json
+  evidence_type: command
+  observed_at: 2026-06-26T20:27:08.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Portfolio Area Map WordPress connections
+  validated_at: 2026-06-26T20:27:08.000Z

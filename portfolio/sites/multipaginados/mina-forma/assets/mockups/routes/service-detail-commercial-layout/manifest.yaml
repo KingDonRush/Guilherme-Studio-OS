@@ -1,0 +1,25 @@
+schema_version: 1
+route: /services/commercial-layout
+slug: service-detail-commercial-layout
+status: approved
+page_type: service-detail
+authorities:
+  content: mina-forma-service-detail-mockup-v1-content-atoms
+  geometry: service-detail-commercial-layout-geometry-2026-07-13
+  visual_language: services-listing-desktop-approved-and-home-v2
+  photography: mina-forma-art-direction-guide-v1
+  implementation: service-detail-commercial-layout-direction-contract
+approved:
+  id: service-detail-commercial-layout-candidate-01
+  path: 02-approved/service-detail-commercial-layout__desktop__approved.png
+  source: 01-runs/2026-07-13__plan-as-primary-evidence/outputs/service-detail-commercial-layout__plan-as-primary-evidence__candidate-01.png
+  approved_at: 2026-07-14
+  approved_by: Guilherme
+  status: locked
+  dimensions: 864x1821
+  mode: RGB
+  sha256: edcbe6e6c54003f735659f8a9f5555eb2b29cb41506fb8170d0fabb594ce3188
+runs:
+  - id: 2026-07-13__plan-as-primary-evidence
+    state: approved
+    path: 01-runs/2026-07-13__plan-as-primary-evidence

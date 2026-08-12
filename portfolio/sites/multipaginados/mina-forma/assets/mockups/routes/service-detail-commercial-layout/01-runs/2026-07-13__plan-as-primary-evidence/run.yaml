@@ -1,0 +1,42 @@
+schema_version: 1
+id: 2026-07-13__plan-as-primary-evidence
+route: /services/commercial-layout
+state: approved
+hypothesis: A compact editorial masthead followed by a large technical plan will distinguish the service detail from Home while making operational layout tangible.
+parent: mina-forma-service-detail-mockup-v1
+authorities:
+  content: mina-forma-service-detail-mockup-v1-content-atoms-only
+  geometry: 00-contract/geometry.yaml
+  visual_language: services-listing/02-approved/services-listing__desktop__approved.png plus mina-forma-home-mockup-v2.png
+  photography: mina-forma-art-direction-guide-v1.png
+change: Replace the old Home-like photographic hero and dense card sequence with an evidence-led Commercial Layout detail composition.
+preserve:
+  - shared Mina Forma header and footer language
+  - warm paper field and charcoal condensed typography
+  - orange numbering and restrained cyan rules
+  - continuous page rails and flat section separators
+  - practical service content atoms
+success_test:
+  - first viewport reads as service detail, not Home
+  - annotated plan is the primary visual evidence
+  - first content section begins before the fold
+  - each section has one job and one dominant idea
+  - layout maps to stable Elementor containers without brittle overlaps
+outputs:
+  - path: outputs/service-detail-commercial-layout__plan-as-primary-evidence__candidate-01.png
+    status: approved-source
+    dimensions: 864x1821
+    sha256: edcbe6e6c54003f735659f8a9f5555eb2b29cb41506fb8170d0fabb594ce3188
+review:
+  intent: pass
+  hierarchy: pass
+  geometry: pass
+  text: pass
+  visual_system: pass
+  reference_fidelity: pass
+  elementor_feasibility: pass
+  scope_fidelity: pass
+decision: approved-by-guilherme
+created_at: 2026-07-13
+reviewed_at: 2026-07-14
+approved_at: 2026-07-14

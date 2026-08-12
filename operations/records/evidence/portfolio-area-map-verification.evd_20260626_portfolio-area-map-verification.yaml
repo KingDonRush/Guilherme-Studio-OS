@@ -1,0 +1,63 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-06-26T19:25:00.000Z
+  id: evd_20260626_portfolio-area-map-verification
+  labels:
+    - portfolio
+    - wordpress
+    - area-map
+  revision: 1
+  schema_version: 1
+  slug: portfolio-area-map-verification
+  updated_at: 2026-06-27T01:20:19.000Z
+relations: []
+spec:
+  claims:
+    - Portfolio Area Map replaces the rejected Workbench runtime in the active theme bootstrap.
+    - The theme exposes a WordPress-native top-level Portfolio admin menu for Mapa do Portfolio.
+    - Area and area-item mutations are available through WP-CLI.
+    - Area-item destination links include native Edit, Elementor and View links for page records.
+    - Forced WordPress/plugin admin notices are contained on the map screen.
+    - The wp-admin surface uses the approved area-focused layout with placeholder initials when no logo exists.
+    - Scoped wp-admin footer and content padding containment keep the tested viewport at zero document overflow.
+    - Internal map links are host-neutral relative paths so alternate local/Tailscale hosts are preserved.
+    - Area creation, item association and area configuration use modal surfaces instead of inline technical forms.
+    - The area sidebar has search, count and bounded scrolling for larger area lists.
+    - Logged-in browser smoke confirms the map renders with no document scroll at the tested 720px viewport.
+    - The global title copy was removed from the visible surface; the selected area is now the contextual parent of the screen.
+    - Native Pages/Elementor links and associated structures/templates render as compact area shortcuts in the header instead of lower inventory sections.
+    - Area actions render as direct right-side buttons without a large empty action panel.
+    - Generic quick tips were removed from the sidebar and replaced by a minimal global footer note.
+    - Sidebar area filtering hides nonmatching rows correctly after the scoped hidden-row CSS fix.
+    - Logged-in browser smoke confirms zero document scroll at 1710x933 and 1366x768 viewports after the refined layout.
+    - Header shortcuts were removed from the area hero; the hero now shows only identity, essential badges and area actions.
+    - Area notes and native/associated destinations moved into a contextual panel inside Páginas associadas.
+    - Page cards now render as a grid with optional six-item pagination instead of a horizontal flow with arrows.
+    - Page context changes on hover and focus, and card-body click pins the selected context without hijacking inner native links.
+    - Visible technical subtitles were removed from former shortcut cards; connection labels show the human object name only.
+    - Page cards now render as read-only summaries; native actions moved into the contextual side panel.
+    - The contextual panel now uses internal tabs for Páginas, Elementor, Theme Builder and related groups.
+    - The Páginas tab exposes Editar, Ver and Desassociar; the Elementor tab exposes Elementor-specific actions when available.
+    - Area context tabs separate Páginas, Elementor, Theme Builder and Outros instead of mixing every connection in one list.
+  command: >-
+    php -l over theme PHP files; docker compose run --rm wpcli gp area create/get/delete;
+    docker compose run --rm wpcli gp area-item attach/list/links/detach;
+    docker compose run --rm wpcli eval rendered map href/action absolute URL audit;
+    Playwright modal/search smoke at /wp-admin/admin.php?page=gp-portfolio-area-map&area=631;
+    docker compose run --rm wpcli eval admin render and notice containment checks;
+    Playwright logged-in smoke at /wp-admin/admin.php?page=gp-portfolio-area-map&area=632;
+    Playwright logged-in desktop/compact smoke at /wp-admin/admin.php?page=gp-portfolio-area-map&area=631;
+    Playwright modal open/escape close and sidebar search smoke for query "mina";
+    Playwright focus/hover/card-body click smoke for context panel switching;
+    Playwright context tab smoke for Páginas and Elementor actions;
+    WP-CLI render audit for removed card actions, tabset presence, context detach action and relative URLs
+  evidence_type: command
+  observed_at: 2026-06-26T19:25:00.000Z
+  source_mutability: operator-observed
+  status: active
+  title: Portfolio Area Map verification
+  validated_at: 2026-06-27T01:20:19.000Z

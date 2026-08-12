@@ -1,0 +1,13 @@
+schema_version: 1
+id: services-route-reframe
+route: services-listing
+state: milestone
+hypothesis: replace the Home-like hero with an editorial service index
+outputs:
+  - mina-forma-services-listing-mockup-v14-route-index.png
+  - mina-forma-services-listing-mockup-v15-material-rhythm.png
+  - mina-forma-services-listing-mockup-v16-first-fold.png
+  - mina-forma-services-listing-mockup-v17-deliverables-rail.png
+  - mina-forma-services-listing-mockup-v18-recomposed.png
+decision: v18 selected as content and geometry authority
+lesson: recompose from the last structural milestone when local solutions accumulate incompatible grammars

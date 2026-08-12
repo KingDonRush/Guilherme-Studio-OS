@@ -1,0 +1,11 @@
+schema_version: 1
+route: replace-me
+status: discovery
+authorities:
+  content: null
+  geometry: null
+  visual_language: null
+  photography: null
+  implementation: null
+approved: null
+runs: []

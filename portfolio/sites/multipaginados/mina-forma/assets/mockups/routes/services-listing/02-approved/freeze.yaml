@@ -1,0 +1,15 @@
+schema_version: 1
+route: services-listing
+approved_at: 2026-07-11
+approved_by: Guilherme
+status: locked
+file: services-listing__desktop__approved.png
+dimensions: 864x1821
+mode: RGB
+sha256: bcad265a8f8a03add9835fb32efda06228d7af7ec969d7a9652df5ac1ca45316
+source_alias: ../../../mina-forma-services-listing-mockup-final.png
+rules:
+  - do not regenerate or reinterpret without explicit scope
+  - preserve open still-life service rows
+  - preserve continuous outer rails
+  - keep service media from defining desktop row height

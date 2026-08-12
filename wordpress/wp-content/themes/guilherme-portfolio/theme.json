@@ -34,19 +34,29 @@
           "name": "JetBrains Mono"
         },
         {
-          "fontFamily": "\"Archivo Black\", \"Space Grotesk\", Arial, sans-serif",
+          "fontFamily": "\"Bebas Neue\", \"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
           "slug": "mina-display",
           "name": "Mina Display"
         },
         {
-          "fontFamily": "\"Space Grotesk\", Geist, Arial, sans-serif",
+          "fontFamily": "\"Bebas Neue\", \"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
           "slug": "mina-heading",
           "name": "Mina Heading"
         },
         {
-          "fontFamily": "Hind, Geist, Arial, sans-serif",
+          "fontFamily": "Geist, Inter, Arial, sans-serif",
           "slug": "mina-body",
           "name": "Mina Body"
+        },
+        {
+          "fontFamily": "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+          "slug": "mina-label",
+          "name": "Mina Label"
+        },
+        {
+          "fontFamily": "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+          "slug": "mina-logo",
+          "name": "Mina Wordmark"
         }
       ]
     },

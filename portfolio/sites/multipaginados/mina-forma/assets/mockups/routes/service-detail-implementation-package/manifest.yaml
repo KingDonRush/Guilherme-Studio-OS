@@ -1,0 +1,14 @@
+route: /services/implementation-package
+slug: service-detail-implementation-package
+page_type: service-detail
+state: approved
+current_run: 2026-07-15__long-title-document-evidence
+approved: 02-approved/service-detail-implementation-package__desktop__approved.png
+template_family:
+  id: single-service
+  authority_candidate: ../service-detail-commercial-layout/02-approved/service-detail-commercial-layout__desktop__approved.png
+  test_dimension: longest-title-and-document-evidence
+notes:
+  - "This run tests the approved Single Service skeleton; it does not propose a new visual direction."
+  - "Pass requires the longest service title and document-heavy evidence to fit without geometry changes."
+  - "Explicitly approved by Guilherme and frozen byte-exact on 2026-07-15."

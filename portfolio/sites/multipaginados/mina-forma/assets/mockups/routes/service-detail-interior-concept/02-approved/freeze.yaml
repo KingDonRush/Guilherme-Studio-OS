@@ -1,0 +1,10 @@
+schema_version: 1
+route: /services/interior-concept
+file: service-detail-interior-concept__desktop__approved.png
+dimensions: 864x1821
+color_mode: RGB
+sha256: 0781faf5dbb8a71a5b481b0f0a223ea3ec856861e833de43971a4b635019d8c6
+approved_at: 2026-07-15
+approved_by: Guilherme
+role: Single Service stress-test pass and route visual authority
+source: ../01-runs/2026-07-15__single-service-substitution/outputs/service-detail-interior-concept__single-service-substitution__candidate-01.png

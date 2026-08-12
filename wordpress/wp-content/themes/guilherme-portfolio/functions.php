@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GP_THEME_VERSION', '0.3.36' );
+define( 'GP_THEME_VERSION', '0.3.37' );
 define( 'GP_THEME_DIR', get_template_directory() );
 define( 'GP_THEME_URI', get_template_directory_uri() );
 
@@ -58,12 +58,12 @@ add_action(
 add_action(
 	'wp_enqueue_scripts',
 	static function (): void {
-		wp_enqueue_style(
-			'gp-fonts',
-			'https://fonts.googleapis.com/css2?family=Archivo+Black&family=Geist:wght@400;500;600;700;800&family=Hind:wght@400;500;600;700&family=Onest:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap',
-			array(),
-			null
-		);
+			wp_enqueue_style(
+				'gp-fonts',
+				'https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@400;500;600;700;800&family=Bebas+Neue&family=Geist:wght@400;500;600;700;800&family=Hind:wght@400;500;600;700&family=Onest:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap',
+				array(),
+				null
+			);
 
 		if ( is_front_page() || is_page( 'simple-budget-plugin' ) ) {
 			wp_enqueue_style(
@@ -242,11 +242,4 @@ function gp_stack_mark( string $stack ): string {
 	);
 
 	return $marks[ $stack ] ?? '';
-}
-
-/**
- * Return the assigned portfolio project ID for a content entry.
- */
-function gp_assigned_project_id( int $post_id ): int {
-	return absint( get_post_meta( $post_id, \GuilhermePortfolio\Projects\ProjectRepository::META_ASSIGNED_PROJECT, true ) );
 }

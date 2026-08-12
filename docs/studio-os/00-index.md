@@ -101,6 +101,7 @@ inputs to migration. They do not override this specification.
 - [Cross-domain journeys](./workflows/01-cross-domain-journeys.md)
 - [Visual feedback and implementation](./workflows/02-visual-reality-loop.md)
 - [Agent execution and handoff](./workflows/03-agent-execution-handoff.md)
+- [Image-first mockup production](./workflows/04-image-first-mockup-production.md)
 
 ### Implementation Execution
 
@@ -108,6 +109,8 @@ inputs to migration. They do not override this specification.
 - [Cross-PRD integration map](./implementation/01-cross-prd-integration-map.md)
 - [Operating north star](./implementation/02-codebase-north-star.md)
 - [Self-build harness bootstrap](./implementation/03-self-build-harness-bootstrap.md)
+- [Spec Kit clean code flow](./implementation/04-spec-kit-clean-code-flow.md)
+- [Clean Code playbook, integral](./implementation/playbooks/playbook-operacional-clean-code.md)
 - [PRD subagent packets](./implementation/subagents/README.md)
 - [PRD 01 implementation plan](./implementation/prd-01-core-governance-plan.md)
 - [PRD 02 implementation plan](./implementation/prd-02-clients-crm-profiles-plan.md)

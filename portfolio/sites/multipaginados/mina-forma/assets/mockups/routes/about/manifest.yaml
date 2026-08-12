@@ -1,0 +1,19 @@
+schema_version: 1
+route: /about
+slug: about
+page_type: institutional
+state: approved
+current_run: 2026-07-15__studio-dossier
+approved: 02-approved/about__desktop__approved.png
+authorities:
+  content: ../../mina-forma-about-mockup-v1.png
+  geometry: 00-contract/geometry.yaml
+  visual_language:
+    - ../services-listing/02-approved/services-listing__desktop__approved.png
+    - ../projects-listing/02-approved/projects-listing__desktop__approved.png
+  shared_surfaces: ../../mina-forma-home-mockup-v2.png
+notes:
+  - "About must read as a studio dossier, not as a second Home or another listing page."
+  - "The v1 mockup controls verified content and photography atoms, not opening composition."
+  - "Explicitly approved by Guilherme and frozen byte-exact on 2026-07-15."
+  - "Shared navigation implementation omits Studio and Method; About owns both topics."

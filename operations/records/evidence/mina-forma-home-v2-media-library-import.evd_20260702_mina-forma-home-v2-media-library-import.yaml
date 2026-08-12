@@ -1,0 +1,34 @@
+api_version: studio.guilherme.dev/v1
+extensions: {}
+kind: evidence
+metadata:
+  archived_at: null
+  classification: internal
+  created_at: 2026-07-02T18:49:49.000Z
+  id: evd_20260702_mina-forma-home-v2-media-library-import
+  labels:
+    - mina-forma
+    - wordpress
+    - media-library
+  revision: 1
+  schema_version: 1
+  slug: mina-forma-home-v2-media-library-import
+  updated_at: 2026-07-02T18:49:49.000Z
+relations:
+  - target_id: prj_20260614_wordpress-portfolio
+    type: supports
+spec:
+  claims:
+    - Imported 14 approved Mina Forma Home v2 individual WebP assets into the local WordPress Media Library.
+    - Created the Media Library group `Mina Forma - Home v2 Individual Assets` using taxonomy `studio_media_group`, term ID `44`, count `14`.
+    - Idempotency rerun returned 14 existing attachments with IDs 717 through 730.
+    - The hero WebP upload returned HTTP 200 from local WordPress.
+  command: docker compose -f wordpress/docker-compose.yml run --rm -T wpcli eval-file scripts/import-mina-forma-home-v2-media.php
+  evidence_type: file
+  observed_at: 2026-07-02T18:49:49.000Z
+  path: runtime/wordpress-media-imports/mina-forma-home-v2/idempotency-rerun.json
+  source_mutability: operator-observed
+  status: active
+  subject_id: prj_20260614_wordpress-portfolio
+  title: Mina Forma Home v2 Media Library import
+  validated_at: 2026-07-02T18:49:49.000Z

@@ -17,42 +17,309 @@
 .elementor .mina-forma-kit {
 	color: var(--mf-ink);
 	background: var(--mf-paper);
-	font-family: "Hind", "Geist", Arial, sans-serif;
+	font-family: "Geist", "Inter", Arial, sans-serif;
 }
 
 .mina-forma-kit h1,
-.mina-forma-kit .mf-display {
+.mina-forma-kit .mf-display,
+.mina-forma-kit .mf-page-title,
+.mina-forma-kit .mf-about-hero-title,
+.mina-forma-kit .mf-services-page-title,
+.mina-forma-kit .mf-projects-page-title,
+.mina-forma-kit .mf-plan-hero-title,
+.mina-forma-kit .mf-contact-page-title {
 	margin: 0;
-	font-family: "Archivo Black", "Space Grotesk", Arial, sans-serif;
+	font-family: "Bebas Neue", "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 4.5rem;
 	font-weight: 400;
+	line-height: .88;
+	letter-spacing: 0;
+	text-transform: uppercase;
+}
+
+.mina-forma-kit .mf-home-hero-title {
+	margin: 0;
+	font-family: "Bebas Neue", "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 5rem;
+	font-weight: 400;
+	line-height: .88;
+	letter-spacing: 0;
+	text-transform: uppercase;
+}
+
+.mina-forma-kit .mf-case-hero-title {
+	margin: 0;
+	font-family: "Bebas Neue", "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 4.75rem;
+	font-weight: 400;
+	line-height: .88;
+	letter-spacing: 0;
+	text-transform: uppercase;
+}
+
+.mina-forma-kit .mf-service-detail-title {
+	margin: 0;
+	font-family: "Bebas Neue", "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 4.25rem;
+	font-weight: 400;
+	line-height: .88;
+	letter-spacing: 0;
+	text-transform: uppercase;
+}
+
+.mina-forma-kit .mf-logo,
+.mina-forma-kit .mf-footer-wordmark {
+	margin: 0;
+	font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 1.7rem;
+	font-weight: 800;
 	line-height: .95;
 	letter-spacing: 0;
+	text-transform: none;
+}
+
+.mina-forma-kit .mf-header-main-title {
+	margin: 0;
+	font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 2.5rem;
+	font-weight: 800;
+	line-height: .9;
+	letter-spacing: 0;
+	text-transform: none;
 }
 
 .mina-forma-kit h2,
-.mina-forma-kit .mf-heading {
+.mina-forma-kit .mf-heading,
+.mina-forma-kit .mf-section-title {
 	margin: 0;
-	font-family: "Space Grotesk", "Geist", Arial, sans-serif;
-	font-weight: 700;
-	line-height: 1.08;
+	font-family: "Bebas Neue", "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 2.625rem;
+	font-weight: 400;
+	line-height: .92;
 	letter-spacing: 0;
+	text-transform: uppercase;
+}
+
+.mina-forma-kit .mf-home-cta-title {
+	margin: 0;
+	font-family: "Bebas Neue", "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 3.5rem;
+	font-weight: 400;
+	line-height: .9;
+	letter-spacing: 0;
+	text-transform: uppercase;
+}
+
+.mina-forma-kit h3,
+.mina-forma-kit .mf-card-title,
+.mina-forma-kit .mf-home-service-title,
+.mina-forma-kit .mf-home-project-title,
+.mina-forma-kit .mf-services-card-title,
+.mina-forma-kit .mf-projects-card-title {
+	margin: 0;
+	font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 1.75rem;
+	font-weight: 700;
+	line-height: .98;
+	letter-spacing: 0;
+	text-transform: uppercase;
+}
+
+.mina-forma-kit .mf-services-card-title,
+.mina-forma-kit .mf-projects-card-title {
+	font-size: 1.875rem;
+}
+
+.mina-forma-kit .mf-about-process-title,
+.mina-forma-kit .mf-contact-detail-title {
+	margin: 0;
+	font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 1.5rem;
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: 0;
+	text-transform: uppercase;
+}
+
+.mina-forma-kit .mf-service-deliverable-title,
+.mina-forma-kit .mf-plan-empty-title {
+	margin: 0;
+	font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 1.375rem;
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: 0;
+	text-transform: uppercase;
+}
+
+.mina-forma-kit .mf-plan-empty-title {
+	font-size: 1.625rem;
 }
 
 .mina-forma-kit p,
-.mina-forma-kit .mf-body {
-	font-family: "Hind", "Geist", Arial, sans-serif;
-	font-weight: 500;
-	line-height: 1.48;
+.mina-forma-kit .mf-body,
+.mina-forma-kit .mf-section-body,
+.mina-forma-kit .mf-about-process-body,
+.mina-forma-kit .mf-services-card-body,
+.mina-forma-kit .mf-plan-empty-body,
+.mina-forma-kit .mf-contact-detail-body {
+	font-family: "Geist", "Inter", Arial, sans-serif;
+	font-weight: 400;
+	line-height: 1.45;
 	letter-spacing: 0;
 }
 
-.mina-forma-kit .mf-label {
-	font-family: "Space Grotesk", "Geist", Arial, sans-serif;
-	font-size: .78rem;
-	font-weight: 700;
+.mina-forma-kit .mf-body-long {
+	font-family: "Geist", "Inter", Arial, sans-serif;
+	font-size: 1.0625rem;
+	font-weight: 400;
+	line-height: 1.55;
 	letter-spacing: 0;
-	line-height: 1.2;
+}
+
+.mina-forma-kit .mf-small {
+	font-family: "Geist", "Inter", Arial, sans-serif;
+	font-size: 1.25rem;
+	font-weight: 500;
+	line-height: 1.35;
+	letter-spacing: 0;
+}
+
+.mina-forma-kit .mf-page-lead,
+.mina-forma-kit .mf-home-hero-lead,
+.mina-forma-kit .mf-service-detail-lead,
+.mina-forma-kit .mf-case-hero-lead,
+.mina-forma-kit .mf-plan-hero-lead {
+	font-family: "Geist", "Inter", Arial, sans-serif;
+	font-size: 1.25rem;
+	font-weight: 500;
+	line-height: 1.42;
+	letter-spacing: 0;
+}
+
+.mina-forma-kit .mf-about-statement {
+	font-family: "Geist", "Inter", Arial, sans-serif;
+	font-size: 1.5rem;
+	font-weight: 500;
+	line-height: 1.32;
+	letter-spacing: 0;
+}
+
+.mina-forma-kit .mf-home-service-body,
+.mina-forma-kit .mf-plan-form-input,
+.mina-forma-kit .mf-plan-empty-body,
+.mina-forma-kit .mf-contact-input,
+.mina-forma-kit .mf-contact-detail-body {
+	font-family: "Geist", "Inter", Arial, sans-serif;
+	font-size: 1.3125rem;
+	font-weight: 400;
+	line-height: 1.35;
+	letter-spacing: 0;
+}
+
+.mina-forma-kit .mf-plan-empty-body {
+	line-height: 1.45;
+}
+
+.mina-forma-kit .mf-contact-detail-body {
+	line-height: 1.4;
+}
+
+.mina-forma-kit .mf-metadata,
+.mina-forma-kit .mf-projects-card-meta,
+.mina-forma-kit .mf-case-caption {
+	font-family: "Geist", "Inter", Arial, sans-serif;
+	font-size: 1.125rem;
+	font-weight: 500;
+	line-height: 1.25;
+	letter-spacing: 0;
+}
+
+.mina-forma-kit .mf-case-caption {
+	line-height: 1.35;
+}
+
+.mina-forma-kit .mf-label,
+.mina-forma-kit .mf-header-menu,
+.mina-forma-kit .mf-header-cta,
+.mina-forma-kit .mf-page-kicker,
+.mina-forma-kit .mf-section-kicker,
+.mina-forma-kit .mf-home-proof-label,
+.mina-forma-kit .mf-projects-filter-label,
+.mina-forma-kit .mf-case-metric-label,
+.mina-forma-kit .mf-plan-form-label,
+.mina-forma-kit .mf-plan-table-head,
+.mina-forma-kit .mf-contact-form-label,
+.mina-forma-kit .mf-footer-heading,
+.mina-forma-kit .mf-button,
+.mina-forma-kit .mf-inline-link {
+	font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 1.0625rem;
+	font-weight: 800;
+	letter-spacing: 0;
+	line-height: 1.05;
 	text-transform: uppercase;
+}
+
+.mina-forma-kit .mf-inline-link {
+	font-size: 1.125rem;
+}
+
+.mina-forma-kit .mf-plan-table-head {
+	font-size: 1rem;
+}
+
+.mina-forma-kit .mf-home-hero-eyebrow {
+	font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 1.125rem;
+	font-weight: 800;
+	letter-spacing: 0;
+	line-height: 1.05;
+	text-transform: uppercase;
+}
+
+.mina-forma-kit .mf-header-menu,
+.mina-forma-kit .mf-header-cta {
+	font-size: .8125rem;
+}
+
+.mina-forma-kit .mf-home-proof-value,
+.mina-forma-kit .mf-home-service-number,
+.mina-forma-kit .mf-case-metric-value,
+.mina-forma-kit .mf-plan-price {
+	font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 1.5rem;
+	font-weight: 800;
+	letter-spacing: 0;
+	line-height: 1;
+	text-transform: uppercase;
+}
+
+.mina-forma-kit .mf-case-metric-value {
+	font-size: 2.125rem;
+	line-height: .95;
+}
+
+.mina-forma-kit .mf-plan-price {
+	font-size: 1.375rem;
+	line-height: .95;
+}
+
+.mina-forma-kit .mf-plan-item-title {
+	font-family: "Geist", "Inter", Arial, sans-serif;
+	font-size: 1.3125rem;
+	font-weight: 600;
+	line-height: 1.3;
+	letter-spacing: 0;
+}
+
+.mina-forma-kit .mf-plan-item-meta,
+.mina-forma-kit .mf-footer-nav {
+	font-family: "Geist", "Inter", Arial, sans-serif;
+	font-size: 1.0625rem;
+	font-weight: 500;
+	line-height: 1.35;
+	letter-spacing: 0;
 }
 
 .mina-forma-kit .mf-panel {
@@ -68,10 +335,11 @@
 	border-radius: var(--mf-radius);
 	background: var(--mf-clay);
 	color: var(--mf-ink);
-	font-family: "Space Grotesk", "Geist", Arial, sans-serif;
-	font-weight: 700;
+	font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+	font-size: 1.0625rem;
+	font-weight: 800;
 	letter-spacing: 0;
-	text-transform: none;
+	text-transform: uppercase;
 	box-shadow: 4px 4px 0 var(--mf-ink);
 }
 

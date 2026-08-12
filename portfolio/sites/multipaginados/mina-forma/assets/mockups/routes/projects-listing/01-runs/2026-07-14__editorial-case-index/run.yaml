@@ -1,0 +1,42 @@
+schema_version: 1
+id: 2026-07-14__editorial-case-index
+route: /projects
+state: approved
+hypothesis: A photo-free editorial opening, one dominant featured case and numbered asymmetric project bands will create a browsable evidence index without repeating Home or collapsing into uniform cards.
+parent: mina-forma-projects-cases-listing-mockup-v1
+authorities:
+  content: mina-forma-projects-cases-listing-mockup-v1-content-atoms-only
+  geometry: 00-contract/geometry.yaml
+  visual_language: approved Services listing plus approved Commercial Layout
+  photography: mina-forma-art-direction-guide-v1
+change: Replace the old Home-like hero and dense uniform project-card wall with an editorial case index built around evidence scale and project priority.
+preserve:
+  - shared Mina Forma header and footer language
+  - warm paper field and charcoal condensed typography
+  - orange numbering and restrained cyan rules
+  - continuous page rails and flat section separators
+  - project names and commercial typology range
+success_test:
+  - first viewport reads as a project index, not Home
+  - Aurora Café has unmistakable featured priority
+  - filters are restrained and do not become dashboard controls
+  - subsequent projects are scannable without a uniform card wall
+  - layout maps to stable Elementor Containers and Loop Grid spans
+outputs:
+  - path: outputs/projects-listing__editorial-case-index__candidate-01.png
+    status: approved-source
+    dimensions: 864x1821
+    sha256: 9b7e1a90a10abea606ae92882a687280633ea17c36e35dbb25be5ddfd5d660a3
+review:
+  intent: pass
+  hierarchy: pass
+  geometry: pass
+  text: pass
+  visual_system: pass
+  reference_fidelity: pass
+  elementor_feasibility: pass
+  scope_fidelity: pass
+approved_result_note: The generated result regularized the selected-work region into two flat three-column bands. Guilherme approved this exact composition, so it supersedes the proposed asymmetric spans.
+decision: approved-by-guilherme
+created_at: 2026-07-14
+approved_at: 2026-07-14

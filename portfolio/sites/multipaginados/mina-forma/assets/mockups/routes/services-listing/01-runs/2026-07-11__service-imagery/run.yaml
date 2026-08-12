@@ -1,0 +1,14 @@
+schema_version: 1
+id: services-service-imagery
+route: services-listing
+state: superseded-by-approved
+hypothesis: add visual evidence to service rows without turning them into cards or a hero
+parent: ../2026-07-11__route-reframe/mina-forma-services-listing-mockup-v18-recomposed.png
+outputs:
+  - mina-forma-services-listing-mockup-v19-process-overlay-board.png
+  - mina-forma-services-listing-mockup-v20-service-image-quadrants.png
+  - mina-forma-services-listing-mockup-v21-home-v2-service-slabs.png
+  - mina-forma-services-listing-mockup-v22-open-service-still-lifes.png
+  - mina-forma-services-listing-mockup-v23-compact-open-still-lifes.png
+decision: v22 selected as visual-language authority; v24 resolved geometry
+lesson: relational feedback requires the exact reference crop; open still lifes must not define row height

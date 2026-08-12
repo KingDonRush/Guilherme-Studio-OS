@@ -15,8 +15,10 @@ to production folders as optimized WebP/SVG.
 | `batch-3-materials` | Material swatches and deliverables | 32 | [`batch-3-materials.md`](generation/batch-3-materials.md) |
 | `batch-4-sbp` | SBP public-flow visual assets | 14 | [`batch-4-sbp.md`](generation/batch-4-sbp.md) |
 | `batch-5-lineart` | Line-art, maps, blueprint overlays and SVG icon sets | 14 | [`batch-5-lineart.md`](generation/batch-5-lineart.md) |
+| `home-v2-individual-assets` | Approved Home v2 individual assetization | 14 production WebPs | [`home-v2-individual-assets.md`](generation/home-v2-individual-assets.md) |
 
-Total generated/runtime files: `98`.
+Prior generated working files: `98`.
+Home v2 individual production assets: `14` WebPs.
 
 ## Batch 1: Core Photography
 
@@ -29,6 +31,29 @@ Folder: `runtime/generated/assets/mina-forma/batch-1-core/`
 - `mf-human-process-table.png` / `.webp`
 - `mf-services-hero-materials-v1.png` / `.webp`
 - `mina-home-hero-interior-v1.png` / `.webp`
+
+## Home V2: Individual Assets
+
+Runtime source folder:
+`runtime/generated/assets/mina-forma/home-v2-individual/`
+
+Production folder:
+`portfolio/sites/multipaginados/mina-forma/assets/wordpress/home-v2-individual/`
+
+- `mina-home-v2-hero-reception-interior.webp`
+- `mina-home-v2-field-materials.webp`
+- `mina-home-v2-field-floor-plan.webp`
+- `mina-home-v2-field-chair-corner.webp`
+- `mina-home-v2-project-retail-fitout.webp`
+- `mina-home-v2-project-cafe-counter.webp`
+- `mina-home-v2-project-studio-reception.webp`
+- `mina-home-v2-cta-planning-desk.webp`
+- `mina-home-v2-paper-grain.webp`
+- `mina-home-v2-icon-calendar-check.webp`
+- `mina-home-v2-icon-storefront.webp`
+- `mina-home-v2-icon-scope-document.webp`
+- `mina-home-v2-shape-corner-mark.webp`
+- `mina-home-v2-icon-orange-arrow.webp`
 
 ## Batch 2: Project Universe
 

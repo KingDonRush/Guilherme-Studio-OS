@@ -1,0 +1,37 @@
+schema_version: 1
+id: 2026-07-15__single-service-substitution
+route: /services/interior-concept
+state: approved
+hypothesis: >-
+  The approved Single Service skeleton survives a change from technical plan
+  evidence to concept, material and lighting evidence without changing its
+  hierarchy or geometry.
+parent: service-detail-commercial-layout__desktop__approved.png
+authorities:
+  content: references/02-services-listing__service-01-content.png plus references/03-old-service-detail__content-atoms-only.png
+  geometry: references/01-commercial-layout__template-authority.png plus ../../00-contract/geometry.yaml
+  visual_language: references/01-commercial-layout__template-authority.png
+  photography: references/04-art-direction-guide__materials.png
+change: Substitute only service content and evidence modality.
+preserve:
+  - complete Single Service section order and proportions
+  - header, footer, rails, typography and palette
+  - flat four-item bands and asymmetric deliverables section
+  - Elementor-safe fixed media slots
+success_test:
+  - page reads as Interior Concept within five seconds
+  - concept board replaces plan as primary evidence without becoming decoration
+  - no parent section grows and no new layout archetype appears
+  - same template can be populated dynamically
+output: outputs/service-detail-interior-concept__single-service-substitution__candidate-01.png
+review:
+  intent: pass
+  hierarchy: pass
+  geometry: pass
+  text: pass
+  visual_system: pass
+  reference_fidelity: pass
+  elementor_feasibility: pass
+  scope_fidelity: pass
+decision: approved-by-guilherme
+approved_at: 2026-07-15

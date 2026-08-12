@@ -1,0 +1,15 @@
+schema_version: 1
+id: services-taste-section-test
+route: services-listing
+state: rejected-research
+hypothesis: generate one horizontal reference frame per section before synthesis
+outputs:
+  - section-01-intro.png
+  - section-02-core-services.png
+  - section-03-material-logic.png
+  - section-04-process.png
+  - section-05-deliverables.png
+  - section-06-cta.png
+  - services-taste-skill-contact-sheet.png
+decision: useful research, rejected as page workflow because synthesis contract was missing
+lesson: section studies require a parent full-page candidate and explicit synthesis plan

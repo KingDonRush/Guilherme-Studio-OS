@@ -106,6 +106,15 @@ method_lens:
     construction_concern:
     test_concern:
     maintenance_concern:
+    clean_code:
+      intention:
+      behavior_contract:
+      responsibility_boundary:
+      complexity_budget:
+      dependency_policy:
+      error_behavior:
+      testability_evidence:
+      exception_or_debt:
   governance:
     gate:
     definition_of_done:
@@ -132,6 +141,11 @@ method_lens:
 The context pack may mark a field `not_material` only with a short reason. For
 material, public, security-sensitive, data-bearing or cross-domain work, missing
 critical fields block authorization.
+
+For code-bearing Spec Kit work, the `software.clean_code` fields are populated
+from [Spec Kit Clean Code Flow](./04-spec-kit-clean-code-flow.md). They must
+remain proportional to risk: short for tiny reversible edits, explicit for
+shared, security-sensitive, public, architecture-moving or refactor-heavy work.
 
 ## Required Bootstrap Capabilities
 

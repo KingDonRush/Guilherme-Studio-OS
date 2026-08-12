@@ -26,13 +26,20 @@ Generation manifests: [`batch-5-lineart.md`](../assets/manifests/generation/batc
 | --- | --- | --- |
 | `mina-forma-art-direction-guide-v1.png` | Visual guide | `255f491fc30b8e12df8cccbe9d2827188e87f9adfcf76fb85db461ce71de352e` |
 | `mina-forma-home-mockup-v1.png` | Home | `3ac8f4bd2f5c12b538d1bc29cbc11026fd8d2ab286f9631e5e1c5cfdc581a47a` |
+| `mina-forma-home-mockup-v2.png` | Home approved compact hero | `6d4aae4a07934f75ee895e0fe50f3aafb382a4c46e2d4a2bc743da0b1f730511` |
 | `mina-forma-about-mockup-v1.png` | About | `fbc77950ab909799e1fa0e5b85eea0ecb6f53a6314f773b694ac260b80612d6d` |
-| `mina-forma-services-listing-mockup-v1.png` | Services listing | `37e0538c8a63339e4e1dba6224db7f1b2272f753c77884f1d41c523759814480` |
+| `routes/services-listing/01-runs/2026-07-09__home-formula/mina-forma-services-listing-mockup-v1.png` | Services listing legacy baseline | `37e0538c8a63339e4e1dba6224db7f1b2272f753c77884f1d41c523759814480` |
+| `routes/services-listing/02-approved/services-listing__desktop__approved.png` | Services listing final, approved 2026-07-11 from v24 | `bcad265a8f8a03add9835fb32efda06228d7af7ec969d7a9652df5ac1ca45316` |
 | `mina-forma-service-detail-mockup-v1.png` | Service detail | `5d89c6888194d06bd6cfec8f3a1925ce4b7b66a7120c6c5985a0963897c2879e` |
 | `mina-forma-projects-cases-listing-mockup-v1.png` | Projects / cases listing | `94f5d4c8d6038d0a09e3d9083075a637f5e9accb653f91abf9e74204b5ee6d89` |
 | `mina-forma-case-aurora-cafe-mockup-v1.png` | Case detail | `00376fea55dcdcb1e52b7ad097402cf40cf74fe62078c10d30953de93fc881d6` |
 | `mina-forma-plan-your-project-orcamento-mockup-v1.png` | SBP proof page | `ccfa3e7894b3e6082760a1bab2f1887c04a41e23e992317bf20aabb49a4327a6` |
 | `mina-forma-contact-mockup-v1.png` | Contact | `90909cb90de4aa65a2394158b48aad8c986489d28a6072fa1aaa5b091877c585` |
+
+The final Services listing lives in its route workspace under
+`routes/services-listing/02-approved/`. It is byte-identical to the v24 source
+and the root compatibility alias. It is a locked visual contract and must not
+be regenerated or reinterpreted from the historical prompt below.
 
 ## Guide Prompt
 

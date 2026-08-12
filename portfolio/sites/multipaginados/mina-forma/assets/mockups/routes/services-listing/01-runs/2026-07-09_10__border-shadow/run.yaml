@@ -1,0 +1,21 @@
+schema_version: 1
+id: services-border-shadow
+route: services-listing
+state: superseded
+hypothesis: recover Home v2 border language and tune depth
+outputs:
+  - mina-forma-services-listing-best-reference.png
+  - mina-forma-services-listing-mockup-v4.png
+  - mina-forma-services-listing-mockup-v5.png
+  - mina-forma-services-listing-mockup-v6.png
+  - mina-forma-services-listing-mockup-v7.png
+  - mina-forma-services-listing-mockup-v8-draft.png
+  - mina-forma-services-listing-mockup-v8.png
+  - mina-forma-services-listing-mockup-v9-shadow-study.png
+  - mina-forma-services-listing-mockup-v9.png
+  - mina-forma-services-listing-mockup-v10-footer-border.png
+  - mina-forma-services-listing-mockup-v11-page-rails.png
+  - mina-forma-services-listing-mockup-v12-no-hero-shadow.png
+  - mina-forma-services-listing-mockup-v13-soft-shadow-rails.png
+decision: outer rails retained; global shadow approach rejected
+lesson: border is structural and shadow is a hierarchy budget, not a paired default

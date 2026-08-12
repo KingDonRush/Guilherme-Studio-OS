@@ -1,0 +1,11 @@
+schema_version: 1
+id: services-home-formula
+route: services-listing
+state: superseded
+hypothesis: share Home v2 visual language while adapting Services content
+outputs:
+  - mina-forma-services-listing-mockup-v1.png
+  - mina-forma-services-listing-mockup-v2.png
+  - mina-forma-services-listing-mockup-v3.png
+decision: v2 rejected as second-Home composition; v3 retained as strategic milestone
+lesson: sibling visual language does not authorize copying the same hero formula

@@ -4,6 +4,12 @@ Status: normative workflow
 Scope: design feedback, browser calibration, implementation diagnosis, and
 human visual approval
 
+This workflow owns implemented/runtime visual reality. Route-level imagegen
+mockup production, version state, diagnosis resets and visual freeze are owned
+by [`04-image-first-mockup-production.md`](./04-image-first-mockup-production.md).
+Use this document for a mockup only when the issue is viewport/environment
+calibration or when the approved image is being compared with implementation.
+
 ## Problem
 
 Visual iteration fails when the human and the agent observe different rendered
@@ -20,6 +26,7 @@ Common causes include:
 - device pixel ratio;
 - scrollbar presence;
 - cached CSS or stale build output;
+- forced WordPress/plugin admin notices above the target surface;
 - screenshot scaling;
 - full-screen mode;
 - different fonts or font loading;
@@ -43,6 +50,107 @@ For user-facing visual acceptance:
 The agent may challenge an observation when evidence indicates a different
 cause, but it must reproduce the environment rather than dismiss the report.
 
+## Collaborative Diagnosis
+
+Visual feedback is not a command queue. Treat Guilherme's comments as raw
+design intent that must be translated before action.
+
+For each meaningful correction, separate:
+
+- literal request;
+- observed symptom;
+- desired relationship or feeling;
+- invariant that must remain protected;
+- likely deeper cause;
+- recommended correction;
+- literal interpretation to avoid.
+
+Example:
+
+```text
+Literal request: change the shadows.
+Symptom: the page feels flooded by shadows.
+Intent: preserve the bordered Mina Forma structure without making every section
+feel like a floating object.
+Invariant: left/right rails and section borders remain mandatory.
+Cause: shadow is being applied as a global style instead of a hierarchy budget.
+Correction: reserve shadow for one or two object groups; keep structural
+sections flat.
+Avoid: generating another version where every container receives a softer
+shadow.
+```
+
+Guilherme has final approval, but the agent must still diagnose, recommend and
+challenge. Do not turn approved invariants into blind obedience. When a literal
+instruction would damage hierarchy, UX, Elementor feasibility, or an approved
+visual language, explain the conflict and propose the smallest coherent
+alternative before generating or editing.
+
+When iteration starts to feel automatic, stop the visual-production loop and
+name the abstraction failure. The next output should be a diagnosis or revised
+direction contract, not another image.
+
+## Design Mockup Viewport Contract
+
+When the work is image-first design rather than implemented CSS, define the
+intended viewport before generating or approving a page mockup. This is required
+for home pages, landing pages, and any route whose first section acts as a hero.
+
+Record:
+
+```yaml
+target_viewport_width:
+target_viewport_height:
+header_height_range:
+usable_first_viewport_height:
+hero_height_ceiling:
+required_first_viewport_information:
+hero_image_aspect_ratio:
+hero_image_max_height:
+next_section_start_y:
+allowed_scroll_for_primary_information:
+pixel_coordinate_space:
+pixel_box_map:
+```
+
+The complete page mockup remains the normal deliverable. Do not fragment the
+generation merely because a hero is hard to proportion. Instead, constrain the
+full-page prompt with this contract and reject any output where the hero becomes
+a poster, relies on excessive padding, overflows the first viewport, or pushes
+essential information below the fold.
+
+When scale or fold behavior is the reported failure, include a pixel box map in
+the prompt. The map should define the conceptual canvas and the expected boxes
+for the header, hero, text column, primary image slot, CTA/icon row, and
+next-section start. Generated bitmap dimensions may differ; review by scaling
+the boxes proportionally to the actual output.
+
+## Image Assetization Contract
+
+After Guilherme approves an image-first Elementor mockup, assetization is a
+separate production phase. The approved mockup is the visual contract, not a
+default source sheet to crop.
+
+Before generating assets, inventory every visible thing Elementor/WordPress does
+not already provide as finished content:
+
+- photography and scene images;
+- generated icons and pictograms;
+- generated shapes, decorative marks and visual forms;
+- textures, material fields, blueprint fragments and custom line-art;
+- other raster visuals needed for the approved direction.
+
+Generate each listed asset as its own imagegen target. Do not make one packed
+image containing several assets and crop it afterward. Do not crop the approved
+full-page mockup into production assets unless Guilherme explicitly asks for
+extraction or the artifact is an approved pixel fragment whose exact edges and
+shadows must be preserved.
+
+Generated transparent icons, shapes and decorative forms use chroma-key
+generation first, then local alpha extraction, trim validation and WebP/PNG
+promotion. Code is allowed for post-processing and validation, not as a
+substitute for the requested visual generation.
+
 ## Observation Record
 
 Before editing, capture:
@@ -63,6 +171,7 @@ page_zoom:
 full_screen:
 logged_in:
 wordpress_admin_bar:
+wordpress_admin_notices:
 scrollbar:
 responsive_breakpoint:
 font_status:
@@ -85,6 +194,9 @@ Convert oral or informal feedback into:
 - intended relationship;
 - acceptance statement;
 - uncertainty.
+- protected invariants from previous approvals;
+- the agent's recommended correction, especially when it differs from the
+  literal wording.
 
 Example:
 
@@ -95,6 +207,7 @@ Unknown: whether the difference comes from viewport height, admin bar, or CSS.
 ```
 
 Do not convert “looks cramped” directly into an arbitrary margin change.
+Do not convert “change shadows” directly into a global shadow restyle.
 
 ### Step 2: Preserve the observation
 
@@ -282,9 +395,23 @@ For a true single-screen desktop composition:
 
 - use the calibrated available viewport;
 - reserve explicit header/admin offsets;
+- account for forced WordPress/plugin admin notices before implementation;
 - prevent essential content from being clipped;
 - allow responsive recomposition rather than proportional shrinking;
 - test at the actual target inner height.
+
+For WordPress admin surfaces that are intended to behave like a single-screen
+tool:
+
+- the surface owns the available `wpbody-content` height and should target the
+  calibrated equivalent of `100vh` after admin chrome offsets;
+- global WordPress/plugin notices must not push the main composition downward;
+- screen-specific notice containment is allowed, but global notice suppression
+  outside the current screen is not;
+- if notices matter for the current task, expose them as a compact collapsed
+  notice area, status chip, or diagnostics link instead of an always-open block;
+- validation must include a logged-in admin capture where plugin/core notices
+  would normally appear.
 
 ## Screenshot Evidence Naming
 

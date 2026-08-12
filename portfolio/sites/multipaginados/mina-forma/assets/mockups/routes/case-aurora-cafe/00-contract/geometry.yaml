@@ -1,0 +1,51 @@
+canvas:
+  width: 1440
+  height: 3400
+  target_viewport: 1440x900
+
+fold_contract:
+  header_height: 92
+  masthead_height: 380
+  first_image_begins_at: 492
+  first_viewport_must_show:
+    - complete header
+    - case label and title
+    - thesis and project metadata
+    - upper portion of the establishing image
+  reject_if:
+    - masthead becomes a tall poster
+    - title is placed beside a dominant image
+    - establishing image begins below 620px
+    - metadata is pushed below the first viewport
+
+boxes:
+  header: {x: 24, y: 20, width: 1392, height: 92}
+  masthead: {x: 24, y: 112, width: 1392, height: 380}
+  establishing_section: {x: 24, y: 492, width: 1392, height: 500}
+  establishing_image: {x: 70, y: 548, width: 1300, height: 400}
+  story: {x: 24, y: 992, width: 1392, height: 320}
+  spatial_move: {x: 24, y: 1312, width: 1392, height: 520}
+  gallery: {x: 24, y: 1832, width: 1392, height: 600}
+  project_system: {x: 24, y: 2432, width: 1392, height: 350}
+  outcomes: {x: 24, y: 2782, width: 1392, height: 280}
+  cta: {x: 24, y: 3062, width: 1392, height: 190}
+  footer: {x: 24, y: 3252, width: 1392, height: 148}
+
+image_limits:
+  establishing: {max_width: 1300, max_height: 420}
+  plan: {max_width: 820, max_height: 400}
+  gallery_large: {max_width: 730, max_height: 420}
+  gallery_small: {max_width: 520, max_height: 230}
+  rule: "Images fit fixed slots and never define parent section height."
+
+responsive_intent:
+  tablet:
+    - retain dossier masthead before imagery
+    - allow story columns to become two plus one
+    - keep plan and explanation legible without overlap
+  mobile:
+    - stack masthead content
+    - stack story in narrative order
+    - place plan before its callouts
+    - place gallery images in one column
+    - preserve editable text outside raster images

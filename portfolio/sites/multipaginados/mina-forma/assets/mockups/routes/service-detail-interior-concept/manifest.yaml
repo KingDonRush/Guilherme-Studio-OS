@@ -1,0 +1,14 @@
+route: /services/interior-concept
+slug: service-detail-interior-concept
+page_type: service-detail
+state: approved
+current_run: 2026-07-15__single-service-substitution
+approved: 02-approved/service-detail-interior-concept__desktop__approved.png
+template_family:
+  id: single-service
+  authority_candidate: ../service-detail-commercial-layout/02-approved/service-detail-commercial-layout__desktop__approved.png
+  test_dimension: evidence-modality-substitution
+notes:
+  - "This run tests the approved Commercial Layout skeleton; it does not propose a new visual direction."
+  - "Approval here means the shared Single Service structure survives Interior Concept content."
+  - "Stress test passed and was explicitly approved by Guilherme on 2026-07-15."

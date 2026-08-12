@@ -1,0 +1,44 @@
+schema_version: 1
+route: services-listing
+status: approved
+retrospective: ../../../../docs/retrospectives/services-listing-2026-07-11.md
+authorities:
+  content: 01-runs/2026-07-11__route-reframe/mina-forma-services-listing-mockup-v18-recomposed.png
+  geometry: 01-runs/2026-07-11__route-reframe/mina-forma-services-listing-mockup-v18-recomposed.png
+  visual_language: 01-runs/2026-07-11__service-imagery/mina-forma-services-listing-mockup-v22-open-service-still-lifes.png
+  photography: 01-runs/2026-07-11__service-imagery/mina-forma-services-listing-mockup-v22-open-service-still-lifes.png
+  implementation: 03-handoff/elementor.md
+approved:
+  id: services-listing-v24
+  path: 02-approved/services-listing__desktop__approved.png
+  legacy_source: mina-forma-services-listing-mockup-v24-fixed-service-height.png
+  compatibility_alias: ../../mina-forma-services-listing-mockup-final.png
+  approved_at: 2026-07-11
+  status: locked
+  dimensions: 864x1821
+  sha256: bcad265a8f8a03add9835fb32efda06228d7af7ec969d7a9652df5ac1ca45316
+runs:
+  - id: legacy-baseline
+    path: 01-runs/2026-07-09__home-formula/
+    versions: [v1, v2, v3]
+    outcome: route architecture corrected, home formula rejected
+  - id: taste-section-test
+    path: 01-runs/2026-07-09__taste-section-test/
+    versions: [six-section-frames]
+    outcome: research only, no synthesis contract
+  - id: border-shadow
+    path: 01-runs/2026-07-09_10__border-shadow/
+    versions: [v4, v5, v6, v7, v8-draft, v8, v9-shadow-study, v9, v10, v11, v12, v13]
+    outcome: outer rails discovered, global shadow treatment rejected
+  - id: route-reframe
+    path: 01-runs/2026-07-11__route-reframe/
+    versions: [v14, v15, v16, v17, v18]
+    outcome: editorial service index and recomposed page established
+  - id: service-imagery
+    path: 01-runs/2026-07-11__service-imagery/
+    versions: [v19, v20, v21, v22, v23]
+    outcome: open still-life treatment established
+  - id: approved-correction
+    path: 02-approved/
+    versions: [v24]
+    outcome: approved and frozen

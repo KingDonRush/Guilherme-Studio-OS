@@ -24,6 +24,14 @@ Scope read for this decision:
 - `09-methods-models-and-practices`
 - `_meta`, `_research`, `_sources`, and `.praxis-knowledge/praxis-knowledge.md`
 
+Additional implementation playbook incorporated after the original Praxis read:
+
+- `Playbook Operacional de Clean Code.pdf`, read locally on 2026-06-26, now
+  transcribed in full as
+  [Playbook Operacional de Clean Code](./playbooks/playbook-operacional-clean-code.md)
+  and adapted into
+  [Spec Kit Clean Code Flow](./04-spec-kit-clean-code-flow.md).
+
 Inventory at reading time: 1091 Markdown files and 86563 lines under
 `.praxis-knowledge`. Temporary digests were used only to navigate the corpus;
 they are not Studio OS source of truth.
@@ -41,6 +49,12 @@ quality, security, delivery, operations, documentation and evidence.
 
 Praxis is used here as knowledge input. Studio OS PRDs, architecture contracts,
 decisions, evidence and operating guides remain the project authority.
+
+The Clean Code playbook is also used as operational input. It does not override
+Studio OS contracts, and it must not be used as a generic taste argument. Its
+role is to make Spec Kit plans answer intention, behavior preservation,
+responsibility, complexity, dependency, error behavior, testability, review,
+exceptions and debt.
 
 ## Doctrine Scope
 
@@ -229,6 +243,9 @@ These are the Studio-specific interpretation of the Praxis knowledge:
 ## Line Count Policy
 
 Praxis knowledge explicitly warns against treating lines of code as quality.
+The incorporated Clean Code playbook reaches the same operational conclusion:
+do not evaluate quality by file count, function size, abstraction count,
+comment count, isolated coverage, generic complexity scores or refactor volume.
 Line count is only a diagnostic signal.
 
 The Studio OS rule is:
@@ -475,6 +492,9 @@ Who owns it?
 What public interface exposes it?
 What test or evidence proves behavior?
 Can I add this through an owned slice instead of broadening a shared surface?
+
+If this is a WordPress admin UI, what is the calibrated usable height, and how
+do WordPress/plugin notices behave on the target screen?
 ```
 
 If the answer is unclear, create or extend a focused slice first.

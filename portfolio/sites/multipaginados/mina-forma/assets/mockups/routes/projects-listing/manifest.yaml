@@ -1,0 +1,25 @@
+schema_version: 1
+route: /projects
+slug: projects-listing
+status: approved
+page_type: projects-listing
+authorities:
+  content: mina-forma-projects-cases-listing-mockup-v1-content-atoms
+  geometry: projects-listing-geometry-2026-07-14
+  visual_language: approved-services-listing-and-commercial-layout
+  photography: mina-forma-art-direction-guide-v1
+  implementation: projects-listing-direction-contract
+approved:
+  id: projects-listing-candidate-01
+  path: 02-approved/projects-listing__desktop__approved.png
+  source: 01-runs/2026-07-14__editorial-case-index/outputs/projects-listing__editorial-case-index__candidate-01.png
+  approved_at: 2026-07-14
+  approved_by: Guilherme
+  status: locked
+  dimensions: 864x1821
+  mode: RGB
+  sha256: 9b7e1a90a10abea606ae92882a687280633ea17c36e35dbb25be5ddfd5d660a3
+runs:
+  - id: 2026-07-14__editorial-case-index
+    state: approved
+    path: 01-runs/2026-07-14__editorial-case-index

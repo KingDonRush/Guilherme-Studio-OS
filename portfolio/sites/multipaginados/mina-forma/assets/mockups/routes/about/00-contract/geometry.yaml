@@ -1,0 +1,40 @@
+schema_version: 1
+canvas:
+  width: 1440
+  height: 3200
+target_viewport:
+  width: 1440
+  height: 900
+boxes:
+  header: { x: 24, y: 20, width: 1392, height: 92 }
+  masthead: { x: 24, y: 112, width: 1392, height: 448 }
+  masthead_title: { x: 72, y: 170, width: 790, height: 280 }
+  masthead_copy: { x: 1020, y: 205, width: 300, height: 170 }
+  primary_evidence: { x: 24, y: 560, width: 1392, height: 540 }
+  manifesto: { x: 24, y: 1100, width: 1392, height: 430 }
+  method_story: { x: 24, y: 1530, width: 1392, height: 610 }
+  principles: { x: 24, y: 2140, width: 1392, height: 470 }
+  closing: { x: 24, y: 2610, width: 1392, height: 390 }
+  footer: { x: 24, y: 3000, width: 1392, height: 180 }
+fold:
+  y: 900
+  required_visible:
+    - complete header
+    - complete masthead identity, headline and support copy
+    - at least 300px of the primary human working image
+fixed_height_regions:
+  - header
+  - masthead
+  - primary_evidence
+content_that_must_not_grow_parent:
+  - masthead headline
+  - primary evidence image
+  - four method rows
+  - four timeline entries
+image_max_boxes:
+  primary_evidence: 1392x540
+  manifesto_material_strip: 700x300
+  closing_process_image: 780x390
+responsive_recomposition:
+  tablet: stack masthead copy below headline; keep primary evidence landscape and full width
+  mobile: stack all paired sections; keep headline under four lines; convert principles to sequential flat rows
