@@ -3,6 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WP_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+PRODUCTS_COMPOSE_FILE="$(cd "$WP_DIR/../operations/wordpress" && pwd)/docker-compose.products.yml"
 LOG_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/wordpress-portfolio-lab"
 LOG_FILE="$LOG_DIR/start.log"
 URL="${WORDPRESS_URL:-http://localhost:8080}"
@@ -19,10 +20,14 @@ notify() {
   fi
 }
 
+compose() {
+  docker compose -f "$WP_DIR/docker-compose.yml" -f "$PRODUCTS_COMPOSE_FILE" "$@"
+}
+
 cd "$WP_DIR"
 
 log "Starting Docker services..."
-docker compose up -d db wordpress >>"$LOG_FILE" 2>&1
+compose up -d db wordpress >>"$LOG_FILE" 2>&1
 
 log "Waiting for MySQL healthcheck..."
 for _ in $(seq 1 60); do

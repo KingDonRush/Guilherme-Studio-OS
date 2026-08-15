@@ -84,6 +84,7 @@ services:
         }
     volumes:
       - ./:/var/www/html
+      - ./config/php/zz-studio-os-upload.ini:/usr/local/etc/php/conf.d/zz-studio-os-upload.ini:ro
 
   wpcli:
     image: wordpress:cli-php8.3
