@@ -1,60 +1,55 @@
 # Guilherme Studio OS
 
-Public, local-first operating system for Guilherme Silva's international
-WordPress business, products, portfolio, career pipeline, and governed agent
-work.
+A local application for organizing software delivery and structured agent work.
+It combines a React dashboard, a TypeScript API/CLI and an MCP interface over the
+same operational records. YAML and Markdown are canonical; SQLite is a rebuildable
+local projection.
 
-The source, non-sensitive operating rules, fixtures, and evidence in this Git
-repository are public. Secrets, confidential business records, private client
-data, local runtime state, and credentials are not part of this repository.
+**Independent working prototype.** Useful evidence of application architecture,
+agent interfaces and explicit action controls. External service adapters are
+currently fake or disabled; this is not a claim of a live commercial service.
 
-The normative product specification lives in
-[`docs/studio-os/`](docs/studio-os/00-index.md).
+## Start with the evidence
 
-## Agent entry point
+| Interest | What to inspect |
+| --- | --- |
+| React / TypeScript applications | [Dashboard source](apps/panel/src), [local API](packages/local-api/src) |
+| Agent tooling / MCP | [MCP server](packages/mcp/src/server.ts), [prepared action lifecycle](packages/core/src/prepared-actions/service.ts) |
+| Product and system decisions | [System specification](docs/studio-os/00-index.md), [repository boundaries](docs/studio-os/architecture/04-repository-wordpress-topology.md) |
+| WordPress implementation | [WordPress runtime and owned surfaces](wordpress/README.md); plugins have their own repositories |
 
-An agent or external reviewer should read the repository in this order:
+An action moves through preparation, confirmation, execution and reconciliation.
+The implementation checks expiry and payload checksums and records failures rather
+than treating a prepared intention as a completed external action.
 
-1. [`AGENTS.md`](AGENTS.md) for the complete operating instructions and safety
-   boundaries;
-2. [`docs/studio-os/00-index.md`](docs/studio-os/00-index.md) for the normative
-   system map and document authority;
-3. [`docs/studio-os/architecture/04-repository-wordpress-topology.md`](docs/studio-os/architecture/04-repository-wordpress-topology.md)
-   for repository ownership, WordPress mounts, and product boundaries;
-4. [`wordpress/README.md`](wordpress/README.md) for the concrete frontend
-   rendering map, theme entrypoints, Elementor exports, and known gaps.
+## Run locally
 
-The records in `products/` describe independently versioned plugin repositories.
-Their working trees live locally under `products/<slug>/repository/` and are
-intentionally ignored here because each plugin has its own GitHub history.
-
-`wordpress/` is a reproducible local runtime, not a WordPress distribution. This
-repository keeps only its local orchestration, owned scripts, owned MU-plugins,
-owned page implementations, and the `guilherme-portfolio` theme. WordPress core,
-uploads, caches, external plugins, generated state, and secrets remain ignored.
-
-## Toolchain
-
-- Node.js 24.16.0
-- npm 11.13.0
-- TypeScript workspaces
-- YAML/Markdown canonical records
-- derived local SQLite projection
-
-## Development
+The declared toolchain is Node.js 24.16.0 and npm 11.13.0. Native SQLite dependencies
+must be built during installation.
 
 ```bash
 npm ci
 npm run verify
-npm run studio -- validate
-```
-
-The dashboard is local-only:
-
-```bash
 npm run studio -- dashboard
 ```
 
-Secrets are never stored in this repository. Raster source files belong under
-the ignored `runtime/assets/sources/`; only approved optimized WebP derivatives
-are versioned.
+The dashboard is local only. See the [review guide](docs/studio-os/reviewer-guide.md)
+for validation results, scope and limitations. Agent contributors should then read
+[AGENTS.md](AGENTS.md).
+
+## Development method and authorship
+
+This is an independent project, not evidence of an employer or a client engagement.
+The source was produced primarily or entirely by AI coding agents under Guilherme
+Manoel da Silva's direction. His contribution includes product intent, requirements,
+constraints, decomposition, product and architectural decisions through the agent
+interface, iteration, validation and documentation. The repository demonstrates
+the resulting system and process; it does not imply that he manually wrote every
+component or can reproduce it unaided from memory.
+
+## Em português
+
+Aplicação local para organizar entregas de software e trabalho dirigido por
+agentes. Reúne painel React, API/CLI TypeScript e interface MCP, com registros
+canônicos em YAML/Markdown e projeção SQLite. Projeto independente; cenários e
+materiais de portfólio não representam clientes, receita ou adoção comprovados.
