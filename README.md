@@ -1,12 +1,14 @@
 # Studio Control Plane
 
-A local-first control plane for freelancers and small software studios. It connects
-client acquisition, commercial work, delivery, repositories, environments, products
-and evidence with the context needed to continue work across AI-agent runs.
+A local-first control plane for freelancers and small web/software studios, with
+WordPress website delivery as a first-class operating surface. It connects client
+acquisition, commercial work and delivery to Dockerized WordPress environments,
+repositories, evidence and the context needed to continue work across AI-agent runs.
 
-The system keeps business and implementation records linked: why a project exists,
-what was agreed, where its code runs, what has been verified and what should happen
-next. A React panel, CLI and MCP interface operate on shared domain services.
+The system keeps business and implementation records linked: why a site or project
+exists, what was agreed, where its code and runtime live, what has been verified and
+what should happen next. A React panel, CLI and MCP interface operate on shared
+domain services.
 
 ## From prospect to delivered work
 
@@ -23,7 +25,8 @@ dedicated wizard for every transition.
 | Area | Implemented system |
 | --- | --- |
 | Client and commercial operations | People, organizations, prospects, opportunities, discovery, proposals, clients and engagements |
-| Delivery and products | Deliverables, projects, repository registration, environments, products and releases |
+| Website and software delivery | Deliverables, projects, repository registration, environments, products and releases |
+| WordPress operations | Docker Compose runtime control, WP-CLI, plugin inspection, database/uploads backup and restore checks |
 | Finance | Contracts, invoices, payment records and obligation tracking |
 | Evidence and publication planning | Evidence registration, portfolio cases, campaigns and content preparation |
 | Agent continuity and governance | Tasks, decisions, agent runs, context packs, observations, verification, handoffs and learning records |
@@ -31,6 +34,31 @@ dedicated wizard for every transition.
 
 Finance records track operational state; they do not process payments. Content and
 commercial preparation remain distinct from external publication or sending.
+
+## WordPress website delivery
+
+WordPress is the strongest concrete delivery specialization in the current system.
+The domain model and repository topology are designed so client engagements and
+deliverables can be linked to independent website repositories and environments,
+instead of flattening every client site into one shared Git history.
+
+The current implementation includes a registered local WordPress portfolio runtime
+and [runtime adapters](packages/adapters/src/index.ts) for Docker Compose
+status/start/stop, HTTP health inspection, WP-CLI commands, plugin inspection,
+database/uploads backups and restore checks. A
+[portfolio site kit](packages/adapters/src/wordpress-site-kit.ts) applies the
+included site capsule to a local WordPress/Elementor runtime.
+
+This makes the control plane useful beyond record keeping: it can observe and operate
+parts of the actual environment used to build and verify WordPress work. The
+[repository topology](docs/studio-os/architecture/04-repository-wordpress-topology.md)
+describes the intended boundary between the coordinator, reusable products,
+portfolio sites and client website repositories.
+
+`wordpress provision` currently creates a target directory and provisioning
+manifest; it does not complete site installation or registration. Richer automated
+client-site bootstrapping and delivery workflows remain architectural direction
+where the runtime does not yet implement them.
 
 ## Continue work across agent runs
 
@@ -45,21 +73,6 @@ The [agent harness](packages/core/src/harness/agent-harness.ts) and
 [prepared-action service](packages/core/src/prepared-actions/service.ts) implement
 these mechanisms. Context packs and handoffs are executable capabilities; richer
 client-memory and briefing models in the PRDs remain architectural direction.
-
-## WordPress delivery specialization
-
-WordPress is a concrete delivery environment within the broader studio model.
-The [runtime adapters](packages/adapters/src/index.ts) implement Docker Compose
-status/start/stop and HTTP health inspection, WP-CLI commands, plugin inspection,
-database/uploads backups and restore checks. A
-[portfolio site kit](packages/adapters/src/wordpress-site-kit.ts) applies the
-included site capsule to a local WordPress/Elementor runtime.
-
-These operations require the registered environment and its Compose files.
-`wordpress provision` currently creates a target directory and provisioning
-manifest; it does not complete site installation or registration. Product plugin
-repositories retain independent Git histories and verification requirements; see
-[repository topology](docs/studio-os/architecture/04-repository-wordpress-topology.md).
 
 ## System map
 
