@@ -49,6 +49,11 @@ database/uploads backups and restore checks. A
 [portfolio site kit](packages/adapters/src/wordpress-site-kit.ts) applies the
 included site capsule to a local WordPress/Elementor runtime.
 
+![Inspecting WordPress health and active plugins through the Studio CLI](docs/media/studio-wordpress-runtime.gif)
+
+The registered WordPress runtime and its active plugins can be inspected from the
+same CLI that manages delivery records.
+
 This makes the control plane useful beyond record keeping: it can observe and operate
 parts of the actual environment used to build and verify WordPress work. The
 [repository topology](docs/studio-os/architecture/04-repository-wordpress-topology.md)

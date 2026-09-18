@@ -1,0 +1,8 @@
+{"version": 2, "width": 104, "height": 29, "timestamp": 1789765703, "env": {"SHELL": "/bin/bash", "TERM": "xterm-256color"}, "title": "Studio Control Plane: inspecting the existing WordPress runtime"}
+[0.006441, "o", "\u001b[H\u001b[2J\u001b[3J"]
+[0.006852, "o", "$ studio wordpress health | jq '{ok,url,httpStatus,services:[.services[]|{Service,State}]}'\r\n"]
+[1.127693, "o", "{\r\n  \"ok\": true,\r\n  \"url\": \"http://localhost:8080\",\r\n  \"httpStatus\": 200,\r\n  \"services\": [\r\n    {\r\n      \"Service\": \"db\",\r\n      \"State\": \"running\"\r\n    },\r\n    {\r\n      \"Service\": \"wordpress\",\r\n      \"State\": \"running\"\r\n    }\r\n  ]\r\n}\r\n"]
+[5.140195, "o", "\u001b[H\u001b[2J\u001b[3J"]
+[5.140282, "o", "$ studio wordpress plugin-list | jq 'map(select(.status==\"active\")|{name,version})'\r\n"]
+[7.181692, "o", "[\r\n  {\r\n    \"name\": \"3d-viewer-to-elementor\",\r\n    \"version\": \"1.0.0\"\r\n  },\r\n  {\r\n    \"name\": \"elementor\",\r\n    \"version\": \"4.0.8\"\r\n  },\r\n  {\r\n    \"name\": \"elementor-implementation-toolkit\",\r\n    \"version\": \"1.0.0-rc.1\"\r\n  },\r\n  {\r\n    \"name\": \"pro-elements\",\r\n    \"version\": \"4.0.4.2\"\r\n  }"]
+[7.181798, "o", "\r\n]\r\n"]
