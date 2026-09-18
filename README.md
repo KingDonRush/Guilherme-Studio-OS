@@ -1,31 +1,25 @@
 # Guilherme Studio OS
 
-A local application for organizing software delivery and structured agent work.
-It combines a React dashboard, a TypeScript API/CLI and an MCP interface over the
-same operational records. YAML and Markdown are canonical; SQLite is a rebuildable
-local projection.
+A local workspace for organizing software delivery through a React panel,
+TypeScript API/CLI and MCP interface. All interfaces share operational contracts.
+YAML and Markdown hold canonical records; SQLite provides a rebuildable projection
+for queries and the dashboard.
 
-**Independent working prototype.** Useful evidence of application architecture,
-agent interfaces and explicit action controls. External service adapters are
-currently fake or disabled; this is not a claim of a live commercial service.
+## How work moves through the system
 
-## Start with the evidence
+Projects, plans and delivery records stay inspectable as files. The panel presents
+that state to a person, while CLI and MCP commands expose it to automation.
+Actions follow preparation, confirmation, execution and reconciliation. Payload
+checksums and expiry constrain what can execute; failed or uncertain outcomes stay
+visible instead of being treated as completed actions.
 
-| Interest | What to inspect |
-| --- | --- |
-| React / TypeScript applications | [Dashboard source](apps/panel/src), [local API](packages/local-api/src) |
-| Agent tooling / MCP | [MCP server](packages/mcp/src/server.ts), [prepared action lifecycle](packages/core/src/prepared-actions/service.ts) |
-| Product and system decisions | [System specification](docs/studio-os/00-index.md), [repository boundaries](docs/studio-os/architecture/04-repository-wordpress-topology.md) |
-| WordPress implementation | [WordPress runtime and owned surfaces](wordpress/README.md); plugins have their own repositories |
-
-An action moves through preparation, confirmation, execution and reconciliation.
-The implementation checks expiry and payload checksums and records failures rather
-than treating a prepared intention as a completed external action.
+External communication and GitHub adapters are currently fake or disabled.
+The local action lifecycle can be exercised without implying an external delivery.
 
 ## Run locally
 
-The declared toolchain is Node.js 24.16.0 and npm 11.13.0. Native SQLite dependencies
-must be built during installation.
+The declared toolchain is Node.js 24.16.0 and npm 11.13.0. Installation builds
+native SQLite dependencies.
 
 ```bash
 npm ci
@@ -33,23 +27,28 @@ npm run verify
 npm run studio -- dashboard
 ```
 
-The dashboard is local only. See the [review guide](docs/studio-os/reviewer-guide.md)
-for validation results, scope and limitations. Agent contributors should then read
-[AGENTS.md](AGENTS.md).
+Consult the [system documentation](docs/studio-os/00-index.md) for setup and
+commands, and the [architecture guide](docs/studio-os/reviewer-guide.md) for a
+short source-reading path. This application is designed for a trusted local
+workspace, not an internet-facing multi-tenant service.
 
-## Development method and authorship
+## System map
 
-This is an independent project, not evidence of an employer or a client engagement.
-The source was produced primarily or entirely by AI coding agents under Guilherme
-Manoel da Silva's direction. His contribution includes product intent, requirements,
-constraints, decomposition, product and architectural decisions through the agent
-interface, iteration, validation and documentation. The repository demonstrates
-the resulting system and process; it does not imply that he manually wrote every
-component or can reproduce it unaided from memory.
+| Layer | Responsibility |
+| --- | --- |
+| [React panel](apps/panel/src) | Human inspection and operation |
+| [Local API](packages/local-api/src) | Local interface over shared services |
+| [Core](packages/core/src) | Domain operations, prepared actions and reconciliation |
+| [Storage](packages/storage/src) | Canonical records and SQLite projection |
+| [CLI](packages/cli/src) / [MCP](packages/mcp/src) | Script and agent entry points |
 
-## Em português
+WordPress product repositories have independent histories and release boundaries;
+see [repository topology](docs/studio-os/architecture/04-repository-wordpress-topology.md).
+They are not bundled releases of this application.
 
-Aplicação local para organizar entregas de software e trabalho dirigido por
-agentes. Reúne painel React, API/CLI TypeScript e interface MCP, com registros
-canônicos em YAML/Markdown e projeção SQLite. Projeto independente; cenários e
-materiais de portfólio não representam clientes, receita ou adoção comprovados.
+## Verification
+
+`npm run verify` runs TypeScript checking, 65 tests, Biome and workspace builds,
+including the panel. Test coverage includes the shared domain and storage contracts.
+External adapters and cross-product WordPress workflows require their own runtime
+validation. SQLite is a derived view: preserve canonical files when rebuilding it.
