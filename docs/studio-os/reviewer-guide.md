@@ -1,23 +1,43 @@
-# Architecture and verification guide
+# Implementation and verification guide
 
-[Project overview](../../README.md)
+[Product overview](../../README.md) · [Design documentation](00-index.md)
 
-Start with `apps/panel/src` and `packages/local-api/src` to trace a human operation.
-Then inspect `packages/core/src/prepared-actions/service.ts` for checksum validation,
-expiry, transitions and reconciliation. The MCP server in `packages/mcp/src/server.ts`
-exposes the same domain rather than maintaining a separate workflow implementation.
-The [system map](00-index.md) links the detailed contracts.
+## Follow a studio operation
 
-Canonical YAML/Markdown records are the durable state. SQLite supports local
-queries and can be rebuilt. Product repositories under the documented WordPress
-topology retain independent histories, dependencies and verification gates.
+1. Read `packages/schemas/src/entities/specs` for commercial, delivery, finance,
+   product and governance data contracts.
+2. Follow `packages/core/src/commands/registry.ts` into domain handlers/services.
+   `opportunity.record-discovery`, proposal review/response and
+   `opportunity.convert` connect commercial records to client engagements.
+3. Inspect `apps/panel/src/views` for the actual CRM, delivery, product, finance,
+   agent and control surfaces. CLI/MCP expose additional domain operations;
+   not every command has a dedicated panel form.
+4. Inspect `packages/core/src/harness/agent-harness.ts` for runs, context packs,
+   observations, verification and handoffs. Prepared actions have a separate
+   checksum/expiry/confirmation lifecycle.
 
-`npm run verify` passes TypeScript checking, 65 tests in 16 files, Biome and
-workspace builds. The 2026-09-18 verification used Node 22.21.1; the declared
-project toolchain remains Node 24.16.0/npm 11.13.0. That difference is not evidence
-of a tested Node compatibility matrix.
+Canonical YAML/Markdown records are durable state. SQLite is a rebuildable query
+projection. Repository and environment records connect delivery to local Git and
+WordPress runtimes; they do not merge independent plugin repositories into this one.
 
-External adapters are fake or disabled. Prepared records prove a local state
-transition, not a completed external communication. Local workspace trust and
-native SQLite installation are current deployment assumptions; this repository
-does not implement multi-tenant authorization.
+## Runtime integrations
+
+`packages/adapters/src/index.ts` implements Git inspection and Docker/WordPress
+operations, including WP-CLI, backup and restore checks. The site-kit module applies
+a concrete portfolio capsule. The provisioning command currently creates a directory
+and manifest, without installing or registering a complete site.
+
+GitHub and communication providers remain fake or disabled. That boundary does not
+apply to the implemented local Docker/WordPress operations. Inspect a command before
+running it against an existing environment; backup and restore checks execute real
+processes and should be exercised in a suitable development runtime.
+
+## Verification scope
+
+`npm run verify` runs TypeScript, 65 tests, Biome and workspace builds. Local
+verification uses Node 22.21.1; the declared toolchain is Node 24.16.0/npm 11.13.0.
+This is not a tested Node compatibility matrix. Unit/contract checks do not prove
+all PRD journeys or a complete live WordPress deployment.
+
+The system assumes a trusted local workspace and loopback access. Existing package,
+MCP and API/schema identities remain compatible across the repository rename.

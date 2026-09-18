@@ -22,7 +22,7 @@ relations: []
 spec:
   branch: main
   default_branch: main
-  expected_remote: https://github.com/KingDonRush/Guilherme-Studio-OS.git
+  expected_remote: https://github.com/KingDonRush/studio-control-plane.git
   path: .
   remote_policy: allowed
   status: active

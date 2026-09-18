@@ -9,7 +9,7 @@ export function createProgram(): Command {
   const program = new Command();
   program
     .name("studio")
-    .description("Guilherme Studio OS local-first operations CLI")
+    .description("Studio Control Plane local-first operations CLI")
     .option("--root <path>", "Studio root", process.cwd())
     .option("--json", "Print JSON output")
     .option("--quiet", "Suppress human output")

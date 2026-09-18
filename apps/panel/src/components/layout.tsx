@@ -30,7 +30,7 @@ export function Sidebar() {
   return (
     <aside className="sidebar">
       <div>
-        <p className="eyebrow">Guilherme Studio OS</p>
+        <p className="eyebrow">Studio Control Plane</p>
         <h1>Operação local-first para renda WordPress internacional</h1>
       </div>
       <nav>

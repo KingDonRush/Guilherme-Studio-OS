@@ -111,7 +111,7 @@ export async function inspectStudioRepositories(
   >();
   candidates.set(context.paths.root, {
     id: "root",
-    title: "Guilherme Studio OS coordinator",
+    title: "Studio Control Plane coordinator",
     cwd: context.paths.root,
     remotePolicy: "forbidden",
   });

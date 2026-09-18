@@ -1,51 +1,19 @@
-# Guilherme Studio OS
+# Studio Control Plane documentation
 
-Status: Studio OS V1 accepted locally; migration and portfolio resumption need
-their own next task
-Purpose: canonical map for the operating system that governs Guilherme's
-international WordPress business.
+[Product overview](../../README.md) · [Implementation and verification guide](reviewer-guide.md)
 
-## Delivery State
+The runtime coordinates commercial operations, delivery, products, evidence and
+agent continuity for a solo or small software studio. WordPress/Docker is an
+implemented delivery specialization within that system.
 
-Completed:
+## Reading the documentation
 
-- Constitution and authority model;
-- five connected planning graphs;
-- ontology and lifecycle contracts;
-- twelve domain PRDs;
-- system, storage, interface, and repository architecture;
-- eight cross-domain journeys;
-- schema and security contracts;
-- operating model and quality gates;
-- primary-source research register;
-- current-state inventory and reversible migration plan;
-- topologically ordered implementation backlog;
-- first executable Studio OS V1 vertical with schemas, storage, CLI, MCP,
-  local API, panel, adapters, workflow fixtures, backup/restore checks and
-  acceptance evidence.
-
-Not executed or still requiring separate task authority:
-
-- physical root rename;
-- deletion of legacy directories.
-
-## North Star
-
-The Studio OS exists to convert Guilherme's capability in WordPress,
-Elementor, WooCommerce, design implementation, and plugin engineering into
-reliable international income.
-
-It must coordinate:
-
-- freelance prospects, clients, contracts, work, delivery, and payment;
-- international job opportunities, applications, interviews, and follow-up;
-- products, plugins, repositories, releases, demos, and public evidence;
-- portfolio cases, marketing, content, outreach, and distribution;
-- operational knowledge, decisions, assets, tasks, agents, and verification.
-
-The operating question is:
-
-> Como isso continua funcionando quando Guilherme para de explicar?
+Start with the implementation guide for executable behavior and source entry points.
+The PRDs, ontology and workflow documents below describe the broader normative
+design; their requirements are not a checklist of already implemented UI flows.
+In particular, detailed client-memory/briefing models and complete site provisioning
+extend beyond the current runtime. Historical names and personal workspace paths
+in design records remain context, not installation requirements.
 
 ## Document Authority
 
@@ -140,36 +108,3 @@ inputs to migration. They do not override this specification.
 - [Current-state inventory](./migration/01-current-state-inventory.md)
 - [Migration plan](./migration/02-migration-plan.md)
 - [Decision register](./decisions/00-decision-register.md)
-
-## Product Boundaries
-
-The Studio OS is:
-
-- a public-source, local-first business and production operating system;
-- a repository whose committed content is always safe for public disclosure;
-- a versioned repository of human-readable canonical records;
-- a deterministic CLI for controlled mutations;
-- an MCP surface for governed agent access;
-- a local browser panel for operational visibility;
-- a coordinator of independent Git repositories and WordPress environments.
-
-The Studio OS is not:
-
-- a public SaaS;
-- a replacement for Git, WordPress, Docker, GitHub, or communication channels;
-- an autonomous sender of messages, applications, proposals, or publications;
-- a storage location for passwords, tokens, private keys, or session cookies;
-- a reason to delay publishing revenue-producing work indefinitely.
-
-## Completion Definition
-
-This specification is implementation-ready when:
-
-- every capability has one structural owner;
-- entity lifecycles and authority rules are explicit;
-- dependencies form a directed acyclic graph;
-- CLI, MCP, panel, storage, and repository boundaries agree;
-- the eight cross-domain journeys are executable on paper;
-- the first implementation phase can begin without reinterpreting the product;
-- no secret can enter Git through a valid workflow;
-- another agent can continue without a complete oral rebrief.
